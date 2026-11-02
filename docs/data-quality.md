@@ -85,13 +85,38 @@ These are declared-power classifications. They are not connector counts, simulta
 
 These assertions validate coverage, retention, and join arithmetic. They do not establish official geographic correctness.
 
+### Batch 05 pre-integration geographic validation
+
+Batch 05 repeated the geographic checks with one DuckDB connection opened read-only and SELECT/CTE queries only. No `CREATE`, `ALTER`, `DROP`, `INSERT`, `UPDATE`, or `DELETE` statement was executed.
+
+| Check | Observed result | Status |
+|---|---:|---|
+| BNetzA source geographies | 401 | PASS |
+| Crosswalk rows / mapped source geographies | 401 / 401 | PASS |
+| Distinct mapped KBA codes | 400 | PASS |
+| Explicit provisional mappings | 24 = 22 aliases + 2 Trier rows | PASS; still provisional |
+| Equipment rows retained through mapping | 117,662 | PASS |
+| Point rows after source-aware equipment join | 211,253 | PASS |
+| Orphan point rows on source-aware key | 0 | PASS |
+| Point rows without a valid maximum parsed power | 0 | PASS |
+| Regional rows | 400 | PASS |
+| Combined KBA code/date rows | 1,200 = 400 × 3 | PASS |
+| Duplicate KBA code/date keys | 0 | PASS |
+| July district BEV stock after aggregate-before-join | 2,362,218 | PASS |
+
+The regional query classified each point from all semicolon-separated `connector_power_raw` tokens after decimal-comma normalization and used `MAX` within the point. It did not use `connector_power_kw_single` as the headline parser and did not sum connector powers. The resulting bands were 156,155 points at or below 22 kW, 55,098 above 22 kW, 40,950 at or above 150 kW, and 6,950 at or above 350 kW. Equipment nominal power was aggregated from the equipment relation separately and totalled 9,215.4173 MW.
+
+The 2026-09-30 infrastructure measures were kept separate from KBA stock dates 2026-01-01, 2026-04-01, and 2026-07-01. Infrastructure values repeat beside each KBA date in the 1,200-row combined grain; they are not summed across the three dates. January and April BEV-to-point ratios must not be described as contemporaneous infrastructure coverage, and the July comparison is still cross-snapshot because the infrastructure date is September.
+
+The design proposal and non-executed SQL definitions are in [geographic-layer-design.md](geographic-layer-design.md). The Crosswalk CSV was not modified.
+
 ### Known coordinate exception
 
 All current equipment rows have non-null coordinates. One row falls outside a broad Germany check because its longitude is 4.0. The source record is not corrected or removed; it remains an exception for future coordinate review.
 
 ## Existing source-aware JOIN issue
 
-analytics.charging_by_state calculates point counts in a subquery grouped only by equipment_excel_row and joins it to equipment on Excel row alone. It omits source_id. With one BNetzA snapshot the current totals reconcile, but the view is unsafe for multiple BNetzA source IDs because equal Excel row numbers could cross-match. Batch 04 documents this issue and does not modify the view.
+analytics.charging_by_state calculates point counts in a subquery grouped only by equipment_excel_row and joins it to equipment on Excel row alone. It omits source_id. With one BNetzA snapshot the current totals reconcile, but the view is unsafe for multiple BNetzA source IDs because equal Excel row numbers could cross-match. Batch 04 documents this issue, and Batch 05 reconfirmed it without modifying the view. The minimum correction is to group the point subquery by `(source_id, equipment_excel_row)` and join on both fields; that correction remains pending approval.
 
 ## Meaning of the existing PASS results
 

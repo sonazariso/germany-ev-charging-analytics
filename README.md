@@ -80,7 +80,7 @@ The current architecture is described in [docs/architecture.md](docs/architectur
 
 Completed local work includes source discovery and profiling, schema inspection, lossless raw ingestion, initial core normalization, read-only validation, charging-power exploration, a 401-row BNetzA-to-KBA crosswalk, and a reusable read-only batch runner.
 
-Batch 04 establishes the English project documentation, persistent project instructions, tracking files, safe local Git configuration, and the first local baseline commit. It does not modify source workbooks or DuckDB tables/views.
+Batch 04 established the English project documentation, persistent project instructions, tracking files, safe local Git configuration, and the first local baseline commit. Batch 05 validated the pre-integration geographic model and documented proposed permanent objects with read-only SQL; it did not modify source workbooks, the Crosswalk CSV, or DuckDB tables/views.
 
 Not complete: authoritative geographic verification, permanent geographic DuckDB objects, independent crosswalk review, BBSR suitability assessment, Tableau data preparation, dashboard development, final license review, and GitHub publication.
 
@@ -127,6 +127,7 @@ The local DuckDB database, virtual environment, raw workbooks, temporary files, 
 - [Data dictionary](docs/data-dictionary.md)
 - [KPI catalog](docs/kpi-catalog.md)
 - [Geographic methodology](docs/geographic-methodology.md)
+- [Geographic layer design](docs/geographic-layer-design.md)
 - [Data quality](docs/data-quality.md)
 - [Analysis findings](docs/analysis-findings.md)
 - [Reproducibility](docs/reproducibility.md)
@@ -141,7 +142,7 @@ The local DuckDB database, virtual environment, raw workbooks, temporary files, 
 - An equipment row may contain several charging points. A charging-point slot is not a connector count.
 - BNetzA infrastructure is dated 2026-09-30; the latest KBA stock snapshot is dated 2026-07-01. Ratios are not contemporaneous.
 - The crosswalk has 401 BNetzA combinations and 400 KBA codes because Trier city and Trier-Saarburg share code 07211. Charging metrics must be aggregated by KBA code before joining vehicle stock.
-- Twenty-two aliases and the shared Trier mapping are provisional local-snapshot mappings pending authoritative review.
+- Twenty-two aliases and the two shared Trier source mappings (24 provisional mappings total) are provisional local-snapshot mappings pending authoritative review.
 - The current analytics.charging_by_state view omits source_id from one equipment-to-point aggregation join. It is safe for the current single BNetzA snapshot only as a documented limitation, not as a resolved design.
 - No source supports utilization, sessions, energy delivered, queue times, reliability, or causality.
 

@@ -28,7 +28,7 @@ flowchart LR
     L -. planned .-> R
 ~~~
 
-The dashed components are not complete. No Tableau workbook or permanent geographic DuckDB object exists in the current project.
+The dashed components are not complete. No Tableau workbook or permanent geographic DuckDB object exists in the current project. Batch 05 validates the proposed pre-integration design in [geographic-layer-design.md](geographic-layer-design.md); that document is design-only and does not represent deployed DuckDB objects.
 
 ## Source and ingestion stages
 
@@ -70,7 +70,7 @@ The current views are:
 - analytics.charging_by_state: state-level equipment and populated-point counts.
 - analytics.kba_national_quarterly_stock: de-duplicated national historical rows from FZ 27.9.
 
-The state view has a known source-aware join issue: its point-count subquery groups only by Excel row and the join omits source_id. It is not modified in Batch 04. The issue must be resolved or explicitly constrained before multiple BNetzA snapshots are loaded together.
+The state view has a known source-aware join issue: its point-count subquery groups only by Excel row and the join omits source_id. It was not modified in Batch 04 or Batch 05. The issue must be resolved or explicitly constrained before multiple BNetzA snapshots are loaded together.
 
 ## Equipment-to-point relationship
 
@@ -97,9 +97,11 @@ The minimum approved-for-design geographic model is:
 
 Charging must be aggregated by KBA code before joining KBA stock. This is mandatory because Kreisfreie Stadt Trier and Landkreis Trier-Saarburg both map to KBA registration-region code 07211. A raw 401-row join would duplicate that KBA stock.
 
-## Proposed SQL definitions — design only
+## Proposed SQL definitions — design-only history
 
-The following definitions show the intended grain and join order. They are not executed in Batch 04 and are not present as permanent DuckDB objects.
+The authoritative Batch 05 proposal, including source-aware joins, maximum-per-point power parsing, mapping flags, snapshot dates, acceptance checks, and backup/rollback requirements, is [geographic-layer-design.md](geographic-layer-design.md). The abbreviated definitions below are retained as architecture history and must not be executed as-is.
+
+The following abbreviated definitions show the intended grain and join order. They were not executed in Batch 04 or Batch 05 and are not present as permanent DuckDB objects.
 
 ~~~sql
 -- Planned reference relation; current source is the curated CSV.

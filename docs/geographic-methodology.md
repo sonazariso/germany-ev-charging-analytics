@@ -2,7 +2,7 @@
 
 ## Purpose and scope
 
-The geographic layer aligns BNetzA charging records with KBA district stock without changing the source geography. It is a local-snapshot crosswalk, not an official boundary gazetteer. The current version is crosswalk_version 2026-07-01: it uses the BNetzA 2026-09-30 geography and the KBA 2026-07-01 district snapshot.
+The geographic layer aligns BNetzA charging records with KBA district stock without changing the source geography. It is a local-snapshot crosswalk, not an official boundary gazetteer. The current version is crosswalk_version 2026-07-01: it uses the BNetzA 2026-09-30 geography and the KBA 2026-07-01 district release for label matching. The KBA stock layer also contains 2026-01-01 and 2026-04-01; those dates remain separate observations in the combined model.
 
 ## Observed geography
 
@@ -13,6 +13,19 @@ The geographic layer aligns BNetzA charging records with KBA district stock with
 - Berlin and Hamburg use state/city naming conventions in the KBA file rather than ordinary city-suffix labels.
 
 Coverage validation is not geographic correctness. The fact that all 401 source combinations have a local KBA target proves row coverage in this snapshot; it does not prove official boundary equivalence.
+
+## Batch 05 pre-integration validation
+
+The geographic model was validated with one DuckDB connection opened using `read_only=True`. The validation recomputed charging measures from `core.charging_equipment` and `core.charging_point`; it did not use the Crosswalk CSV's pre-aggregated measures as the analytical source.
+
+- The source-aware equipment-to-point join used both `source_id` and Excel row. All 117,662 equipment rows and all 211,253 point rows were retained.
+- Point power was parsed from every semicolon-separated token in `connector_power_raw`, with decimal commas normalized to decimal points. The maximum valid token within each point was used for classification; connector powers were never summed.
+- The result contained 400 KBA district-code rows. Equipment nominal power was aggregated from equipment rows separately from point measures and totalled 9,215.4173 MW.
+- The regional power bands reconciled to 156,155 points at or below 22 kW, 55,098 above 22 kW, 40,950 at or above 150 kW, and 6,950 at or above 350 kW. No point lacked a valid parsed maximum in this snapshot.
+- The 401 source combinations mapped to 400 distinct KBA codes. All 24 provisional mappings remained explicitly flagged: 22 aliases and two Trier shared-region rows.
+- Joining the 400 aggregated regional rows to the three KBA snapshots produced 1,200 code/date rows. July district BEV stock remained 2,362,218, and the shared Trier code was joined once per date rather than once per source row.
+
+The permanent-object proposal, including SQL definitions and acceptance checks, is in [the geographic layer design](geographic-layer-design.md). No permanent geographic table or view was created in Batch 05.
 
 ## Matching method
 
@@ -39,7 +52,7 @@ The result is deterministic for the observed source snapshot. Determinism is a r
 | explicit_state_city_naming_convention | 2 | observed_local_snapshot_naming_convention |
 | shared_kba_registration_region | 2 | provisional_shared_region_requires_authoritative_review |
 
-The 375 ordinary matches were checked against the local July KBA snapshot. The 22 aliases and two Trier rows remain provisional. No row is labelled officially verified.
+The 375 ordinary matches were checked against the local July KBA snapshot. The 22 aliases and two Trier rows make 24 explicitly provisional mappings. No row is labelled officially verified.
 
 ## Provisional aliases
 
@@ -113,6 +126,14 @@ The curated file is data/reference/bnetza_kba_district_crosswalk_2026.csv. Its c
 
 The current validation report records 401 rows, 401 mapped rows, 400 distinct codes, no unmapped combinations, no multiply assigned BNetzA combinations, and only code 07211 assigned twice.
 
+The CSV's `kba_reference_date` identifies the KBA release used for local matching evidence. It must not be used to overwrite the actual `reference_date` of a KBA stock row when the combined model is built.
+
+## Temporal meaning of combined measures
+
+BNetzA infrastructure is dated `2026-09-30`; KBA district stock is dated `2026-01-01`, `2026-04-01`, or `2026-07-01`. A combined row is therefore a cross-snapshot comparison. The infrastructure measures may be repeated beside each KBA date, but they must not be summed across dates.
+
+In particular, January and April BEV-to-charging-point ratios are not contemporaneous infrastructure-coverage ratios. The July ratio is also not contemporaneous in a strict same-date sense because the latest infrastructure snapshot is September. Any BEV-per-point measure remains descriptive and provisional because the BNetzA register is not exhaustive and the geographic mappings remain partly provisional. KBA BEV and PHEV values are registered stock, not vehicle sales.
+
 ## Validation strategy
 
 Before any geographic DuckDB integration is approved, repeat these checks:
@@ -125,6 +146,9 @@ Before any geographic DuckDB integration is approved, repeat these checks:
 6. Reconcile equipment, declared points, point slots, and nominal power before and after mapping.
 7. Aggregate by KBA code before the KBA join and reconcile vehicle totals to the source KBA district table.
 8. Review the Trier treatment and every provisional alias with an authoritative administrative reference.
+9. Recheck the source-aware equipment-to-point join on `(source_id, excel_row)` and confirm that all source rows are retained.
+10. Recompute point bands from the maximum successfully parsed semicolon-separated connector-power token and reconcile every band to the point denominator.
+11. Validate one combined row per KBA code and actual KBA stock reference date for every source snapshot; never sum repeated infrastructure rows across stock dates.
 
 ## Relationship to future BBSR settlement types
 

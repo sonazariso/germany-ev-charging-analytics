@@ -27,6 +27,12 @@ All KPIs must carry the source reference date and the geographic grain in the ou
 
 Power KPIs use a read-only derivation from connector_power_raw: split each point's semicolon-separated text, parse numeric tokens, and classify by the maximum token in that point row. This is distinct from connector_power_kw_single, which is populated only for a single numeric raw value.
 
+### Batch 05 regional validation note
+
+The same definitions were recomputed at KBA district-code grain after mapping the 401 BNetzA source geographies and aggregating to 400 KBA codes. The regional result retained 117,662 equipment rows and 211,253 point slots, with 156,155 normal points, 55,098 fast points, 40,950 points at least 150 kW, 6,950 points at least 350 kW, and 9,215.4173 MW of declared equipment nominal power. Percentages use the point-slot denominator within each KBA code. All regional outputs must carry `bnetza_reference_date = 2026-09-30`, the actual KBA `reference_date`, and the mapping verification flags.
+
+The combined validation grain is one KBA district code per KBA stock date: 400 codes × three dates = 1,200 rows. Infrastructure measures are repeated beside the three KBA snapshots for comparison and must never be summed across dates. The 24 provisional source mappings remain visible as quality flags; they are not promoted to officially verified mappings.
+
 ## Charging infrastructure KPIs
 
 ### 1. Registered charging equipment count
@@ -248,10 +254,10 @@ Power KPIs use a read-only derivation from connector_power_raw: split each point
 - Formula: SUM(bev_cars at KBA date) / SUM(charging_point_slots at BNetzA date).
 - Units: Registered BEVs per published point slot.
 - Source tables: core.kba_district_ev_stock, core.charging_point, core.charging_equipment, and the crosswalk CSV.
-- Grain: KBA district code; BNetzA 2026-09-30 and KBA 2026-07-01.
+- Grain: KBA district code; BNetzA 2026-09-30 and one explicit KBA stock date from 2026-01-01, 2026-04-01, or 2026-07-01.
 - Filters and exclusions: Aggregate charging metrics by KBA code before the vehicle join; retain provisional mappings and expose unmapped rows.
 - Interpretation: A descriptive pressure or coverage indicator, not a utilization ratio.
-- Known limitations: Dates are not contemporaneous, the BNetzA register is not exhaustive, and the crosswalk is provisional. Trier must not duplicate stock.
+- Known limitations: Dates are not contemporaneous; January and April ratios must not be described as contemporaneous infrastructure coverage; the BNetzA register is not exhaustive; and the crosswalk is provisional. Trier must not duplicate stock, and infrastructure rows must not be summed across KBA dates.
 - Status: PROVISIONAL.
 
 ### 18. Fast charging share versus BEV stock growth
