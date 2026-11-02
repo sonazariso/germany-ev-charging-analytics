@@ -49,7 +49,8 @@ These are project milestones supported by local artifacts. They are not historic
 - [ ] Decide whether a historical boundary-vintage note and additional pre-2026 KBA snapshots are required before older or cross-product regional trends.
 - [ ] Reconcile KBA district versus state-level Sonstige and national-total differences.
 - [ ] Decide whether maximum-per-point power parsing becomes a reusable view or core field.
-- [ ] Assess BBSR suitability, boundary vintages, and licensing; do not download until approved.
+- [x] Assess BBSR four-category suitability, boundary vintages, and licensing in Batch 09; no implementation or complete INKAR download.
+- [ ] Approve a dated BBSR/KBA compatibility bridge, mixed/unresolved status, Hanau treatment, and any future BBSR reference model before implementation.
 - [ ] Further KPI validation and dashboard-specific denominator review.
 - [ ] Prepare compact Tableau extracts and source-date metadata.
 - [ ] Develop a Germany-wide overview and selected drill-down dashboard.

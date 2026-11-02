@@ -75,3 +75,12 @@ This changelog records project milestones and local repository changes. Historic
 - Added `reports/batch08_geographic_code_verification.md` and updated geographic methodology, data-quality, findings, decisions, roadmap, and project-status documentation.
 - Preserved all 24 operational provisional statuses and all verified metrics; no source workbook, Crosswalk CSV, DuckDB object, view, KPI formula, or raw data was changed.
 - No remote was added and nothing was uploaded or published.
+
+## 2026-11-02 — Batch 09
+
+- Researched the official BBSR four-category settlement-structural district typology, current reference-table downloads, Kreis/Kreisregion distinction, Umsteigeschlüssel, INKAR context, Destatis key definitions, and licensing.
+- Identified `raumgliederungen-referenzen-2025.xlsx` and its `Kreisreferenz` sheet as the smallest suitable current official reference artifact found; documented its 31.12.2025 geographic stand, 400 Kreis rows, 362 Kreisregion keys, compact type codes 1–4, and attribution requirements.
+- Performed a read-only KBA/BBSR prefix compatibility screen and documented the Hanau vintage gap, mixed Trier types, smaller-city Kreisregion groups, Berlin/Hamburg/Bremen/Bremerhaven, and special administrative structures.
+- Compared direct, controlled administrative, and separate-detail integration strategies; recommended a conditional future Strategy C with visible `mixed_or_unresolved` and `vintage_mismatch` statuses.
+- Added `reports/batch09_bbsr_feasibility.md` and updated project geography, data sources, architecture, KPI candidates, data quality, findings, decisions, roadmap, README, project status, and charter documentation.
+- Kept BBSR integration NOT IMPLEMENTED: no complete INKAR download, source-manifest entry, Crosswalk change, DuckDB change, KPI value/formula change, Trier allocation, remote, upload, or publication.

@@ -81,4 +81,4 @@ The analytical value is a traceable bridge from official workbooks to validated 
 
 Batch 04 is the documentation and local-Git phase. The current database and crosswalk are read-only inputs to the documentation; no permanent geographic DuckDB objects are created here.
 
-Planned features are independent mapping review, approval of the minimum geographic analytics layer, optional BBSR suitability assessment, further KPI validation, Tableau extract preparation, dashboard development, final licensing review, and eventual publication after explicit approval.
+Planned features are approval of the minimum geographic analytics layer, implementation of any separately approved BBSR compatibility layer, further KPI validation, Tableau extract preparation, dashboard development, final licensing review, and eventual publication after explicit approval. Batch 09 completed the BBSR suitability assessment as research/documentation only; BBSR remains excluded from the current implementation.

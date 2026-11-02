@@ -52,7 +52,7 @@ Batch 08 independently checked the 22 identity-supported aliases, Hanau's 2026 b
 - The current 400-code model remains defensible as a KBA registration-region model for these snapshots, not as an authoritative 400-region administrative model. A historical boundary-vintage note is required before older or cross-product series are presented.
 - All 24 operational mappings remain provisional. No CSV, reference table, view, KPI formula, source row, or vehicle count was changed.
 
-For display, use the explicit label **Trier/Trier-Saarburg KBA registration region (07211)**. The July 2026 value of 7,869 BEVs is joined once after aggregation; it must not be assigned to either administrative unit.
+For display, use the owner-approved label **Trier / Trier-Saarburg (gemeinsamer Zulassungsbezirk)**. The July 2026 value of 7,869 BEVs is joined once after aggregation; it must not be assigned to either administrative unit.
 
 ## Matching method
 
@@ -181,6 +181,48 @@ Before any geographic DuckDB integration is approved, repeat these checks:
 10. Recompute point bands from the maximum successfully parsed semicolon-separated connector-power token and reconcile every band to the point denominator.
 11. Validate one combined row per KBA code and actual KBA stock reference date for every source snapshot; never sum repeated infrastructure rows across stock dates.
 
+## Batch 09 BBSR feasibility findings
+
+Batch 09 assessed the official four-category BBSR siedlungsstruktureller Kreistyp
+without adding BBSR to the source inventory or database. The full evidence review
+is in [reports/batch09_bbsr_feasibility.md](../reports/batch09_bbsr_feasibility.md).
+
+- The current official BBSR reference artifact is `raumgliederungen-referenzen-2025.xlsx`,
+  `Kreisreferenz`, with geographic stand `2025-12-31` and workbook stand
+  `2026-09-11`. It contains 400 Kreis rows, 362 Kreisregion keys, and compact
+  four-class codes 1–4. The five-category differentiated field is not the target
+  classification.
+- BBSR's classification basis is Kreisregionen: smaller independent cities under
+  100,000 inhabitants can be grouped with associated counties. A BBSR Kreis row
+  therefore must not be interpreted as an independent KBA registration region.
+- A read-only five-digit prefix screen found 399 intersections between the 400
+  July 2026 KBA codes and BBSR 2025 Kreis prefixes. KBA-only `06415` is Hanau;
+  BBSR-only `07235` is Trier-Saarburg. This is a compatibility screen, not a
+  validated KBA-to-BBSR/AGS/ARS crosswalk.
+- The 2025 BBSR table has Main-Kinzig-Kreis but no separate Hanau row, so its type
+  cannot be copied to the 2026 Hanau KBA row without a compatible post-change
+  reference or approved conversion method.
+- BBSR assigns Trier city to compact type 1 and Trier-Saarburg to compact type 3,
+  while KBA combines both in registration region `07211`. A future KBA-level
+  BBSR value must therefore be `mixed_or_unresolved`; the shared vehicle stock
+  remains one combined value and is never allocated without approval.
+- The owner-approved display label is **Trier / Trier-Saarburg (gemeinsamer
+  Zulassungsbezirk)**. Boundary-vintage limitations must remain visible in any
+  historical or cross-source comparison.
+
+The recommendation is **CONDITIONAL GO** for a separate, versioned BBSR reference
+and controlled compatibility layer, and **NO-GO** for direct assignment of one
+BBSR category to all current KBA codes. No BBSR table, view, Crosswalk row, KPI
+formula, or classification value was added in Batch 09.
+
 ## Relationship to future BBSR settlement types
 
-BBSR settlement or spatial typologies would be an enrichment dimension, not a replacement for administrative districts or KBA registration regions. A future integration must validate boundary vintages, choose an explicit point-to-area method, preserve the administrative crosswalk, and avoid implying that a settlement type is a KBA registration district. BBSR is not currently downloaded or integrated.
+BBSR settlement or spatial typologies are an enrichment dimension, not a
+replacement for administrative districts or KBA registration regions. A future
+integration must preserve BBSR KRS and Kreisregion keys, use an explicit dated
+KBA compatibility bridge, retain source and classification vintages, and expose
+`mixed_or_unresolved` and `vintage_mismatch` statuses. It must aggregate charging
+before joining KBA stock, never allocate shared Trier stock without approval, and
+must not imply that a settlement type is a KBA registration district. BBSR is not
+part of the project source inventory and is not integrated; Batch 09 inspected one
+temporary official reference workbook for feasibility only.

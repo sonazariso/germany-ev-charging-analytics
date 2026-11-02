@@ -82,7 +82,7 @@ Completed local work includes source discovery and profiling, schema inspection,
 
 Batch 04 established the English project documentation, persistent project instructions, tracking files, safe local Git configuration, and the first local baseline commit. Batch 05 validated the pre-integration geographic model. Batch 06 deployed the approved permanent objects after a verified backup and independent validation; source workbooks and the Crosswalk CSV remained unchanged.
 
-Not complete: authoritative geographic verification, independent crosswalk review, BBSR suitability assessment, Tableau data preparation, dashboard development, final license review, and GitHub publication.
+Not complete: BBSR enrichment implementation, Tableau data preparation, dashboard development, final license review, and GitHub publication. Batch 09 completed the BBSR suitability assessment as documentation only; no BBSR data is integrated.
 
 ## Reproducibility
 
@@ -138,7 +138,7 @@ The local DuckDB database, virtual environment, raw workbooks, temporary files, 
 - [Roadmap](docs/roadmap.md)
 - [Decision log](docs/decisions.md)
 - [GitHub publication checklist](docs/github-publication-checklist.md)
-- [Phase validation reports](reports/phase01_data_profile.md), [Phase 02 schema inspection](reports/phase02_schema_inspection.md), [Phase 03 DuckDB validation](reports/phase03_duckdb_validation.md), [Batch 03 crosswalk validation](reports/batch03_crosswalk_validation.md), [Batch 06 geographic deployment](reports/batch06_geographic_deployment.md), and [Batch 06.1 KPI documentation audit](reports/batch06-1_kpi_documentation_audit.md)
+- [Phase validation reports](reports/phase01_data_profile.md), [Phase 02 schema inspection](reports/phase02_schema_inspection.md), [Phase 03 DuckDB validation](reports/phase03_duckdb_validation.md), [Batch 03 crosswalk validation](reports/batch03_crosswalk_validation.md), [Batch 06 geographic deployment](reports/batch06_geographic_deployment.md), [Batch 06.1 KPI documentation audit](reports/batch06-1_kpi_documentation_audit.md), and [Batch 09 BBSR feasibility](reports/batch09_bbsr_feasibility.md)
 
 ## Important limitations
 
@@ -152,6 +152,6 @@ The local DuckDB database, virtual environment, raw workbooks, temporary files, 
 
 ## Roadmap
 
-The next stages are independent crosswalk review, final geographic-layer approval, optional BBSR suitability work, KPI hardening, Tableau extract preparation, dashboard development, final quality and licensing review, and only then an explicitly approved GitHub publication.
+The next stages are owner approval of the BBSR compatibility bridge and mixed-region treatment, KPI hardening, Tableau extract preparation, dashboard development, final quality and licensing review, and only then an explicitly approved GitHub publication.
 
 Code is covered by the existing MIT LICENSE. Official source data retain the licenses and attribution requirements declared in the source manifest; redistribution and final publication rights require a separate review.

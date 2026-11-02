@@ -54,6 +54,22 @@ These rankings describe the observed source aggregates. They do not indicate tha
 - Trier remains one combined KBA registration region. The July `07211 TRIER-SAARBURG` stock is 7,869 BEVs and is counted once after the two BNetzA source rows are aggregated to KBA code.
 - The 400-region model is defensible for the current KBA registration-region grain, not as proof that all 400 KBA regions are identical to administrative regions. Historical boundary compatibility remains an open note for future time series.
 
+### BBSR feasibility
+
+- The official BBSR 2025 reference contains 400 Kreis rows and 362 Kreisregion
+  keys with compact four-class codes 1–4. Smaller independent cities can be
+  grouped with associated counties, so the BBSR grain is not automatically the
+  KBA registration-region grain.
+- A read-only five-digit prefix screen found 399 intersections between the 400
+  July 2026 KBA codes and BBSR 2025 Kreis prefixes. KBA `06415` Hanau is absent
+  from the 2025 BBSR table, and BBSR `07235` Trier-Saarburg is absent from the
+  KBA 400-code table. This is not a validated crosswalk.
+- BBSR assigns Trier city and Trier-Saarburg different four-class types while KBA
+  combines their stock under `07211`; a future KBA-level category must remain
+  mixed/unresolved unless an approved method is introduced.
+- The feasibility result is conditional future use of a separate BBSR reference
+  layer, not current BBSR enrichment or a direct classification of KBA codes.
+
 ## Preliminary exploratory results
 
 The data can support exploratory comparisons of state or KBA-region point-power mix, BEV stock growth, and BEVs per published point. Those comparisons remain provisional because:

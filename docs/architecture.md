@@ -103,6 +103,29 @@ The deployed geographic model is:
 
 Charging must be aggregated by KBA code before joining KBA stock. This is mandatory because Kreisfreie Stadt Trier and Landkreis Trier-Saarburg both map to KBA registration-region code 07211. A raw 401-row join would duplicate that KBA stock.
 
+## BBSR feasibility outcome — not implemented
+
+Batch 09 assessed the official BBSR four-category settlement-structural district
+typology as a possible future reference dimension. The current BBSR artifact is
+`raumgliederungen-referenzen-2025.xlsx` at geographic stand 31.12.2025. Its
+`Kreisreferenz` sheet contains 400 administrative Kreis rows and 362 Kreisregion
+keys. It is not a KBA registration-region table and has not been added to the
+source manifest, DuckDB, Crosswalk, or Tableau path.
+
+The recommended future architecture is a separate versioned BBSR KRS/Kreisregion
+reference plus an explicit KBA compatibility relation. The compatibility relation
+must retain source systems, effective dates, and statuses such as
+`mixed_or_unresolved` and `vintage_mismatch`; it must never replace AGS, ARS, KRS,
+or KBA keys with an unnamed generic region key. Direct BBSR-type assignment to all
+KBA codes is not approved. In particular, the 2025 BBSR table does not contain a
+separate Hanau row, and BBSR gives Trier city and Trier-Saarburg different types
+while KBA combines their stock under 07211.
+
+See [reports/batch09_bbsr_feasibility.md](../reports/batch09_bbsr_feasibility.md)
+for the source register, strategy assessment, proposed minimal model, and
+validation gates. No BBSR schema or analytical object exists in the current
+database.
+
 ## Deployment SQL and design history
 
 The authoritative executable definitions are in [sql/06_geographic_layer.sql](../sql/06_geographic_layer.sql), executed by [scripts/06_deploy_geographic_layer.py](../scripts/06_deploy_geographic_layer.py). The detailed design and acceptance checks remain in [geographic-layer-design.md](geographic-layer-design.md). The abbreviated definitions below are retained as architecture history and are not the deployment source.

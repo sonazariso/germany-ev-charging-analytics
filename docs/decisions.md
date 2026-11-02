@@ -61,6 +61,35 @@ This log separates approved decisions, implementation details, and pending propo
 - Status: Approved and implemented in the crosswalk validation logic; permanent DuckDB integration is pending.
 - Evidence: Batch 03 aggregate-before-join check.
 
+### Batch 09 owner-approved geographic controls
+
+- Decision: Keep the 22 identity- and code-supported aliases operationally provisional until sufficient code-system equivalence evidence exists.
+- Reason: Row-level identity evidence does not establish a universal KBA registration-code = Destatis AGS/ARS relationship.
+- Consequences: The 22 aliases remain visibly provisional in the Crosswalk and deployed reference table; no status promotion occurs in Batch 09.
+- Status: Approved owner control; documented and unchanged.
+
+- Decision: Use the combined dashboard label **Trier / Trier-Saarburg (gemeinsamer Zulassungsbezirk)** for the shared KBA registration region.
+- Reason: KBA FZ 27.15 reports one combined registration row while Destatis and BBSR retain separate administrative rows.
+- Consequences: The label must not imply that the KBA stock belongs to either administrative unit alone.
+- Status: Approved owner control; display guidance only, with no current view change.
+
+- Decision: Never allocate the shared Trier KBA vehicle stock between Trier city and Trier-Saarburg without a separately approved, defensible allocation method.
+- Reason: The available sources provide combined registration-region stock but no validated city/county allocation.
+- Consequences: Aggregate charging to KBA code `07211`, join stock once, and retain a mixed/unresolved treatment for future BBSR category rollups.
+- Status: Approved owner control; implemented in the existing aggregate-before-join rule.
+
+- Decision: Document geographic boundary-vintage limitations for historical and cross-source comparisons.
+- Reason: BNetzA, KBA, Destatis, and BBSR use dated products and do not necessarily share the same effective boundary vintage.
+- Consequences: Every future geographic comparison must retain source dates, classification vintage, and incompatibility flags; historical trends require an explicit compatibility check.
+- Status: Approved owner control; Batch 09 adds the BBSR/Hanau vintage note.
+
+### Batch 09 research-only scope
+
+- Decision: Conduct the BBSR feasibility assessment as research and documentation only.
+- Reason: The owner did not authorize BBSR ingestion, database modification, Crosswalk changes, or KPI changes in this batch.
+- Consequences: The official BBSR reference workbook was inspected in temporary storage only; no BBSR object or analytical value was added to the project.
+- Status: Approved and completed in Batch 09.
+
 ### Batch 06 permanent geographic layer deployment
 
 - Decision: Deploy the approved geographic reference table and two snapshot-specific analytics views to the existing DuckDB file, and correct `analytics.charging_by_state` to use `(source_id, excel_row)` for point aggregation and joins.

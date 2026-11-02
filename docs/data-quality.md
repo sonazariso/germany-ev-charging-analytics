@@ -159,6 +159,30 @@ Batch 08 added an independent evidence review without changing operational data 
 
 Hanau therefore has no observed current-snapshot coverage mismatch. Historical impact is unknown because the current model contains only the three 2026 FZ 27.15 snapshots. The 400-code model remains defensible only when described as a KBA registration-region model. A historical boundary-vintage note is required for any older or cross-product comparison.
 
+### Batch 09 BBSR feasibility screen
+
+Batch 09 inspected the official BBSR `raumgliederungen-referenzen-2025.xlsx`
+reference workbook outside the repository and compared its `Kreisreferenz` keys
+with the local KBA FZ 27.15 July 2026 codes. This was a read-only documentation
+check; no BBSR rows were loaded into DuckDB.
+
+| Check | Observed result | Quality interpretation |
+|---|---:|---|
+| BBSR 2025 Kreis rows | 400 | Official reference-table rows at geographic stand 31.12.2025. |
+| BBSR Kreisregion keys | 362 | Classification basis is not identical to 400 KBA registration codes. |
+| Compact BBSR class domain | 1–4 | Use `AS`/`AT`; the differentiated five-category fields are not the target. |
+| KBA/BBSR five-digit prefix intersections | 399 of 400 KBA codes | Audit screen only; not an official code-system equivalence. |
+| KBA-only code | `06415` Hanau | 2025 BBSR vintage has no separate Hanau row after the 2026 boundary change. |
+| BBSR-only code | `07235` Trier-Saarburg | KBA combines the source area with Trier city under registration code `07211`. |
+| Mixed BBSR type at a KBA code | `07211`: BBSR type 1 and type 3 components | Future KBA-level category must be `mixed_or_unresolved`; do not duplicate or allocate stock. |
+
+The prefix comparison is not a coverage KPI. It must not promote the 22 aliases,
+convert a KBA code into AGS/ARS, or permit name-only joins. Future validation must
+store the BBSR version, effective date, code system, compatibility status, and
+source URL, and must reject a single category for mixed or incompatible vintages.
+The full evidence and proposed checks are in
+[reports/batch09_bbsr_feasibility.md](../reports/batch09_bbsr_feasibility.md).
+
 ### Known coordinate exception
 
 All current equipment rows have non-null coordinates. One row falls outside a broad Germany check because its longitude is 4.0. The source record is not corrected or removed; it remains an exception for future coordinate review.

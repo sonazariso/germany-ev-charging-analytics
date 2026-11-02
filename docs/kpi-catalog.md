@@ -62,7 +62,7 @@ This audit reviewed the existing numbered definitions and the requested coverage
 | Payment methods, opening hours, and connector types | PROPOSED — REQUIRES APPROVAL | `payment_methods`, `opening_*`, and `connector_types` are preserved in core | Tokenization, multi-label denominators, and display treatment are not approved; opening text is not real-time availability | Approve descriptive field distributions before validation |
 | KBA ownership, postcode, and municipality analyses | PROPOSED — REQUIRES APPROVAL | `core.kba_postcode_ev_stock` and `core.kba_municipality_ev_stock`; 24,586 and 32,229 rows | Ownership denominator, possible total-row handling, and separation from district grain need approval | Define one-grain analyses and validate alternative-grain reconciliation |
 | Crosswalk verification and Trier treatment | VALIDATED for coverage and join arithmetic; PROVISIONAL for official geography | Batch 03/05/06/08 reports; 401 rows, 400 codes, 24 provisional mappings | Batch 08 found 22 direct row-level key matches and two entity-level combined Trier mappings, but no universal KBA-to-AGS/ARS rule | Keep all flags visible and aggregate to KBA code before the stock join |
-| BBSR settlement or spatial enrichment | PROPOSED — REQUIRES APPROVAL | Geographic methodology and roadmap only; no BBSR data integrated | Source, boundary vintage, point-to-area method, licensing, and intended KPI are undefined | Do not download or integrate BBSR until approved |
+| BBSR settlement or spatial enrichment | PROPOSED — REQUIRES APPROVAL | Batch 09 feasibility report and official 2025 reference inspected temporarily; no BBSR data integrated | Source/version, boundary vintage, code bridge, mixed-region treatment, licensing, and intended KPI require implementation approval | Preserve BBSR separately; do not ingest or integrate until the approved gates are met |
 | Data-quality and coverage metrics | VALIDATED | `docs/data-quality.md`, Phase 03, Batch 03/05/06 reports | The metrics were documented as checks but not grouped in the catalog | Use the explicit quality measures below; keep exceptions visible |
 | Utilization, sessions, energy, queue time, reliability, real-time availability, sales, or causal adoption claims | UNSUPPORTED BY CURRENT SOURCES | Project charter, data dictionary, and Batch 06 limitations | No source fields measure these concepts | Keep outside the KPI catalog until a suitable source and definition are approved |
 
@@ -436,7 +436,28 @@ The following definitions document gaps identified by the audit. They are delibe
 
 ## Optional future BBSR enrichment
 
-BBSR settlement or spatial typology is not present in the current source inventory and has not been downloaded or integrated. It is a proposed enrichment dimension, not a current KPI. Any future use requires approval of the source, boundary vintage, point-to-area allocation method, administrative crosswalk preservation, licensing, and the intended interpretation. The current status is PROPOSED — REQUIRES APPROVAL.
+BBSR settlement or spatial typology is not present in the current source inventory
+and has not been integrated. Batch 09 inspected the official 2025 reference table
+for feasibility only. It is a proposed enrichment dimension, not a current KPI.
+Any future use requires approval of the source, boundary vintage, compatibility
+bridge, mixed-region treatment, licensing, and intended interpretation. No formula
+or current KPI value is changed by the candidate definitions below.
+
+| Planned analytical candidate | Suitable future grain | Current status and control |
+|---|---|---|
+| Charging points by BBSR category | BBSR Kreis/Kreisregion, or homogeneous KBA regions after a validated bridge | PROPOSED — REQUIRES APPROVAL; do not force a single class onto mixed KBA `07211`. |
+| Fast charging share by BBSR category | Same BBSR-compatible grain; numerator and denominator aggregated before the share | PROPOSED — REQUIRES APPROVAL; retain the declared-power and BNetzA-date caveats. |
+| High-power (>=150 kW) charging share by BBSR category | Same BBSR-compatible grain | PROPOSED — REQUIRES APPROVAL; use the existing maximum-per-point classification only after geography is validated. |
+| BEV stock by BBSR category | BBSR administrative/Kreisregion grain or compatible one-to-one KBA aggregation | PROPOSED — REQUIRES APPROVAL; no Hanau assignment from the 2025 BBSR vintage and no Trier stock allocation. |
+| BEV per charging point by BBSR category | Same validated category grain with explicit BNetzA and KBA dates | PROPOSED — REQUIRES APPROVAL; descriptive only, not utilization. |
+| BEV stock growth by BBSR category | Fixed compatible BBSR vintage across both KBA dates or an approved historical conversion | PROPOSED — REQUIRES APPROVAL; stock change is not sales or causality. |
+
+The Batch 09 feasibility result is **CONDITIONAL GO** for a separate versioned BBSR
+reference and controlled compatibility layer, but **NO-GO** for direct assignment
+of one BBSR class to all current KBA codes. The owner-approved Trier display label
+is **Trier / Trier-Saarburg (gemeinsamer Zulassungsbezirk)**, and shared stock must
+not be allocated without a separately approved method. See
+[reports/batch09_bbsr_feasibility.md](../reports/batch09_bbsr_feasibility.md).
 
 ## Metrics not supported by current data
 

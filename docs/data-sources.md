@@ -90,6 +90,34 @@ The source licenses and required attributions are metadata in the local manifest
 - Review whether any field-level source content, including identifiers or Public Keys, is appropriate for a public extract.
 - Keep the code license separate from official-data licenses.
 
-## BBSR future enrichment
+## BBSR feasibility reference — not integrated
 
-BBSR is a possible future enrichment source for settlement or spatial typologies. It is not listed in the current source manifest, not downloaded, not integrated, and not used in any current KPI. Any future use requires a separate source, boundary-vintage, and licensing review. BBSR settlement types must remain analytically distinct from administrative districts and must not replace the BNetzA-to-KBA crosswalk.
+Batch 09 investigated the official BBSR four-category settlement-structural district
+typology for feasibility only. It is **not** in `config/sources.json`, was not
+copied into the repository or DuckDB, and is not used in a current KPI.
+
+| Field | Investigated value |
+|---|---|
+| Publisher | Bundesinstitut für Bau-, Stadt- und Raumforschung (BBSR) |
+| Typology page | [Siedlungsstruktureller Kreistyp](https://www.bbsr.bund.de/BBSR/DE/forschung/raumbeobachtung/Raumabgrenzungen/deutschland/kreise/siedlungsstrukturelle-kreistypen/kreistypen.html) |
+| Current reference download | [BBSR reference tables](https://www.bbsr.bund.de/BBSR/DE/forschung/raumbeobachtung/Raumabgrenzungen/downloads/download-referenzen.html) |
+| Smallest suitable current artifact identified | `raumgliederungen-referenzen-2025.xlsx`, `Kreisreferenz` worksheet |
+| Geographic reference date | 31.12.2025 |
+| Workbook stand | 11.09.2026 |
+| Relevant fields | `KRS2025`, `KRS_NAME`, Kreisregion code/name, compact BBSR type code/label (`AS`/`AT`) |
+| Observed reference rows | 400 Kreis rows; 362 distinct Kreisregion keys |
+| License | Datenlizenz Deutschland – Namensnennung – Version 2.0 |
+| Recommended attribution | `Bundesinstitut für Bau-, Stadt- und Raumforschung: Laufende Raumbeobachtung des BBSR` |
+| License text | [DL-DE/by-2.0](https://www.govdata.de/dl-de/by-2-0) |
+
+The current reference workbook is preferred over the historical GovData entry that
+describes a nine-category 2012 dataset. The full [INKAR](https://www.inkar.de/Default)
+database was not downloaded; the current online edition is described as edition
+07/2025 on the uniform geographic stand 31.12.2023 and is not required for the
+four-category reference lookup.
+
+BBSR keys and KBA registration codes remain separate. Any future use requires a
+dated code-based compatibility bridge, an explicit boundary-vintage check, and
+preservation of the existing BNetzA-to-KBA crosswalk. The owner-approved Trier
+label is **Trier / Trier-Saarburg (gemeinsamer Zulassungsbezirk)**; shared KBA stock
+must not be allocated without a separately approved method.
