@@ -11,6 +11,16 @@ The current verified local environment is:
 
 The Phase 01 profiling scripts use Python standard-library modules only. DuckDB is needed for the database, crosswalk, batch-runner, deployment, and validation stages. Batch 06 used the existing `.venv` environment and did not install packages or change DuckDB memory or thread settings.
 
+## Local relocation
+
+The complete project is kept under the established local `dev` development root. Run the commands in this document from the repository root so that all database, source, report, and configuration paths remain repository-relative.
+
+The private Persian KPI catalog is kept in the sibling directory `../germany-ev-charging-analytics-private/`. It is deliberately outside the Git repository and must never be staged or published.
+
+The local DBeaver DuckDB connection/output settings and VS Code workspace record were updated to the relocated project outside Git. Historical DBeaver logs and UI-state text may retain old paths, but they are not active source or connection definitions.
+
+Batch 06.2 preserved the existing ignored `.venv` without installing or recreating dependencies. `.venv/bin/python` and `.venv/bin/python -m pip` run successfully after relocation, but the generated activation scripts and `pip` entry-point wrappers retain historical absolute paths from an earlier location. Use the working Python entry point directly until an environment repair or recreation is explicitly approved.
+
 ## Source acquisition and verification
 
 Run from the repository root:

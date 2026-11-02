@@ -48,3 +48,12 @@ This changelog records project milestones and local repository changes. Historic
 - Recorded PHEV candidate measures, city/county, operator, descriptive source-field, KBA ownership/postcode/municipality, BBSR, and unsupported real-time domains without promoting unapproved analyses.
 - Added `reports/batch06-1_kpi_documentation_audit.md` and generated the private Persian KPI reference outside the Git worktree.
 - Did not modify source workbooks, DuckDB objects, the Crosswalk CSV, or raw data; no remote was added and nothing was uploaded or published.
+
+## 2026-11-02 — Batch 06.2
+
+- Relocated the complete local project into the established `dev` development root, preserving `.git`, the ignored source workbooks, DuckDB database and backups, `.venv`, reports, scripts, SQL, documentation, and configuration.
+- Relocated the private Persian KPI catalog into the sibling `../germany-ev-charging-analytics-private/` directory, completely outside the Git repository.
+- Verified before/after inventories and hashes, Git history, clean status, absent remotes, read-only database and backup integrity, Crosswalk integrity, and the independent Batch 06 validator after relocation.
+- Updated the local DBeaver connection/output paths and VS Code workspace record to the relocated project; these machine-local settings remain outside Git.
+- Documented the project-relative reproducibility workflow and the preserved `.venv` portability caveat; no dependency installation or recreation was performed.
+- Did not change source workbooks, DuckDB schemas or objects, analytical logic, or the Crosswalk CSV; no remote was added and nothing was uploaded or published.

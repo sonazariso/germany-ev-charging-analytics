@@ -2,11 +2,11 @@
 
 ## Current Batch
 
-Batch 06.1 — KPI documentation audit (complete; English catalog reconciled against validated evidence, candidate domains explicitly status-labeled, and private Persian reference generated outside the repository; no data or database changes).
+Batch 06.2 — local project relocation (complete; the complete project is under the established `dev` root, the private Persian catalog is in a sibling directory outside Git, and post-move integrity validation passed; no data or database changes).
 
 ## Last completed Batch
 
-Batch 06.1 — KPI documentation audit completed after the Batch 06 geographic deployment.
+Batch 06.2 — local project relocation completed after the Batch 06.1 KPI documentation audit.
 
 ## Latest validated metrics
 
@@ -49,6 +49,9 @@ The deployed maximum-per-point parser classifies 156,155 points at or below 22 k
 - Batch 06.1 English KPI documentation audit and comparison report.
 - Batch 06.1 status vocabulary separating validated, provisional, exploratory, not-yet-validated, proposed, and unsupported measures.
 - Private Persian KPI reference maintained outside the Git worktree.
+- Batch 06.2 complete local relocation with before/after inventory and hash verification.
+- Batch 06.2 post-relocation database, backup, crosswalk, Git, and Python/DuckDB runtime checks.
+- Local DBeaver connection/output settings and the VS Code workspace record updated to the relocated project outside Git.
 - Persistent AGENTS.md, changelog, and local Git configuration.
 
 ## Open issues
@@ -61,6 +64,7 @@ The deployed maximum-per-point parser classifies 156,155 points at or below 22 k
 - PHEV change/growth and PHEV passenger-car penetration are defined as candidates but remain unvalidated and require owner approval.
 - Operator, city/county, payment/opening/connector, and KBA ownership/postcode/municipality analyses remain proposed pending denominator, grain, and normalization decisions.
 - Tableau reporting, BBSR enrichment, final license review, and GitHub publication are incomplete.
+- The preserved ignored `.venv` has historical absolute paths in its activation scripts and `pip` entry-point shebangs; `.venv/bin/python` and `.venv/bin/python -m pip` work, but the environment requires explicit repair or recreation in a future approved task.
 
 ## Pending decisions
 
@@ -76,4 +80,4 @@ Owner review of candidate KPI domains, independent geographic review, KBA reconc
 
 ## Last local Git commit reference
 
-The Batch 06.1 local commit hash is returned in the handoff; no remote is configured.
+The Batch 06.2 local commit hash is returned in the handoff; no remote is configured.
