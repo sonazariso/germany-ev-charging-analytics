@@ -1,5 +1,30 @@
 # Data dictionary
 
+## Tracked BBSR reference (outside DuckDB)
+
+Batch 10 adds a separately versioned, source-derived CSV reference. It is not a
+DuckDB table, does not replace the BNetzA-to-KBA Crosswalk, and is not a current
+KBA enrichment or KPI input.
+
+| Artifact | Grain | Rows | Reference |
+|---|---|---:|---|
+| data/reference/bbsr_settlement_types_2025.csv | One row per BBSR KRS2025 administrative Kreis row | 400 | Geographic stand 2025-12-31; 362 distinct Kreisregion keys |
+
+| CSV column | Meaning and source | Rule |
+|---|---|---|
+| source_version | Preserved workbook/sheet/version description | Keep beside every derived row |
+| bbsr_reference_date | BBSR geographic stand | Do not overwrite with a KBA or BNetzA date |
+| source_sheet_name, source_excel_row | Original worksheet lineage | Retain for reproducibility; source row is not a geographic key |
+| administrative_district_code, administrative_district_name | Original KRS2025 / KRS_NAME | Codes remain strings; names are original BBSR text |
+| federal_state_code, federal_state_name | Original BLD2025 / BLD_NAME | Two-digit state codes remain strings; names are original BBSR text |
+| kreisregion_code, kreisregion_name | Original KKR2025 / KKR_NAME | Multiple administrative rows may share one Kreisregion; do not collapse them silently |
+| settlement_type_code, settlement_type_name_de | Original KTU2025 / KTU_NAME compact four-category classification | Code domain is 1–4; differentiated five-category fields are not used |
+
+The source workbook, response metadata, complete original sheet/column inventory,
+source checksum, derived checksum, and validation evidence are recorded in
+data/reference/bbsr_source_manifest.json. The raw workbook is intentionally
+excluded from Git.
+
 ## Database inventory
 
 The current local database is data/analytics/ev_charging.duckdb. It contains four schemas and the following objects. Counts are read-only observations from the current file.

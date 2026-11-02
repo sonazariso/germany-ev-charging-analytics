@@ -62,7 +62,7 @@ This audit reviewed the existing numbered definitions and the requested coverage
 | Payment methods, opening hours, and connector types | PROPOSED — REQUIRES APPROVAL | `payment_methods`, `opening_*`, and `connector_types` are preserved in core | Tokenization, multi-label denominators, and display treatment are not approved; opening text is not real-time availability | Approve descriptive field distributions before validation |
 | KBA ownership, postcode, and municipality analyses | PROPOSED — REQUIRES APPROVAL | `core.kba_postcode_ev_stock` and `core.kba_municipality_ev_stock`; 24,586 and 32,229 rows | Ownership denominator, possible total-row handling, and separation from district grain need approval | Define one-grain analyses and validate alternative-grain reconciliation |
 | Crosswalk verification and Trier treatment | VALIDATED for coverage and join arithmetic; PROVISIONAL for official geography | Batch 03/05/06/08 reports; 401 rows, 400 codes, 24 provisional mappings | Batch 08 found 22 direct row-level key matches and two entity-level combined Trier mappings, but no universal KBA-to-AGS/ARS rule | Keep all flags visible and aggregate to KBA code before the stock join |
-| BBSR settlement or spatial enrichment | PROPOSED — REQUIRES APPROVAL | Batch 09 feasibility report and official 2025 reference inspected temporarily; no BBSR data integrated | Source/version, boundary vintage, code bridge, mixed-region treatment, licensing, and intended KPI require implementation approval | Preserve BBSR separately; do not ingest or integrate until the approved gates are met |
+| BBSR settlement or spatial enrichment | PROPOSED — REQUIRES APPROVAL | Batch 09 feasibility plus Batch 10 derived official 2025 reference; separate CSV only, no DuckDB/KBA integration | Boundary vintage, code bridge, mixed-region treatment, licensing, and intended KPI require approval | Preserve the reference separately; do not assign types to KBA or calculate category KPIs until the gates are met |
 | Data-quality and coverage metrics | VALIDATED | `docs/data-quality.md`, Phase 03, Batch 03/05/06 reports | The metrics were documented as checks but not grouped in the catalog | Use the explicit quality measures below; keep exceptions visible |
 | Utilization, sessions, energy, queue time, reliability, real-time availability, sales, or causal adoption claims | UNSUPPORTED BY CURRENT SOURCES | Project charter, data dictionary, and Batch 06 limitations | No source fields measure these concepts | Keep outside the KPI catalog until a suitable source and definition are approved |
 
@@ -436,9 +436,11 @@ The following definitions document gaps identified by the audit. They are delibe
 
 ## Optional future BBSR enrichment
 
-BBSR settlement or spatial typology is not present in the current source inventory
-and has not been integrated. Batch 09 inspected the official 2025 reference table
-for feasibility only. It is a proposed enrichment dimension, not a current KPI.
+BBSR settlement or spatial typology is now present as a separate, versioned
+reference artifact built in Batch 10, but it has not been integrated into DuckDB,
+the BNetzA-to-KBA Crosswalk, or a current KPI. Batch 09 and Batch 10 established
+the official 2025 source, grain, checksums, and compatibility limitations. It is
+still a proposed enrichment dimension, not a current KPI.
 Any future use requires approval of the source, boundary vintage, compatibility
 bridge, mixed-region treatment, licensing, and intended interpretation. No formula
 or current KPI value is changed by the candidate definitions below.

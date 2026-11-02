@@ -67,8 +67,9 @@ These rankings describe the observed source aggregates. They do not indicate tha
 - BBSR assigns Trier city and Trier-Saarburg different four-class types while KBA
   combines their stock under `07211`; a future KBA-level category must remain
   mixed/unresolved unless an approved method is introduced.
-- The feasibility result is conditional future use of a separate BBSR reference
-  layer, not current BBSR enrichment or a direct classification of KBA codes.
+- Batch 10 implemented the separate BBSR reference layer with 400 Kreis rows and
+  362 Kreisregion keys. It remains separate from current BBSR enrichment and does
+  not directly classify KBA codes.
 
 ## Preliminary exploratory results
 

@@ -26,13 +26,16 @@ flowchart LR
     M -. planned extract .-> Q[Tableau Public]
     O --> R[Deployed geographic analytics layer]
     L --> R
+    E --> S[scripts/10_build_bbsr_reference.py]
+    S --> T[data/reference/bbsr_settlement_types_2025.csv]
+    S --> U[data/reference/bbsr_source_manifest.json]
 ~~~
 
 The Tableau path remains planned. Batch 06 deployed the approved geographic reference table and analytics views to the local DuckDB file; the crosswalk mappings remain partly provisional and are not an official boundary gazetteer.
 
 ## Source and ingestion stages
 
-1. config/sources.json records the four official source IDs, reference dates, paths, direct URLs, source pages, and declared reuse licenses.
+1. config/sources.json records the four primary BNetzA/KBA source IDs plus the separately handled BBSR reference source, including reference dates, paths, direct URLs, source pages, and declared reuse licenses.
 2. scripts/01_download.py downloads or verifies the original XLSX files and writes byte counts and SHA-256 hashes to data/profiles/download_inventory.json.
 3. scripts/02_profile_xlsx.py streams the XML inside each workbook and counts every physical and populated row across every worksheet without rewriting the source.
 4. scripts/03_inspect_schema.py previews early worksheet rows to identify title, header, and data positions.
@@ -40,6 +43,7 @@ The Tableau path remains planned. Batch 06 deployed the approved geographic refe
 6. scripts/04_build_geographic_crosswalk.py opens DuckDB read-only and writes a versioned CSV crosswalk plus a validation report.
 7. scripts/batch_analysis.py runs named SELECT or WITH queries on one read-only DuckDB connection and writes one structured Markdown report.
 8. scripts/06_deploy_geographic_layer.py performs the approved backup, prerequisite checks, transactional deployment, and state-view correction; scripts/06_validate_geographic_layer.py independently validates the deployed objects read-only.
+9. scripts/10_build_bbsr_reference.py reads the preserved BBSR workbook, inspects every worksheet, extracts the approved four-category Kreisreferenz grain, and writes a deterministic CSV plus source/derived checksums. The reference path stops outside DuckDB and the BNetzA-to-KBA Crosswalk.
 
 ## DuckDB schemas
 
@@ -103,14 +107,15 @@ The deployed geographic model is:
 
 Charging must be aggregated by KBA code before joining KBA stock. This is mandatory because Kreisfreie Stadt Trier and Landkreis Trier-Saarburg both map to KBA registration-region code 07211. A raw 401-row join would duplicate that KBA stock.
 
-## BBSR feasibility outcome — not implemented
+## BBSR feasibility background
 
 Batch 09 assessed the official BBSR four-category settlement-structural district
-typology as a possible future reference dimension. The current BBSR artifact is
+typology as a possible future reference dimension. At that batch boundary, the
+current BBSR artifact was
 `raumgliederungen-referenzen-2025.xlsx` at geographic stand 31.12.2025. Its
 `Kreisreferenz` sheet contains 400 administrative Kreis rows and 362 Kreisregion
-keys. It is not a KBA registration-region table and has not been added to the
-source manifest, DuckDB, Crosswalk, or Tableau path.
+keys. It was not a KBA registration-region table and, at that batch boundary,
+was not yet in the source manifest, DuckDB, Crosswalk, or Tableau path.
 
 The recommended future architecture is a separate versioned BBSR KRS/Kreisregion
 reference plus an explicit KBA compatibility relation. The compatibility relation
@@ -125,6 +130,32 @@ See [reports/batch09_bbsr_feasibility.md](../reports/batch09_bbsr_feasibility.md
 for the source register, strategy assessment, proposed minimal model, and
 validation gates. No BBSR schema or analytical object exists in the current
 database.
+
+## Batch 10 BBSR reference path — separate from DuckDB
+
+Batch 10 acquired the latest suitable official BBSR reference listed on the
+download page: raumgliederungen-referenzen-2025.xlsx, geographic stand
+31.12.2025 and workbook stand 11.09.2026. The Kreisreferenz sheet contains
+400 administrative Kreis rows, 362 Kreisregion keys, and the compact
+four-category settlement-structural type. The workbook has six sheets and its
+complete original column inventory is recorded in
+data/reference/bbsr_source_manifest.json.
+
+The versioned derived artifact is
+data/reference/bbsr_settlement_types_2025.csv. Its grain is one row per BBSR
+KRS2025 administrative Kreis row; repeated Kreisregion keys preserve the
+original component relationship. The raw workbook remains ignored under
+data/raw/bbsr/.
+
+This is a reference dimension, not a KBA registration-region table. The current
+implementation does not add BBSR to DuckDB, change the existing Crosswalk, assign
+one BBSR type to KBA codes, calculate BBSR KPIs, or allocate the shared Trier
+stock. Future compatibility work must retain source systems, effective dates,
+classification vintages, and visible statuses such as mixed_or_unresolved and
+vintage_mismatch.
+
+See reports/batch09_bbsr_feasibility.md for the strategy assessment and
+reports/batch10_bbsr_reference_validation.md for the source/build evidence.
 
 ## Deployment SQL and design history
 

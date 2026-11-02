@@ -90,6 +90,14 @@ This log separates approved decisions, implementation details, and pending propo
 - Consequences: The official BBSR reference workbook was inspected in temporary storage only; no BBSR object or analytical value was added to the project.
 - Status: Approved and completed in Batch 09.
 
+### Batch 10 separate BBSR reference scope
+
+- Decision: Acquire the latest suitable official BBSR reference workbook and build a versioned local four-category Kreis reference outside DuckDB and the existing BNetzA-to-KBA Crosswalk.
+- Reason: The owner approved a reproducible BBSR reference while explicitly excluding complete INKAR, KBA classification, shared Trier allocation, KPI changes, and database changes.
+- Consequences: The 2025 geographic stand is preserved at one row per BBSR KRS2025 administrative Kreis row, with Kreisregion relationships, source version, reference date, source lineage, and checksums visible. The raw workbook remains ignored by Git.
+- Status: Approved and implemented in Batch 10. BBSR-to-KBA compatibility, mixed/unresolved treatment, and category-level KPI use remain pending.
+- Evidence: scripts/10_build_bbsr_reference.py, data/reference/bbsr_settlement_types_2025.csv, data/reference/bbsr_source_manifest.json, and reports/batch10_bbsr_reference_validation.md.
+
 ### Batch 06 permanent geographic layer deployment
 
 - Decision: Deploy the approved geographic reference table and two snapshot-specific analytics views to the existing DuckDB file, and correct `analytics.charging_by_state` to use `(source_id, excel_row)` for point aggregation and joins.
@@ -139,5 +147,5 @@ This log separates approved decisions, implementation details, and pending propo
 - Approve permanent reference and geographic aggregate objects in DuckDB.
 - Resolve the source_id omission in analytics.charging_by_state before multi-snapshot loading.
 - Approve a reusable point-power parser/view.
-- Decide whether BBSR settlement typology adds analytical value.
+- Approve or defer the dated BBSR/KBA compatibility bridge and any BBSR category-level KPI or Tableau use; the separate BBSR reference itself is implemented.
 - Complete source-data redistribution and final public-extract licensing review.

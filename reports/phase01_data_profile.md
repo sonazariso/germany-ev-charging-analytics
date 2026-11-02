@@ -2,7 +2,7 @@
 
 Full Germany coverage; raw originals kept; no sample rows excluded from analysis.
 
-Generated on: 2026-10-21 09:33 UTC
+Generated on: 2026-11-02 20:29 UTC
 
 | Source | Date | Status | Original XLSX | Sheets | Populated rows across sheets |
 |---|---|---|---:|---:|---:|
@@ -10,6 +10,7 @@ Generated on: 2026-10-21 09:33 UTC
 | kba_fz27_2026_01 | 2026-01-01 | verified_and_profiled | 1.41 MiB | 20 | 20,588 |
 | kba_fz27_2026_04 | 2026-04-01 | verified_and_profiled | 1.41 MiB | 20 | 20,597 |
 | kba_fz27_2026_07 | 2026-07-01 | verified_and_profiled | 1.41 MiB | 20 | 20,612 |
+| bbsr_raumgliederungen_2025 | 2025-12-31 | verified_and_profiled | 8.36 MiB | 6 | 23,174 |
 
 ## Worksheets
 
@@ -95,6 +96,17 @@ Counted rows are physical non-empty Excel rows, NOT distinct charging points or 
 | FZ 27.15 | 431 | 5,460 | 15 |
 | FZ 27.16 | 8,209 | 57,405 | 8 |
 | FZ 27.17 | 10,756 | 75,657 | 10 |
+
+### bbsr_raumgliederungen_2025
+
+| Sheet | Populated rows | Populated cells | Max column |
+|---|---:|---:|---:|
+| Nutzungshinweise | 10 | 10 | 1 |
+| Administrativ | 10,951 | 164,285 | 16 |
+| Gemeindereferenz (inkl. Kreise) | 10,951 | 1,631,719 | 150 |
+| Kreisreferenz | 402 | 30,552 | 76 |
+| Metropolregionen | 450 | 1,800 | 4 |
+| Grenzregionen | 410 | 1,640 | 4 |
 
 ## Cautions before building analytics
 

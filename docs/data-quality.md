@@ -12,7 +12,7 @@ This document separates measured checks from recommendations. The original repor
 
 ### Source preservation
 
-- Four source workbooks are present locally and match the source manifest.
+- Four primary BNetzA/KBA workbooks and one separately handled BBSR reference workbook are present locally and match the source manifest.
 - The download inventory records file sizes and SHA-256 hashes.
 - Workbook profiling streamed every worksheet row and retained only a capped preview in the profile artifacts.
 - The DuckDB raw schema retains 117,670 populated BNetzA rows and 61,797 populated KBA rows.
@@ -170,7 +170,7 @@ check; no BBSR rows were loaded into DuckDB.
 |---|---:|---|
 | BBSR 2025 Kreis rows | 400 | Official reference-table rows at geographic stand 31.12.2025. |
 | BBSR Kreisregion keys | 362 | Classification basis is not identical to 400 KBA registration codes. |
-| Compact BBSR class domain | 1–4 | Use `AS`/`AT`; the differentiated five-category fields are not the target. |
+| Compact BBSR class domain | 1–4 | Use source fields `KTU2025`/`KTU_NAME`; the differentiated five-category fields are not the target. |
 | KBA/BBSR five-digit prefix intersections | 399 of 400 KBA codes | Audit screen only; not an official code-system equivalence. |
 | KBA-only code | `06415` Hanau | 2025 BBSR vintage has no separate Hanau row after the 2026 boundary change. |
 | BBSR-only code | `07235` Trier-Saarburg | KBA combines the source area with Trier city under registration code `07211`. |
@@ -182,6 +182,34 @@ store the BBSR version, effective date, code system, compatibility status, and
 source URL, and must reject a single category for mixed or incompatible vintages.
 The full evidence and proposed checks are in
 [reports/batch09_bbsr_feasibility.md](../reports/batch09_bbsr_feasibility.md).
+
+### Batch 10 BBSR reference validation
+
+Batch 10 read all six worksheets in the official BBSR workbook and built the
+separate deterministic reference CSV without changing DuckDB, the existing
+Crosswalk, or KPI logic.
+
+| Check | Observed result | Status |
+|---|---:|---|
+| Source file size / SHA-256 | 8,768,335 bytes / 083f7740c3cf2d858c79482e63ca6c7e4680248c5bd6e207ebc9df6ede953525 | PASS |
+| Geographic reference date / workbook stand | 2025-12-31 / 2026-09-11 | PASS |
+| Worksheets inspected | 6 | PASS |
+| Kreisreferenz source rows / derived rows | 400 / 400 | PASS |
+| Distinct administrative district codes | 400 | PASS |
+| Distinct Kreisregion keys | 362 | PASS |
+| Compact classification domain | 1, 2, 3, 4 | PASS |
+| Compact type row counts | 68 / 131 / 98 / 103 | PASS |
+| Duplicate primary-grain keys | 0 | PASS |
+| Source rows not emitted | 0 | PASS |
+| Code/label or Kreisregion inconsistencies | 0 | PASS |
+| Multi-district Kreisregion groups preserved | 36 | PASS |
+
+The raw workbook remains ignored under data/raw/bbsr/. The derived checksum,
+original sheet/column inventory, and special-case evidence are recorded in
+data/reference/bbsr_source_manifest.json and the full report is
+reports/batch10_bbsr_reference_validation.md. The 2025 BBSR vintage has no
+Hanau row, retains Main-Kinzig-Kreis as type 2, and keeps Trier city type 1 and
+Trier-Saarburg type 3 as separate rows. No BBSR type is assigned to KBA 07211.
 
 ### Known coordinate exception
 

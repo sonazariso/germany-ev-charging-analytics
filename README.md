@@ -2,9 +2,9 @@
 
 ## Nationwide public-charging infrastructure versus registered electric-vehicle stock
 
-This portfolio project builds a reproducible, Germany-wide analytical foundation for comparing the published public-charging register with registered passenger-car stock. It preserves the original BNetzA and KBA workbooks, separates charging equipment from charging points, and keeps snapshot dates visible throughout the workflow.
+This portfolio project builds a reproducible, Germany-wide analytical foundation for comparing the published public-charging register with registered passenger-car stock. It preserves the original BNetzA, KBA, and separately versioned BBSR reference workbooks, separates charging equipment from charging points, and keeps snapshot dates visible throughout the workflow.
 
-The current implementation is a validated local DuckDB model plus a deployed, still-provisional geographic analytics layer. Tableau Public reporting and BBSR enrichment are not complete.
+The current implementation is a validated local DuckDB model, a deployed still-provisional geographic analytics layer, and a separate validated BBSR administrative reference. BBSR has not been assigned to KBA registration regions or used in a KPI; Tableau Public reporting remains incomplete.
 
 ## Why this matters
 
@@ -15,11 +15,12 @@ Electric-vehicle adoption and charging infrastructure are measured by different 
 - All 16 German federal states.
 - BNetzA Ladesäulenregister snapshot dated 2026-09-30.
 - KBA FZ 27 snapshots dated 2026-01-01, 2026-04-01, and 2026-07-01.
+- BBSR Raumgliederungen-Referenzen workbook at geographic stand 2025-12-31, reduced to the four-category Kreisreferenz.
 - Complete locally downloaded source workbooks are preserved under data/raw and are not committed to Git.
 - Every BNetzA equipment row and populated charging-point slot is retained in DuckDB.
 - KBA worksheets, footnotes, alternate breakdowns, and source rows are retained in the raw schema.
 
-The project does not currently include Destatis, BBSR, charging sessions, energy delivery, utilization, queue times, reliability, real-time availability, or causal impact analysis.
+The project does not currently include a BBSR-to-KBA compatibility bridge, Destatis integration, charging sessions, energy delivery, utilization, queue times, reliability, real-time availability, or causal impact analysis.
 
 ## Verified local baseline
 
@@ -55,6 +56,7 @@ The state-level KBA FZ 27.2 total labelled Deutschland is 2,365,047 BEVs for Jul
 ~~~mermaid
 flowchart LR
     A[Official BNetzA and KBA XLSX] --> B[Download manifest and SHA-256 inventory]
+    A2[Official BBSR XLSX] --> B
     B --> C[Streaming workbook profiling]
     C --> D[Read-only schema inspection]
     D --> E[DuckDB raw schema]
@@ -63,6 +65,8 @@ flowchart LR
     F --> H[Read-only batch analysis runner]
     H --> I[Versioned geographic crosswalk CSV]
     I --> J[Deployed geographic reference and analytics views]
+    A2 --> L[scripts/10_build_bbsr_reference.py]
+    L --> M[Versioned BBSR reference CSV and provenance]
     J -. planned .-> K[Tableau Public extracts and dashboard]
 ~~~
 
@@ -78,11 +82,11 @@ The current architecture is described in [docs/architecture.md](docs/architectur
 
 ## Current implementation status
 
-Completed local work includes source discovery and profiling, schema inspection, lossless raw ingestion, initial core normalization, read-only validation, charging-power exploration, a 401-row BNetzA-to-KBA crosswalk, a reusable read-only batch runner, and the validated Batch 06 geographic layer.
+Completed local work includes source discovery and profiling, schema inspection, lossless raw ingestion, initial core normalization, read-only validation, charging-power exploration, a 401-row BNetzA-to-KBA crosswalk, a reusable read-only batch runner, the validated Batch 06 geographic layer, and the Batch 10 BBSR four-category reference build.
 
 Batch 04 established the English project documentation, persistent project instructions, tracking files, safe local Git configuration, and the first local baseline commit. Batch 05 validated the pre-integration geographic model. Batch 06 deployed the approved permanent objects after a verified backup and independent validation; source workbooks and the Crosswalk CSV remained unchanged.
 
-Not complete: BBSR enrichment implementation, Tableau data preparation, dashboard development, final license review, and GitHub publication. Batch 09 completed the BBSR suitability assessment as documentation only; no BBSR data is integrated.
+Not complete: a dated BBSR/KBA compatibility bridge, BBSR category-level KPIs, Tableau data preparation, dashboard development, final license review, and GitHub publication. The BBSR reference is deliberately separate from DuckDB and the existing Crosswalk.
 
 ## Reproducibility
 
@@ -93,6 +97,7 @@ python3 scripts/00_storage_check.py
 python3 scripts/01_download.py
 python3 scripts/02_profile_xlsx.py
 python3 scripts/03_inspect_schema.py
+python3 scripts/10_build_bbsr_reference.py
 
 .venv/bin/python scripts/04_build_geographic_crosswalk.py
 .venv/bin/python scripts/batch_analysis.py --demo \
@@ -111,7 +116,7 @@ The DuckDB build command is documented in [docs/reproducibility.md](docs/reprodu
 config/       Official source manifest
 data/raw/     Local original XLSX files; ignored by Git
 data/reference/
-              Curated BNetzA-to-KBA crosswalk CSV
+              Curated BNetzA-to-KBA crosswalk and BBSR reference CSVs
 data/profiles/
               Source inventories and validation JSON artifacts
 docs/         English project documentation
@@ -138,7 +143,7 @@ The local DuckDB database, virtual environment, raw workbooks, temporary files, 
 - [Roadmap](docs/roadmap.md)
 - [Decision log](docs/decisions.md)
 - [GitHub publication checklist](docs/github-publication-checklist.md)
-- [Phase validation reports](reports/phase01_data_profile.md), [Phase 02 schema inspection](reports/phase02_schema_inspection.md), [Phase 03 DuckDB validation](reports/phase03_duckdb_validation.md), [Batch 03 crosswalk validation](reports/batch03_crosswalk_validation.md), [Batch 06 geographic deployment](reports/batch06_geographic_deployment.md), [Batch 06.1 KPI documentation audit](reports/batch06-1_kpi_documentation_audit.md), and [Batch 09 BBSR feasibility](reports/batch09_bbsr_feasibility.md)
+- [Phase validation reports](reports/phase01_data_profile.md), [Phase 02 schema inspection](reports/phase02_schema_inspection.md), [Phase 03 DuckDB validation](reports/phase03_duckdb_validation.md), [Batch 03 crosswalk validation](reports/batch03_crosswalk_validation.md), [Batch 06 geographic deployment](reports/batch06_geographic_deployment.md), [Batch 06.1 KPI documentation audit](reports/batch06-1_kpi_documentation_audit.md), [Batch 09 BBSR feasibility](reports/batch09_bbsr_feasibility.md), and [Batch 10 BBSR reference validation](reports/batch10_bbsr_reference_validation.md)
 
 ## Important limitations
 
@@ -147,6 +152,7 @@ The local DuckDB database, virtual environment, raw workbooks, temporary files, 
 - BNetzA infrastructure is dated 2026-09-30; the latest KBA stock snapshot is dated 2026-07-01. Ratios are not contemporaneous.
 - The crosswalk has 401 BNetzA combinations and 400 KBA codes because Trier city and Trier-Saarburg share code 07211. Charging metrics must be aggregated by KBA code before joining vehicle stock.
 - Twenty-two aliases and the two shared Trier source mappings (24 provisional mappings total) are provisional local-snapshot mappings pending authoritative review.
+- The BBSR reference uses the 2025 geographic stand and contains 400 Kreis rows / 362 Kreisregion keys. It is not a KBA registration-region classification; Hanau has no separate row in this vintage, and Trier city/Trier-Saarburg retain types 1 and 3 separately.
 - The deployed analytics.charging_by_state view uses source_id and equipment Excel row in both the point aggregation and join. The current database still contains one BNetzA infrastructure snapshot; future multi-snapshot loads require re-running the same source-aware validations.
 - No source supports utilization, sessions, energy delivered, queue times, reliability, or causality.
 

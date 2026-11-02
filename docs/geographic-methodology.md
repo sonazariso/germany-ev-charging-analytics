@@ -184,8 +184,10 @@ Before any geographic DuckDB integration is approved, repeat these checks:
 ## Batch 09 BBSR feasibility findings
 
 Batch 09 assessed the official four-category BBSR siedlungsstruktureller Kreistyp
-without adding BBSR to the source inventory or database. The full evidence review
-is in [reports/batch09_bbsr_feasibility.md](../reports/batch09_bbsr_feasibility.md).
+before implementation. Batch 10 acquired and built the separate reference without
+adding it to DuckDB or the existing Crosswalk. The full feasibility evidence is in
+[reports/batch09_bbsr_feasibility.md](../reports/batch09_bbsr_feasibility.md);
+the build evidence is in [reports/batch10_bbsr_reference_validation.md](../reports/batch10_bbsr_reference_validation.md).
 
 - The current official BBSR reference artifact is `raumgliederungen-referenzen-2025.xlsx`,
   `Kreisreferenz`, with geographic stand `2025-12-31` and workbook stand
@@ -212,8 +214,9 @@ is in [reports/batch09_bbsr_feasibility.md](../reports/batch09_bbsr_feasibility.
 
 The recommendation is **CONDITIONAL GO** for a separate, versioned BBSR reference
 and controlled compatibility layer, and **NO-GO** for direct assignment of one
-BBSR category to all current KBA codes. No BBSR table, view, Crosswalk row, KPI
-formula, or classification value was added in Batch 09.
+BBSR category to all current KBA codes. Batch 10 implements only the separate
+versioned reference; no BBSR table, view, Crosswalk row, KPI formula, KBA
+classification, or stock allocation was added.
 
 ## Relationship to future BBSR settlement types
 
@@ -223,6 +226,21 @@ integration must preserve BBSR KRS and Kreisregion keys, use an explicit dated
 KBA compatibility bridge, retain source and classification vintages, and expose
 `mixed_or_unresolved` and `vintage_mismatch` statuses. It must aggregate charging
 before joining KBA stock, never allocate shared Trier stock without approval, and
-must not imply that a settlement type is a KBA registration district. BBSR is not
-part of the project source inventory and is not integrated; Batch 09 inspected one
-temporary official reference workbook for feasibility only.
+must not imply that a settlement type is a KBA registration district. The
+versioned BBSR reference is available outside DuckDB and the Crosswalk, while
+KBA compatibility and category-level KPI use remain pending approval.
+
+## Batch 10 BBSR reference validation
+
+The reproducible generator reads the preserved official workbook and emits one
+row per KRS2025 administrative Kreis row. It preserves the original KRS2025
+and KKR2025 codes as strings, the original names, the source sheet/row lineage,
+the 2025-12-31 geographic reference date, and the exact compact four-category
+KTU2025/KTU_NAME classification.
+
+Observed results are 400 Kreis rows, 362 distinct Kreisregion keys, 36
+multi-district Kreisregion groups, and compact type counts 68/131/98/103 for
+codes 1/2/3/4. Hanau has no row in the 2025 vintage; Main-Kinzig-Kreis is
+preserved as type 2. Trier city is type 1 and Trier-Saarburg is type 3 in
+separate BBSR rows. Neither type is assigned to KBA 07211 and no shared stock
+is allocated.

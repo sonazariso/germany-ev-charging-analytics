@@ -3728,5 +3728,623 @@
         ]
       }
     ]
+  },
+  {
+    "source_id": "bbsr_raumgliederungen_2025",
+    "reference_date": "2025-12-31",
+    "status": "verified_and_profiled",
+    "path": "data/raw/bbsr/raumgliederungen-referenzen-2025.xlsx",
+    "official_page": "https://www.bbsr.bund.de/BBSR/DE/forschung/raumbeobachtung/Raumabgrenzungen/downloads/download-referenzen.html",
+    "size_bytes": 8768335,
+    "sha256": "083f7740c3cf2d858c79482e63ca6c7e4680248c5bd6e207ebc9df6ede953525",
+    "shared_string_count": 35828,
+    "worksheet_count": 6,
+    "sheets": [
+      {
+        "sheet": "Nutzungshinweise",
+        "xml_member": "xl/worksheets/sheet1.xml",
+        "physical_excel_rows": 14,
+        "populated_rows": 10,
+        "last_excel_row_number": 14,
+        "max_populated_column_index": 1,
+        "nonempty_cells": 10,
+        "value_type_counts": {
+          "s": 10
+        },
+        "first_populated_rows_preview": [
+          {
+            "excel_row": 1,
+            "cells": {
+              "A1": "Raumgliederungssystem des Bundesinstituts für Bau-, Stadt- und Raumforschung (BBSR) zum Gebietsstand…"
+            }
+          },
+          {
+            "excel_row": 2,
+            "cells": {
+              "A2": "Stand 11.09.2026"
+            }
+          },
+          {
+            "excel_row": 4,
+            "cells": {
+              "A4": "Inhaltliche Erklärungen und Karten zu den Raumgliederungen finden Sie unter:"
+            }
+          },
+          {
+            "excel_row": 5,
+            "cells": {
+              "A5": "https://www.bbsr.bund.de/BBSR/DE/forschung/raumbeobachtung/Raumabgrenzungen/raumabgrenzungen-uebersi…"
+            }
+          },
+          {
+            "excel_row": 7,
+            "cells": {
+              "A7": "Veröffentlicht unter der \"Datenlizenz Deutschland – Namensnennung – Version 2.0\""
+            }
+          },
+          {
+            "excel_row": 8,
+            "cells": {
+              "A8": "Empfohlene Quellenangabe: \"Bundesinstitut für Bau-, Stadt- und Raumforschung: Laufende Raumbeobachtu…"
+            }
+          }
+        ]
+      },
+      {
+        "sheet": "Administrativ",
+        "xml_member": "xl/worksheets/sheet2.xml",
+        "physical_excel_rows": 10951,
+        "populated_rows": 10951,
+        "last_excel_row_number": 10951,
+        "max_populated_column_index": 16,
+        "nonempty_cells": 164285,
+        "value_type_counts": {
+          "s": 100866,
+          "n": 63419
+        },
+        "first_populated_rows_preview": [
+          {
+            "excel_row": 1,
+            "cells": {
+              "A1": "GEM2025",
+              "B1": "GEM2025_RS",
+              "C1": "GEM_NAME",
+              "D1": "Bez_GEM",
+              "E1": "bev25",
+              "F1": "fl25",
+              "G1": "PLZ_Verwaltungssitz",
+              "H1": "PLZ_multi",
+              "I1": "BWK",
+              "J1": "BWK_multi",
+              "K1": "VWG2025",
+              "L1": "VWG_NAME",
+              "M1": "Bez_VWG",
+              "N1": "KRS2025",
+              "O1": "KRS_NAME",
+              "P1": "Bez_KRS"
+            }
+          },
+          {
+            "excel_row": 2,
+            "cells": {
+              "A2": "Gemeinden (2025) Kennziffer",
+              "B2": "Gemeinden (2025) Regionalschlüssel",
+              "C2": "Gemeinden (2025) Name",
+              "D2": "Gemeinden (2025) Bezeichnung",
+              "E2": "Einwohner 2025",
+              "F2": "Fläche 2025 in km²",
+              "G2": "PLZ Verwaltungssitz",
+              "H2": "PLZ mehrere (ja/nein)",
+              "I2": "Bundeswahlkreis",
+              "J2": "Bundeswahlkreis mehrere",
+              "K2": "Gemeindeverbände (2025) Kennziffer",
+              "L2": "Gemeindeverbände (2025) Name",
+              "M2": "Gemeindeverbände (2025) Bezeichnung",
+              "N2": "Kreise (2025) Kennziffer",
+              "O2": "Kreise (2025) Name",
+              "P2": "Kreise (2025) Bezeichnung"
+            }
+          },
+          {
+            "excel_row": 3,
+            "cells": {
+              "A3": "01001000",
+              "B3": "010010000000",
+              "C3": "Flensburg, Stadt",
+              "D3": "Kreisfreie Stadt",
+              "E3": "95568",
+              "F3": "56.73",
+              "G3": "24937",
+              "H3": "1",
+              "I3": "1",
+              "K3": "010010000",
+              "L3": "Flensburg, Stadt",
+              "M3": "verbandsfreie Gemeinde",
+              "N3": "01001000",
+              "O3": "Flensburg, Stadt",
+              "P3": "Kreisfreie Stadt"
+            }
+          },
+          {
+            "excel_row": 4,
+            "cells": {
+              "A4": "01002000",
+              "B4": "010020000000",
+              "C4": "Kiel, Landeshauptstadt",
+              "D4": "Kreisfreie Stadt",
+              "E4": "251842",
+              "F4": "118.65",
+              "G4": "24103",
+              "H4": "1",
+              "I4": "5",
+              "K4": "010020000",
+              "L4": "Kiel, Landeshauptstadt",
+              "M4": "verbandsfreie Gemeinde",
+              "N4": "01002000",
+              "O4": "Kiel, Landeshauptstadt",
+              "P4": "Kreisfreie Stadt"
+            }
+          },
+          {
+            "excel_row": 5,
+            "cells": {
+              "A5": "01003000",
+              "B5": "010030000000",
+              "C5": "Lübeck, Hansestadt",
+              "D5": "Kreisfreie Stadt",
+              "E5": "217061",
+              "F5": "214.19",
+              "G5": "23539",
+              "H5": "1",
+              "I5": "11",
+              "K5": "010030000",
+              "L5": "Lübeck, Hansestadt",
+              "M5": "verbandsfreie Gemeinde",
+              "N5": "01003000",
+              "O5": "Lübeck, Hansestadt",
+              "P5": "Kreisfreie Stadt"
+            }
+          },
+          {
+            "excel_row": 6,
+            "cells": {
+              "A6": "01004000",
+              "B6": "010040000000",
+              "C6": "Neumünster, Stadt",
+              "D6": "Kreisfreie Stadt",
+              "E6": "80145",
+              "F6": "71.66",
+              "G6": "24534",
+              "H6": "1",
+              "I6": "6",
+              "K6": "010040000",
+              "L6": "Neumünster, Stadt",
+              "M6": "verbandsfreie Gemeinde",
+              "N6": "01004000",
+              "O6": "Neumünster, Stadt",
+              "P6": "Kreisfreie Stadt"
+            }
+          }
+        ]
+      },
+      {
+        "sheet": "Gemeindereferenz (inkl. Kreise)",
+        "xml_member": "xl/worksheets/sheet3.xml",
+        "physical_excel_rows": 10951,
+        "populated_rows": 10951,
+        "last_excel_row_number": 10951,
+        "max_populated_column_index": 150,
+        "nonempty_cells": 1631719,
+        "value_type_counts": {
+          "s": 987516,
+          "n": 644203
+        },
+        "first_populated_rows_preview": [
+          {
+            "excel_row": 1,
+            "cells": {
+              "A1": "GEM2025",
+              "B1": "GEM2025_RS",
+              "C1": "GEM_NAME",
+              "D1": "Bez_GEM",
+              "E1": "bev25",
+              "F1": "fl25",
+              "G1": "PLZ_Verwaltungssitz",
+              "H1": "PLZ_multi",
+              "I1": "BWK",
+              "J1": "BWK_multi",
+              "K1": "VWG2025",
+              "L1": "VWG_NAME",
+              "M1": "Bez_VWG",
+              "N1": "AAG2025",
+              "O1": "AAG_NAME",
+              "P1": "GMB2025"
+            }
+          },
+          {
+            "excel_row": 2,
+            "cells": {
+              "A2": "Gemeinden (2025) Kennziffer",
+              "B2": "Gemeinden (2025) Regionalschlüssel",
+              "C2": "Gemeinden (2025) Name",
+              "D2": "Gemeinden (2025) Bezeichnung",
+              "E2": "Einwohner 2025",
+              "F2": "Fläche 2025 in km²",
+              "G2": "PLZ Verwaltungssitz",
+              "H2": "PLZ mehrere (ja/nein)",
+              "I2": "Bundeswahlkreis",
+              "J2": "Bundeswahlkreis mehrere",
+              "K2": "Gemeindeverbände (2025) Kennziffer",
+              "L2": "Gemeindeverbände (2025) Name",
+              "M2": "Gemeindeverbände (2025) Bezeichnung",
+              "N2": "Arbeitsagenturbezirke - Geschäftsstellen (2025) Kennziffer",
+              "O2": "Arbeitsagenturbezirke - Geschäftsstellen (2025) Name",
+              "P2": "BBSR-Mittelbereiche (2025) Kennziffer"
+            }
+          },
+          {
+            "excel_row": 3,
+            "cells": {
+              "A3": "01001000",
+              "B3": "010010000000",
+              "C3": "Flensburg, Stadt",
+              "D3": "Kreisfreie Stadt",
+              "E3": "95568",
+              "F3": "56.73",
+              "G3": "24937",
+              "H3": "1",
+              "I3": "1",
+              "K3": "010010000",
+              "L3": "Flensburg, Stadt",
+              "M3": "verbandsfreie Gemeinde",
+              "N3": "11901",
+              "O3": "Flensburg",
+              "P3": "010010000",
+              "Q3": "Flensburg, Stadt"
+            }
+          },
+          {
+            "excel_row": 4,
+            "cells": {
+              "A4": "01002000",
+              "B4": "010020000000",
+              "C4": "Kiel, Landeshauptstadt",
+              "D4": "Kreisfreie Stadt",
+              "E4": "251842",
+              "F4": "118.65",
+              "G4": "24103",
+              "H4": "1",
+              "I4": "5",
+              "K4": "010020000",
+              "L4": "Kiel, Landeshauptstadt",
+              "M4": "verbandsfreie Gemeinde",
+              "N4": "13101",
+              "O4": "Kiel",
+              "P4": "010020000",
+              "Q4": "Kiel, Landeshauptstadt"
+            }
+          },
+          {
+            "excel_row": 5,
+            "cells": {
+              "A5": "01003000",
+              "B5": "010030000000",
+              "C5": "Lübeck, Hansestadt",
+              "D5": "Kreisfreie Stadt",
+              "E5": "217061",
+              "F5": "214.19",
+              "G5": "23539",
+              "H5": "1",
+              "I5": "11",
+              "K5": "010030000",
+              "L5": "Lübeck, Hansestadt",
+              "M5": "verbandsfreie Gemeinde",
+              "N5": "13501",
+              "O5": "Lübeck",
+              "P5": "010030000",
+              "Q5": "Lübeck, Hansestadt"
+            }
+          },
+          {
+            "excel_row": 6,
+            "cells": {
+              "A6": "01004000",
+              "B6": "010040000000",
+              "C6": "Neumünster, Stadt",
+              "D6": "Kreisfreie Stadt",
+              "E6": "80145",
+              "F6": "71.66",
+              "G6": "24534",
+              "H6": "1",
+              "I6": "6",
+              "K6": "010040000",
+              "L6": "Neumünster, Stadt",
+              "M6": "verbandsfreie Gemeinde",
+              "N6": "13901",
+              "O6": "Neumünster",
+              "P6": "010040000",
+              "Q6": "Neumünster, Stadt"
+            }
+          }
+        ]
+      },
+      {
+        "sheet": "Kreisreferenz",
+        "xml_member": "xl/worksheets/sheet4.xml",
+        "physical_excel_rows": 402,
+        "populated_rows": 402,
+        "last_excel_row_number": 402,
+        "max_populated_column_index": 76,
+        "nonempty_cells": 30552,
+        "value_type_counts": {
+          "s": 18951,
+          "n": 11601
+        },
+        "first_populated_rows_preview": [
+          {
+            "excel_row": 1,
+            "cells": {
+              "A1": "KRS2025",
+              "B1": "KRS_NAME",
+              "C1": "bev25",
+              "D1": "fl25",
+              "E1": "AAB2025",
+              "F1": "AAB_NAME",
+              "G1": "KAM2025",
+              "H1": "KAM_NAME",
+              "I1": "KBN2025",
+              "J1": "KBN_NAME",
+              "K1": "KBK2025",
+              "L1": "KBK_NAME",
+              "M1": "BND2025",
+              "N1": "BND_NAME",
+              "O1": "BLD2025",
+              "P1": "BLD_NAME"
+            }
+          },
+          {
+            "excel_row": 2,
+            "cells": {
+              "A2": "Kreise (2025) Kennziffer",
+              "B2": "Kreise (2025) Name",
+              "C2": "Einwohner 2025",
+              "D2": "Fläche 2025 in km²",
+              "E2": "Arbeitsagenturbezirke (2025) Kennziffer",
+              "F2": "Arbeitsagenturbezirke (2025) Name",
+              "G2": "Arbeitsmarktregionen (2025) Kennziffer",
+              "H2": "Arbeitsmarktregionen (2025) Name",
+              "I2": "Braunkohlereviere (auch nicht förderfähige) (2025) Kennziffer",
+              "J2": "Braunkohlereviere (auch nicht förderfähige) (2025) Name",
+              "K2": "Braunkohlereviere (2025) Kennziffer",
+              "L2": "Braunkohlereviere (2025) Name",
+              "M2": "Bund (2025) Kennziffer",
+              "N2": "Bund (2025) Name",
+              "O2": "Bundesländer (2025) Kennziffer",
+              "P2": "Bundesländer (2025) Name"
+            }
+          },
+          {
+            "excel_row": 3,
+            "cells": {
+              "A3": "01001000",
+              "B3": "Flensburg, Stadt",
+              "C3": "95568",
+              "D3": "56.73",
+              "E3": "119",
+              "F3": "Flensburg",
+              "G3": "001",
+              "H3": "Flensburg",
+              "I3": "0",
+              "J3": "kein Braunkohlerevier",
+              "K3": "0",
+              "L3": "kein Braunkohlerevier",
+              "M3": "111",
+              "N3": "Bundesrepublik Deutschland",
+              "O3": "01",
+              "P3": "Schleswig-Holstein"
+            }
+          },
+          {
+            "excel_row": 4,
+            "cells": {
+              "A4": "01002000",
+              "B4": "Kiel, Landeshauptstadt",
+              "C4": "251842",
+              "D4": "118.65",
+              "E4": "131",
+              "F4": "Kiel",
+              "G4": "002",
+              "H4": "Kiel",
+              "I4": "0",
+              "J4": "kein Braunkohlerevier",
+              "K4": "0",
+              "L4": "kein Braunkohlerevier",
+              "M4": "111",
+              "N4": "Bundesrepublik Deutschland",
+              "O4": "01",
+              "P4": "Schleswig-Holstein"
+            }
+          },
+          {
+            "excel_row": 5,
+            "cells": {
+              "A5": "01003000",
+              "B5": "Lübeck, Hansestadt",
+              "C5": "217061",
+              "D5": "214.19",
+              "E5": "135",
+              "F5": "Lübeck",
+              "G5": "003",
+              "H5": "Lübeck",
+              "I5": "0",
+              "J5": "kein Braunkohlerevier",
+              "K5": "0",
+              "L5": "kein Braunkohlerevier",
+              "M5": "111",
+              "N5": "Bundesrepublik Deutschland",
+              "O5": "01",
+              "P5": "Schleswig-Holstein"
+            }
+          },
+          {
+            "excel_row": 6,
+            "cells": {
+              "A6": "01004000",
+              "B6": "Neumünster, Stadt",
+              "C6": "80145",
+              "D6": "71.66",
+              "E6": "139",
+              "F6": "Neumünster",
+              "G6": "004",
+              "H6": "Neumünster",
+              "I6": "0",
+              "J6": "kein Braunkohlerevier",
+              "K6": "0",
+              "L6": "kein Braunkohlerevier",
+              "M6": "111",
+              "N6": "Bundesrepublik Deutschland",
+              "O6": "01",
+              "P6": "Schleswig-Holstein"
+            }
+          }
+        ]
+      },
+      {
+        "sheet": "Metropolregionen",
+        "xml_member": "xl/worksheets/sheet5.xml",
+        "physical_excel_rows": 450,
+        "populated_rows": 450,
+        "last_excel_row_number": 450,
+        "max_populated_column_index": 4,
+        "nonempty_cells": 1800,
+        "value_type_counts": {
+          "s": 1800
+        },
+        "first_populated_rows_preview": [
+          {
+            "excel_row": 1,
+            "cells": {
+              "A1": "KRS2025",
+              "B1": "KRS_NAME",
+              "C1": "KMR2025",
+              "D1": "KMR_NAME"
+            }
+          },
+          {
+            "excel_row": 2,
+            "cells": {
+              "A2": "Kreise (2025) Kennziffer",
+              "B2": "Kreise (2025) Name",
+              "C2": "Metropolregionen (2025) Kennziffer",
+              "D2": "Metropolregionen (2025) Name"
+            }
+          },
+          {
+            "excel_row": 3,
+            "cells": {
+              "A3": "01001000",
+              "B3": "Flensburg, Stadt",
+              "C3": "999",
+              "D3": "keine Metropolregion"
+            }
+          },
+          {
+            "excel_row": 4,
+            "cells": {
+              "A4": "01002000",
+              "B4": "Kiel, Landeshauptstadt",
+              "C4": "999",
+              "D4": "keine Metropolregion"
+            }
+          },
+          {
+            "excel_row": 5,
+            "cells": {
+              "A5": "01003000",
+              "B5": "Lübeck, Hansestadt",
+              "C5": "030",
+              "D5": "Metropolregion Hamburg"
+            }
+          },
+          {
+            "excel_row": 6,
+            "cells": {
+              "A6": "01004000",
+              "B6": "Neumünster, Stadt",
+              "C6": "030",
+              "D6": "Metropolregion Hamburg"
+            }
+          }
+        ]
+      },
+      {
+        "sheet": "Grenzregionen",
+        "xml_member": "xl/worksheets/sheet6.xml",
+        "physical_excel_rows": 410,
+        "populated_rows": 410,
+        "last_excel_row_number": 410,
+        "max_populated_column_index": 4,
+        "nonempty_cells": 1640,
+        "value_type_counts": {
+          "s": 1640
+        },
+        "first_populated_rows_preview": [
+          {
+            "excel_row": 1,
+            "cells": {
+              "A1": "KRS2025",
+              "B1": "KRS_NAME",
+              "C1": "KGN2024",
+              "D1": "KGN_NAME"
+            }
+          },
+          {
+            "excel_row": 2,
+            "cells": {
+              "A2": "Kreise (2025) Kennziffer",
+              "B2": "Kreise (2025) Name",
+              "C2": "Grenzregionen - Nachbarländer (2025) Kennziffer",
+              "D2": "Grenzregionen - Nachbarländer (2025) Name"
+            }
+          },
+          {
+            "excel_row": 3,
+            "cells": {
+              "A3": "01001000",
+              "B3": "Flensburg, Stadt",
+              "C3": "20",
+              "D3": "Grenzregion zu Dänemark"
+            }
+          },
+          {
+            "excel_row": 4,
+            "cells": {
+              "A4": "01002000",
+              "B4": "Kiel, Landeshauptstadt",
+              "C4": "99",
+              "D4": "keine Grenzregion"
+            }
+          },
+          {
+            "excel_row": 5,
+            "cells": {
+              "A5": "01003000",
+              "B5": "Lübeck, Hansestadt",
+              "C5": "99",
+              "D5": "keine Grenzregion"
+            }
+          },
+          {
+            "excel_row": 6,
+            "cells": {
+              "A6": "01004000",
+              "B6": "Neumünster, Stadt",
+              "C6": "99",
+              "D6": "keine Grenzregion"
+            }
+          }
+        ]
+      }
+    ]
   }
 ]

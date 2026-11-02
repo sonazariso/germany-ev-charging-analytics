@@ -36,6 +36,7 @@ The analytical value is a traceable bridge from official workbooks to validated 
 - Normalized charging equipment and charging-point tables.
 - KBA state, district, postcode, municipality, and national-history structures already supported by the current build.
 - A versioned BNetzA-to-KBA district crosswalk in CSV form.
+- A separately versioned BBSR four-category administrative/Kreisregion reference, without direct KBA assignment.
 - Read-only batch analysis and documentation.
 - Future Tableau Public reporting after the model and KPIs are approved.
 
@@ -43,7 +44,7 @@ The analytical value is a traceable bridge from official workbooks to validated 
 
 - No modification of official source workbooks.
 - No rebuild, migration, or schema change to DuckDB in Batch 04.
-- No Destatis or BBSR data integration in the current implementation.
+- No Destatis integration or BBSR-to-KBA/DuckDB integration; the approved BBSR reference remains a separate local artifact.
 - No charging-session, energy-delivery, utilization, queue, reliability, or real-time availability measures.
 - No vehicle-level data; KBA values are aggregate stock.
 - No causal claim that infrastructure causes vehicle-stock growth.
@@ -73,7 +74,7 @@ The analytical value is a traceable bridge from official workbooks to validated 
 - Equipment, point, and vehicle grains are not conflated.
 - Every KPI has a formula, denominator, date, grain, status, and limitation.
 - Provisional mappings are visibly separated from local-snapshot observations.
-- Documentation does not claim Tableau or BBSR completion.
+- Documentation does not claim Tableau or BBSR-to-KBA enrichment completion.
 - No raw workbook, DuckDB database, virtual environment, secret, remote, or upload is included in the local baseline commit.
 - Validation failures and unresolved issues remain visible.
 
@@ -81,4 +82,4 @@ The analytical value is a traceable bridge from official workbooks to validated 
 
 Batch 04 is the documentation and local-Git phase. The current database and crosswalk are read-only inputs to the documentation; no permanent geographic DuckDB objects are created here.
 
-Planned features are approval of the minimum geographic analytics layer, implementation of any separately approved BBSR compatibility layer, further KPI validation, Tableau extract preparation, dashboard development, final licensing review, and eventual publication after explicit approval. Batch 09 completed the BBSR suitability assessment as research/documentation only; BBSR remains excluded from the current implementation.
+Planned features are approval of the BBSR compatibility layer, further KPI validation, Tableau extract preparation, dashboard development, final licensing review, and eventual publication after explicit approval. Batch 10 completed the separate BBSR reference build; direct KBA enrichment remains excluded pending approval.

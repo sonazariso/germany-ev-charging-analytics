@@ -84,3 +84,12 @@ This changelog records project milestones and local repository changes. Historic
 - Compared direct, controlled administrative, and separate-detail integration strategies; recommended a conditional future Strategy C with visible `mixed_or_unresolved` and `vintage_mismatch` statuses.
 - Added `reports/batch09_bbsr_feasibility.md` and updated project geography, data sources, architecture, KPI candidates, data quality, findings, decisions, roadmap, README, project status, and charter documentation.
 - Kept BBSR integration NOT IMPLEMENTED: no complete INKAR download, source-manifest entry, Crosswalk change, DuckDB change, KPI value/formula change, Trier allocation, remote, upload, or publication.
+
+## 2026-11-02 — Batch 10
+
+- Rechecked the official BBSR reference-download page and selected the latest suitable listed workbook, `raumgliederungen-referenzen-2025.xlsx`; no 2026 workbook was listed at the check time, and the complete INKAR database was not downloaded.
+- Downloaded and preserved the original BBSR workbook under the ignored `data/raw/bbsr/` path with its URL, workbook geographic stand `2025-12-31`, workbook stand `2026-09-11`, response metadata, actual size, UTC download timestamp, and SHA-256.
+- Added `scripts/10_build_bbsr_reference.py`, which inspects all six sheets, validates the exact `Kreisreferenz` source fields, preserves string codes and original names, extracts compact BBSR types 1–4, and fails on missing fields, categories, duplicate grain keys, inconsistent relationships, or silent row loss.
+- Added `data/reference/bbsr_settlement_types_2025.csv`, `data/reference/bbsr_source_manifest.json`, `data/profiles/bbsr_reference_profile.json`, and `reports/batch10_bbsr_reference_validation.md`; the deterministic derived reference contains 400 Kreis rows and 362 Kreisregion keys.
+- Documented the Hanau vintage mismatch, separate Trier type 1/type 3 rows, Berlin/Hamburg/Bremen/Bremerhaven fixtures, 36 multi-district Kreisregion groups, licensing, attribution, and the continued prohibition on direct KBA assignment or shared Trier allocation.
+- Updated the source workflow so separately profiled reference workbooks are ignored by the DuckDB rebuild script; no DuckDB object, Crosswalk row, KPI formula/value, dependency, remote, upload, or publication was changed.

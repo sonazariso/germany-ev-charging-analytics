@@ -44,6 +44,7 @@ data/profiles/*
 !data/profiles/download_inventory.json
 !data/profiles/workbook_profiles.json
 !data/profiles/phase03_validation.json
+!data/profiles/bbsr_reference_profile.json
 
 # Internal task briefs and legacy local-language notes are retained locally,
 # but are not part of the English publication baseline.

@@ -1,6 +1,6 @@
 {
-  "catalog_date": "2026-10-21",
-  "notes": "Only BNetzA and KBA FZ27 are in scope. Dates denote reference periods; never combine snapshots as though contemporaneous.",
+  "catalog_date": "2026-11-02",
+  "notes": "BNetzA and KBA FZ27 remain the primary analytical sources. The separately versioned BBSR reference workbook is approved as a local geographic reference only; it is not ingested into DuckDB or assigned to KBA registration regions. Dates denote reference periods; never combine snapshots as though contemporaneous.",
   "sources": [
     {
       "id": "bnetza_charging_2026_09_30",
@@ -54,6 +54,42 @@
       "source_page": "https://www.govdata.de/suche/daten/fz-27-2026-bestand-an-kraftfahrzeugen-und-kraftfahrzeuganhangern-nach-ausgewahlten-merkmalen-bu",
       "license": "Datenlizenz Deutschland – Namensnennung 2.0",
       "scope_note": "Preserve all worksheets and source report date; aggregate stock, not individual vehicle records."
+    },
+    {
+      "id": "bbsr_raumgliederungen_2025",
+      "role": "reference",
+      "organization": "Bundesinstitut für Bau-, Stadt- und Raumforschung",
+      "dataset": "Raumgliederungssystem des BBSR — Raumgliederungen-Referenzen",
+      "reference_date": "2025-12-31",
+      "publication_date": "2026-09-11",
+      "workbook_stand": "2026-09-11",
+      "publication_date_basis": "Workbook stand printed on the official Nutzungshinweise sheet",
+      "format": "xlsx",
+      "filename": "raumgliederungen-referenzen-2025.xlsx",
+      "path": "data/raw/bbsr/raumgliederungen-referenzen-2025.xlsx",
+      "url": "https://www.bbsr.bund.de/BBSR/DE/forschung/raumbeobachtung/Raumabgrenzungen/downloads/raumgliederungen-referenzen-2025.xlsx?__blob=publicationFile&v=3",
+      "source_page": "https://www.bbsr.bund.de/BBSR/DE/forschung/raumbeobachtung/Raumabgrenzungen/downloads/download-referenzen.html",
+      "license": "Datenlizenz Deutschland – Namensnennung – Version 2.0",
+      "license_url": "https://www.govdata.de/dl-de/by-2-0",
+      "required_attribution": "Bundesinstitut für Bau-, Stadt- und Raumforschung: Laufende Raumbeobachtung des BBSR",
+      "scope_note": "Separate BBSR administrative/Kreisregion reference. The Kreisreferenz sheet is reduced reproducibly to the official four-category settlement-structural district classification and necessary geographic identifiers; no KBA classification or KPI is assigned.",
+      "downloaded_at_utc": "2026-11-02T20:22:53Z",
+      "file_size_bytes": 8768335,
+      "sha256": "083f7740c3cf2d858c79482e63ca6c7e4680248c5bd6e207ebc9df6ede953525",
+      "source_page_checked_at_utc": "2026-11-02T20:21:16Z",
+      "available_reference_vintages_observed": ["2021", "2022", "2023", "2024", "2025"],
+      "selected_latest_available_vintage": "2025",
+      "selection_note": "The official download page listed 2021–2025 reference workbooks when checked; no 2026 workbook was listed. The 2025 workbook is the latest available suitable official resource and is not the older nine-category 2012 dataset or the complete INKAR database.",
+      "http_response": {
+        "status": 200,
+        "date": "2026-11-02T20:22:53Z",
+        "last_modified": "2026-09-23T14:44:13Z",
+        "content_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8",
+        "content_length_header": null,
+        "transfer_encoding": "chunked",
+        "accept_ranges": "bytes",
+        "etag": "bc2ec49a3dc95d3fadc5f42235c39665"
+      }
     }
   ]
 }

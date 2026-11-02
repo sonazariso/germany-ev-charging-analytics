@@ -1,0 +1,1593 @@
+{
+  "source_file": {
+    "path": "data/raw/bbsr/raumgliederungen-referenzen-2025.xlsx",
+    "bytes": 8768335,
+    "sha256": "083f7740c3cf2d858c79482e63ca6c7e4680248c5bd6e207ebc9df6ede953525"
+  },
+  "reference_date": "2025-12-31",
+  "workbook_stand": "2026-09-11",
+  "sheet_count": 6,
+  "sheets": [
+    {
+      "sheet_name": "Nutzungshinweise",
+      "xml_member": "xl/worksheets/sheet1.xml",
+      "physical_excel_rows": 14,
+      "nonempty_rows": 10,
+      "first_nonempty_row": 1,
+      "last_nonempty_row": 14,
+      "original_columns": [
+        {
+          "excel_column": "A",
+          "field_name": "Raumgliederungssystem des Bundesinstituts für Bau-, Stadt- und Raumforschung (BBSR) zum Gebietsstand 31.12.2025",
+          "description": "Stand 11.09.2026"
+        }
+      ]
+    },
+    {
+      "sheet_name": "Administrativ",
+      "xml_member": "xl/worksheets/sheet2.xml",
+      "physical_excel_rows": 10951,
+      "nonempty_rows": 10951,
+      "first_nonempty_row": 1,
+      "last_nonempty_row": 10951,
+      "original_columns": [
+        {
+          "excel_column": "A",
+          "field_name": "GEM2025",
+          "description": "Gemeinden (2025) Kennziffer"
+        },
+        {
+          "excel_column": "B",
+          "field_name": "GEM2025_RS",
+          "description": "Gemeinden (2025) Regionalschlüssel"
+        },
+        {
+          "excel_column": "C",
+          "field_name": "GEM_NAME",
+          "description": "Gemeinden (2025) Name"
+        },
+        {
+          "excel_column": "D",
+          "field_name": "Bez_GEM",
+          "description": "Gemeinden (2025) Bezeichnung"
+        },
+        {
+          "excel_column": "E",
+          "field_name": "bev25",
+          "description": "Einwohner 2025"
+        },
+        {
+          "excel_column": "F",
+          "field_name": "fl25",
+          "description": "Fläche 2025 in km²"
+        },
+        {
+          "excel_column": "G",
+          "field_name": "PLZ_Verwaltungssitz",
+          "description": "PLZ Verwaltungssitz"
+        },
+        {
+          "excel_column": "H",
+          "field_name": "PLZ_multi",
+          "description": "PLZ mehrere (ja/nein)"
+        },
+        {
+          "excel_column": "I",
+          "field_name": "BWK",
+          "description": "Bundeswahlkreis"
+        },
+        {
+          "excel_column": "J",
+          "field_name": "BWK_multi",
+          "description": "Bundeswahlkreis mehrere"
+        },
+        {
+          "excel_column": "K",
+          "field_name": "VWG2025",
+          "description": "Gemeindeverbände (2025) Kennziffer"
+        },
+        {
+          "excel_column": "L",
+          "field_name": "VWG_NAME",
+          "description": "Gemeindeverbände (2025) Name"
+        },
+        {
+          "excel_column": "M",
+          "field_name": "Bez_VWG",
+          "description": "Gemeindeverbände (2025) Bezeichnung"
+        },
+        {
+          "excel_column": "N",
+          "field_name": "KRS2025",
+          "description": "Kreise (2025) Kennziffer"
+        },
+        {
+          "excel_column": "O",
+          "field_name": "KRS_NAME",
+          "description": "Kreise (2025) Name"
+        },
+        {
+          "excel_column": "P",
+          "field_name": "Bez_KRS",
+          "description": "Kreise (2025) Bezeichnung"
+        }
+      ]
+    },
+    {
+      "sheet_name": "Gemeindereferenz (inkl. Kreise)",
+      "xml_member": "xl/worksheets/sheet3.xml",
+      "physical_excel_rows": 10951,
+      "nonempty_rows": 10951,
+      "first_nonempty_row": 1,
+      "last_nonempty_row": 10951,
+      "original_columns": [
+        {
+          "excel_column": "A",
+          "field_name": "GEM2025",
+          "description": "Gemeinden (2025) Kennziffer"
+        },
+        {
+          "excel_column": "B",
+          "field_name": "GEM2025_RS",
+          "description": "Gemeinden (2025) Regionalschlüssel"
+        },
+        {
+          "excel_column": "C",
+          "field_name": "GEM_NAME",
+          "description": "Gemeinden (2025) Name"
+        },
+        {
+          "excel_column": "D",
+          "field_name": "Bez_GEM",
+          "description": "Gemeinden (2025) Bezeichnung"
+        },
+        {
+          "excel_column": "E",
+          "field_name": "bev25",
+          "description": "Einwohner 2025"
+        },
+        {
+          "excel_column": "F",
+          "field_name": "fl25",
+          "description": "Fläche 2025 in km²"
+        },
+        {
+          "excel_column": "G",
+          "field_name": "PLZ_Verwaltungssitz",
+          "description": "PLZ Verwaltungssitz"
+        },
+        {
+          "excel_column": "H",
+          "field_name": "PLZ_multi",
+          "description": "PLZ mehrere (ja/nein)"
+        },
+        {
+          "excel_column": "I",
+          "field_name": "BWK",
+          "description": "Bundeswahlkreis"
+        },
+        {
+          "excel_column": "J",
+          "field_name": "BWK_multi",
+          "description": "Bundeswahlkreis mehrere"
+        },
+        {
+          "excel_column": "K",
+          "field_name": "VWG2025",
+          "description": "Gemeindeverbände (2025) Kennziffer"
+        },
+        {
+          "excel_column": "L",
+          "field_name": "VWG_NAME",
+          "description": "Gemeindeverbände (2025) Name"
+        },
+        {
+          "excel_column": "M",
+          "field_name": "Bez_VWG",
+          "description": "Gemeindeverbände (2025) Bezeichnung"
+        },
+        {
+          "excel_column": "N",
+          "field_name": "AAG2025",
+          "description": "Arbeitsagenturbezirke - Geschäftsstellen (2025) Kennziffer"
+        },
+        {
+          "excel_column": "O",
+          "field_name": "AAG_NAME",
+          "description": "Arbeitsagenturbezirke - Geschäftsstellen (2025) Name"
+        },
+        {
+          "excel_column": "P",
+          "field_name": "GMB2025",
+          "description": "BBSR-Mittelbereiche (2025) Kennziffer"
+        },
+        {
+          "excel_column": "Q",
+          "field_name": "GMB_NAME",
+          "description": "BBSR-Mittelbereiche (2025) Name"
+        },
+        {
+          "excel_column": "R",
+          "field_name": "DUG2025",
+          "description": "Degree of Urbanisation (Gemeinden) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "S",
+          "field_name": "DUG_NAME",
+          "description": "Degree of Urbanisation (Gemeinden) (2025) Name"
+        },
+        {
+          "excel_column": "T",
+          "field_name": "DUV2025",
+          "description": "Degree of Urbanisation (Gemeindeverbände) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "U",
+          "field_name": "DUV_NAME",
+          "description": "Degree of Urbanisation (Gemeindeverbände) (2025) Name"
+        },
+        {
+          "excel_column": "V",
+          "field_name": "FUC2025",
+          "description": "Functional Urban Area (City/Pendlerzone) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "W",
+          "field_name": "FUC_NAME",
+          "description": "Functional Urban Area (City/Pendlerzone) (2025) Name"
+        },
+        {
+          "excel_column": "X",
+          "field_name": "FUA2025",
+          "description": "Functional Urban Area (2025) Kennziffer"
+        },
+        {
+          "excel_column": "Y",
+          "field_name": "FUA_NAME",
+          "description": "Functional Urban Area (2025) Name"
+        },
+        {
+          "excel_column": "Z",
+          "field_name": "GEB2025",
+          "description": "Großstadtregionen (2025) Kennziffer"
+        },
+        {
+          "excel_column": "AA",
+          "field_name": "GEB_NAME",
+          "description": "Großstadtregionen (2025)Name"
+        },
+        {
+          "excel_column": "AB",
+          "field_name": "GGR2025",
+          "description": "Großstadtregionaler Einzugsbereich (2025) Kennziffer"
+        },
+        {
+          "excel_column": "AC",
+          "field_name": "GGR_NAME",
+          "description": "Großstadtregionaler Einzugsbereich (2025) Name"
+        },
+        {
+          "excel_column": "AD",
+          "field_name": "GIB2025",
+          "description": "IHK-Bezirke (2025) Kennziffer"
+        },
+        {
+          "excel_column": "AE",
+          "field_name": "GIB_NAME",
+          "description": "IHK-Bezirke (2025) Name"
+        },
+        {
+          "excel_column": "AF",
+          "field_name": "RBG2025",
+          "description": "Raumtyp Bezug: Besiedlung (Gemeinden) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "AG",
+          "field_name": "RBG_NAME",
+          "description": "Raumtyp Bezug: Besiedlung (Gemeinden) (2025) Name"
+        },
+        {
+          "excel_column": "AH",
+          "field_name": "RBV2025",
+          "description": "Raumtyp Bezug: Besiedlung (Gemeindeverbände) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "AI",
+          "field_name": "RBV_NAME",
+          "description": "Raumtyp Bezug: Besiedlung (Gemeindeverbände) (2025) Name"
+        },
+        {
+          "excel_column": "AJ",
+          "field_name": "RLG2025",
+          "description": "Raumtyp Bezug: Lage (Gemeinden) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "AK",
+          "field_name": "RLG_NAME",
+          "description": "Raumtyp Bezug: Lage (Gemeinden) (2025) Name"
+        },
+        {
+          "excel_column": "AL",
+          "field_name": "RLV2025",
+          "description": "Raumtyp Bezug: Lage (Gemeindeverbände) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "AM",
+          "field_name": "RLV_NAME",
+          "description": "Raumtyp Bezug: Lage (Gemeindeverbände) (2025) Name"
+        },
+        {
+          "excel_column": "AN",
+          "field_name": "RS52025",
+          "description": "Regionalstatistischer Raumtyp Gemeindetyp 5 (Regio (2025) Kennziffer"
+        },
+        {
+          "excel_column": "AO",
+          "field_name": "RS5_NAME",
+          "description": "Regionalstatistischer Raumtyp Gemeindetyp 5 (Regio (2025) Name"
+        },
+        {
+          "excel_column": "AP",
+          "field_name": "RSS2025",
+          "description": "Regionalstatistischer Raumtyp 17 (RegioStaR17) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "AQ",
+          "field_name": "RSS_NAME",
+          "description": "Regionalstatistischer Raumtyp 17 (RegioStaR17) (2025) Name"
+        },
+        {
+          "excel_column": "AR",
+          "field_name": "RS22025",
+          "description": "Regionalstatistischer Raumtyp 2 (RegioStaR2) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "AS",
+          "field_name": "RS2_NAME",
+          "description": "Regionalstatistischer Raumtyp 2 (RegioStaR2) (2025) Name"
+        },
+        {
+          "excel_column": "AT",
+          "field_name": "RS72025",
+          "description": "Regionalstatistischer Raumtyp 7 (RegioStaR7) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "AU",
+          "field_name": "RS7_NAME",
+          "description": "Regionalstatistischer Raumtyp 7 (RegioStaR7) (2025) Name"
+        },
+        {
+          "excel_column": "AV",
+          "field_name": "GSR2025",
+          "description": "Regionalstatistischer Raumtyp (RegioStaR) Stadtregionen (2025) Kennziffer"
+        },
+        {
+          "excel_column": "AW",
+          "field_name": "GSR_NAME",
+          "description": "Regionalstatistischer Raumtyp (RegioStaR) Stadtregionen (2025) Name"
+        },
+        {
+          "excel_column": "AX",
+          "field_name": "GTL2025",
+          "description": "Stadt- und Gemeindetyp (Bundesländer) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "AY",
+          "field_name": "GTL_NAME",
+          "description": "Stadt- und Gemeindetyp (Bundesländer) (2025) Name"
+        },
+        {
+          "excel_column": "AZ",
+          "field_name": "GTD2025",
+          "description": "Stadt- und Gemeindetyp differenziert (2025) Kennziffer"
+        },
+        {
+          "excel_column": "BA",
+          "field_name": "GTD_NAME",
+          "description": "Stadt- und Gemeindetyp differenziert (2025) Name"
+        },
+        {
+          "excel_column": "BB",
+          "field_name": "GTO2025",
+          "description": "Stadt- und Gemeindetyp (West-Ost) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "BC",
+          "field_name": "GTO_NAME",
+          "description": "Stadt- und Gemeindetyp (West-Ost) (2025) Name"
+        },
+        {
+          "excel_column": "BD",
+          "field_name": "GTU2025",
+          "description": "Stadt- und Gemeindetyp (2025) Kennziffer"
+        },
+        {
+          "excel_column": "BE",
+          "field_name": "GTU_NAME",
+          "description": "Stadt- und Gemeindetyp (2025) Name"
+        },
+        {
+          "excel_column": "BF",
+          "field_name": "GVR2025",
+          "description": "Verdichtungsraum MKRO (2025) Kennziffer"
+        },
+        {
+          "excel_column": "BG",
+          "field_name": "GVR_NAME",
+          "description": "Verdichtungsraum MKRO (2025) Name"
+        },
+        {
+          "excel_column": "BH",
+          "field_name": "GWS2025",
+          "description": "Wachsen und Schrumpfen 2019-2024 (Gemeinden) Kennziffer"
+        },
+        {
+          "excel_column": "BI",
+          "field_name": "GWS_NAME",
+          "description": "Wachsen und Schrumpfen 2019-2024 (Gemeinden) Name"
+        },
+        {
+          "excel_column": "BJ",
+          "field_name": "GZ22025",
+          "description": "Zentrale Orte (ja/nein) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "BK",
+          "field_name": "GZ2_NAME",
+          "description": "Zentrale Orte (ja/nein) (2025) Name"
+        },
+        {
+          "excel_column": "BL",
+          "field_name": "GZZ2025",
+          "description": "Zentralörtliche Einstufung (zusammengefasst) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "BM",
+          "field_name": "GZZ_NAME",
+          "description": "Zentralörtliche Einstufung (zusammengefasst) (2025) Name"
+        },
+        {
+          "excel_column": "BN",
+          "field_name": "GZO2025",
+          "description": "Zentralörtliche Einstufung (2025) Kennziffer"
+        },
+        {
+          "excel_column": "BO",
+          "field_name": "GZO_NAME",
+          "description": "Zentralörtliche Einstufung (2025) Name"
+        },
+        {
+          "excel_column": "BP",
+          "field_name": "GGZ2025",
+          "description": "Zentralörtliche Funktion - Grundzentrum (2025) Kennziffer"
+        },
+        {
+          "excel_column": "BQ",
+          "field_name": "GGZ_NAME",
+          "description": "Zentralörtliche Funktion - Grundzentrum (2025) Name"
+        },
+        {
+          "excel_column": "BR",
+          "field_name": "GKF2025",
+          "description": "Zentralörtliche Funktion - keine (2025) Kennziffer"
+        },
+        {
+          "excel_column": "BS",
+          "field_name": "GKF_NAME",
+          "description": "Zentralörtliche Funktion - keine (2025) Name"
+        },
+        {
+          "excel_column": "BT",
+          "field_name": "GMZ2025",
+          "description": "Zentralörtliche Funktion - Mittelzentrum (2025) Kennziffer"
+        },
+        {
+          "excel_column": "BU",
+          "field_name": "GMZ_NAME",
+          "description": "Zentralörtliche Funktion - Mittelzentrum (2025) Name"
+        },
+        {
+          "excel_column": "BV",
+          "field_name": "GOZ2025",
+          "description": "Zentralörtliche Funktion - Oberzentrum (2025) Kennziffer"
+        },
+        {
+          "excel_column": "BW",
+          "field_name": "GOZ_NAME",
+          "description": "Zentralörtliche Funktion - Oberzentrum (2025) Name"
+        },
+        {
+          "excel_column": "BX",
+          "field_name": "KRS2025",
+          "description": "Kreise (2025) Kennziffer"
+        },
+        {
+          "excel_column": "BY",
+          "field_name": "KRS_NAME",
+          "description": "Kreise (2025) Name"
+        },
+        {
+          "excel_column": "BZ",
+          "field_name": "Bez_KRS",
+          "description": "Kreise (2025) Bezeichnung"
+        },
+        {
+          "excel_column": "CA",
+          "field_name": "AAB2025",
+          "description": "Arbeitsagenturbezirke (2025) Kennziffer"
+        },
+        {
+          "excel_column": "CB",
+          "field_name": "AAB_NAME",
+          "description": "Arbeitsagenturbezirke (2025) Name"
+        },
+        {
+          "excel_column": "CC",
+          "field_name": "KAM2025",
+          "description": "Arbeitsmarktregionen (2025) Kennziffer"
+        },
+        {
+          "excel_column": "CD",
+          "field_name": "KAM_NAME",
+          "description": "Arbeitsmarktregionen (2025) Name"
+        },
+        {
+          "excel_column": "CE",
+          "field_name": "KBN2025",
+          "description": "Braunkohlereviere (auch nicht förderfähige) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "CF",
+          "field_name": "KBN_NAME",
+          "description": "Braunkohlereviere (auch nicht förderfähige) (2025) Name"
+        },
+        {
+          "excel_column": "CG",
+          "field_name": "KBK2025",
+          "description": "Braunkohlereviere (2025) Kennziffer"
+        },
+        {
+          "excel_column": "CH",
+          "field_name": "KBK_NAME",
+          "description": "Braunkohlereviere (2025) Name"
+        },
+        {
+          "excel_column": "CI",
+          "field_name": "BND2025",
+          "description": "Bund (2025) Kennziffer"
+        },
+        {
+          "excel_column": "CJ",
+          "field_name": "BND_NAME",
+          "description": "Bund (2025) Name"
+        },
+        {
+          "excel_column": "CK",
+          "field_name": "BLD2025",
+          "description": "Bundesländer (2025) Kennziffer"
+        },
+        {
+          "excel_column": "CL",
+          "field_name": "BLD_NAME",
+          "description": "Bundesländer (2025) Name"
+        },
+        {
+          "excel_column": "CM",
+          "field_name": "GR22025",
+          "description": "GRW-Fördergebiete (ja/nein) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "CN",
+          "field_name": "GR2_NAME",
+          "description": "GRW-Fördergebiete (ja/nein) (2025) Name"
+        },
+        {
+          "excel_column": "CO",
+          "field_name": "GRW2025",
+          "description": "GRW-Fördergebiete (2025) Kennziffer"
+        },
+        {
+          "excel_column": "CP",
+          "field_name": "GRW_NAME",
+          "description": "GRW-Fördergebiete (2025) Name"
+        },
+        {
+          "excel_column": "CQ",
+          "field_name": "SLK2025",
+          "description": "Kreisfreie Stadt / Landkreis (2025) Kennziffer"
+        },
+        {
+          "excel_column": "CR",
+          "field_name": "SLK_NAME",
+          "description": "Kreisfreie Stadt / Landkreis (2025) Name"
+        },
+        {
+          "excel_column": "CS",
+          "field_name": "KKR2025",
+          "description": "Kreisregionen (2025) Kennziffer"
+        },
+        {
+          "excel_column": "CT",
+          "field_name": "KKR_NAME",
+          "description": "Kreisregionen (2025) Name"
+        },
+        {
+          "excel_column": "CU",
+          "field_name": "BLG2025",
+          "description": "Ländergruppen (2025) Kennziffer"
+        },
+        {
+          "excel_column": "CV",
+          "field_name": "BLG_NAME",
+          "description": "Ländergruppen (2025) Name"
+        },
+        {
+          "excel_column": "CW",
+          "field_name": "N2D2025",
+          "description": "NUTS2 - Deutschland (2025) Kennziffer"
+        },
+        {
+          "excel_column": "CX",
+          "field_name": "N2D_NAME",
+          "description": "NUTS2 - Deutschland (2025) Name"
+        },
+        {
+          "excel_column": "CY",
+          "field_name": "N3D2025",
+          "description": "NUTS3 - Deutschland (2025) Kennziffer"
+        },
+        {
+          "excel_column": "CZ",
+          "field_name": "N3D_NAME",
+          "description": "NUTS3 - Deutschland (2025) Name"
+        },
+        {
+          "excel_column": "DA",
+          "field_name": "KRO2025",
+          "description": "Raumordnungsregionen (2025) Kennziffer"
+        },
+        {
+          "excel_column": "DB",
+          "field_name": "KRO_NAME",
+          "description": "Raumordnungsregionen (2025) Name"
+        },
+        {
+          "excel_column": "DC",
+          "field_name": "RLK2025",
+          "description": "Raumtyp Bezug: Lage (Kreise) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "DD",
+          "field_name": "RLK_NAME",
+          "description": "Raumtyp Bezug: Lage (Kreise) (2025) Name"
+        },
+        {
+          "excel_column": "DE",
+          "field_name": "RBZ2025",
+          "description": "Regierungsbezirke (2025) Kennziffer"
+        },
+        {
+          "excel_column": "DF",
+          "field_name": "RBZ_NAME",
+          "description": "Regierungsbezirke (2025) Name"
+        },
+        {
+          "excel_column": "DG",
+          "field_name": "KTL2025",
+          "description": "Siedlungsstruktureller Kreistyp (Bundesländer) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "DH",
+          "field_name": "KTL_NAME",
+          "description": "Siedlungsstruktureller Kreistyp (Bundesländer) (2025) Name"
+        },
+        {
+          "excel_column": "DI",
+          "field_name": "KTD2025",
+          "description": "Siedlungsstruktureller Kreistyp (differenziert) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "DJ",
+          "field_name": "KTD_NAME",
+          "description": "Siedlungsstruktureller Kreistyp (differenziert) (2025) Name"
+        },
+        {
+          "excel_column": "DK",
+          "field_name": "KTK2025",
+          "description": "Siedlungsstruktureller Kreistyp (kompakt) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "DL",
+          "field_name": "KTK_NAME",
+          "description": "Siedlungsstruktureller Kreistyp (kompakt) (2025) Name"
+        },
+        {
+          "excel_column": "DM",
+          "field_name": "KTO2025",
+          "description": "Siedlungsstruktureller Kreistyp (West-Ost) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "DN",
+          "field_name": "KTO_NAME",
+          "description": "Siedlungsstruktureller Kreistyp (West-Ost) (2025) Name"
+        },
+        {
+          "excel_column": "DO",
+          "field_name": "KTU2025",
+          "description": "Siedlungsstruktureller Kreistyp (2025) Kennziffer"
+        },
+        {
+          "excel_column": "DP",
+          "field_name": "KTU_NAME",
+          "description": "Siedlungsstruktureller Kreistyp (2025) Name"
+        },
+        {
+          "excel_column": "DQ",
+          "field_name": "RTL2025",
+          "description": "Siedlungsstruktureller Regionstyp (Bundesländer) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "DR",
+          "field_name": "RTL_NAME",
+          "description": "Siedlungsstruktureller Regionstyp (Bundesländer) (2025) Name"
+        },
+        {
+          "excel_column": "DS",
+          "field_name": "RTO2025",
+          "description": "Siedlungsstruktureller Regionstyp (West-Ost) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "DT",
+          "field_name": "RTO_NAME",
+          "description": "Siedlungsstruktureller Regionstyp (West-Ost) (2025) Name"
+        },
+        {
+          "excel_column": "DU",
+          "field_name": "RTU2025",
+          "description": "Siedlungsstruktureller Regionstyp (2025) Kennziffer"
+        },
+        {
+          "excel_column": "DV",
+          "field_name": "RTU_NAME",
+          "description": "Siedlungsstruktureller Regionstyp (2025) Name"
+        },
+        {
+          "excel_column": "DW",
+          "field_name": "SAM2025",
+          "description": "Siedlungsstruktureller Typ (Arbeitsmarktregionen) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "DX",
+          "field_name": "SAM_NAME",
+          "description": "Siedlungsstruktureller Typ (Arbeitsmarktregionen) (2025) Name"
+        },
+        {
+          "excel_column": "DY",
+          "field_name": "SLT2025",
+          "description": "Stadt- Land Typologie (Eurostat) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "DZ",
+          "field_name": "SLT_NAME",
+          "description": "Stadt- Land Typologie (Eurostat) (2025) Name"
+        },
+        {
+          "excel_column": "EA",
+          "field_name": "KSL2025",
+          "description": "Städtischer-Ländlicher Raum (Bundesländer) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "EB",
+          "field_name": "KSL_NAME",
+          "description": "Städtischer-Ländlicher Raum (Bundesländer) (2025) Name"
+        },
+        {
+          "excel_column": "EC",
+          "field_name": "KSO2025",
+          "description": "Städtischer-Ländlicher Raum (West-Ost) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "ED",
+          "field_name": "KSO_NAME",
+          "description": "Städtischer-Ländlicher Raum (West-Ost) (2025) Name"
+        },
+        {
+          "excel_column": "EE",
+          "field_name": "KSU2025",
+          "description": "Städtischer-Ländlicher Raum (2025) Kennziffer"
+        },
+        {
+          "excel_column": "EF",
+          "field_name": "KSU_NAME",
+          "description": "Städtischer-Ländlicher Raum (2025) Name"
+        },
+        {
+          "excel_column": "EG",
+          "field_name": "TH32025",
+          "description": "Thünen-Typologie: Typen ländlicher Räume (3) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "EH",
+          "field_name": "TH3_NAME",
+          "description": "Thünen-Typologie: Typen ländlicher Räume (3) (2025) Name"
+        },
+        {
+          "excel_column": "EI",
+          "field_name": "TH52025",
+          "description": "Thünen-Typologie: Typen ländlicher Räume (5) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "EJ",
+          "field_name": "TH5_NAME",
+          "description": "Thünen-Typologie: Typen ländlicher Räume (5) (2025) Name"
+        },
+        {
+          "excel_column": "EK",
+          "field_name": "AAV2025",
+          "description": "Vergleichstypen der Arbeitsagenturbezirke (2025) Kennziffer"
+        },
+        {
+          "excel_column": "EL",
+          "field_name": "AAV_NAME",
+          "description": "Vergleichstypen der Arbeitsagenturbezirke (2025) Name"
+        },
+        {
+          "excel_column": "EM",
+          "field_name": "AWS2025",
+          "description": "Wachsen und Schrumpfen 2019-2024 (Arbeitsmarktregionen) Kennziffer"
+        },
+        {
+          "excel_column": "EN",
+          "field_name": "AWS_NAME",
+          "description": "Wachsen und Schrumpfen 2019-2024 (Arbeitsmarktregionen) Name"
+        },
+        {
+          "excel_column": "EO",
+          "field_name": "KWS2025",
+          "description": "Wachsen und Schrumpfen 2019-2024 (Kreise) Kennziffer"
+        },
+        {
+          "excel_column": "EP",
+          "field_name": "KWS_NAME",
+          "description": "Wachsen und Schrumpfen 2019-2024 (Kreise) Name"
+        },
+        {
+          "excel_column": "EQ",
+          "field_name": "KWB2025",
+          "description": "West-Ost (ohne Berlin) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "ER",
+          "field_name": "KWB_NAME",
+          "description": "West-Ost (ohne Berlin) (2025) Name"
+        },
+        {
+          "excel_column": "ES",
+          "field_name": "KWO2025",
+          "description": "West-Ost (2025) Kennziffer"
+        },
+        {
+          "excel_column": "ET",
+          "field_name": "KWO_NAME",
+          "description": "West-Ost (2025) Name"
+        }
+      ]
+    },
+    {
+      "sheet_name": "Kreisreferenz",
+      "xml_member": "xl/worksheets/sheet4.xml",
+      "physical_excel_rows": 402,
+      "nonempty_rows": 402,
+      "first_nonempty_row": 1,
+      "last_nonempty_row": 402,
+      "original_columns": [
+        {
+          "excel_column": "A",
+          "field_name": "KRS2025",
+          "description": "Kreise (2025) Kennziffer"
+        },
+        {
+          "excel_column": "B",
+          "field_name": "KRS_NAME",
+          "description": "Kreise (2025) Name"
+        },
+        {
+          "excel_column": "C",
+          "field_name": "bev25",
+          "description": "Einwohner 2025"
+        },
+        {
+          "excel_column": "D",
+          "field_name": "fl25",
+          "description": "Fläche 2025 in km²"
+        },
+        {
+          "excel_column": "E",
+          "field_name": "AAB2025",
+          "description": "Arbeitsagenturbezirke (2025) Kennziffer"
+        },
+        {
+          "excel_column": "F",
+          "field_name": "AAB_NAME",
+          "description": "Arbeitsagenturbezirke (2025) Name"
+        },
+        {
+          "excel_column": "G",
+          "field_name": "KAM2025",
+          "description": "Arbeitsmarktregionen (2025) Kennziffer"
+        },
+        {
+          "excel_column": "H",
+          "field_name": "KAM_NAME",
+          "description": "Arbeitsmarktregionen (2025) Name"
+        },
+        {
+          "excel_column": "I",
+          "field_name": "KBN2025",
+          "description": "Braunkohlereviere (auch nicht förderfähige) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "J",
+          "field_name": "KBN_NAME",
+          "description": "Braunkohlereviere (auch nicht förderfähige) (2025) Name"
+        },
+        {
+          "excel_column": "K",
+          "field_name": "KBK2025",
+          "description": "Braunkohlereviere (2025) Kennziffer"
+        },
+        {
+          "excel_column": "L",
+          "field_name": "KBK_NAME",
+          "description": "Braunkohlereviere (2025) Name"
+        },
+        {
+          "excel_column": "M",
+          "field_name": "BND2025",
+          "description": "Bund (2025) Kennziffer"
+        },
+        {
+          "excel_column": "N",
+          "field_name": "BND_NAME",
+          "description": "Bund (2025) Name"
+        },
+        {
+          "excel_column": "O",
+          "field_name": "BLD2025",
+          "description": "Bundesländer (2025) Kennziffer"
+        },
+        {
+          "excel_column": "P",
+          "field_name": "BLD_NAME",
+          "description": "Bundesländer (2025) Name"
+        },
+        {
+          "excel_column": "Q",
+          "field_name": "GR22025",
+          "description": "GRW-Fördergebiete (ja/nein) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "R",
+          "field_name": "GR2_NAME",
+          "description": "GRW-Fördergebiete (ja/nein) (2025) Name"
+        },
+        {
+          "excel_column": "S",
+          "field_name": "GRW2025",
+          "description": "GRW-Fördergebiete (2025) Kennziffer"
+        },
+        {
+          "excel_column": "T",
+          "field_name": "GRW_NAME",
+          "description": "GRW-Fördergebiete (2025) Name"
+        },
+        {
+          "excel_column": "U",
+          "field_name": "SLK2025",
+          "description": "Kreisfreie Stadt / Landkreis (2025) Kennziffer"
+        },
+        {
+          "excel_column": "V",
+          "field_name": "SLK_NAME",
+          "description": "Kreisfreie Stadt / Landkreis (2025) Name"
+        },
+        {
+          "excel_column": "W",
+          "field_name": "KKR2025",
+          "description": "Kreisregionen (2025) Kennziffer"
+        },
+        {
+          "excel_column": "X",
+          "field_name": "KKR_NAME",
+          "description": "Kreisregionen (2025) Name"
+        },
+        {
+          "excel_column": "Y",
+          "field_name": "BLG2025",
+          "description": "Ländergruppen (2025) Kennziffer"
+        },
+        {
+          "excel_column": "Z",
+          "field_name": "BLG_NAME",
+          "description": "Ländergruppen (2025) Name"
+        },
+        {
+          "excel_column": "AA",
+          "field_name": "N2D2025",
+          "description": "NUTS2 - Deutschland (2025) Kennziffer"
+        },
+        {
+          "excel_column": "AB",
+          "field_name": "N2D_NAME",
+          "description": "NUTS2 - Deutschland (2025) Name"
+        },
+        {
+          "excel_column": "AC",
+          "field_name": "N3D2025",
+          "description": "NUTS3 - Deutschland (2025) Kennziffer"
+        },
+        {
+          "excel_column": "AD",
+          "field_name": "N3D_NAME",
+          "description": "NUTS3 - Deutschland (2025) Name"
+        },
+        {
+          "excel_column": "AE",
+          "field_name": "KRO2025",
+          "description": "Raumordnungsregionen (2025) Kennziffer"
+        },
+        {
+          "excel_column": "AF",
+          "field_name": "KRO_NAME",
+          "description": "Raumordnungsregionen (2025) Name"
+        },
+        {
+          "excel_column": "AG",
+          "field_name": "RLK2025",
+          "description": "Raumtyp Bezug: Lage (Kreise) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "AH",
+          "field_name": "RLK_NAME",
+          "description": "Raumtyp Bezug: Lage (Kreise) (2025) Name"
+        },
+        {
+          "excel_column": "AI",
+          "field_name": "RBZ2025",
+          "description": "Regierungsbezirke (2025) Kennziffer"
+        },
+        {
+          "excel_column": "AJ",
+          "field_name": "RBZ_NAME",
+          "description": "Regierungsbezirke (2025) Name"
+        },
+        {
+          "excel_column": "AK",
+          "field_name": "KTL2025",
+          "description": "Siedlungsstruktureller Kreistyp (Bundesländer) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "AL",
+          "field_name": "KTL_NAME",
+          "description": "Siedlungsstruktureller Kreistyp (Bundesländer) (2025) Name"
+        },
+        {
+          "excel_column": "AM",
+          "field_name": "KTD2025",
+          "description": "Siedlungsstruktureller Kreistyp (differenziert) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "AN",
+          "field_name": "KTD_NAME",
+          "description": "Siedlungsstruktureller Kreistyp (differenziert) (2025) Name"
+        },
+        {
+          "excel_column": "AO",
+          "field_name": "KTK2025",
+          "description": "Siedlungsstruktureller Kreistyp (kompakt) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "AP",
+          "field_name": "KTK_NAME",
+          "description": "Siedlungsstruktureller Kreistyp (kompakt) (2025) Name"
+        },
+        {
+          "excel_column": "AQ",
+          "field_name": "KTO2025",
+          "description": "Siedlungsstruktureller Kreistyp (West-Ost) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "AR",
+          "field_name": "KTO_NAME",
+          "description": "Siedlungsstruktureller Kreistyp (West-Ost) (2025) Name"
+        },
+        {
+          "excel_column": "AS",
+          "field_name": "KTU2025",
+          "description": "Siedlungsstruktureller Kreistyp (2025) Kennziffer"
+        },
+        {
+          "excel_column": "AT",
+          "field_name": "KTU_NAME",
+          "description": "Siedlungsstruktureller Kreistyp (2025) Name"
+        },
+        {
+          "excel_column": "AU",
+          "field_name": "RTL2025",
+          "description": "Siedlungsstruktureller Regionstyp (Bundesländer) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "AV",
+          "field_name": "RTL_NAME",
+          "description": "Siedlungsstruktureller Regionstyp (Bundesländer) (2025) Name"
+        },
+        {
+          "excel_column": "AW",
+          "field_name": "RTO2025",
+          "description": "Siedlungsstruktureller Regionstyp (West-Ost) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "AX",
+          "field_name": "RTO_NAME",
+          "description": "Siedlungsstruktureller Regionstyp (West-Ost) (2025) Name"
+        },
+        {
+          "excel_column": "AY",
+          "field_name": "RTU2025",
+          "description": "Siedlungsstruktureller Regionstyp (2025) Kennziffer"
+        },
+        {
+          "excel_column": "AZ",
+          "field_name": "RTU_NAME",
+          "description": "Siedlungsstruktureller Regionstyp (2025) Name"
+        },
+        {
+          "excel_column": "BA",
+          "field_name": "SAM2025",
+          "description": "Siedlungsstruktureller Typ (Arbeitsmarktregionen) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "BB",
+          "field_name": "SAM_NAME",
+          "description": "Siedlungsstruktureller Typ (Arbeitsmarktregionen) (2025) Name"
+        },
+        {
+          "excel_column": "BC",
+          "field_name": "SLT2025",
+          "description": "Stadt- Land Typologie (Eurostat) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "BD",
+          "field_name": "SLT_NAME",
+          "description": "Stadt- Land Typologie (Eurostat) (2025) Name"
+        },
+        {
+          "excel_column": "BE",
+          "field_name": "KSL2025",
+          "description": "Städtischer-Ländlicher Raum (Bundesländer) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "BF",
+          "field_name": "KSL_NAME",
+          "description": "Städtischer-Ländlicher Raum (Bundesländer) (2025) Name"
+        },
+        {
+          "excel_column": "BG",
+          "field_name": "KSO2025",
+          "description": "Städtischer-Ländlicher Raum (West-Ost) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "BH",
+          "field_name": "KSO_NAME",
+          "description": "Städtischer-Ländlicher Raum (West-Ost) (2025) Name"
+        },
+        {
+          "excel_column": "BI",
+          "field_name": "KSU2025",
+          "description": "Städtischer-Ländlicher Raum (2025) Kennziffer"
+        },
+        {
+          "excel_column": "BJ",
+          "field_name": "KSU_NAME",
+          "description": "Städtischer-Ländlicher Raum (2025) Name"
+        },
+        {
+          "excel_column": "BK",
+          "field_name": "TH32025",
+          "description": "Thünen-Typologie: Typen ländlicher Räume (3) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "BL",
+          "field_name": "TH3_NAME",
+          "description": "Thünen-Typologie: Typen ländlicher Räume (3) (2025) Name"
+        },
+        {
+          "excel_column": "BM",
+          "field_name": "TH52025",
+          "description": "Thünen-Typologie: Typen ländlicher Räume (5) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "BN",
+          "field_name": "TH5_NAME",
+          "description": "Thünen-Typologie: Typen ländlicher Räume (5) (2025) Name"
+        },
+        {
+          "excel_column": "BO",
+          "field_name": "AAV2025",
+          "description": "Vergleichstypen der Arbeitsagenturbezirke (2025) Kennziffer"
+        },
+        {
+          "excel_column": "BP",
+          "field_name": "AAV_NAME",
+          "description": "Vergleichstypen der Arbeitsagenturbezirke (2025) Name"
+        },
+        {
+          "excel_column": "BQ",
+          "field_name": "AWS2025",
+          "description": "Wachsen und Schrumpfen 2019-2024 (Arbeitsmarktregionen) Kennziffer"
+        },
+        {
+          "excel_column": "BR",
+          "field_name": "AWS_NAME",
+          "description": "Wachsen und Schrumpfen 2019-2024 (Arbeitsmarktregionen) Name"
+        },
+        {
+          "excel_column": "BS",
+          "field_name": "KWS2025",
+          "description": "Wachsen und Schrumpfen 2019-2024 (Kreise) Kennziffer"
+        },
+        {
+          "excel_column": "BT",
+          "field_name": "KWS_NAME",
+          "description": "Wachsen und Schrumpfen 2019-2024 (Kreise) Name"
+        },
+        {
+          "excel_column": "BU",
+          "field_name": "KWB2025",
+          "description": "West-Ost (ohne Berlin) (2025) Kennziffer"
+        },
+        {
+          "excel_column": "BV",
+          "field_name": "KWB_NAME",
+          "description": "West-Ost (ohne Berlin) (2025) Name"
+        },
+        {
+          "excel_column": "BW",
+          "field_name": "KWO2025",
+          "description": "West-Ost (2025) Kennziffer"
+        },
+        {
+          "excel_column": "BX",
+          "field_name": "KWO_NAME",
+          "description": "West-Ost (2025) Name"
+        }
+      ]
+    },
+    {
+      "sheet_name": "Metropolregionen",
+      "xml_member": "xl/worksheets/sheet5.xml",
+      "physical_excel_rows": 450,
+      "nonempty_rows": 450,
+      "first_nonempty_row": 1,
+      "last_nonempty_row": 450,
+      "original_columns": [
+        {
+          "excel_column": "A",
+          "field_name": "KRS2025",
+          "description": "Kreise (2025) Kennziffer"
+        },
+        {
+          "excel_column": "B",
+          "field_name": "KRS_NAME",
+          "description": "Kreise (2025) Name"
+        },
+        {
+          "excel_column": "C",
+          "field_name": "KMR2025",
+          "description": "Metropolregionen (2025) Kennziffer"
+        },
+        {
+          "excel_column": "D",
+          "field_name": "KMR_NAME",
+          "description": "Metropolregionen (2025) Name"
+        }
+      ]
+    },
+    {
+      "sheet_name": "Grenzregionen",
+      "xml_member": "xl/worksheets/sheet6.xml",
+      "physical_excel_rows": 410,
+      "nonempty_rows": 410,
+      "first_nonempty_row": 1,
+      "last_nonempty_row": 410,
+      "original_columns": [
+        {
+          "excel_column": "A",
+          "field_name": "KRS2025",
+          "description": "Kreise (2025) Kennziffer"
+        },
+        {
+          "excel_column": "B",
+          "field_name": "KRS_NAME",
+          "description": "Kreise (2025) Name"
+        },
+        {
+          "excel_column": "C",
+          "field_name": "KGN2024",
+          "description": "Grenzregionen - Nachbarländer (2025) Kennziffer"
+        },
+        {
+          "excel_column": "D",
+          "field_name": "KGN_NAME",
+          "description": "Grenzregionen - Nachbarländer (2025) Name"
+        }
+      ]
+    }
+  ],
+  "selected_sheet": "Kreisreferenz",
+  "selected_source_fields": {
+    "administrative_district_code": {
+      "source_field": "KRS2025",
+      "source_description": "Kreise (2025) Kennziffer"
+    },
+    "administrative_district_name": {
+      "source_field": "KRS_NAME",
+      "source_description": "Kreise (2025) Name"
+    },
+    "federal_state_code": {
+      "source_field": "BLD2025",
+      "source_description": "Bundesländer (2025) Kennziffer"
+    },
+    "federal_state_name": {
+      "source_field": "BLD_NAME",
+      "source_description": "Bundesländer (2025) Name"
+    },
+    "kreisregion_code": {
+      "source_field": "KKR2025",
+      "source_description": "Kreisregionen (2025) Kennziffer"
+    },
+    "kreisregion_name": {
+      "source_field": "KKR_NAME",
+      "source_description": "Kreisregionen (2025) Name"
+    },
+    "settlement_type_code": {
+      "source_field": "KTU2025",
+      "source_description": "Siedlungsstruktureller Kreistyp (2025) Kennziffer"
+    },
+    "settlement_type_name_de": {
+      "source_field": "KTU_NAME",
+      "source_description": "Siedlungsstruktureller Kreistyp (2025) Name"
+    }
+  },
+  "validation": {
+    "source_rows_read": 400,
+    "derived_rows_emitted": 400,
+    "source_rows_not_emitted": 0,
+    "distinct_administrative_district_codes": 400,
+    "distinct_federal_state_codes": 16,
+    "federal_state_name_inconsistency_count": 0,
+    "distinct_kreisregion_codes": 362,
+    "duplicate_primary_grain_keys": 0,
+    "null_or_blank_classification_codes": 0,
+    "classification_codes": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "classification_code_label_map": {
+      "1": "kreisfreie Großstadt",
+      "2": "städtischer Kreis",
+      "3": "ländlicher Kreis mit Verdichtungsansätzen",
+      "4": "dünn besiedelter ländlicher Kreis"
+    },
+    "classification_row_counts": {
+      "1": 68,
+      "2": 131,
+      "3": 98,
+      "4": 103
+    },
+    "classification_code_label_inconsistency_count": 0,
+    "kreisregion_name_inconsistency_count": 0,
+    "kreisregion_type_inconsistency_count": 0,
+    "multi_row_kreisregion_group_count": 36,
+    "multi_row_kreisregion_examples": [
+      {
+        "kreisregion_code": "01058000",
+        "administrative_district_codes": [
+          "01004000",
+          "01058000"
+        ]
+      },
+      {
+        "kreisregion_code": "01059000",
+        "administrative_district_codes": [
+          "01001000",
+          "01059000"
+        ]
+      },
+      {
+        "kreisregion_code": "03251000",
+        "administrative_district_codes": [
+          "03251000",
+          "03401000"
+        ]
+      },
+      {
+        "kreisregion_code": "03452000",
+        "administrative_district_codes": [
+          "03402000",
+          "03452000"
+        ]
+      },
+      {
+        "kreisregion_code": "03455000",
+        "administrative_district_codes": [
+          "03405000",
+          "03455000"
+        ]
+      },
+      {
+        "kreisregion_code": "07331000",
+        "administrative_district_codes": [
+          "07319000",
+          "07331000"
+        ]
+      },
+      {
+        "kreisregion_code": "07332000",
+        "administrative_district_codes": [
+          "07316000",
+          "07332000"
+        ]
+      },
+      {
+        "kreisregion_code": "07337000",
+        "administrative_district_codes": [
+          "07313000",
+          "07337000"
+        ]
+      },
+      {
+        "kreisregion_code": "07338000",
+        "administrative_district_codes": [
+          "07311000",
+          "07318000",
+          "07338000"
+        ]
+      },
+      {
+        "kreisregion_code": "07340000",
+        "administrative_district_codes": [
+          "07317000",
+          "07320000",
+          "07340000"
+        ]
+      }
+    ],
+    "hanau_rows": [],
+    "main_kinzig_rows": [
+      {
+        "source_version": "raumgliederungen-referenzen-2025.xlsx | Kreisreferenz | geographic stand 2025-12-31",
+        "bbsr_reference_date": "2025-12-31",
+        "source_sheet_name": "Kreisreferenz",
+        "source_excel_row": "127",
+        "administrative_district_code": "06435000",
+        "administrative_district_name": "Main-Kinzig-Kreis",
+        "federal_state_code": "06",
+        "federal_state_name": "Hessen",
+        "kreisregion_code": "06435000",
+        "kreisregion_name": "Main-Kinzig-Kreis",
+        "settlement_type_code": "2",
+        "settlement_type_name_de": "städtischer Kreis"
+      }
+    ],
+    "trier_city_rows": [
+      {
+        "source_version": "raumgliederungen-referenzen-2025.xlsx | Kreisreferenz | geographic stand 2025-12-31",
+        "bbsr_reference_date": "2025-12-31",
+        "source_sheet_name": "Kreisreferenz",
+        "source_excel_row": "156",
+        "administrative_district_code": "07211000",
+        "administrative_district_name": "Trier, kreisfreie Stadt",
+        "federal_state_code": "07",
+        "federal_state_name": "Rheinland-Pfalz",
+        "kreisregion_code": "07211000",
+        "kreisregion_name": "Trier, kreisfreie Stadt",
+        "settlement_type_code": "1",
+        "settlement_type_name_de": "kreisfreie Großstadt"
+      }
+    ],
+    "trier_saarburg_rows": [
+      {
+        "source_version": "raumgliederungen-referenzen-2025.xlsx | Kreisreferenz | geographic stand 2025-12-31",
+        "bbsr_reference_date": "2025-12-31",
+        "source_sheet_name": "Kreisreferenz",
+        "source_excel_row": "160",
+        "administrative_district_code": "07235000",
+        "administrative_district_name": "Trier-Saarburg",
+        "federal_state_code": "07",
+        "federal_state_name": "Rheinland-Pfalz",
+        "kreisregion_code": "07235000",
+        "kreisregion_name": "Trier-Saarburg",
+        "settlement_type_code": "3",
+        "settlement_type_name_de": "ländlicher Kreis mit Verdichtungsansätzen"
+      }
+    ],
+    "special_case_rows": {
+      "Berlin": [
+        {
+          "source_version": "raumgliederungen-referenzen-2025.xlsx | Kreisreferenz | geographic stand 2025-12-31",
+          "bbsr_reference_date": "2025-12-31",
+          "source_sheet_name": "Kreisreferenz",
+          "source_excel_row": "327",
+          "administrative_district_code": "11000000",
+          "administrative_district_name": "Berlin, Stadt",
+          "federal_state_code": "11",
+          "federal_state_name": "Berlin",
+          "kreisregion_code": "11000000",
+          "kreisregion_name": "Berlin, Stadt",
+          "settlement_type_code": "1",
+          "settlement_type_name_de": "kreisfreie Großstadt"
+        }
+      ],
+      "Hamburg": [
+        {
+          "source_version": "raumgliederungen-referenzen-2025.xlsx | Kreisreferenz | geographic stand 2025-12-31",
+          "bbsr_reference_date": "2025-12-31",
+          "source_sheet_name": "Kreisreferenz",
+          "source_excel_row": "18",
+          "administrative_district_code": "02000000",
+          "administrative_district_name": "Hamburg, Freie und Hansestadt",
+          "federal_state_code": "02",
+          "federal_state_name": "Hamburg",
+          "kreisregion_code": "02000000",
+          "kreisregion_name": "Hamburg, Freie und Hansestadt",
+          "settlement_type_code": "1",
+          "settlement_type_name_de": "kreisfreie Großstadt"
+        }
+      ],
+      "Bremen": [
+        {
+          "source_version": "raumgliederungen-referenzen-2025.xlsx | Kreisreferenz | geographic stand 2025-12-31",
+          "bbsr_reference_date": "2025-12-31",
+          "source_sheet_name": "Kreisreferenz",
+          "source_excel_row": "64",
+          "administrative_district_code": "04011000",
+          "administrative_district_name": "Bremen, Stadt",
+          "federal_state_code": "04",
+          "federal_state_name": "Bremen",
+          "kreisregion_code": "04011000",
+          "kreisregion_name": "Bremen, Stadt",
+          "settlement_type_code": "1",
+          "settlement_type_name_de": "kreisfreie Großstadt"
+        }
+      ],
+      "Bremerhaven": [
+        {
+          "source_version": "raumgliederungen-referenzen-2025.xlsx | Kreisreferenz | geographic stand 2025-12-31",
+          "bbsr_reference_date": "2025-12-31",
+          "source_sheet_name": "Kreisreferenz",
+          "source_excel_row": "65",
+          "administrative_district_code": "04012000",
+          "administrative_district_name": "Bremerhaven, Stadt",
+          "federal_state_code": "04",
+          "federal_state_name": "Bremen",
+          "kreisregion_code": "04012000",
+          "kreisregion_name": "Bremerhaven, Stadt",
+          "settlement_type_code": "1",
+          "settlement_type_name_de": "kreisfreie Großstadt"
+        }
+      ]
+    },
+    "district_to_kreisregion_relationships_preserved": true,
+    "allocation_applied": false,
+    "kba_assignment_applied": false,
+    "kba_crosswalk_changed": false
+  },
+  "derived_output": {
+    "path": "data/reference/bbsr_settlement_types_2025.csv",
+    "bytes": 84864,
+    "sha256": "e35c57da8d8f675fa132b629e6dda43180a18e5b78b95e1e72de30069a062e65"
+  }
+}

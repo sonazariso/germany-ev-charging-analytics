@@ -30,6 +30,7 @@ python3 scripts/00_storage_check.py
 python3 scripts/01_download.py
 python3 scripts/02_profile_xlsx.py
 python3 scripts/03_inspect_schema.py
+python3 scripts/10_build_bbsr_reference.py
 ~~~
 
 The source manifest is config/sources.json. scripts/01_download.py validates the XLSX container and writes data/profiles/download_inventory.json. scripts/02_profile_xlsx.py streams every physical row in every worksheet and writes data/profiles/workbook_profiles.json and reports/phase01_data_profile.md.
@@ -43,9 +44,18 @@ python3 scripts/02_profile_xlsx.py
 
 Do not rename, rewrite, trim, or modify the original workbooks.
 
+The BBSR command reads data/raw/bbsr/raumgliederungen-referenzen-2025.xlsx and
+writes data/reference/bbsr_settlement_types_2025.csv,
+data/reference/bbsr_source_manifest.json,
+data/profiles/bbsr_reference_profile.json, and
+reports/batch10_bbsr_reference_validation.md. It records the source and derived
+SHA-256 values, inspects every workbook sheet, validates the exact four-category
+fields, and does not write to DuckDB. Re-running it must produce the same CSV
+checksum.
+
 ## DuckDB build
 
-The existing build script uses the four verified source profiles, creates a temporary build database, validates profiled row counts and hashes, and replaces the target only after a successful checkpoint. Its command is:
+The existing build script uses the four verified primary BNetzA/KBA source profiles, creates a temporary build database, validates profiled row counts and hashes, and replaces the target only after a successful checkpoint. Separately profiled reference sources such as BBSR are ignored by that builder. Its command is:
 
 ~~~bash
 .venv/bin/python scripts/03_build_duckdb.py

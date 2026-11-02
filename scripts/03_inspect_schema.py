@@ -4,8 +4,8 @@
 Use from the repository root:
     python3 scripts/03_inspect_schema.py
 
-Reads all 4 locally downloaded workbooks in streaming mode, previewing only their
-first Excel rows (the full source workbooks remain untouched). Uses standard
+Reads all registered locally downloaded workbooks in streaming mode, previewing
+only their first Excel rows (the full source workbooks remain untouched). Uses standard
 Python 3 libraries only; does not require DuckDB, Pandas, or Excel on macOS.
 
 Outputs:
@@ -117,7 +117,7 @@ def render_md(items: list[dict]) -> str:
     lines = [
         "# Phase 02 — Excel schema inspection",
         "",
-        "**Scope:** complete BNetzA September 2026 + all 3 KBA FZ 27 releases in 2026.",
+        "**Scope:** all registered official XLSX sources; BNetzA/KBA primary sources and separate reference workbooks are shown without ingestion.",
         "",
         "This report shows ONLY early Excel rows to identify title/header/subheader positions.",
         "The full source workbooks are untouched and no records are discarded.",

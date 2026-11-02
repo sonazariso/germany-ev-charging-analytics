@@ -1,6 +1,6 @@
 # Data sources
 
-The source inventory is maintained in config/sources.json. The local inventory and workbook profiles are generated artifacts in data/profiles and are the evidence for the file sizes, hashes, worksheet counts, and row counts below.
+The source inventory is maintained in config/sources.json. It contains four primary BNetzA/KBA sources and one separately handled BBSR reference source. The local inventory and workbook profiles are generated artifacts in data/profiles and are the evidence for the file sizes, hashes, worksheet counts, and row counts below.
 
 ## BNetzA Ladesäulenregister
 
@@ -85,16 +85,19 @@ The download script validates the XLSX container and writes the hash inventory. 
 The source licenses and required attributions are metadata in the local manifest, not a blanket permission to publish every source-derived export. Before GitHub or Tableau publication:
 
 - Preserve the required BNetzA and KBA attribution.
+- Preserve the BBSR attribution and identify the tracked CSV as a changed/derived reference under Datenlizenz Deutschland – Namensnennung – Version 2.0.
 - Review the applicable license terms for source-derived extracts and screenshots.
 - Do not commit the original XLSX workbooks or the DuckDB database.
 - Review whether any field-level source content, including identifiers or Public Keys, is appropriate for a public extract.
 - Keep the code license separate from official-data licenses.
 
-## BBSR feasibility reference — not integrated
+## BBSR reference acquisition and provenance
 
-Batch 09 investigated the official BBSR four-category settlement-structural district
-typology for feasibility only. It is **not** in `config/sources.json`, was not
-copied into the repository or DuckDB, and is not used in a current KPI.
+Batch 09 identified the official BBSR four-category settlement-structural district
+typology. Batch 10 acquired the latest suitable official workbook, preserved it
+locally under data/raw/bbsr/ (ignored by Git), and built a versioned derived
+reference outside DuckDB. It is not used in a current KPI or assigned to a KBA
+registration region.
 
 | Field | Investigated value |
 |---|---|
@@ -104,11 +107,36 @@ copied into the repository or DuckDB, and is not used in a current KPI.
 | Smallest suitable current artifact identified | `raumgliederungen-referenzen-2025.xlsx`, `Kreisreferenz` worksheet |
 | Geographic reference date | 31.12.2025 |
 | Workbook stand | 11.09.2026 |
-| Relevant fields | `KRS2025`, `KRS_NAME`, Kreisregion code/name, compact BBSR type code/label (`AS`/`AT`) |
+| Local filename | data/raw/bbsr/raumgliederungen-referenzen-2025.xlsx (ignored by Git) |
+| File size | 8,768,335 bytes |
+| SHA-256 | 083f7740c3cf2d858c79482e63ca6c7e4680248c5bd6e207ebc9df6ede953525 |
+| Download timestamp | 2026-11-02T20:22:53Z |
+| Relevant fields | `KRS2025`, `KRS_NAME`, federal state (`BLD2025`/`BLD_NAME`), `KKR2025`, `KKR_NAME`, compact BBSR type code/label (`KTU2025`/`KTU_NAME`) |
 | Observed reference rows | 400 Kreis rows; 362 distinct Kreisregion keys |
 | License | Datenlizenz Deutschland – Namensnennung – Version 2.0 |
-| Recommended attribution | `Bundesinstitut für Bau-, Stadt- und Raumforschung: Laufende Raumbeobachtung des BBSR` |
+| Recommended attribution | Bundesinstitut für Bau-, Stadt- und Raumforschung: Laufende Raumbeobachtung des BBSR |
 | License text | [DL-DE/by-2.0](https://www.govdata.de/dl-de/by-2-0) |
+
+The selected workbook contains six worksheets: Nutzungshinweise, Administrativ,
+Gemeindereferenz (inkl. Kreise), Kreisreferenz, Metropolregionen, and
+Grenzregionen. The relevant Kreisreferenz sheet has 76 original columns. The
+derived file is data/reference/bbsr_settlement_types_2025.csv with one row per
+KRS2025 administrative Kreis row and these stable fields:
+
+- source_version
+- bbsr_reference_date
+- source_sheet_name
+- source_excel_row
+- administrative_district_code / administrative_district_name
+- federal_state_code / federal_state_name
+- kreisregion_code / kreisregion_name
+- settlement_type_code / settlement_type_name_de
+
+The complete original sheet/column inventory, source checksum, derived checksum,
+download timestamp, response metadata, and validation results are in
+data/reference/bbsr_source_manifest.json. The reproducible generator is
+scripts/10_build_bbsr_reference.py and its evidence is in
+reports/batch10_bbsr_reference_validation.md.
 
 The current reference workbook is preferred over the historical GovData entry that
 describes a nine-category 2012 dataset. The full [INKAR](https://www.inkar.de/Default)

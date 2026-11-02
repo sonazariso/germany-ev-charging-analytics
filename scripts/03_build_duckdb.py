@@ -437,10 +437,14 @@ def main():
         raise SystemExit('Missing Phase 01 profile: data/profiles/workbook_profiles.json')
     profiles = json.loads(profile_path.read_text(encoding='utf-8'))
     profile_map = {p['source_id']:p for p in profiles}
-    if set(profile_map)!=set(SOURCE_NAMES):
-        raise SystemExit('Need exactly the 4 expected BNetzA/KBA source profiles')
-    if any(p.get('status')!='verified_and_profiled' for p in profiles):
-        raise SystemExit('All four source files must be verified_and_profiled in Phase 01')
+    missing = [name for name in SOURCE_NAMES if name not in profile_map]
+    if missing:
+        raise SystemExit('Missing expected BNetzA/KBA source profiles: ' + ', '.join(missing))
+    reference_profiles = sorted(set(profile_map) - set(SOURCE_NAMES))
+    if reference_profiles:
+        print('[INFO] Ignoring separately profiled reference sources: ' + ', '.join(reference_profiles), flush=True)
+    if any(profile_map[name].get('status')!='verified_and_profiled' for name in SOURCE_NAMES):
+        raise SystemExit('All four primary BNetzA/KBA source files must be verified_and_profiled in Phase 01')
     dest = ROOT / 'data/analytics/ev_charging.duckdb'
     build = ROOT / 'data/analytics/ev_charging.build.duckdb'
     dest.parent.mkdir(parents=True,exist_ok=True)

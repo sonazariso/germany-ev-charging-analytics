@@ -9,7 +9,7 @@ This checklist prepares a future publication review. Nothing in Batch 04 publish
 - [ ] All headline metrics reconcile to a named report or read-only query.
 - [ ] KPI denominators, grains, and source dates reviewed.
 - [ ] Provisional geographic mappings clearly marked.
-- [ ] BBSR and Tableau are not described as complete unless they are actually complete.
+- [ ] BBSR is described accurately as a separate reference only; no unapproved KBA enrichment or KPI is presented as complete.
 - [ ] Dashboard and screenshot review completed.
 
 ## Security and repository hygiene
@@ -28,7 +28,8 @@ This checklist prepares a future publication review. Nothing in Batch 04 publish
 - [ ] KBA Datenlizenz Deutschland – Namensnennung 2.0 attribution is present where required.
 - [ ] Code license and source-data licenses are kept distinct.
 - [ ] Source-derived extracts, identifiers, coordinates, screenshots, and Tableau publication rights are reviewed.
-- [ ] Any BBSR or other future enrichment license is reviewed before use.
+- [ ] BBSR Datenlizenz Deutschland – Namensnennung – Version 2.0 attribution and change notice are retained for the tracked derived reference.
+- [ ] Any future BBSR/KBA enrichment or Tableau publication license is reviewed before use.
 
 ## Code and dependency review
 
