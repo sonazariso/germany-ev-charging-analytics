@@ -97,10 +97,13 @@ This log separates approved decisions, implementation details, and pending propo
 - The current source-local equipment key is source_id plus Excel row.
 - The read-only Batch Analysis Runner accepts named SELECT or WITH queries and can read the crosswalk CSV as a query-scoped relation.
 - Current generated reports retain source reference dates and validation results.
+- Batch 07 evidence review: 22 of the 24 provisional mappings are independently supported at the row/entity level; the two Trier rows are partially supported as one KBA registration region; no row identity is unresolved. This is an evidence classification, not approval to change operational statuses. Destatis AGS/ARS keys and KBA registration-region keys remain distinct concepts.
+- Batch 07 confirmed that the July 2026 KBA FZ 27.15 value of 7,869 BEVs belongs to the combined `07211 TRIER-SAARBURG` row. A common registration authority does not justify splitting that stock between the two administrative units.
 
 ## Pending proposals
 
-- Replace or supplement the provisional crosswalk with an authoritative administrative reference.
+- Approve whether the 22 row/entity-supported aliases may move out of the operational provisional status; retain the two Trier rows as a combined KBA registration region unless direct allocation evidence is found.
+- Replace or supplement the provisional crosswalk with an authoritative KBA-to-administrative reference that explicitly identifies the code system and effective date.
 - Approve permanent reference and geographic aggregate objects in DuckDB.
 - Resolve the source_id omission in analytics.charging_by_state before multi-snapshot loading.
 - Approve a reusable point-power parser/view.

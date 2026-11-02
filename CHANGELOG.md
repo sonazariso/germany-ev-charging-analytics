@@ -57,3 +57,12 @@ This changelog records project milestones and local repository changes. Historic
 - Updated the local DBeaver connection/output paths and VS Code workspace record to the relocated project; these machine-local settings remain outside Git.
 - Documented the project-relative reproducibility workflow and the preserved `.venv` portability caveat; no dependency installation or recreation was performed.
 - Did not change source workbooks, DuckDB schemas or objects, analytical logic, or the Crosswalk CSV; no remote was added and nothing was uploaded or published.
+
+## 2026-11-02 — Batch 07
+
+- Reviewed all 24 provisional BNetzA-to-KBA crosswalk rows against the Destatis GV-ISys Q3 2026 administrative classification and official KBA FZ 27.15 July 2026 evidence.
+- Classified 22 mappings as independently supported at the row/entity level, two Trier mappings as partially supported shared KBA-registration-region mappings, and zero row identities as unresolved.
+- Confirmed the distinction between Destatis AGS/ARS and KBA registration-district keys; no universal code-system equivalence was inferred.
+- Confirmed that KBA FZ 27.15 reports 7,869 July 2026 BEVs for combined row `07211 TRIER-SAARBURG`; preserved aggregate-before-join and did not allocate the stock to either administrative unit.
+- Added the Batch 07 evidence report and updated geographic methodology, data-quality, decision-log, and project-status documentation.
+- Did not modify the Crosswalk CSV, DuckDB reference table, analytics views, KPIs, source workbooks, Python environment, dependencies, or datasets; no remote was added and nothing was uploaded or published.

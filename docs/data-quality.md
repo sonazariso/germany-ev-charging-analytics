@@ -130,6 +130,20 @@ Batch 06 created a verified pre-change backup, deployed the permanent reference 
 
 The direct core recomputation matched the deployed regional view. The state-view comparison retained all 16 states and every baseline equipment, declared-point, and populated-point value. The exact backup path, hash, and validation evidence are recorded in [reports/batch06_geographic_deployment.md](../reports/batch06_geographic_deployment.md).
 
+### Batch 07 authoritative crosswalk review
+
+Batch 07 reviewed all 24 provisional Crosswalk rows against the Destatis GV-ISys Q3 2026 administrative classification and the official KBA FZ 27.15 July 2026 workbook. The detailed matrix and source URLs are in [reports/batch07_authoritative_crosswalk_review.md](../reports/batch07_authoritative_crosswalk_review.md).
+
+| Review result | Rows | Quality interpretation |
+|---|---:|---|
+| Independently supported at row/entity level | 22 | Same state, official district identity, five-digit key, and identifiable KBA label variant. This is not a universal KBA-code = AGS/ARS claim. |
+| Partially supported shared-region mappings | 2 | Trier city and Trier-Saarburg are distinct Destatis units but one KBA FZ 27.15 registration-region row. |
+| Unresolved row identities | 0 | No reviewed row lacked an identifiable official target. |
+
+All 24 operational rows remain provisional. The review did not modify the CSV or DuckDB table. Destatis separates Trier city `07211` from Trier-Saarburg `07235`; KBA FZ 27.15 reports `07211 TRIER-SAARBURG` and 7,869 July 2026 BEVs for the combined KBA row. A common registration office confirms shared administration, but not a city/county allocation of that stock. The local KBA FZ 27.17 presentation also uses `07211 TRIER,STADT` for municipality rows, so KBA display labels must not be used alone as administrative definitions.
+
+This review resolves the evidence classification, not the owner decision to promote any mapping. Future changes must keep AGS, ARS, and KBA registration-region keys in explicitly named fields and preserve the aggregate-before-join rule.
+
 ### Known coordinate exception
 
 All current equipment rows have non-null coordinates. One row falls outside a broad Germany check because its longitude is 4.0. The source record is not corrected or removed; it remains an exception for future coordinate review.

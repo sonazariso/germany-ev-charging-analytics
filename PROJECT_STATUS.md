@@ -2,11 +2,11 @@
 
 ## Current Batch
 
-Batch 06.2 — local project relocation (complete; the complete project is under the established `dev` root, the private Persian catalog is in a sibling directory outside Git, and post-move integrity validation passed; no data or database changes).
+Batch 07 — authoritative geographic crosswalk review (complete; all 24 provisional rows were reviewed against contemporary Destatis and official KBA evidence; documentation only; no data, crosswalk, DuckDB, view, or KPI changes).
 
 ## Last completed Batch
 
-Batch 06.2 — local project relocation completed after the Batch 06.1 KPI documentation audit.
+Batch 07 — authoritative geographic crosswalk review completed after the Batch 06.2 local project relocation.
 
 ## Latest validated metrics
 
@@ -52,11 +52,14 @@ The deployed maximum-per-point parser classifies 156,155 points at or below 22 k
 - Batch 06.2 complete local relocation with before/after inventory and hash verification.
 - Batch 06.2 post-relocation database, backup, crosswalk, Git, and Python/DuckDB runtime checks.
 - Local DBeaver connection/output settings and the VS Code workspace record updated to the relocated project outside Git.
+- Batch 07 authoritative evidence review of all 24 provisional crosswalk rows.
+- Batch 07 evidence classification: 22 independently supported row/entity mappings, 2 partially supported shared Trier-region mappings, and 0 unresolved row identities; all 24 remain operationally provisional.
+- Batch 07 Trier finding: KBA FZ 27.15 reports 7,869 July 2026 BEVs for combined row `07211 TRIER-SAARBURG`; Destatis separately identifies Trier city `07211` and Trier-Saarburg `07235`.
 - Persistent AGENTS.md, changelog, and local Git configuration.
 
 ## Open issues
 
-- Twenty-two district aliases and the two shared Trier/Trier-Saarburg source mappings (24 provisional mappings total) require authoritative geographic review.
+- All 24 provisional mappings have completed the Batch 07 evidence review; 22 are independently supported at row/entity level and two Trier rows remain partially supported because KBA combines them. Operational status promotion still requires owner approval, and no universal KBA-code-to-AGS/ARS mapping was found.
 - The current helper `connector_power_kw_single` does not parse multi-value power strings; the complete bands use the deployed maximum-per-point expression over `connector_power_raw`.
 - The 400-district KBA total differs from the state-level Deutschland total because of the current Sonstige/reporting-structure reconciliation.
 - One BNetzA coordinate falls outside a broad Germany bounding check and remains uncorrected.
@@ -68,7 +71,8 @@ The deployed maximum-per-point parser classifies 156,155 points at or below 22 k
 
 ## Pending decisions
 
-- Complete authoritative review of the provisional crosswalk and decide the final display treatment of shared Trier code 07211.
+- Decide whether and how to promote the 22 row/entity-supported aliases while retaining explicit KBA-versus-AGS/ARS terminology.
+- Decide the final display treatment of shared Trier code 07211; preserve the combined KBA registration-region interpretation unless direct allocation evidence is approved.
 - Decide whether point-power parsing becomes a reusable core field rather than remaining in the deployed geographic view.
 - Approve or defer the candidate KPI domains recorded in the Batch 06.1 audit, including PHEV change/growth, city/county, operator, descriptive source fields, and KBA ownership/postcode/municipality analyses.
 - Decide whether BBSR settlement typology adds value and can be reused.
@@ -76,8 +80,8 @@ The deployed maximum-per-point parser classifies 156,155 points at or below 22 k
 
 ## Next planned work
 
-Owner review of candidate KPI domains, independent geographic review, KBA reconciliation, KPI hardening, optional BBSR assessment, Tableau extract preparation, dashboard development, and final publication review.
+Owner review of the Batch 07 evidence classifications, KBA reconciliation, KPI hardening, optional BBSR assessment, Tableau extract preparation, dashboard development, and final publication review.
 
 ## Last local Git commit reference
 
-The Batch 06.2 local commit hash is returned in the handoff; no remote is configured.
+The Batch 07 local commit hash is returned in the handoff; no remote is configured.

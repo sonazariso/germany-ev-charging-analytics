@@ -31,6 +31,17 @@ Before modification, the deployment checked the 117,662 equipment rows, 211,253 
 
 The deployed regional view retains equipment and point measures at separate aggregation stages, uses the maximum valid semicolon-delimited connector-power token within each point, exposes `points_without_valid_power`, and retains mapping-quality indicators. The combined view has one row per KBA code and actual KBA stock date, with infrastructure values repeated across the three stock dates rather than summed.
 
+## Batch 07 authoritative crosswalk review
+
+Batch 07 reviewed all 24 rows that were explicitly provisional in the Crosswalk CSV and permanent DuckDB reference table. The detailed evidence matrix is in [reports/batch07_authoritative_crosswalk_review.md](../reports/batch07_authoritative_crosswalk_review.md).
+
+- Twenty-two alias rows are independently supported at the row/entity level by the Destatis GV-ISys Q3 2026 administrative classification and the official KBA FZ 27.15 July 2026 row with the same state, five-digit key, and identifiable label variant.
+- The two Trier rows are only partially supported: Destatis distinguishes Trier city (`07211`) from Landkreis Trier-Saarburg (`07235`), while KBA FZ 27.15 reports one combined registration-region row, `07211 TRIER-SAARBURG`.
+- No reviewed row was unresolved at the row-identity level, but no universal KBA `Statistische Kennziffer` = AGS/ARS rule was found. Destatis AGS/ARS and KBA registration-district keys remain distinct concepts.
+- All 24 rows remain operationally provisional. This documentation review does not authorize a Crosswalk CSV, DuckDB reference-table, analytics-view, or KPI change.
+
+The official KBA July 2026 FZ 27.15 row reports **7,869 BEVs** for `07211 TRIER-SAARBURG`. This is combined KBA registration-region stock, not a Trier-city-only or Trier-Saarburg-county-only value. The existing aggregate-before-join method is therefore preserved.
+
 ## Matching method
 
 The generator in scripts/04_build_geographic_crosswalk.py applies the following sequence:
@@ -56,7 +67,7 @@ The result is deterministic for the observed source snapshot. Determinism is a r
 | explicit_state_city_naming_convention | 2 | observed_local_snapshot_naming_convention |
 | shared_kba_registration_region | 2 | provisional_shared_region_requires_authoritative_review |
 
-The 375 ordinary matches were checked against the local July KBA snapshot. The 22 aliases and two Trier rows make 24 explicitly provisional mappings. No row is labelled officially verified.
+The 375 ordinary matches were checked against the local July KBA snapshot. The 22 aliases and two Trier rows make 24 explicitly provisional mappings. Batch 07 adds evidence for 22 row/entity identities and partial support for the two Trier aggregation mappings, but no row is labelled officially verified in the operational data.
 
 ## Provisional aliases
 
@@ -87,7 +98,7 @@ These rules are explicit candidates for the local KBA release. They are not proo
 | Sachsen | Landkreis Sächsische Schweiz-Osterzgebirge | 14628 | SAECHS.SCHWEIZ-OSTERZGEB | Multiple abbreviations |
 | Thüringen | Landkreis Saale-Holzland-Kreis | 16074 | SAALE-HOLZLANDKREIS | Joined KBA wording |
 
-The target state, local administrative type, and KBA display label were checked for each candidate against the local July workbook. An authoritative administrative source or independent review is still required.
+The target state, local administrative type, and KBA display label were checked for each candidate against the local July workbook and the contemporary Destatis administrative classification. The 22 aliases are supported as row/entity identities, but the KBA product does not publish a universal AGS/ARS crosswalk; they remain provisional until the owner approves the status treatment.
 
 ## City/county collisions and special conventions
 
@@ -97,7 +108,11 @@ The crosswalk explicitly maps Kreisfreie Stadt Berlin to KBA code 11000 and Krei
 
 ### Trier and Trier-Saarburg
 
-KBA FZ 27.15 reports Trier city and Trier-Saarburg together under registration-region code 07211. Both original BNetzA rows are retained:
+Destatis distinguishes Trier city (`07211`) from Landkreis Trier-Saarburg (`07235`). The official Landkreis page and the 2022 public-law agreement establish a common Kfz registration office and common registration district for both areas. KBA FZ 27.15 nevertheless reports one district-level row as `07211 TRIER-SAARBURG`; it has no separate `07235` row. An official Rheinland-Pfalz method note also describes the KBA registration district Trier-Saarburg as including the city of Trier.
+
+The July 2026 FZ 27.15 row reports 7,869 BEVs, 160,422 passenger cars, and 3,516 PHEVs for this combined KBA row. FZ 27.17 uses the presentation label `07211 TRIER,STADT` for municipality rows, so KBA worksheet labels are not sufficient to define a separate administrative boundary. The 7,869 BEVs must not be allocated to either source geography without new approved evidence.
+
+Both original BNetzA rows are retained:
 
 | BNetzA district | KBA code | Consequence |
 |---|---:|---|
@@ -114,7 +129,7 @@ BNetzA equipment and point rows
   -> join one KBA stock row per code and reference date
 ~~~
 
-Joining the raw 401-row crosswalk directly to KBA stock would duplicate the 07211 vehicle stock. The Batch 03 validation measured 2,362,218 BEVs after aggregate-before-join and 2,370,087 in the intentionally demonstrated raw 401-row join.
+Joining the raw 401-row crosswalk directly to KBA stock would duplicate the 07211 vehicle stock. The Batch 03 validation measured 2,362,218 BEVs after aggregate-before-join and 2,370,087 in the intentionally demonstrated raw 401-row join. Shared registration administration is not treated as proof that the administrative boundaries or all KBA worksheets are identical.
 
 ## Crosswalk output
 
