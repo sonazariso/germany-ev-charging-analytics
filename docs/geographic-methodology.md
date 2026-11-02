@@ -244,3 +244,39 @@ codes 1/2/3/4. Hanau has no row in the 2025 vintage; Main-Kinzig-Kreis is
 preserved as type 2. Trier city is type 1 and Trier-Saarburg is type 3 in
 separate BBSR rows. Neither type is assigned to KBA 07211 and no shared stock
 is allocated.
+
+## Batch 11 BBSR–KBA compatibility audit
+
+Batch 11 performed the approved read-only compatibility audit with
+[`scripts/11_audit_bbsr_kba_compatibility.py`](../scripts/11_audit_bbsr_kba_compatibility.py).
+The complete evidence report is in
+[`reports/batch11_bbsr_kba_compatibility.md`](../reports/batch11_bbsr_kba_compatibility.md);
+the 400-row non-operational output is in
+[`reports/batch11_bbsr_kba_compatibility_audit.csv`](../reports/batch11_bbsr_kba_compatibility_audit.csv).
+
+The audit inspected the actual BBSR `KRS2025`/`KKR2025`/`KTU2025`-derived CSV
+fields, the KBA `district_code`/`reference_date`/`bev_cars` fields, the original
+BNetzA district identities, and the deployed aggregate-before-join views. It
+preserved leading zeroes and opened DuckDB with `read_only=True`. It did not
+create a bridge, change the Crosswalk, modify the BBSR CSV, or write to DuckDB.
+
+Under the strict rule that `EXACT` requires an authoritative, dated KBA-to-BBSR
+equivalence, the result is 0 `EXACT`, 0 `HOMOGENEOUS_COMPOSITE`, 1 `MIXED`, 2
+`VINTAGE_CONFLICT`, 397 `UNRESOLVED`, and 0 `CONFLICTING` regions. The 399
+five-digit prefix intersections remain diagnostic candidates, not a BBSR
+classification coverage measure. No production KBA region can currently be
+assigned a BBSR category from the approved evidence set.
+
+The two boundary-vintage rows are Hanau `06415` and current Main-Kinzig-Kreis
+`06435`: BBSR stand 2025-12-31 predates Hanau's 2026-01-01 separation, and the
+2025 Main-Kinzig type must not be inherited by Hanau or silently treated as an
+exact type for the current remainder. KBA `07211` remains `MIXED` because its
+combined registration-region stock covers BBSR type 1 Trier city and type 3
+Trier-Saarburg. Its approved display label and aggregate-before-join treatment
+remain unchanged.
+
+The general KBA denominator still reconciles to 400 regions, 211,253 charging
+points, and 2,362,218 July BEVs. These totals describe KBA registration-region
+coverage only; they are not BBSR urban/rural KPIs. BBSR-to-KBA integration is
+**NOT IMPLEMENTED** pending owner approval of a dated authoritative bridge,
+vintage treatment, mixed-region handling, and any category-level reporting.

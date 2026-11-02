@@ -17,6 +17,7 @@ This roadmap distinguishes established work from planned work. A planned item is
 - Batch 07: authoritative evidence review of the 24 provisional crosswalk rows.
 - Batch 08: independent code-system and boundary verification for the 22 aliases, Trier, Hanau, and the 400-code model.
 - Batch 10: acquired and validated the latest suitable official BBSR reference, preserved source provenance, and built a separate four-category Kreis CSV without changing DuckDB or the Crosswalk.
+- Batch 11: completed a read-only BBSR/KBA compatibility and coverage audit for all 400 KBA regions, with explicit non-operational statuses and no production integration.
 
 These are project milestones supported by local artifacts. They are not historical Git commits unless a local commit is explicitly identified in the handoff.
 
@@ -52,6 +53,7 @@ These are project milestones supported by local artifacts. They are not historic
 - [ ] Decide whether maximum-per-point power parsing becomes a reusable view or core field.
 - [x] Assess BBSR four-category suitability, boundary vintages, and licensing in Batch 09; no implementation or complete INKAR download.
 - [x] Acquire and build the versioned BBSR four-category administrative reference in Batch 10; preserve raw source outside Git and keep it separate from KBA classification.
+- [x] Audit BBSR/KBA compatibility, Hanau/Main-Kinzig vintage conflict, Trier mixed coverage, Kreisregion relationships, and full-denominator coverage in Batch 11; keep statuses non-operational.
 - [ ] Approve a dated BBSR/KBA compatibility bridge, mixed/unresolved status, Hanau treatment, and any future BBSR reference model before implementation.
 - [ ] Further KPI validation and dashboard-specific denominator review.
 - [ ] Prepare compact Tableau extracts and source-date metadata.

@@ -2,11 +2,11 @@
 
 ## Current Batch
 
-Batch 10 — Independent BBSR reference dataset (complete; latest suitable official workbook acquired and preserved, six worksheets inspected, four-category Kreis reference built and validated; no DuckDB, Crosswalk, KBA classification, allocation, or KPI changes).
+Batch 11 — BBSR–KBA compatibility and coverage audit (complete; all 400 KBA regions audited read-only with explicit non-operational statuses; no DuckDB, Crosswalk, BBSR CSV, KBA classification, allocation, or KPI changes).
 
 ## Last completed Batch
 
-Batch 10 — BBSR reference dataset completed after the Batch 09 feasibility assessment and Batch 08 geographic verification.
+Batch 11 — BBSR–KBA compatibility audit completed after the Batch 10 reference build, Batch 09 feasibility assessment, and Batch 08 geographic verification.
 
 ## Latest validated metrics
 
@@ -29,6 +29,8 @@ The latest local DuckDB validation uses BNetzA 2026-09-30 and KBA snapshots 2026
 | Combined KBA code/date rows | 1,200 = 400 × 3 |
 | BBSR Kreis rows / distinct Kreisregion keys | 400 / 362 |
 | BBSR compact type row counts | 68 / 131 / 98 / 103 for codes 1 / 2 / 3 / 4 |
+| Batch 11 KBA audit statuses | 0 exact / 0 homogeneous / 1 mixed / 2 vintage / 397 unresolved / 0 conflicting |
+| Strict BBSR classification coverage | 0 regions / 0 charging points / 0 July BEVs |
 
 The deployed maximum-per-point parser classifies 156,155 points at or below 22 kW, 55,098 above 22 kW, 40,950 at or above 150 kW, and 6,950 at or above 350 kW. These are declared-power classifications, not utilization measures.
 
@@ -64,20 +66,23 @@ The deployed maximum-per-point parser classifies 156,155 points at or below 22 k
 - Batch 09 finding: a read-only five-digit prefix screen found 399 intersections between the 400 July 2026 KBA codes and the BBSR 2025 Kreis table; Hanau `06415` is absent from the 2025 BBSR vintage, Trier-Saarburg `07235` is absent from KBA's 400-code table, and KBA `07211` is a mixed BBSR-type registration region.
 - Batch 10 BBSR reference: official 2025 workbook preserved with source/derived checksums; six sheets inspected; deterministic 400-row CSV built from Kreisreferenz with 362 Kreisregion keys and 36 multi-district groups; source rows retained without KBA assignment.
 - Batch 10 BBSR compatibility review: Hanau remains absent from the 2025 BBSR vintage; Main-Kinzig-Kreis is type 2; Trier city is type 1 and Trier-Saarburg type 3 in separate rows; no shared KBA stock is allocated.
+- Batch 11 BBSR/KBA compatibility audit: all 400 KBA regions are represented in a deterministic non-operational output; no `EXACT` or `HOMOGENEOUS_COMPOSITE` status is supported without an authoritative dated bridge; Trier is `MIXED`, Hanau/Main-Kinzig are `VINTAGE_CONFLICT`, and the remaining 397 regions are `UNRESOLVED`.
+- Batch 11 coverage: status denominators reconcile to 211,253 charging points and 2,362,218 July BEVs; unresolved rows remain in the denominator and no BBSR category KPI is calculated.
+- Batch 11 reproducibility: read-only DuckDB integrity checks, source fingerprints, syntax checks, deterministic repeat, and audit CSV coverage all passed.
 - Persistent AGENTS.md, changelog, and local Git configuration.
 
 ## Open issues
 
 - All 24 provisional mappings have completed the Batch 08 evidence review; 22 aliases have direct row-level key evidence and two Trier rows remain entity-level combined-region evidence because KBA combines them. Operational status promotion still requires owner approval, and no universal KBA-code-to-AGS/ARS mapping was found.
 - Historical boundary compatibility remains unknown outside the three 2026 FZ 27.15 snapshots. A boundary-vintage note and additional historical evidence are required before older or cross-product regional trends are published.
-- BBSR is available only as a separate 2025 administrative/Kreisregion reference. It is not integrated into DuckDB or KBA reporting; no direct KBA-to-BBSR equivalence or single BBSR class is defensible for combined Trier code `07211`, and Hanau remains a vintage mismatch.
+- BBSR is available only as a separate 2025 administrative/Kreisregion reference. Batch 11 found no authoritative dated KBA-to-BBSR bridge: no direct KBA-level classification is operationally supported, Trier code `07211` remains mixed, and Hanau/Main-Kinzig remain vintage conflicts.
 - The current helper `connector_power_kw_single` does not parse multi-value power strings; the complete bands use the deployed maximum-per-point expression over `connector_power_raw`.
 - The 400-district KBA total differs from the state-level Deutschland total because of the current Sonstige/reporting-structure reconciliation.
 - One BNetzA coordinate falls outside a broad Germany bounding check and remains uncorrected.
 - BNetzA and KBA snapshot dates are not contemporaneous, and the BNetzA register is not exhaustive.
 - PHEV change/growth and PHEV passenger-car penetration are defined as candidates but remain unvalidated and require owner approval.
 - Operator, city/county, payment/opening/connector, and KBA ownership/postcode/municipality analyses remain proposed pending denominator, grain, and normalization decisions.
-- Tableau reporting, BBSR/KBA compatibility and category-level enrichment, final license review, and GitHub publication are incomplete.
+- Tableau reporting, production BBSR/KBA compatibility and category-level enrichment, final license review, and GitHub publication are incomplete. The Batch 11 audit CSV is non-operational.
 - The preserved ignored `.venv` has historical absolute paths in its activation scripts and `pip` entry-point shebangs; `.venv/bin/python` and `.venv/bin/python -m pip` work, but the environment requires explicit repair or recreation in a future approved task.
 
 ## Pending decisions
@@ -88,12 +93,13 @@ The deployed maximum-per-point parser classifies 156,155 points at or below 22 k
 - Decide whether point-power parsing becomes a reusable core field rather than remaining in the deployed geographic view.
 - Approve or defer the candidate KPI domains recorded in the Batch 06.1 audit, including PHEV change/growth, city/county, operator, descriptive source fields, and KBA ownership/postcode/municipality analyses.
 - Approve a dated BBSR/KBA compatibility bridge, the `mixed_or_unresolved` and `vintage_mismatch` statuses, Hanau treatment, and any future BBSR KPI/Tableau use before integration.
+- Approve whether new authoritative evidence can promote any Batch 11 audit rows to `EXACT` or `HOMOGENEOUS_COMPOSITE`; preserve the no-allocation rule for Trier and the vintage-conflict rule for Hanau/Main-Kinzig.
 - Complete source-derived extract and publication licensing review.
 
 ## Next planned work
 
-Owner review of the Batch 08 evidence classifications, Batch 10 BBSR compatibility gates, historical-boundary recommendation, KBA reconciliation, KPI hardening, Tableau extract preparation, dashboard development, and final publication review.
+Owner review of the Batch 11 compatibility audit and proposed future bridge, historical-boundary recommendation, KBA reconciliation, KPI hardening, Tableau extract preparation, dashboard development, and final publication review.
 
 ## Last local Git commit reference
 
-The Batch 09 local commit is recorded in Git history; the Batch 10 commit will be returned in the handoff. No remote is configured.
+The Batch 10 commit is recorded in Git history; the Batch 11 commit will be returned in the handoff. No remote is configured.

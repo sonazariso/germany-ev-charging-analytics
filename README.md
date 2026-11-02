@@ -4,7 +4,7 @@
 
 This portfolio project builds a reproducible, Germany-wide analytical foundation for comparing the published public-charging register with registered passenger-car stock. It preserves the original BNetzA, KBA, and separately versioned BBSR reference workbooks, separates charging equipment from charging points, and keeps snapshot dates visible throughout the workflow.
 
-The current implementation is a validated local DuckDB model, a deployed still-provisional geographic analytics layer, and a separate validated BBSR administrative reference. BBSR has not been assigned to KBA registration regions or used in a KPI; Tableau Public reporting remains incomplete.
+The current implementation is a validated local DuckDB model, a deployed still-provisional geographic analytics layer, a separate validated BBSR administrative reference, and a non-operational Batch 11 compatibility audit. BBSR has not been assigned to KBA registration regions or used in a KPI; Tableau Public reporting remains incomplete.
 
 ## Why this matters
 
@@ -82,11 +82,11 @@ The current architecture is described in [docs/architecture.md](docs/architectur
 
 ## Current implementation status
 
-Completed local work includes source discovery and profiling, schema inspection, lossless raw ingestion, initial core normalization, read-only validation, charging-power exploration, a 401-row BNetzA-to-KBA crosswalk, a reusable read-only batch runner, the validated Batch 06 geographic layer, and the Batch 10 BBSR four-category reference build.
+Completed local work includes source discovery and profiling, schema inspection, lossless raw ingestion, initial core normalization, read-only validation, charging-power exploration, a 401-row BNetzA-to-KBA crosswalk, a reusable read-only batch runner, the validated Batch 06 geographic layer, the Batch 10 BBSR four-category reference build, and the Batch 11 read-only compatibility audit for all 400 KBA regions.
 
 Batch 04 established the English project documentation, persistent project instructions, tracking files, safe local Git configuration, and the first local baseline commit. Batch 05 validated the pre-integration geographic model. Batch 06 deployed the approved permanent objects after a verified backup and independent validation; source workbooks and the Crosswalk CSV remained unchanged.
 
-Not complete: a dated BBSR/KBA compatibility bridge, BBSR category-level KPIs, Tableau data preparation, dashboard development, final license review, and GitHub publication. The BBSR reference is deliberately separate from DuckDB and the existing Crosswalk.
+Not complete: a dated BBSR/KBA compatibility bridge, BBSR category-level KPIs, Tableau data preparation, dashboard development, final license review, and GitHub publication. The Batch 11 audit found no strict `EXACT` or `HOMOGENEOUS_COMPOSITE` coverage; the BBSR reference and audit output are deliberately separate from DuckDB and the existing Crosswalk.
 
 ## Reproducibility
 
@@ -143,7 +143,7 @@ The local DuckDB database, virtual environment, raw workbooks, temporary files, 
 - [Roadmap](docs/roadmap.md)
 - [Decision log](docs/decisions.md)
 - [GitHub publication checklist](docs/github-publication-checklist.md)
-- [Phase validation reports](reports/phase01_data_profile.md), [Phase 02 schema inspection](reports/phase02_schema_inspection.md), [Phase 03 DuckDB validation](reports/phase03_duckdb_validation.md), [Batch 03 crosswalk validation](reports/batch03_crosswalk_validation.md), [Batch 06 geographic deployment](reports/batch06_geographic_deployment.md), [Batch 06.1 KPI documentation audit](reports/batch06-1_kpi_documentation_audit.md), [Batch 09 BBSR feasibility](reports/batch09_bbsr_feasibility.md), and [Batch 10 BBSR reference validation](reports/batch10_bbsr_reference_validation.md)
+- [Phase validation reports](reports/phase01_data_profile.md), [Phase 02 schema inspection](reports/phase02_schema_inspection.md), [Phase 03 DuckDB validation](reports/phase03_duckdb_validation.md), [Batch 03 crosswalk validation](reports/batch03_crosswalk_validation.md), [Batch 06 geographic deployment](reports/batch06_geographic_deployment.md), [Batch 06.1 KPI documentation audit](reports/batch06-1_kpi_documentation_audit.md), [Batch 09 BBSR feasibility](reports/batch09_bbsr_feasibility.md), [Batch 10 BBSR reference validation](reports/batch10_bbsr_reference_validation.md), and [Batch 11 BBSR/KBA compatibility audit](reports/batch11_bbsr_kba_compatibility.md)
 
 ## Important limitations
 

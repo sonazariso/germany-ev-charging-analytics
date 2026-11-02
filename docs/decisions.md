@@ -98,6 +98,19 @@ This log separates approved decisions, implementation details, and pending propo
 - Status: Approved and implemented in Batch 10. BBSR-to-KBA compatibility, mixed/unresolved treatment, and category-level KPI use remain pending.
 - Evidence: scripts/10_build_bbsr_reference.py, data/reference/bbsr_settlement_types_2025.csv, data/reference/bbsr_source_manifest.json, and reports/batch10_bbsr_reference_validation.md.
 
+### Batch 11 non-operational BBSR–KBA compatibility audit
+
+- Decision: Keep BBSR-to-KBA compatibility findings in a read-only audit output and do not promote them to the operational Crosswalk or DuckDB.
+- Reason: The available evidence contains BBSR administrative/Kreisregion keys, KBA registration-region keys, local BNetzA-to-KBA identity evidence, and source vintages, but no authoritative dated KBA-to-BBSR boundary bridge.
+- Consequences: The 400 KBA regions remain visible with explicit audit statuses. The strict result is 0 `EXACT`, 0 `HOMOGENEOUS_COMPOSITE`, 1 `MIXED` for Trier, 2 `VINTAGE_CONFLICT` for Hanau/Main-Kinzig, 397 `UNRESOLVED`, and 0 `CONFLICTING`. Prefix intersections remain diagnostic only.
+- Status: Approved for Batch 11 audit scope; operational integration remains **NOT IMPLEMENTED** and requires new owner approval.
+- Evidence: scripts/11_audit_bbsr_kba_compatibility.py, reports/batch11_bbsr_kba_compatibility.md, and reports/batch11_bbsr_kba_compatibility_audit.csv.
+
+- Decision: Preserve full KBA denominators and aggregate-before-join treatment while reporting compatibility coverage.
+- Reason: Unresolved regions must remain visible, infrastructure is unique at KBA-code grain, and shared Trier stock must not be duplicated or allocated.
+- Consequences: Coverage reconciles to 400 KBA regions, 211,253 charging points, and 2,362,218 July BEVs. The result is an audit of classification readiness, not a BBSR KPI.
+- Status: Applied in the Batch 11 audit only; no analytical view or KPI formula changed.
+
 ### Batch 06 permanent geographic layer deployment
 
 - Decision: Deploy the approved geographic reference table and two snapshot-specific analytics views to the existing DuckDB file, and correct `analytics.charging_by_state` to use `(source_id, excel_row)` for point aggregation and joins.

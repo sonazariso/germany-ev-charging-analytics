@@ -93,3 +93,11 @@ This changelog records project milestones and local repository changes. Historic
 - Added `data/reference/bbsr_settlement_types_2025.csv`, `data/reference/bbsr_source_manifest.json`, `data/profiles/bbsr_reference_profile.json`, and `reports/batch10_bbsr_reference_validation.md`; the deterministic derived reference contains 400 Kreis rows and 362 Kreisregion keys.
 - Documented the Hanau vintage mismatch, separate Trier type 1/type 3 rows, Berlin/Hamburg/Bremen/Bremerhaven fixtures, 36 multi-district Kreisregion groups, licensing, attribution, and the continued prohibition on direct KBA assignment or shared Trier allocation.
 - Updated the source workflow so separately profiled reference workbooks are ignored by the DuckDB rebuild script; no DuckDB object, Crosswalk row, KPI formula/value, dependency, remote, upload, or publication was changed.
+
+## 2026-11-02 — Batch 11
+
+- Added `scripts/11_audit_bbsr_kba_compatibility.py`, a deterministic read-only audit of all 400 KBA FZ 27.15 registration regions against the separate BBSR 2025 four-category Kreis reference.
+- Added `reports/batch11_bbsr_kba_compatibility.md` and the clearly non-operational `reports/batch11_bbsr_kba_compatibility_audit.csv` with source identities, candidate components, evidence types, vintage flags, status recommendations, and charging/BEV coverage.
+- Validated strict audit results: 0 `EXACT`, 0 `HOMOGENEOUS_COMPOSITE`, 1 `MIXED` Trier region, 2 `VINTAGE_CONFLICT` Hanau/Main-Kinzig regions, 397 `UNRESOLVED`, and 0 `CONFLICTING`.
+- Confirmed full-denominator reconciliation to 211,253 charging points and 2,362,218 July 2026 BEVs without duplicating Trier or summing infrastructure across KBA dates; strict BBSR classification coverage remains zero.
+- Updated geographic methodology, data-quality, decisions, roadmap, project status, and this changelog. BBSR-to-KBA integration remains **NOT IMPLEMENTED**; no source CSV, DuckDB object, KPI formula, dependency, remote, upload, or publication was changed.

@@ -211,6 +211,35 @@ reports/batch10_bbsr_reference_validation.md. The 2025 BBSR vintage has no
 Hanau row, retains Main-Kinzig-Kreis as type 2, and keeps Trier city type 1 and
 Trier-Saarburg type 3 as separate rows. No BBSR type is assigned to KBA 07211.
 
+### Batch 11 BBSR–KBA compatibility audit
+
+The read-only Batch 11 audit is documented in
+[reports/batch11_bbsr_kba_compatibility.md](../reports/batch11_bbsr_kba_compatibility.md)
+and reproduced by
+[scripts/11_audit_bbsr_kba_compatibility.py](../scripts/11_audit_bbsr_kba_compatibility.py).
+The detailed 400-row output is explicitly non-operational:
+[reports/batch11_bbsr_kba_compatibility_audit.csv](../reports/batch11_bbsr_kba_compatibility_audit.csv).
+
+| Check | Result | Quality interpretation |
+|---|---:|---|
+| KBA regions audited | 400 | Every current KBA code is present once in the audit output. |
+| BBSR administrative rows / Kreisregion keys | 400 / 362 | BBSR grain remains separate from KBA registration regions. |
+| BBSR multi-district groups / mixed-type groups | 36 / 0 | 74 component rows; all groups are homogeneous within the 2025 BBSR source. |
+| Audit statuses | 0 exact / 0 homogeneous / 1 mixed / 2 vintage / 397 unresolved / 0 conflicting | No unsupported status is promoted to the operational model. |
+| Strict BBSR classification coverage | 0 regions / 0 points / 0 July BEVs | No authoritative dated KBA-to-BBSR bridge is present. |
+| General KBA coverage denominator | 400 / 211,253 / 2,362,218 | Regions / charging points / July BEVs reconcile independently of BBSR classification. |
+
+The 399 five-digit prefix intersections are retained as screening evidence only;
+they are not a coverage KPI. Hanau `06415` and current Main-Kinzig-Kreis `06435`
+are `VINTAGE_CONFLICT` because BBSR 2025 predates the 2026-01-01 boundary
+change. Trier `07211` is `MIXED` because its shared KBA registration region
+contains BBSR type 1 and type 3 components. Its 503 charging points and 7,869
+July BEVs are counted once at the KBA code grain.
+
+This audit does not change the Crosswalk, BBSR CSV, DuckDB, KPI formulas, or
+Tableau readiness. Unresolved regions remain in every denominator, and no
+classification or vehicle stock is estimated or allocated.
+
 ### Known coordinate exception
 
 All current equipment rows have non-null coordinates. One row falls outside a broad Germany check because its longitude is 4.0. The source record is not corrected or removed; it remains an exception for future coordinate review.
