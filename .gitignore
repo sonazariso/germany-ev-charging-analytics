@@ -1,0 +1,50 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.venv/
+.env
+.env.*
+!.env.example
+*.log
+
+# IDE and local machine settings
+.idea/
+.vscode/
+.python-version
+
+# Official raw source workbooks are reproducibly downloaded, not committed.
+*.xlsx
+*.xls
+*.zip
+data/raw/**
+
+# Local DuckDB and build artifacts
+*.duckdb
+*.duckdb.wal
+*.db
+*.db.wal
+*.part
+data/staging/
+data/analytics/
+data/tmp/
+.data_cache/
+*.tmp
+
+# Generated or uncontrolled analytical exports
+reports/CSV Archive/
+reports/csv/
+*.hyper
+*.twb~
+
+# Generated source previews containing raw sample fields; keep approved
+# inventories and aggregate validation JSON explicit below.
+data/profiles/*
+!data/profiles/
+!data/profiles/download_inventory.json
+!data/profiles/workbook_profiles.json
+!data/profiles/phase03_validation.json
+
+# Internal task briefs and legacy local-language notes are retained locally,
+# but are not part of the English publication baseline.
+prompts/
+*-fa.md

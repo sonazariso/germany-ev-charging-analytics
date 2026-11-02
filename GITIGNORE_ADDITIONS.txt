@@ -1,0 +1,7 @@
+# Phase 03: append to project's existing .gitignore
+.venv/
+data/raw/
+data/analytics/
+data/tmp/
+*.wal
+__pycache__/

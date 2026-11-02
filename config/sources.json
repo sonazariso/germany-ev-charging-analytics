@@ -1,0 +1,59 @@
+{
+  "catalog_date": "2026-10-21",
+  "notes": "Only BNetzA and KBA FZ27 are in scope. Dates denote reference periods; never combine snapshots as though contemporaneous.",
+  "sources": [
+    {
+      "id": "bnetza_charging_2026_09_30",
+      "organization": "Bundesnetzagentur",
+      "dataset": "Ladesäulenregister / Liste der Ladesäulen",
+      "reference_date": "2026-09-30",
+      "format": "xlsx",
+      "filename": "Ladesaeulenregister_BNetzA_2026-09-30.xlsx",
+      "path": "data/raw/bnetza/Ladesaeulenregister_BNetzA_2026-09-30.xlsx",
+      "url": "https://data.bundesnetzagentur.de/Bundesnetzagentur/DE/Fachthemen/ElektrizitaetundGas/E-Mobilitaet/Ladesaeulenregister_BNetzA_2026-09-30.xlsx",
+      "source_page": "https://www.bundesnetzagentur.de/DE/Fachthemen/ElektrizitaetundGas/E-Mobilitaet/start.htm",
+      "license": "CC BY 4.0",
+      "required_attribution": "bundesnetzagentur.de",
+      "scope_note": "One spreadsheet row represents charging equipment, which may contain more than one charging point; do not equate row count with charging-point count."
+    },
+    {
+      "id": "kba_fz27_2026_01",
+      "organization": "Kraftfahrt-Bundesamt",
+      "dataset": "FZ 27 — Fahrzeugbestand",
+      "reference_date": "2026-01-01",
+      "format": "xlsx",
+      "filename": "fz27_202601.xlsx",
+      "path": "data/raw/kba/fz27_202601.xlsx",
+      "url": "https://www.kba.de/SharedDocs/Downloads/DE/Statistik/Fahrzeuge/FZ27/fz27_202601.xlsx?__blob=publicationFile&v=3",
+      "source_page": "https://www.govdata.de/suche/daten/fz-27-2026-bestand-an-kraftfahrzeugen-und-kraftfahrzeuganhangern-nach-ausgewahlten-merkmalen-bu",
+      "license": "Datenlizenz Deutschland – Namensnennung 2.0",
+      "scope_note": "Preserve all worksheets and source report date; aggregate stock, not individual vehicle records."
+    },
+    {
+      "id": "kba_fz27_2026_04",
+      "organization": "Kraftfahrt-Bundesamt",
+      "dataset": "FZ 27 — Fahrzeugbestand",
+      "reference_date": "2026-04-01",
+      "format": "xlsx",
+      "filename": "fz27_202604.xlsx",
+      "path": "data/raw/kba/fz27_202604.xlsx",
+      "url": "https://www.kba.de/SharedDocs/Downloads/DE/Statistik/Fahrzeuge/FZ27/fz27_202604.xlsx?__blob=publicationFile&v=3",
+      "source_page": "https://www.govdata.de/suche/daten/fz-27-2026-bestand-an-kraftfahrzeugen-und-kraftfahrzeuganhangern-nach-ausgewahlten-merkmalen-bu",
+      "license": "Datenlizenz Deutschland – Namensnennung 2.0",
+      "scope_note": "Preserve all worksheets and source report date; aggregate stock, not individual vehicle records."
+    },
+    {
+      "id": "kba_fz27_2026_07",
+      "organization": "Kraftfahrt-Bundesamt",
+      "dataset": "FZ 27 — Fahrzeugbestand",
+      "reference_date": "2026-07-01",
+      "format": "xlsx",
+      "filename": "fz27_202607.xlsx",
+      "path": "data/raw/kba/fz27_202607.xlsx",
+      "url": "https://www.kba.de/SharedDocs/Downloads/DE/Statistik/Fahrzeuge/FZ27/fz27_202607.xlsx?__blob=publicationFile&v=3",
+      "source_page": "https://www.govdata.de/suche/daten/fz-27-2026-bestand-an-kraftfahrzeugen-und-kraftfahrzeuganhangern-nach-ausgewahlten-merkmalen-bu",
+      "license": "Datenlizenz Deutschland – Namensnennung 2.0",
+      "scope_note": "Preserve all worksheets and source report date; aggregate stock, not individual vehicle records."
+    }
+  ]
+}

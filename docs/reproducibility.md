@@ -1,0 +1,108 @@
+# Reproducibility
+
+## Environment
+
+The current verified local environment is:
+
+- Python 3.9.6
+- DuckDB 1.4.5
+- DuckDB requirement declared in requirements-phase03.txt: duckdb >=1.3 and <3
+- macOS local filesystem workflow
+
+The Phase 01 profiling scripts use Python standard-library modules only. DuckDB is needed for the database, crosswalk, and batch-runner stages. The current Batch 04 did not install packages or change the environment.
+
+## Source acquisition and verification
+
+Run from the repository root:
+
+~~~bash
+python3 scripts/00_storage_check.py
+python3 scripts/01_download.py
+python3 scripts/02_profile_xlsx.py
+python3 scripts/03_inspect_schema.py
+~~~
+
+The source manifest is config/sources.json. scripts/01_download.py validates the XLSX container and writes data/profiles/download_inventory.json. scripts/02_profile_xlsx.py streams every physical row in every worksheet and writes data/profiles/workbook_profiles.json and reports/phase01_data_profile.md.
+
+If an official page blocks scripted downloads, download the original workbook from the source_page in the manifest into its exact configured path, then run:
+
+~~~bash
+python3 scripts/01_download.py --verify-only
+python3 scripts/02_profile_xlsx.py
+~~~
+
+Do not rename, rewrite, trim, or modify the original workbooks.
+
+## DuckDB build
+
+The existing build script uses the four verified source profiles, creates a temporary build database, validates profiled row counts and hashes, and replaces the target only after a successful checkpoint. Its command is:
+
+~~~bash
+.venv/bin/python scripts/03_build_duckdb.py
+~~~
+
+This command is a read-write rebuild workflow. It is not part of normal read-only analysis and must not be run during a review unless a database rebuild is explicitly approved. The current database was not rebuilt in Batch 04.
+
+The current database contains raw, core, and analytics objects described in [the data dictionary](data-dictionary.md). The original source files remain outside the Git baseline.
+
+## Validation
+
+The existing reports provide the established checks:
+
+~~~bash
+.venv/bin/python scripts/04_build_geographic_crosswalk.py
+.venv/bin/python scripts/batch_analysis.py --demo \
+  --report reports/batch03_batch_runner_demo.md
+~~~
+
+The crosswalk script opens DuckDB with read_only=True and writes the curated reference CSV and its Markdown validation report. The batch runner opens one read-only connection, accepts multiple named SELECT or WITH queries, consumes every result to record row counts, and closes the connection.
+
+For a custom query:
+
+~~~bash
+.venv/bin/python scripts/batch_analysis.py \
+  --query equipment_count="SELECT COUNT(*) AS rows FROM core.charging_equipment" \
+  --query point_count="SELECT COUNT(*) AS rows FROM core.charging_point" \
+  --report reports/my_batch.md
+~~~
+
+For reusable JSON query definitions, use query-file with either an object mapping names to SQL or a list of objects containing name and sql. The placeholder {{CROSSWALK_CSV}} can be used in a query-file and is resolved by the runner. Queries are restricted to one SELECT or WITH statement and no permanent tables or views are created.
+
+## Geographic crosswalk
+
+The crosswalk generator reads:
+
+- core.charging_equipment
+- core.charging_point
+- core.kba_district_ev_stock at 2026-07-01
+
+It writes data/reference/bnetza_kba_district_crosswalk_2026.csv and reports/batch03_crosswalk_validation.md. It preserves all 401 source combinations and records provisional statuses rather than inventing missing mappings.
+
+## Read-only database inspection
+
+Use a read-only Python connection for analysis:
+
+~~~python
+import duckdb
+
+connection = duckdb.connect(
+    "data/analytics/ev_charging.duckdb",
+    read_only=True,
+)
+try:
+    rows = connection.execute(
+        "SELECT COUNT(*) FROM core.charging_point"
+    ).fetchone()
+finally:
+    connection.close()
+~~~
+
+Do not kill processes to clear a lock. If a read-only connection fails because another process holds the DuckDB file, close the other client or use an existing verified report and mark the evidence historical. Do not rebuild the database to work around a lock.
+
+## DBeaver
+
+DBeaver is optional. If used, create a DuckDB connection to data/analytics/ev_charging.duckdb and inspect raw, core, and analytics schemas. Keep the Python build and analysis processes closed when DBeaver needs exclusive access. Prefer a read-only connection for inspection and do not run DDL from the client unless the database change has been separately approved.
+
+## Tableau Public
+
+Tableau Public cannot query a local DuckDB file as a live published source. The planned workflow is to create a compact, validated extract from approved analytics relations, record both source dates and the extract generation time, and keep detailed point data available locally where performance and licensing permit. No Tableau dashboard or public extract has been completed.

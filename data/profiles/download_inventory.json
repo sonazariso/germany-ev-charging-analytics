@@ -1,0 +1,38 @@
+[
+  {
+    "id": "bnetza_charging_2026_09_30",
+    "reference_date": "2026-09-30",
+    "relative_path": "data/raw/bnetza/Ladesaeulenregister_BNetzA_2026-09-30.xlsx",
+    "download_url": "https://data.bundesnetzagentur.de/Bundesnetzagentur/DE/Fachthemen/ElektrizitaetundGas/E-Mobilitaet/Ladesaeulenregister_BNetzA_2026-09-30.xlsx",
+    "bytes": 31722320,
+    "sha256": "1e82c1734b17e17e51092a0f9460a5e204888569fb12aa5940b30e9cdb726342",
+    "format": "xlsx"
+  },
+  {
+    "id": "kba_fz27_2026_01",
+    "reference_date": "2026-01-01",
+    "relative_path": "data/raw/kba/fz27_202601.xlsx",
+    "download_url": "https://www.kba.de/SharedDocs/Downloads/DE/Statistik/Fahrzeuge/FZ27/fz27_202601.xlsx?__blob=publicationFile&v=3",
+    "bytes": 1474738,
+    "sha256": "29ab2eaa178a1c6a3463d5cad707fee1e762241304ae6bb08c29702d6e6aea31",
+    "format": "xlsx"
+  },
+  {
+    "id": "kba_fz27_2026_04",
+    "reference_date": "2026-04-01",
+    "relative_path": "data/raw/kba/fz27_202604.xlsx",
+    "download_url": "https://www.kba.de/SharedDocs/Downloads/DE/Statistik/Fahrzeuge/FZ27/fz27_202604.xlsx?__blob=publicationFile&v=3",
+    "bytes": 1482694,
+    "sha256": "28fffaa7d2f21ede6d7f6988a717b749b759a308755c472df4d391c73a0653e7",
+    "format": "xlsx"
+  },
+  {
+    "id": "kba_fz27_2026_07",
+    "reference_date": "2026-07-01",
+    "relative_path": "data/raw/kba/fz27_202607.xlsx",
+    "download_url": "https://www.kba.de/SharedDocs/Downloads/DE/Statistik/Fahrzeuge/FZ27/fz27_202607.xlsx?__blob=publicationFile&v=3",
+    "bytes": 1478376,
+    "sha256": "d6a26702fa6f8358cc5f0e15e88c04ac6c36527be404058674138dd9571bc803",
+    "format": "xlsx"
+  }
+]
