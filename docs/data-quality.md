@@ -144,6 +144,21 @@ All 24 operational rows remain provisional. The review did not modify the CSV or
 
 This review resolves the evidence classification, not the owner decision to promote any mapping. Future changes must keep AGS, ARS, and KBA registration-region keys in explicitly named fields and preserve the aggregate-before-join rule.
 
+### Batch 08 code and boundary verification
+
+Batch 08 added an independent evidence review without changing operational data or statuses. The full matrix and source register are in [reports/batch08_geographic_code_verification.md](../reports/batch08_geographic_code_verification.md).
+
+| Review result | Rows / result | Quality interpretation |
+|---|---:|---|
+| Alias rows with direct row-level code evidence | 22 | Same dated five-digit KBA key and Destatis Kreis component, state, type, and identifiable entity; not a universal AGS/ARS equivalence. |
+| Aliases supported only at entity level | 0 | The two Trier rows are instead combined-region evidence. |
+| Unresolved or conflicting alias identities | 0 | No identity gap was found; the universal code-system relationship remains unproven. |
+| Hanau BNetzA source rows | 2 | Separate `Kreisfreie Stadt Hanau` and `Landkreis Main-Kinzig-Kreis` rows in the 2026-09-30 source. |
+| Hanau KBA FZ 27.15 rows | 2 per snapshot | Separate `06415` and `06435` rows on all three 2026 dates. |
+| Trier KBA July BEV stock | 7,869 once | Combined `07211 TRIER-SAARBURG` registration-region stock; no city/county allocation. |
+
+Hanau therefore has no observed current-snapshot coverage mismatch. Historical impact is unknown because the current model contains only the three 2026 FZ 27.15 snapshots. The 400-code model remains defensible only when described as a KBA registration-region model. A historical boundary-vintage note is required for any older or cross-product comparison.
+
 ### Known coordinate exception
 
 All current equipment rows have non-null coordinates. One row falls outside a broad Germany check because its longitude is 4.0. The source record is not corrected or removed; it remains an exception for future coordinate review.

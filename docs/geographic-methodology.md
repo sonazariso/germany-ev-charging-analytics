@@ -42,6 +42,18 @@ Batch 07 reviewed all 24 rows that were explicitly provisional in the Crosswalk 
 
 The official KBA July 2026 FZ 27.15 row reports **7,869 BEVs** for `07211 TRIER-SAARBURG`. This is combined KBA registration-region stock, not a Trier-city-only or Trier-Saarburg-county-only value. The existing aggregate-before-join method is therefore preserved.
 
+## Batch 08 code-system and boundary verification
+
+Batch 08 independently checked the 22 identity-supported aliases, Hanau's 2026 boundary change, the three local KBA FZ 27.15 snapshots, and the Trier registration-region treatment. The detailed evidence matrix is in [reports/batch08_geographic_code_verification.md](../reports/batch08_geographic_code_verification.md).
+
+- The 22 aliases have direct **row-level** code evidence: the KBA five-digit `Statistische Kennziffer` matches the dated Destatis five-digit Kreis component, and the state, administrative type, and entity identity agree. This does not establish a universal KBA-code = AGS/ARS relationship.
+- No alias is supported only by entity-level evidence; no alias identity is unresolved or conflicting. The two Trier rows are separate administrative entities supported only as one combined KBA registration region and are not counted as aliases.
+- Hanau became a kreisfreie Stadt on 2026-01-01. The 2026-09-30 BNetzA snapshot has separate Hanau and Main-Kinzig-Kreis rows, and KBA FZ 27.15 has separate `06415 HANAU,STADT` and `06435 MAIN-KINZIG-KREIS` rows on 2026-01-01, 2026-04-01, and 2026-07-01. The current crosswalk has no Hanau coverage mismatch.
+- The current 400-code model remains defensible as a KBA registration-region model for these snapshots, not as an authoritative 400-region administrative model. A historical boundary-vintage note is required before older or cross-product series are presented.
+- All 24 operational mappings remain provisional. No CSV, reference table, view, KPI formula, source row, or vehicle count was changed.
+
+For display, use the explicit label **Trier/Trier-Saarburg KBA registration region (07211)**. The July 2026 value of 7,869 BEVs is joined once after aggregation; it must not be assigned to either administrative unit.
+
 ## Matching method
 
 The generator in scripts/04_build_geographic_crosswalk.py applies the following sequence:

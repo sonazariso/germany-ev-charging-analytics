@@ -66,3 +66,12 @@ This changelog records project milestones and local repository changes. Historic
 - Confirmed that KBA FZ 27.15 reports 7,869 July 2026 BEVs for combined row `07211 TRIER-SAARBURG`; preserved aggregate-before-join and did not allocate the stock to either administrative unit.
 - Added the Batch 07 evidence report and updated geographic methodology, data-quality, decision-log, and project-status documentation.
 - Did not modify the Crosswalk CSV, DuckDB reference table, analytics views, KPIs, source workbooks, Python environment, dependencies, or datasets; no remote was added and nothing was uploaded or published.
+
+## 2026-11-02 — Batch 08
+
+- Independently verified all 22 identity-supported aliases with dated Destatis and local KBA FZ 27.15 evidence, distinguishing row-level five-digit key evidence from universal AGS/ARS equivalence.
+- Confirmed that Hanau and Main-Kinzig-Kreis are separate in the 2026-09-30 BNetzA source and in the 2026-01-01, 2026-04-01, and 2026-07-01 KBA FZ 27.15 snapshots.
+- Confirmed that Trier city and Trier-Saarburg remain one combined KBA registration region, with July 2026 BEV stock of 7,869 joined once after KBA-code aggregation.
+- Added `reports/batch08_geographic_code_verification.md` and updated geographic methodology, data-quality, findings, decisions, roadmap, and project-status documentation.
+- Preserved all 24 operational provisional statuses and all verified metrics; no source workbook, Crosswalk CSV, DuckDB object, view, KPI formula, or raw data was changed.
+- No remote was added and nothing was uploaded or published.

@@ -2,11 +2,11 @@
 
 ## Current Batch
 
-Batch 07 — authoritative geographic crosswalk review (complete; all 24 provisional rows were reviewed against contemporary Destatis and official KBA evidence; documentation only; no data, crosswalk, DuckDB, view, or KPI changes).
+Batch 08 — geographic code and boundary verification (complete; all 22 aliases, Trier shared-region treatment, Hanau's 2026 separation, and structural geographic checks were reviewed; documentation only; no data, crosswalk, DuckDB, view, or KPI changes).
 
 ## Last completed Batch
 
-Batch 07 — authoritative geographic crosswalk review completed after the Batch 06.2 local project relocation.
+Batch 08 — geographic code and boundary verification completed after the Batch 07 authoritative crosswalk review.
 
 ## Latest validated metrics
 
@@ -55,11 +55,15 @@ The deployed maximum-per-point parser classifies 156,155 points at or below 22 k
 - Batch 07 authoritative evidence review of all 24 provisional crosswalk rows.
 - Batch 07 evidence classification: 22 independently supported row/entity mappings, 2 partially supported shared Trier-region mappings, and 0 unresolved row identities; all 24 remain operationally provisional.
 - Batch 07 Trier finding: KBA FZ 27.15 reports 7,869 July 2026 BEVs for combined row `07211 TRIER-SAARBURG`; Destatis separately identifies Trier city `07211` and Trier-Saarburg `07235`.
+- Batch 08 geographic code verification report with a complete 22-alias evidence matrix, dated Hanau checks, Trier stock treatment, source limitations, and owner decisions.
+- Batch 08 finding: all 22 aliases have direct row-level five-digit key evidence, but no universal KBA-to-AGS/ARS equivalence was found; the two Trier rows remain entity-level combined-region evidence and all 24 operational statuses remain provisional.
+- Batch 08 finding: Hanau and Main-Kinzig-Kreis are separate in BNetzA 2026-09-30 and KBA FZ 27.15 on all three 2026 dates; no current coverage mismatch was measured.
 - Persistent AGENTS.md, changelog, and local Git configuration.
 
 ## Open issues
 
-- All 24 provisional mappings have completed the Batch 07 evidence review; 22 are independently supported at row/entity level and two Trier rows remain partially supported because KBA combines them. Operational status promotion still requires owner approval, and no universal KBA-code-to-AGS/ARS mapping was found.
+- All 24 provisional mappings have completed the Batch 08 evidence review; 22 aliases have direct row-level key evidence and two Trier rows remain entity-level combined-region evidence because KBA combines them. Operational status promotion still requires owner approval, and no universal KBA-code-to-AGS/ARS mapping was found.
+- Historical boundary compatibility remains unknown outside the three 2026 FZ 27.15 snapshots. A boundary-vintage note and additional historical evidence are required before older or cross-product regional trends are published.
 - The current helper `connector_power_kw_single` does not parse multi-value power strings; the complete bands use the deployed maximum-per-point expression over `connector_power_raw`.
 - The 400-district KBA total differs from the state-level Deutschland total because of the current Sonstige/reporting-structure reconciliation.
 - One BNetzA coordinate falls outside a broad Germany bounding check and remains uncorrected.
@@ -73,6 +77,7 @@ The deployed maximum-per-point parser classifies 156,155 points at or below 22 k
 
 - Decide whether and how to promote the 22 row/entity-supported aliases while retaining explicit KBA-versus-AGS/ARS terminology.
 - Decide the final display treatment of shared Trier code 07211; preserve the combined KBA registration-region interpretation unless direct allocation evidence is approved.
+- Decide whether to require a dated historical-boundary compatibility note and additional pre-2026 KBA snapshots before publishing historical or cross-product regional trends.
 - Decide whether point-power parsing becomes a reusable core field rather than remaining in the deployed geographic view.
 - Approve or defer the candidate KPI domains recorded in the Batch 06.1 audit, including PHEV change/growth, city/county, operator, descriptive source fields, and KBA ownership/postcode/municipality analyses.
 - Decide whether BBSR settlement typology adds value and can be reused.
@@ -80,8 +85,8 @@ The deployed maximum-per-point parser classifies 156,155 points at or below 22 k
 
 ## Next planned work
 
-Owner review of the Batch 07 evidence classifications, KBA reconciliation, KPI hardening, optional BBSR assessment, Tableau extract preparation, dashboard development, and final publication review.
+Owner review of the Batch 08 evidence classifications and historical-boundary recommendation, KBA reconciliation, KPI hardening, optional BBSR assessment, Tableau extract preparation, dashboard development, and final publication review.
 
 ## Last local Git commit reference
 
-The Batch 07 local commit hash is returned in the handoff; no remote is configured.
+The Batch 08 local commit hash is returned in the handoff; no remote is configured.

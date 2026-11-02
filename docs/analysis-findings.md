@@ -47,13 +47,20 @@ The state-level KBA FZ 27.2 row labelled Deutschland reports 2,365,047 BEVs and 
 
 These rankings describe the observed source aggregates. They do not indicate that infrastructure caused vehicle-stock changes or that a lower count means poor infrastructure.
 
+## Geographic verification findings
+
+- The 22 explicit aliases have direct row-level five-digit key evidence against the dated Destatis Kreis components and local KBA FZ 27.15 rows. This is not a universal KBA-to-AGS/ARS equivalence, and all 22 remain operationally provisional.
+- Hanau and Main-Kinzig-Kreis are separate in the 2026-09-30 BNetzA source and in KBA FZ 27.15 on 2026-01-01, 2026-04-01, and 2026-07-01. No current 2026 coverage mismatch was measured.
+- Trier remains one combined KBA registration region. The July `07211 TRIER-SAARBURG` stock is 7,869 BEVs and is counted once after the two BNetzA source rows are aggregated to KBA code.
+- The 400-region model is defensible for the current KBA registration-region grain, not as proof that all 400 KBA regions are identical to administrative regions. Historical boundary compatibility remains an open note for future time series.
+
 ## Preliminary exploratory results
 
 The data can support exploratory comparisons of state or KBA-region point-power mix, BEV stock growth, and BEVs per published point. Those comparisons remain provisional because:
 
 - BNetzA infrastructure is dated 2026-09-30 and KBA stock is dated 2026-07-01.
 - The BNetzA register is incomplete relative to every publicly accessible charger.
-- Twenty-two aliases and both Trier rows require authoritative geographic review.
+- The 22 aliases and two Trier rows have completed the Batch 08 evidence review, but operational promotion remains owner-controlled and the KBA-versus-AGS/ARS distinction must be retained.
 - A point count is not a utilization or energy-delivery measure.
 - KBA stock growth is not a sales flow.
 
@@ -70,9 +77,10 @@ The correct exploratory workflow aggregates charging measures to KBA code before
 
 ## Open analytical questions
 
-1. Which authoritative administrative reference should approve or replace the 22 alias rules?
-2. Is the shared Trier/Trier-Saarburg registration-region treatment appropriate for every final KPI, or should a separate display geography be retained?
-3. Should maximum-per-point power parsing become a reusable approved view or core field?
-4. How should the 2,829 Sonstige BEVs and the different national passenger-car totals be presented in the final dashboard?
-5. Which BBSR settlement typology, if any, would add value without replacing administrative geography?
-6. Which compact Tableau extract can be published while respecting source licensing and field-level disclosure review?
+1. Which owner-approved status vocabulary should be used if any of the 22 row-level-supported aliases are promoted?
+2. Should the shared Trier/Trier-Saarburg registration-region treatment be the permanent display geography for every final KPI?
+3. Which historical KBA vintages and product-specific boundary notes are required before older comparisons are shown, especially after the Hanau change?
+4. Should maximum-per-point power parsing become a reusable approved view or core field?
+5. How should the 2,829 Sonstige BEVs and the different national passenger-car totals be presented in the final dashboard?
+6. Which BBSR settlement typology, if any, would add value without replacing administrative geography?
+7. Which compact Tableau extract can be published while respecting source licensing and field-level disclosure review?

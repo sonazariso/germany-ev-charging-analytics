@@ -99,11 +99,14 @@ This log separates approved decisions, implementation details, and pending propo
 - Current generated reports retain source reference dates and validation results.
 - Batch 07 evidence review: 22 of the 24 provisional mappings are independently supported at the row/entity level; the two Trier rows are partially supported as one KBA registration region; no row identity is unresolved. This is an evidence classification, not approval to change operational statuses. Destatis AGS/ARS keys and KBA registration-region keys remain distinct concepts.
 - Batch 07 confirmed that the July 2026 KBA FZ 27.15 value of 7,869 BEVs belongs to the combined `07211 TRIER-SAARBURG` row. A common registration authority does not justify splitting that stock between the two administrative units.
+- Batch 08 refined the evidence classification: all 22 aliases have direct row-level five-digit key evidence, but no universal KBA-to-AGS/ARS equivalence was found; the two Trier rows remain entity-level combined-region evidence. All 24 operational statuses remain provisional.
+- Batch 08 confirmed that the 2026-09-30 BNetzA source and all three local 2026 FZ 27.15 snapshots represent Hanau (`06415`) and Main-Kinzig-Kreis (`06435`) separately. The current 400-code model is defensible as a KBA registration-region model, while historical boundary compatibility remains unmeasured.
 
 ## Pending proposals
 
 - Approve whether the 22 row/entity-supported aliases may move out of the operational provisional status; retain the two Trier rows as a combined KBA registration region unless direct allocation evidence is found.
 - Replace or supplement the provisional crosswalk with an authoritative KBA-to-administrative reference that explicitly identifies the code system and effective date.
+- Decide whether a dated historical-boundary compatibility note and additional pre-2026 KBA snapshots are required before publishing any historical or cross-product regional trend.
 - Approve permanent reference and geographic aggregate objects in DuckDB.
 - Resolve the source_id omission in analytics.charging_by_state before multi-snapshot loading.
 - Approve a reusable point-power parser/view.
