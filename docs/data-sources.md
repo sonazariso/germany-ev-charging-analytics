@@ -166,3 +166,21 @@ dated code-based compatibility bridge, an explicit boundary-vintage check, and
 preservation of the existing BNetzA-to-KBA crosswalk. The owner-approved Trier
 label is **Trier / Trier-Saarburg (gemeinsamer Zulassungsbezirk)**; shared KBA stock
 must not be allocated without a separately approved method.
+
+## Batch 13.1 owner-scenario evidence
+
+The owner-approved scenario records the following external evidence URLs with
+the two-row override reference:
+
+- [Hanau in Zahlen](https://www.hanau.de/wirtschaft/profil-und-standortvorteile/hanau-in-zahlen/)
+- [Hessen press statement: Stadt Hanau erhält 20 Millionen Euro](https://innen.hessen.de/presse/stadt-hanau-erhaelt-20-millionen-euro)
+- [Hessen municipalities and counties](https://innen.hessen.de/kommunales/kommunen/gemeinden-und-landkreise)
+
+The Hessen statement describes Hanau's separation from Main-Kinzig-Kreis with
+effect from 1 January 2026 and gives the contrasting context of approximately
+98,000 residents versus about 107,000 reported by the municipal register. The
+scenario stores that difference as provenance context only; it is not a BBSR
+classification rule. Hanau category 1 is an owner-approved analytical
+assumption, not an official BBSR 2025 or 2026 classification. Main-Kinzig type
+2 is carried forward from the BBSR 2025 row with an explicit 2026
+boundary-vintage caveat.

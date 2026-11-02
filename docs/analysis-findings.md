@@ -121,3 +121,31 @@ BEV/PHEV stock. Hanau does not inherit Main-Kinzig's type; Main-Kinzig's
 pre-change BBSR administrative/Kreisregion code is retained without a type.
 Trier city and Trier-Saarburg remain separate source rows with types 1 and 3;
 their shared KBA vehicle stock is neither joined nor allocated.
+
+## Batch 13.1 owner-approved scenario findings
+
+The official five-row Batch 13 summary remains unchanged as the **OFFICIAL
+BBSR 2025 BASELINE**. Batch 13.1 adds the separate **OWNER-APPROVED 2026
+ANALYTICAL SCENARIO**. It applies exactly two rows from the versioned override
+reference:
+
+- Hanau `06415` is category 1 by `OWNER_APPROVED_SCENARIO`. This is an owner
+  assumption, not an official BBSR 2025 or 2026 classification.
+- Main-Kinzig-Kreis `06435` is category 2 by
+  `HISTORICAL_BBSR_CARRY_FORWARD`, based on official BBSR 2025 type 2 with a
+  caveat that Hanau separated in 2026.
+
+Both rows have `official_bbsr_verification = false`. The actual database
+contribution is 146 equipment and 251 points for Hanau, and 439 equipment and
+740 points for Main-Kinzig-Kreis. Together they move 585 equipment records and
+991 points from the official baseline `UNCLASSIFIED` group into categories 1
+and 2. The move also transfers 613 normal points, 378 fast points, 327 points
+>=150 kW, 77 points >=350 kW, and 63.482 MW of declared nominal equipment
+power. No national total changes.
+
+The resulting scenario covers all 401 original BNetzA districts with zero
+scenario-unclassified districts. Category district counts are 68, 132, 98,
+and 103 for types 1–4. Trier city remains category 1 and Trier-Saarburg
+category 3 as separate source rows with 201 and 302 points; no KBA stock is
+integrated. The scenario is charging-only and source-grain, not a KBA-level
+BBSR integration.

@@ -345,3 +345,34 @@ splits semicolon-separated `connector_power_raw` values, normalizes decimal
 commas, takes the maximum valid power per point, and exposes any unclassifiable
 power count. Trier city and Trier-Saarburg remain separate source rows with
 types 1 and 3; no shared KBA stock is joined or allocated.
+
+## Batch 13.1 owner-approved boundary scenario
+
+Batch 13.1 keeps the official Batch 13 result as the **OFFICIAL BBSR 2025
+BASELINE** and adds a separate **OWNER-APPROVED 2026 ANALYTICAL SCENARIO**.
+The scenario reference has exactly two rows at the observed BNetzA source
+grain:
+
+- Hanau `06415` → analytical category 1 using `OWNER_APPROVED_SCENARIO`.
+- Main-Kinzig-Kreis `06435` → category 2 using
+  `HISTORICAL_BBSR_CARRY_FORWARD` from official BBSR 2025 type 2.
+
+The code values are the existing Crosswalk `kba_district_code` identifiers for
+the BNetzA source rows. They are not used as proof of KBA/BBSR equivalence.
+Both rows have `official_bbsr_verification = false` and remain visibly
+non-`VERIFIED_COMPATIBLE`. Hanau's category 1 must not be described as an
+official BBSR 2025 or 2026 classification. Its municipal population context
+(over 107,000 in the municipal register versus approximately 98,000 in the
+April 2026 Hessen census-based statement) is documented as provenance context,
+not as a BBSR classification formula. Main-Kinzig's carried-forward type has a
+boundary-vintage caveat because Hanau separated in 2026.
+
+The scenario view overlays these two rows onto the official Batch 13 charging
+view, preserving source-aware equipment/point joins and maximum-per-point power
+classification. It covers all 401 BNetzA source districts, moves 585 equipment
+records and 991 points out of the official baseline `UNCLASSIFIED` group, and
+has zero scenario-unclassified districts. It does not integrate KBA stock or
+allocate the shared Trier registration-region stock. Evidence is recorded in
+the reference CSV and in
+[`reports/batch13_1_bbsr_scenario_classification.md`](../reports/batch13_1_bbsr_scenario_classification.md),
+with the [Hanau municipal page](https://www.hanau.de/wirtschaft/profil-und-standortvorteile/hanau-in-zahlen/), [Hessen press statement](https://innen.hessen.de/presse/stadt-hanau-erhaelt-20-millionen-euro), and [Hessen municipalities page](https://innen.hessen.de/kommunales/kommunen/gemeinden-und-landkreise).

@@ -133,6 +133,14 @@ This log separates approved decisions, implementation details, and pending propo
 - Status: Approved and implemented locally after a verified ignored backup, transaction validation, independent read-only checks, and repeat execution.
 - Evidence: [`sql/13_bbsr_charging_layer.sql`](../sql/13_bbsr_charging_layer.sql), [`scripts/13_deploy_bbsr_charging_layer.py`](../scripts/13_deploy_bbsr_charging_layer.py), bridge CSV/manifest, and [`reports/batch13_bbsr_charging_deployment.md`](../reports/batch13_bbsr_charging_deployment.md).
 
+### Batch 13.1 owner-approved 2026 BBSR-like scenario
+
+- Decision: Add a separate, versioned owner-override reference and charging-only scenario for Hanau `06415` → category 1 and Main-Kinzig-Kreis `06435` → category 2.
+- Reason: The owner approved an analytical scenario for the 2026 boundary context while requiring the official BBSR 2025 baseline to remain unchanged and Hanau's category 1 to remain explicitly non-official.
+- Controls: Use the actual BNetzA source identity and existing Crosswalk `kba_district_code` as an identifier only. Set `classification_method` to `OWNER_APPROVED_SCENARIO` for Hanau and `HISTORICAL_BBSR_CARRY_FORWARD` for Main-Kinzig. Keep `official_bbsr_verification = false` for both; expose scenario version, source vintage, boundary vintage, caveat, provenance, evidence URLs, and audit hash.
+- Consequences: `reference.bnetza_bbsr_owner_override_2026` has exactly two rows; the scenario district view has 401 rows; the scenario type view has four rows with zero unclassified districts. The official five-row `analytics.charging_by_bbsr_type_2025` summary remains available and unchanged. National charging totals remain 117,662 equipment, 211,253 points, and 9,215.4173 MW.
+- Evidence: [`data/reference/bnetza_bbsr_owner_override_2026.csv`](../data/reference/bnetza_bbsr_owner_override_2026.csv), [`sql/13_1_bbsr_scenario.sql`](../sql/13_1_bbsr_scenario.sql), [`scripts/13_1_deploy_bbsr_scenario.py`](../scripts/13_1_deploy_bbsr_scenario.py), and [`reports/batch13_1_bbsr_scenario_classification.md`](../reports/batch13_1_bbsr_scenario_classification.md).
+
 ### Batch 06 permanent geographic layer deployment
 
 - Decision: Deploy the approved geographic reference table and two snapshot-specific analytics views to the existing DuckDB file, and correct `analytics.charging_by_state` to use `(source_id, excel_row)` for point aggregation and joins.

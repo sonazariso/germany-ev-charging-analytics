@@ -4,7 +4,7 @@
 
 This portfolio project builds a reproducible, Germany-wide analytical foundation for comparing the published public-charging register with registered passenger-car stock. It preserves the original BNetzA, KBA, and separately versioned BBSR reference workbooks, separates charging equipment from charging points, and keeps snapshot dates visible throughout the workflow.
 
-The current implementation is a validated local DuckDB model, a deployed still-provisional KBA geographic layer, and a separate Batch 13 charging-only BNetzA-source-grain BBSR layer. Batch 13 does not assign BBSR categories to KBA registration regions, join KBA vehicle stock, or allocate Trier stock; Tableau Public reporting remains incomplete.
+The current implementation is a validated local DuckDB model, a deployed still-provisional KBA geographic layer, the separate Batch 13 charging-only BNetzA-source-grain BBSR layer, and a separate Batch 13.1 owner-approved 2026 analytical scenario. Batch 13.1 does not change the official BBSR 2025 baseline, assign BBSR categories to KBA registration regions, join KBA vehicle stock, or allocate Trier stock; Tableau Public reporting remains incomplete.
 
 ## Why this matters
 
@@ -20,7 +20,7 @@ Electric-vehicle adoption and charging infrastructure are measured by different 
 - Every BNetzA equipment row and populated charging-point slot is retained in DuckDB.
 - KBA worksheets, footnotes, alternate breakdowns, and source rows are retained in the raw schema.
 
-The project does not include a BBSR-to-KBA compatibility bridge, Destatis integration, charging sessions, energy delivery, utilization, queue times, reliability, real-time availability, or causal impact analysis. The Batch 13 BNetzA-to-BBSR bridge is source-grain and charging-only; it is not a KBA bridge.
+The project does not include a BBSR-to-KBA compatibility bridge, Destatis integration, charging sessions, energy delivery, utilization, queue times, reliability, real-time availability, or causal impact analysis. The Batch 13 BNetzA-to-BBSR bridge is source-grain and charging-only; it is not a KBA bridge. The Batch 13.1 scenario is an explicitly labelled owner override: Hanau category 1 is not an official BBSR 2025/2026 classification, and Main-Kinzig category 2 is a historical carry-forward with a boundary-vintage caveat.
 
 ## Verified local baseline
 
@@ -90,6 +90,8 @@ Batch 04 established the English project documentation, persistent project instr
 
 Batch 13 completed the approved charging-only Path A deployment: a 401-row versioned bridge, a 401-row source-grain district view, and a five-row settlement-type summary. It validated 399 verified-compatible districts, retained Main-Kinzig as a conditional-vintage unclassified row, retained Hanau as unresolved, and reconciled all national charging totals. The new layer remains separate from the existing Crosswalk and contains no KBA vehicle stock.
 
+Batch 13.1 added a separate two-row owner-override reference, a 401-row scenario district view, and a four-row scenario category view. The scenario assigns Hanau `06415` to analytical category 1 and carries Main-Kinzig-Kreis `06435` forward as category 2. It moves the existing 585 equipment records and 991 charging points from the official baseline `UNCLASSIFIED` group into categories 1 and 2 without changing national totals. Both overrides remain explicitly non-official and are not labelled `VERIFIED_COMPATIBLE`.
+
 Not complete: a dated BBSR/KBA compatibility bridge, KBA-level BBSR classification, Tableau data preparation, dashboard development, final license review, and GitHub publication. Batch 12 Path B remains at zero strict verified KBA regions.
 
 ## Reproducibility
@@ -116,6 +118,10 @@ python3 scripts/10_build_bbsr_reference.py
 
 # Batch 13 charging-only BBSR deployment and repeat-safe validation
 .venv/bin/python scripts/13_deploy_bbsr_charging_layer.py --json
+
+# Batch 13.1 owner-approved scenario: read-only preflight, then deployment
+.venv/bin/python scripts/13_1_deploy_bbsr_scenario.py --dry-run --json
+.venv/bin/python scripts/13_1_deploy_bbsr_scenario.py --json
 ~~~
 
 The DuckDB build command is documented in [docs/reproducibility.md](docs/reproducibility.md) and must only be run when a database rebuild is explicitly approved. The Batch 06 deployment is the approved exception for the permanent geographic objects and creates an ignored local backup before modification.
@@ -153,7 +159,7 @@ The local DuckDB database, virtual environment, raw workbooks, temporary files, 
 - [Roadmap](docs/roadmap.md)
 - [Decision log](docs/decisions.md)
 - [GitHub publication checklist](docs/github-publication-checklist.md)
-- [Phase validation reports](reports/phase01_data_profile.md), [Phase 02 schema inspection](reports/phase02_schema_inspection.md), [Phase 03 DuckDB validation](reports/phase03_duckdb_validation.md), [Batch 03 crosswalk validation](reports/batch03_crosswalk_validation.md), [Batch 06 geographic deployment](reports/batch06_geographic_deployment.md), [Batch 06.1 KPI documentation audit](reports/batch06-1_kpi_documentation_audit.md), [Batch 09 BBSR feasibility](reports/batch09_bbsr_feasibility.md), [Batch 10 BBSR reference validation](reports/batch10_bbsr_reference_validation.md), [Batch 11 BBSR/KBA compatibility audit](reports/batch11_bbsr_kba_compatibility.md), [Batch 12 two-path BBSR investigation](reports/batch12_bbsr_integration_paths.md), and [Batch 13 BBSR charging-only deployment](reports/batch13_bbsr_charging_deployment.md)
+- [Phase validation reports](reports/phase01_data_profile.md), [Phase 02 schema inspection](reports/phase02_schema_inspection.md), [Phase 03 DuckDB validation](reports/phase03_duckdb_validation.md), [Batch 03 crosswalk validation](reports/batch03_crosswalk_validation.md), [Batch 06 geographic deployment](reports/batch06_geographic_deployment.md), [Batch 06.1 KPI documentation audit](reports/batch06-1_kpi_documentation_audit.md), [Batch 09 BBSR feasibility](reports/batch09_bbsr_feasibility.md), [Batch 10 BBSR reference validation](reports/batch10_bbsr_reference_validation.md), [Batch 11 BBSR/KBA compatibility audit](reports/batch11_bbsr_kba_compatibility.md), [Batch 12 two-path BBSR investigation](reports/batch12_bbsr_integration_paths.md), [Batch 13 BBSR charging-only deployment](reports/batch13_bbsr_charging_deployment.md), and [Batch 13.1 owner-approved scenario](reports/batch13_1_bbsr_scenario_classification.md)
 
 ## Important limitations
 
@@ -163,6 +169,7 @@ The local DuckDB database, virtual environment, raw workbooks, temporary files, 
 - The crosswalk has 401 BNetzA combinations and 400 KBA codes because Trier city and Trier-Saarburg share code 07211. Charging metrics must be aggregated by KBA code before joining vehicle stock.
 - Twenty-two aliases and the two shared Trier source mappings (24 provisional mappings total) are provisional local-snapshot mappings pending authoritative review.
 - The BBSR reference uses the 2025 geographic stand and contains 400 Kreis rows / 362 Kreisregion keys. Batch 13 uses it only in a dated source-grain charging enrichment: 399 verified-compatible rows are classifiable, while Main-Kinzig is conditional-vintage and Hanau unresolved in `UNCLASSIFIED`. It is not a KBA registration-region classification; Trier city/Trier-Saarburg retain types 1 and 3 separately, and Path B remains 0 strict verified KBA regions.
+- Batch 13.1 is a separate owner-approved analytical scenario, not an official BBSR 2026 publication. Hanau `06415` is category 1 by explicit owner assumption, and Main-Kinzig `06435` carries forward BBSR 2025 type 2 with the 2026 Hanau-separation caveat. The official Batch 13 five-row summary remains unchanged and available for comparison.
 - The deployed analytics.charging_by_state view uses source_id and equipment Excel row in both the point aggregation and join. The current database still contains one BNetzA infrastructure snapshot; future multi-snapshot loads require re-running the same source-aware validations.
 - No source supports utilization, sessions, energy delivered, queue times, reliability, or causality.
 

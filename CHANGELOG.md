@@ -119,3 +119,12 @@ This changelog records project milestones and local repository changes. Historic
 - Implemented charging-only BBSR KPIs with separate equipment/point aggregation, composite source-local keys, maximum-per-point semicolon-token power parsing, explicit unknown-power reporting, all equipment statuses, and a five-group national reconciliation.
 - Validated 117,662 equipment rows, 211,253 points, 156,155 normal points, 55,098 fast points, 40,950 points >=150 kW, 6,950 points >=350 kW, and 9,215.4173 MW. `UNCLASSIFIED` contains Hanau and Main-Kinzig: 585 equipment and 991 points.
 - Added `reports/batch13_bbsr_charging_deployment.md` and updated the English documentation and private Persian KPI reference. No new dataset, dependency, remote, upload, or publication was added.
+
+## 2026-11-02 — Batch 13.1
+
+- Added the reproducible two-row `data/reference/bnetza_bbsr_owner_override_2026.csv` and deterministic manifest. The rows use the actual BNetzA source identities and existing Crosswalk `kba_district_code` identifiers: Hanau `06415` → category 1 and Main-Kinzig-Kreis `06435` → category 2.
+- Added `scripts/13_1_deploy_bbsr_scenario.py` and `sql/13_1_bbsr_scenario.sql` with read-only preflight, lock/WAL checks, timestamped verified backup, transactional deployment, official-object snapshots, independent reconciliation, and repeat-safe execution.
+- Deployed only `reference.bnetza_bbsr_owner_override_2026`, `analytics.charging_by_bbsr_district_2026_scenario`, and `analytics.charging_by_bbsr_type_2026_scenario`. The official BBSR 2025 CSV, original bridge, Crosswalk, raw/core data, and Batch 13 baseline views remain unchanged.
+- Applied Hanau's category 1 as `OWNER_APPROVED_SCENARIO` and Main-Kinzig's category 2 as `HISTORICAL_BBSR_CARRY_FORWARD`; both remain `official_bbsr_verification = false` and are not labelled `VERIFIED_COMPATIBLE`.
+- Reclassified the database-derived 585 equipment records and 991 charging points from the official baseline `UNCLASSIFIED` group into scenario categories 1 and 2. The scenario covers 401 districts with zero unclassified districts and reconciles all national charging totals.
+- Added `reports/batch13_1_bbsr_scenario_classification.md` and updated the English documentation plus the private Persian KPI reference outside the Git worktree. No KBA stock integration, Trier allocation, Tableau work, remote, upload, or publication was performed.

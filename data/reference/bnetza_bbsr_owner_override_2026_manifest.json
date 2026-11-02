@@ -1,0 +1,60 @@
+{
+  "manifest_version": 1,
+  "scenario_version": "batch13.1-2026-11-02-owner-approved-hanau-main-kinzig",
+  "reference_file": "data/reference/bnetza_bbsr_owner_override_2026.csv",
+  "reference_sha256": "1b2e3264a0c7e950a3dbfbca9e5abad581d88158b9322481643fb0505d441aac",
+  "row_count": 2,
+  "grain": "One BNetzA source state/district combination with an owner-approved analytical BBSR-like category.",
+  "source_vintage": {
+    "bnetza_source_id": "bnetza_charging_2026_09_30",
+    "bnetza_reference_date": "2026-09-30",
+    "kba_reference_date": "2026-07-01",
+    "bbsr_reference_vintage": "2025-12-31",
+    "boundary_vintage": "2026"
+  },
+  "geographic_code": {
+    "system": "KBA_DISTRICT_CODE",
+    "source_file": "data/reference/bnetza_kba_district_crosswalk_2026.csv",
+    "source_column": "kba_district_code",
+    "use": "Identifier cross-checked against the existing local Crosswalk; it is not BBSR assignment proof."
+  },
+  "source_audit": {
+    "path": "reports/batch12_bbsr_integration_paths_audit.csv",
+    "scope": "Batch 12 PATH_A only",
+    "version": "batch12-2026-11-02-two-path-strict-evidence",
+    "sha256": "f4d681fc81ac700b73521b9da81689073df183f6664866e2dcb9397a89d9d644"
+  },
+  "override_rules": {
+    "hanau": {
+      "geographic_code": "06415",
+      "analytical_category_code": "1",
+      "classification_method": "OWNER_APPROVED_SCENARIO",
+      "official_bbsr_verification": false,
+      "official_bbsr_2025_type": null,
+      "population_context": "Municipal register over 107,000 versus approximately 98,000 census-based residents cited by Hessen in April 2026; context only.",
+      "official_classification_claim": false
+    },
+    "main_kinzig": {
+      "geographic_code": "06435",
+      "analytical_category_code": "2",
+      "classification_method": "HISTORICAL_BBSR_CARRY_FORWARD",
+      "official_bbsr_verification": false,
+      "official_bbsr_2025_type": "2",
+      "boundary_compatibility_caveat": "Hanau separation in 2026; current remainder is not proven identical to the pre-change BBSR 2025 row.",
+      "official_classification_claim": false
+    }
+  },
+  "official_baseline_preservation": {
+    "bbsr_reference_csv": "data/reference/bbsr_settlement_types_2025.csv",
+    "original_bridge_csv": "data/reference/bnetza_bbsr_bridge_2025.csv",
+    "official_summary_view": "analytics.charging_by_bbsr_type_2025",
+    "scenario_unclassified_districts": 0,
+    "kba_stock_integrated": false,
+    "trier_stock_allocated": false
+  },
+  "evidence_urls": [
+    "https://www.hanau.de/wirtschaft/profil-und-standortvorteile/hanau-in-zahlen/",
+    "https://innen.hessen.de/presse/stadt-hanau-erhaelt-20-millionen-euro",
+    "https://innen.hessen.de/kommunales/kommunen/gemeinden-und-landkreise"
+  ]
+}

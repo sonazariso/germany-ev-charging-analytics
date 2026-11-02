@@ -296,6 +296,33 @@ not reference KBA, BEV, or PHEV measures. Hanau does not inherit Main-Kinzig's
 type, Main-Kinzig's pre-change code is retained without a type, and Trier city
 and Trier-Saarburg remain separate without stock allocation.
 
+### Batch 13.1 owner-approved scenario validation
+
+Batch 13.1 adds a separate two-row reference and four-category scenario; it
+does not alter the official Batch 13 baseline. The new deployment passed the
+following additional controls:
+
+| Check | Result | Interpretation |
+|---|---:|---|
+| Override CSV rows / scenario table rows | 2 / 2 | Exactly Hanau `06415` and Main-Kinzig `06435`. |
+| Owner verification flags | 2 false / 0 true | Neither override is silently promoted to official verification. |
+| Scenario district rows / source districts | 401 / 401 | Full source coverage with no omitted districts. |
+| Duplicate scenario source districts | 0 | One row per BNetzA source state/district. |
+| Scenario unclassified districts | 0 | All four analytical categories are populated. |
+| Scenario category rows | 4 | Category district counts are 68 / 132 / 98 / 103. |
+| Scenario national reconciliation | PASS | 117,662 equipment; 211,253 points; 156,155 normal; 55,098 fast; 40,950 >=150 kW; 6,950 >=350 kW; 9,215.4173 MW. |
+| Hanau/Main-Kinzig moved coverage | 585 equipment / 991 points | Exact sum of the two database-derived source rows. |
+| Trier treatment | PASS | Separate BBSR codes/types retained; 201 + 302 points; no KBA stock allocation. |
+| Official/KBA baseline snapshots | PASS | Official Batch 13 views, Crosswalk, KBA views, and state view match the verified backup. |
+| Repeat execution / deterministic result | PASS | Second deployment is idempotent; independent result hashes repeat. |
+
+The official BBSR CSV and original bridge CSV remain checksum-stable. The
+scenario reuses the validated Batch 13 source-aware joins and maximum-per-point
+power parser; it contains no KBA vehicle-stock, BEV, or PHEV reference. Hanau
+category 1 is an owner-approved analytical assumption, not an official BBSR
+2025/2026 classification. Main-Kinzig category 2 is a historical carry-forward
+with the 2026 Hanau-separation caveat.
+
 ### Known coordinate exception
 
 All current equipment rows have non-null coordinates. One row falls outside a broad Germany check because its longitude is 4.0. The source record is not corrected or removed; it remains an exception for future coordinate review.

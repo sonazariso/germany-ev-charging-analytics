@@ -121,6 +121,49 @@ join KBA stock, classify KBA registration regions, or allocate Trier stock.
 Run the command a second time and inspect the JSON evidence; the existing
 bridge must match exactly and no duplicate rows may appear.
 
+## Batch 13.1 owner-approved scenario deployment
+
+Run the read-only preflight first:
+
+~~~bash
+.venv/bin/python scripts/13_1_deploy_bbsr_scenario.py --dry-run --json
+~~~
+
+The preflight validates the exact two-row reference, the manifest checksum,
+the actual `bnetza_source_id`/state/district columns, and the existing
+Crosswalk `kba_district_code` values `06415` and `06435`. It also checks the
+official five-row Batch 13 summary and all national charging baselines.
+
+Deploy the separate scenario only after the preflight passes:
+
+~~~bash
+.venv/bin/python scripts/13_1_deploy_bbsr_scenario.py --json
+~~~
+
+The script checks for open handles and WALs, creates an ignored timestamped
+`ev_charging_pre_batch13_1_*.duckdb` backup, opens that backup read-only, and
+compares baseline object snapshots before the transaction. It creates only
+`reference.bnetza_bbsr_owner_override_2026`,
+`analytics.charging_by_bbsr_district_2026_scenario`, and
+`analytics.charging_by_bbsr_type_2026_scenario`. The official BBSR CSV,
+original bridge, Crosswalk, raw/core tables, official Batch 13 views, KBA
+views, and state view are acceptance baselines.
+
+For idempotency validation, reuse the verified backup:
+
+~~~bash
+.venv/bin/python scripts/13_1_deploy_bbsr_scenario.py \
+  --backup-path data/backups/ev_charging_pre_batch13_1_20261102_224646.duckdb \
+  --json
+~~~
+
+The scenario remains a charging-only source-grain analysis. Hanau category 1
+is an owner-approved assumption, not an official BBSR 2025/2026 classification;
+Main-Kinzig category 2 is a historical BBSR 2025 carry-forward with a 2026
+Hanau-separation caveat. Neither override is `VERIFIED_COMPATIBLE`, and no KBA
+vehicle stock or Trier allocation is introduced. Full evidence is in
+[`reports/batch13_1_bbsr_scenario_classification.md`](../reports/batch13_1_bbsr_scenario_classification.md).
+
 For a custom query:
 
 ~~~bash

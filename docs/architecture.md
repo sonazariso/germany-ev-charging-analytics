@@ -46,6 +46,7 @@ The Tableau path remains planned. Batch 06 deployed the approved geographic refe
 9. scripts/10_build_bbsr_reference.py reads the preserved BBSR workbook, inspects every worksheet, extracts the approved four-category Kreisreferenz grain, and writes a deterministic CSV plus source/derived checksums. The reference path stops outside DuckDB and the BNetzA-to-KBA Crosswalk.
 10. scripts/12_audit_bbsr_integration_paths.py audits the BNetzA-source and KBA-registration paths read-only; its Path A output is the evidence input for the approved charging-only deployment.
 11. scripts/13_deploy_bbsr_charging_layer.py independently rechecks Path A identities, creates/validates the versioned BNetzA-to-BBSR bridge, validates a safe backup, and deploys only the new BBSR reference and charging views transactionally.
+12. scripts/13_1_deploy_bbsr_scenario.py validates the two-row owner-override reference, checks the existing Crosswalk identifiers, creates a verified backup, and deploys only the separate 2026 scenario table and views transactionally.
 
 ## DuckDB schemas
 
@@ -73,6 +74,7 @@ The current core schema contains:
 
 - reference.bnetza_kba_district_crosswalk_2026: one row per BNetzA source state/district combination for crosswalk version 2026-07-01, with source lineage, KBA identifiers, mapping method/status, verification fields, notes, evidence URL, and source aggregates. Its 401 rows map to 400 KBA codes because both Trier source rows use code 07211.
 - reference.bnetza_bbsr_district_bridge_2025: one row per BNetzA source state/district combination. It preserves BBSR KRS/Kreisregion fields as strings, source dates, Path A evidence, and compatibility status. Its only uniqueness rule is the composite BNetzA source key; BBSR codes are not globally unique in this table.
+- reference.bnetza_bbsr_owner_override_2026: exactly two owner-approved scenario rows for BNetzA source districts `06415` and `06435`. It exposes the scenario version, BNetzA source identity, Crosswalk-derived code identifier, boundary vintage, analytical category, classification method, official-verification boolean, caveat, population context, and evidence URLs. It is not an official BBSR reference and does not replace the Batch 13 bridge.
 
 ### analytics
 
@@ -85,6 +87,8 @@ The current views are:
 - analytics.kba_national_quarterly_stock: de-duplicated national historical rows from FZ 27.9.
 - analytics.charging_by_bbsr_district_2025: one row per original BNetzA state/district combination, with dated BBSR enrichment and charging-only equipment/point metrics.
 - analytics.charging_by_bbsr_type_2025: five rows for BBSR types 1–4 and `UNCLASSIFIED`; category point-share denominators include all 401 source districts.
+- analytics.charging_by_bbsr_district_2026_scenario: one row per original BNetzA state/district, retaining the official baseline fields and overlaying the two owner-approved category assignments. It contains scenario vintage, provenance, method, verification, caveat, and source-audit fields.
+- analytics.charging_by_bbsr_type_2026_scenario: four owner-scenario category rows. It reports charging-only KPIs, override counts, the zero `UNCLASSIFIED` count, and all national point-share denominator metadata.
 
 The state view’s source-aware join issue was corrected in Batch 06. Its output column names, order, 16-state grain, and current metrics were preserved. Any future multi-snapshot load must retain the same source-aware key.
 
@@ -185,6 +189,34 @@ registered points, with the latter denominator explicitly including
 `UNCLASSIFIED`. No KBA table, BEV/PHEV field, or vehicle-stock denominator is
 used. Full results and backup evidence are in
 [`reports/batch13_bbsr_charging_deployment.md`](../reports/batch13_bbsr_charging_deployment.md).
+
+## Batch 13.1 owner-approved 2026 analytical scenario
+
+Batch 13.1 is deliberately separate from the **OFFICIAL BBSR 2025 BASELINE**.
+The reproducible input is
+`data/reference/bnetza_bbsr_owner_override_2026.csv`, with its hash and source
+lineage in the matching manifest. The code identifiers `06415` and `06435` are
+the existing Crosswalk `kba_district_code` values for the observed BNetzA
+source rows; they are identifiers, not evidence that KBA and BBSR boundaries
+are equivalent.
+
+The scenario overlays Hanau with category 1 using
+`OWNER_APPROVED_SCENARIO`, and Main-Kinzig-Kreis with category 2 using
+`HISTORICAL_BBSR_CARRY_FORWARD`. Both rows have
+`official_bbsr_verification = false`. Hanau has no official BBSR 2025 type and
+must never be described as an official BBSR 2026 classification. Main-Kinzig's
+type 2 is carried forward with the explicit caveat that Hanau separated in
+2026. The official bridge, reference CSV, five-row summary, Crosswalk, raw/core
+tables, KBA views, and state view remain unchanged.
+
+The scenario district view reuses the official Batch 13 source-aware charging
+view, so equipment and point grains remain separate and each point is
+classified once from the maximum valid semicolon-separated
+`connector_power_raw` token. It contains no KBA stock join. The scenario type
+view has 4 rows, covers all 401 source districts, and reports zero
+`UNCLASSIFIED` districts. See
+[`reports/batch13_1_bbsr_scenario_classification.md`](../reports/batch13_1_bbsr_scenario_classification.md)
+for the KPI table, backup fingerprints, evidence URLs, and validation record.
 
 ## Deployment SQL and design history
 

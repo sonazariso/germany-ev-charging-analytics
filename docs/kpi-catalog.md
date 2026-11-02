@@ -62,7 +62,7 @@ This audit reviewed the existing numbered definitions and the requested coverage
 | Payment methods, opening hours, and connector types | PROPOSED — REQUIRES APPROVAL | `payment_methods`, `opening_*`, and `connector_types` are preserved in core | Tokenization, multi-label denominators, and display treatment are not approved; opening text is not real-time availability | Approve descriptive field distributions before validation |
 | KBA ownership, postcode, and municipality analyses | PROPOSED — REQUIRES APPROVAL | `core.kba_postcode_ev_stock` and `core.kba_municipality_ev_stock`; 24,586 and 32,229 rows | Ownership denominator, possible total-row handling, and separation from district grain need approval | Define one-grain analyses and validate alternative-grain reconciliation |
 | Crosswalk verification and Trier treatment | VALIDATED for coverage and join arithmetic; PROVISIONAL for official geography | Batch 03/05/06/08 reports; 401 rows, 400 codes, 24 provisional mappings | Batch 08 found 22 direct row-level key matches and two entity-level combined Trier mappings, but no universal KBA-to-AGS/ARS rule | Keep all flags visible and aggregate to KBA code before the stock join |
-| BBSR settlement or spatial enrichment | PROPOSED — REQUIRES APPROVAL | Batch 09 feasibility plus Batch 10 derived official 2025 reference; separate CSV only, no DuckDB/KBA integration | Boundary vintage, code bridge, mixed-region treatment, licensing, and intended KPI require approval | Preserve the reference separately; do not assign types to KBA or calculate category KPIs until the gates are met |
+| BBSR/KBA or vehicle-stock spatial enrichment | PROPOSED — REQUIRES APPROVAL | Batch 09 feasibility plus Batch 10 reference; Batch 13/13.1 source-grain charging-only layers are separate approved exceptions | Dated KBA bridge, boundary vintage, mixed-region treatment, licensing, and intended KPI require approval | Keep the official baseline and owner scenario separate; do not assign types to KBA or calculate vehicle-stock category KPIs |
 | Data-quality and coverage metrics | VALIDATED | `docs/data-quality.md`, Phase 03, Batch 03/05/06 reports | The metrics were documented as checks but not grouped in the catalog | Use the explicit quality measures below; keep exceptions visible |
 | Utilization, sessions, energy, queue time, reliability, real-time availability, sales, or causal adoption claims | UNSUPPORTED BY CURRENT SOURCES | Project charter, data dictionary, and Batch 06 limitations | No source fields measure these concepts | Keep outside the KPI catalog until a suitable source and definition are approved |
 
@@ -458,6 +458,31 @@ KBA vehicle stock.
 - Coverage: Four valid categories cover 399 verified source districts; `UNCLASSIFIED` contains Hanau and Main-Kinzig (585 equipment, 991 points).
 - Controls: Do not include BEV/PHEV stock, calculate BEV-per-point, or infer a category for a KBA registration region. Keep the BNetzA and BBSR dates visible.
 - Status: VALIDATED descriptive infrastructure KPI; not a vehicle or utilization KPI.
+
+## Batch 13.1 owner-approved scenario KPIs
+
+Batch 13.1 adds a separate scenario path; it does not revise the official
+Batch 13 five-row summary. The official baseline remains the source of record
+for the BBSR 2025 classification status, with Hanau and Main-Kinzig in
+`UNCLASSIFIED`. The scenario view is explicitly labelled
+`OWNER_APPROVED_2026_ANALYTICAL_SCENARIO`.
+
+### 25. Charging infrastructure by owner-approved BBSR-like category
+
+- Definition: Aggregate the 401 original BNetzA source-district rows after applying exactly two owner overrides: Hanau `06415` → category 1 and Main-Kinzig-Kreis `06435` → category 2.
+- Scenario reference: `data/reference/bnetza_bbsr_owner_override_2026.csv`; version `batch13.1-2026-11-02-owner-approved-hanau-main-kinzig`.
+- Grain and dates: BNetzA source state/district; infrastructure `2026-09-30`; Crosswalk code identifier snapshot `2026-07-01`; official BBSR source stand `2025-12-31`; scenario boundary vintage `2026`.
+- Measures: District count, equipment count, charging-point count, normal points, fast points, points >=150 kW, points >=350 kW, fast charging share, high-power share, declared equipment nominal power, and national charging-point share.
+- Denominators: Fast/high-power shares use category charging points. National point share uses all 211,253 scenario charging points. The scenario has four category rows and zero `UNCLASSIFIED` districts.
+- Provenance: Hanau uses `OWNER_APPROVED_SCENARIO`; Main-Kinzig uses `HISTORICAL_BBSR_CARRY_FORWARD`. Both rows expose `official_bbsr_verification = false`; neither is `VERIFIED_COMPATIBLE`.
+- Controls: Reuse the validated source-aware equipment/point joins and maximum-per-point `connector_power_raw` parser. Do not join KBA stock, calculate BEV/PHEV ratios, allocate Trier stock, or describe Hanau category 1 as an official BBSR 2026 classification.
+- Status: `VALIDATED` as a reproducible owner-approved analytical scenario; `PROVISIONAL` for geographic interpretation because the owner overrides are not official BBSR verification.
+
+The deployed relations are `analytics.charging_by_bbsr_district_2026_scenario`
+and `analytics.charging_by_bbsr_type_2026_scenario`. The detailed four-category
+result, comparison with the official baseline, evidence URLs, and limitations
+are in
+[`reports/batch13_1_bbsr_scenario_classification.md`](../reports/batch13_1_bbsr_scenario_classification.md).
 
 ## Optional future BBSR/KBA enrichment
 

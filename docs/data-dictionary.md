@@ -50,6 +50,34 @@ Main-Kinzig retains its pre-change BBSR administrative/Kreisregion code as
 evidence but no settlement type. Hanau has no separate BBSR 2025 row. Neither
 row may inherit a type from the other.
 
+## Batch 13.1 owner-override reference
+
+`data/reference/bnetza_bbsr_owner_override_2026.csv` and
+`reference.bnetza_bbsr_owner_override_2026` contain exactly two rows at the
+original BNetzA source state/district grain. They are a versioned analytical
+scenario, not an official BBSR reference.
+
+| Column | Meaning and rule |
+|---|---|
+| scenario_version | Fixed owner-scenario identifier; current value is `batch13.1-2026-11-02-owner-approved-hanau-main-kinzig` |
+| scenario_source_vintage | Visible BNetzA, KBA-code, and BBSR source vintages; do not collapse them into one date |
+| bnetza_source_id / bnetza_reference_date | Actual normalized BNetzA source identifier and `2026-09-30` date |
+| bnetza_state_name / bnetza_district_name / bnetza_admin_type | Actual source columns and source-grain identity used for the overlay join |
+| geographic_code_system / geographic_code | Existing Crosswalk `kba_district_code` identifier (`KBA_DISTRICT_CODE`), `06415` or `06435`; identifier only, not BBSR proof |
+| kba_reference_date | Crosswalk code snapshot date `2026-07-01`; no KBA stock is joined |
+| analytical_category_code / analytical_category_name_de | Owner scenario category 1–4; only 1 for Hanau and 2 for Main-Kinzig |
+| classification_method | `OWNER_APPROVED_SCENARIO` for Hanau; `HISTORICAL_BBSR_CARRY_FORWARD` for Main-Kinzig |
+| official_bbsr_verification | Boolean false for both owner rows; neither is `VERIFIED_COMPATIBLE` |
+| official_bbsr_2025_type | NULL for Hanau; `2` for the Main-Kinzig historical BBSR row |
+| boundary_vintage / boundary_compatibility_caveat | Explicit `2026` scenario vintage and Hanau-separation caveat |
+| override_provenance / population_evidence_note | Owner approval, non-official status, and Hanau population-context note |
+| evidence_source_urls | Semicolon-separated evidence URLs retained with each row |
+| source_audit_version / source_audit_sha256 | Batch 12 Path A lineage and immutable audit checksum |
+
+The official `data/reference/bbsr_settlement_types_2025.csv` and the Batch 13
+bridge remain separate and unchanged. The complete manifest records the CSV
+checksum and the distinction between the official baseline and this scenario.
+
 ## Database inventory
 
 The current local database is data/analytics/ev_charging.duckdb. It contains four schemas and the following objects. Counts are read-only observations from the current file.
@@ -233,6 +261,35 @@ points, including unclassified source districts, and
 `point_share_denominator_scope` states that denominator explicitly. The view
 contains no KBA vehicle-stock measures and does not calculate BEV-per-point.
 
+### reference.bnetza_bbsr_owner_override_2026
+
+This is the two-row owner-approved scenario reference described above. It is a
+new table and does not overwrite `reference.bnetza_bbsr_district_bridge_2025`.
+Its `geographic_code` values are Crosswalk identifiers for the observed
+BNetzA rows; they do not turn the scenario into a KBA-to-BBSR bridge.
+
+### analytics.charging_by_bbsr_district_2026_scenario
+
+Grain: one original BNetzA state/district combination. The view retains the
+official Batch 13 baseline category/status fields and adds the scenario
+category, version, source vintage, boundary vintage, override provenance,
+official-verification flag, evidence URLs, and audit hash. It has 401 rows and
+zero rows with a NULL scenario category.
+
+Charging measures are inherited from the validated Batch 13 source-aware view:
+equipment rows and point rows remain separate, and each point is classified
+once using the maximum valid semicolon-separated `connector_power_raw` token.
+No KBA stock or BEV/PHEV measure is present.
+
+### analytics.charging_by_bbsr_type_2026_scenario
+
+Grain: one owner-scenario analytical category, codes 1–4. The four-row view
+reports district/equipment/point counts, normal and fast points, points at
+least 150/350 kW, fast/high-power shares, declared nominal equipment power,
+national point share, owner-override counts, and the explicit zero
+`unclassified_district_count`. Its scenario version and source-vintage fields
+remain visible in every row.
+
 ### analytics.kba_national_quarterly_stock
 
 Grain: one retained national historical stock observation per stock_date after de-duplicating overlapping report snapshots. Columns are source_id, report_snapshot, excel_row, stock_date, passenger_bev, passenger_phev, and passenger_cars_total.
@@ -246,6 +303,7 @@ Grain: one retained national historical stock observation per stock_date after d
 - Treat KBA district, postcode, municipality, state, and national tables as alternative grains, not additive partitions.
 - Keep the 2026-09-30 BNetzA date and KBA dates in every combined output.
 - Keep BBSR `KRS` and `Kreisregion` codes as strings and do not require BBSR codes to be globally unique across BNetzA source rows.
-- Treat BBSR category KPIs as descriptive measures of 399 verified-compatible BNetzA source districts; keep Main-Kinzig and Hanau in `UNCLASSIFIED`.
+- Treat the official Batch 13 BBSR category KPIs as descriptive measures of 399 verified-compatible BNetzA source districts; keep Main-Kinzig and Hanau in the official baseline `UNCLASSIFIED` group.
+- Treat Batch 13.1 scenario category KPIs as a separate owner-approved analytical scenario. Hanau category 1 is not an official BBSR 2025/2026 classification; Main-Kinzig category 2 is a historical carry-forward with a 2026 boundary caveat; both override rows have `official_bbsr_verification = false`.
 - Do not join BBSR views to KBA vehicle stock or infer a BBSR type for KBA registration regions.
 - Do not infer utilization, energy delivery, or causality from these tables.

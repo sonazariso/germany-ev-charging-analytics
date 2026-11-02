@@ -44,7 +44,7 @@ The analytical value is a traceable bridge from official workbooks to validated 
 
 - No modification of official source workbooks.
 - No rebuild, migration, or schema change to DuckDB in Batch 04.
-- No Destatis integration or BBSR-to-KBA/DuckDB integration; the approved BBSR reference remains a separate local artifact.
+- No Destatis integration or BBSR-to-KBA/vehicle-stock integration. Batch 13 and Batch 13.1 now provide separately named, source-grain, charging-only BBSR DuckDB layers; the official BBSR reference and the owner scenario remain separate from KBA classification.
 - No charging-session, energy-delivery, utilization, queue, reliability, or real-time availability measures.
 - No vehicle-level data; KBA values are aggregate stock.
 - No causal claim that infrastructure causes vehicle-stock growth.
@@ -74,7 +74,7 @@ The analytical value is a traceable bridge from official workbooks to validated 
 - Equipment, point, and vehicle grains are not conflated.
 - Every KPI has a formula, denominator, date, grain, status, and limitation.
 - Provisional mappings are visibly separated from local-snapshot observations.
-- Documentation does not claim Tableau or BBSR-to-KBA enrichment completion.
+- Documentation does not claim Tableau or BBSR-to-KBA enrichment completion; it distinguishes the official BBSR 2025 baseline from the non-official Batch 13.1 owner scenario.
 - No raw workbook, DuckDB database, virtual environment, secret, remote, or upload is included in the local baseline commit.
 - Validation failures and unresolved issues remain visible.
 
@@ -82,4 +82,4 @@ The analytical value is a traceable bridge from official workbooks to validated 
 
 Batch 04 is the documentation and local-Git phase. The current database and crosswalk are read-only inputs to the documentation; no permanent geographic DuckDB objects are created here.
 
-Planned features are approval of the BBSR compatibility layer, further KPI validation, Tableau extract preparation, dashboard development, final licensing review, and eventual publication after explicit approval. Batch 10 completed the separate BBSR reference build; direct KBA enrichment remains excluded pending approval.
+Planned features are approval of a dated BBSR/KBA compatibility layer, further KPI validation, Tableau extract preparation, dashboard development, final licensing review, and eventual publication after explicit approval. Batch 10 completed the separate BBSR reference build; Batch 13 completed the official source-grain charging-only layer; Batch 13.1 completed the separate owner scenario. Direct KBA enrichment remains excluded pending approval.
