@@ -4,7 +4,10 @@
 
 - VALIDATED: the current source fields, grain, formula, and reconciliation have been checked against the local artifacts. This is descriptive validation, not a claim that the source is exhaustive.
 - PROVISIONAL: calculable from current data, but affected by a documented date, coverage, geographic, parsing, or interpretation limitation.
-- PROPOSED: useful for a future model or dashboard, but not yet implemented or sufficiently validated.
+- EXPLORATORY: a descriptive comparison or ranking that is not an approved standalone causal or performance KPI.
+- DEFINED BUT NOT VALIDATED: the source fields, grain, and formula are specified, but this project has not yet produced the required independent validation evidence.
+- PROPOSED — REQUIRES APPROVAL: a candidate analysis or KPI whose final denominator, display grain, normalization, or use has not been approved.
+- UNSUPPORTED BY CURRENT SOURCES: the current source fields cannot measure the requested concept without a new approved data source.
 
 All KPIs must carry the source reference date and the geographic grain in the output. A KBA stock value is registered stock, not new vehicle sales.
 
@@ -34,6 +37,36 @@ The same definitions were recomputed at KBA district-code grain after mapping th
 The combined validation grain is one KBA district code per KBA stock date: 400 codes × three dates = 1,200 rows. Infrastructure measures are repeated beside the three KBA snapshots for comparison and must never be summed across dates. The 24 provisional source mappings remain visible as quality flags; they are not promoted to officially verified mappings.
 
 Batch 06 deployed these definitions in `analytics.charging_by_kba_district_2026_09_30` and `analytics.kba_district_charging_vs_bev_2026`. The regional view exposes `normal_charging_point_count`, `fast_charging_point_count`, `points_ge_150_kw`, `points_ge_350_kw`, `fast_charging_share_pct`, `high_power_charging_share_pct`, `equipment_nominal_power_kw`, `equipment_nominal_power_mw`, and `points_without_valid_power`. The combined view adds KBA state/district names, the actual `kba_reference_date`, `bev_per_registered_charging_point`, passenger-car/BEV/PHEV stock, and the same mapping-quality flags. The BEV-per-point ratio remains PROVISIONAL because the infrastructure and vehicle dates differ, the BNetzA register is not exhaustive, and the crosswalk remains partly provisional.
+
+## Batch 06.1 coverage audit
+
+This audit reviewed the existing numbered definitions and the requested coverage domains against the [data dictionary](data-dictionary.md), [analysis findings](analysis-findings.md), [geographic methodology](geographic-methodology.md), [data-quality record](data-quality.md), [decision log](decisions.md), and the Batch 03/05/06 validation reports. The table distinguishes documented and validated measures from candidate analyses. A row marked PROPOSED — REQUIRES APPROVAL records source capability and a possible definition; it does not approve a dashboard KPI or a database change.
+
+| KPI or domain | English catalog status | Evidence | Missing definition or control | Recommended action |
+|---|---|---|---|---|
+| Registered equipment and charging-point slot counts | VALIDATED | Current baseline; `core.charging_equipment`, `core.charging_point`; Batch 06 report | None; equipment and point grains are separate | Retain the existing formulas and reconciliation |
+| Normal, fast, >=150 kW, and >=350 kW points and shares | VALIDATED | Current baseline; Batch 05/06 regional validation | None; maximum declared power per point and point-slot denominator are documented | Retain the parser and recheck it for every future snapshot |
+| Equipment nominal power and published status | VALIDATED | `core.charging_equipment`; Phase 03 and Batch 06 reports | None; nominal power is aggregated before any point join | Retain separate equipment-grain aggregation |
+| State infrastructure distribution | VALIDATED | `analytics.charging_by_state`; 16-state baseline in Batch 06 | Standalone state-distribution definition was implicit rather than named | Add the explicit definition below; do not population-normalize without approval |
+| KBA district infrastructure distribution | VALIDATED for observed local arithmetic; PROVISIONAL for official boundary meaning | `analytics.charging_by_kba_district_2026_09_30`; 400 rows in Batch 06 | Official review of 22 aliases and the shared Trier treatment is still missing | Use the deployed view with mapping flags; complete authoritative review before public rankings |
+| BEV stock, absolute change, and percentage growth | VALIDATED | `core.kba_district_ev_stock`; existing definitions 12, 14, and 15 | None for the approved 400-district grain | Retain same-grain/date controls and the stock-not-sales warning |
+| PHEV stock | VALIDATED | `core.kba_district_ev_stock`; Batch 06 July total | None for the current stock measure | Retain the existing definition |
+| PHEV absolute change and percentage growth | DEFINED BUT NOT VALIDATED | Same KBA fields and snapshot dates as the BEV measures | No independent project validation result or explicit approved catalog entry | Obtain owner approval and run a like-for-like validation before publishing |
+| BEV share of passenger cars | VALIDATED | FZ 27.15 `bev_cars / passenger_cars`; existing definition 16 | None where the FZ 27.15 denominator is used | Keep the district/state/national-grain warning |
+| PHEV share of passenger cars | DEFINED BUT NOT VALIDATED | FZ 27.15 provides `phev_cars` and `passenger_cars` | No approved definition or validation result in the current project | Treat as a candidate until approved and reconciled |
+| BEVs per registered charging point and related ratios | PROVISIONAL | Deployed combined view; existing definition 17 | Formula is complete; dates, source coverage, and provisional geography limit interpretation | Keep as a cross-snapshot descriptive ratio, never a utilization KPI |
+| Fast/HPC share versus BEV growth | EXPLORATORY (PROVISIONAL) | Existing definitions 18 and 19; Batch 05/06 dates and limitations | These are paired measures, not one causal KPI | Keep exploratory and do not infer demand, impact, or causality |
+| Administrative city/county comparisons | PROPOSED — REQUIRES APPROVAL | BNetzA admin type and crosswalk fields; 401 source geographies | Display geography, aggregation rule, and treatment of city-to-county and Trier cases are not approved | Decide the comparison grain and validate it separately |
+| Operator breakdowns | PROPOSED — REQUIRES APPROVAL | `core.charging_equipment.operator_name`; data dictionary | Operator-name normalization, primary measure, and denominator are not approved | Approve raw-name versus normalized-operator treatment before use |
+| Commissioning history | VALIDATED as a descriptive distribution | `core.charging_equipment.commissioning_date`; existing definition 11 | None for a snapshot cohort profile; it is not an installation flow | Retain the cohort/profile limitation |
+| Payment methods, opening hours, and connector types | PROPOSED — REQUIRES APPROVAL | `payment_methods`, `opening_*`, and `connector_types` are preserved in core | Tokenization, multi-label denominators, and display treatment are not approved; opening text is not real-time availability | Approve descriptive field distributions before validation |
+| KBA ownership, postcode, and municipality analyses | PROPOSED — REQUIRES APPROVAL | `core.kba_postcode_ev_stock` and `core.kba_municipality_ev_stock`; 24,586 and 32,229 rows | Ownership denominator, possible total-row handling, and separation from district grain need approval | Define one-grain analyses and validate alternative-grain reconciliation |
+| Crosswalk verification and Trier treatment | VALIDATED for coverage and join arithmetic; PROVISIONAL for official geography | Batch 03/05/06 reports; 401 rows, 400 codes, 24 provisional mappings | Authoritative administrative verification remains outstanding | Keep all flags visible and aggregate to KBA code before the stock join |
+| BBSR settlement or spatial enrichment | PROPOSED — REQUIRES APPROVAL | Geographic methodology and roadmap only; no BBSR data integrated | Source, boundary vintage, point-to-area method, licensing, and intended KPI are undefined | Do not download or integrate BBSR until approved |
+| Data-quality and coverage metrics | VALIDATED | `docs/data-quality.md`, Phase 03, Batch 03/05/06 reports | The metrics were documented as checks but not grouped in the catalog | Use the explicit quality measures below; keep exceptions visible |
+| Utilization, sessions, energy, queue time, reliability, real-time availability, sales, or causal adoption claims | UNSUPPORTED BY CURRENT SOURCES | Project charter, data dictionary, and Batch 06 limitations | No source fields measure these concepts | Keep outside the KPI catalog until a suitable source and definition are approved |
+
+The audit found no reason to change the formulas or current validation status of the existing 20 numbered KPI definitions. The additions below make previously implicit validated coverage explicit and record candidate domains without promoting them to approved results.
 
 ## Charging infrastructure KPIs
 
@@ -273,7 +306,7 @@ Batch 06 deployed these definitions in `analytics.charging_by_kba_district_2026_
 - Filters and exclusions: Use maximum declared power per point; do not compare unaggregated Trier source rows with KBA stock.
 - Interpretation: An exploratory descriptive comparison.
 - Known limitations: Different dates, incomplete published infrastructure, provisional geography, and confounding factors prohibit causal interpretation.
-- Status: PROVISIONAL.
+- Status: EXPLORATORY (PROVISIONAL).
 
 ### 19. High-power charging share versus BEV stock growth
 
@@ -286,7 +319,7 @@ Batch 06 deployed these definitions in `analytics.charging_by_kba_district_2026_
 - Filters and exclusions: Maximum-per-point power parser; aggregate before joining; preserve provisional flags.
 - Interpretation: An exploratory descriptive comparison.
 - Known limitations: No utilization, demand, or causal mechanism is observed.
-- Status: PROVISIONAL.
+- Status: EXPLORATORY (PROVISIONAL).
 
 ### 20. Regional and state differences or rankings
 
@@ -299,8 +332,120 @@ Batch 06 deployed these definitions in `analytics.charging_by_kba_district_2026_
 - Filters and exclusions: Do not rank mixed dates or alternate KBA grains; do not hide provisional mappings or unknown power values.
 - Interpretation: A descriptive prioritization aid.
 - Known limitations: Rankings can reflect population, reporting coverage, administrative boundaries, and source completeness rather than infrastructure quality or need.
-- Status: PROVISIONAL for combined regional rankings; VALIDATED for single-source descriptive counts.
+- Status: EXPLORATORY (PROVISIONAL) for combined regional rankings; VALIDATED for single-source descriptive counts.
+
+### 21. State infrastructure distribution
+
+- Business question: How are registered equipment records and charging-point slots distributed across the 16 German states?
+- Definition: Report equipment rows, declared point counts, and populated point slots by `state_name`, keeping each measure at its own grain.
+- Formula: `COUNT(*)` equipment rows; `SUM(declared_point_count)` declared points; source-aware `COUNT(*)` point rows.
+- Units: Equipment records and point slots.
+- Source tables: `analytics.charging_by_state`, `core.charging_equipment`, and `core.charging_point`.
+- Grain: State and BNetzA reference date `2026-09-30`.
+- Filters and exclusions: Preserve all equipment statuses; use `(source_id, excel_row)` / `(source_id, equipment_excel_row)` for the equipment-to-point relationship; do not divide by population without an approved denominator.
+- Interpretation: A descriptive state distribution of the published register. The current view contains all 16 states.
+- Known limitations: The BNetzA register is not exhaustive, and absolute counts reflect state size and source coverage.
+- Status: VALIDATED for the current snapshot.
+
+### 22. KBA district infrastructure distribution
+
+- Business question: How are the registered charging measures distributed across KBA district codes?
+- Definition: Aggregate equipment and point measures by KBA code after mapping each BNetzA state/district combination, then expose the mapping-quality fields.
+- Formula: Sum equipment measures and count point rows by `kba_district_code` after source-geography aggregation; calculate shares with the point-slot denominator within the same KBA code.
+- Units: Equipment records, point slots, declared-power bands, nominal MW, and percentages.
+- Source tables: `analytics.charging_by_kba_district_2026_09_30`, `reference.bnetza_kba_district_crosswalk_2026`, `core.charging_equipment`, and `core.charging_point`.
+- Grain: KBA district code and BNetzA reference date `2026-09-30`; the combined view adds one explicit KBA `reference_date`.
+- Filters and exclusions: Aggregate before the vehicle join; keep the 24 provisional mappings and `points_without_valid_power`; never sum infrastructure values repeated beside multiple KBA dates.
+- Interpretation: Batch 06 validated 400 KBA district rows and retained the national totals.
+- Known limitations: The local arithmetic is validated, but 22 aliases and both Trier source mappings still require authoritative geographic review. KBA stock dates are not contemporaneous with the infrastructure date.
+- Status: VALIDATED for observed row and aggregate arithmetic; PROVISIONAL for official geographic interpretation.
+
+## Data-quality and coverage measures
+
+These are validation measures rather than new business KPIs. They should be shown as quality metadata beside analytical outputs, not interpreted as utilization or performance measures.
+
+| Measure | Formula | Current validated result | Grain and source | Limitation |
+|---|---|---:|---|---|
+| Equipment-to-point count mismatch | Count equipment rows where `declared_point_count` differs from matched populated point rows | 0 | Equipment row; `core.charging_equipment` + `core.charging_point` | A zero mismatch confirms current retention, not source completeness |
+| Orphan charging-point rows | Point rows without a matching `(source_id, equipment_excel_row)` equipment row | 0 | Point row; source-aware join | A future source change requires rerunning the key check |
+| Duplicate equipment and point keys | Duplicate `(source_id, excel_row)` and `(source_id, equipment_excel_row, point_number)` counts | 0 / 0 | Current BNetzA snapshot | Uniqueness is local to the current source snapshot |
+| Declared-power parse coverage | `points_without_valid_power / populated_point_slots` | 0 / 211,253 | Point row and KBA district; deployed geographic view | The parser remains a derived read-only expression over raw text |
+| Crosswalk coverage and provisional mapping count | Mapped source geographies / source geographies; count of provisional flags | 401 / 401; 24 provisional | BNetzA source geography and crosswalk | Coverage does not prove official boundary equivalence |
+| KBA code/date key uniqueness | Duplicate `(kba_district_code, kba_reference_date)` keys | 0; 1,200 rows | Combined KBA view | Infrastructure values repeat across dates and must not be summed |
+| Coordinate exception | Equipment rows outside the broad Germany check | 1 | Equipment row; source coordinates | The source coordinate is retained and is not corrected by this documentation batch |
+
+Evidence for these results is consolidated in [docs/data-quality.md](data-quality.md), [reports/batch03_crosswalk_validation.md](../reports/batch03_crosswalk_validation.md), [reports/batch05_preintegration_review.md](../reports/batch05_preintegration_review.md), and [reports/batch06_geographic_deployment.md](../reports/batch06_geographic_deployment.md).
+
+## Candidate source-supported analyses requiring approval
+
+The following definitions document gaps identified by the audit. They are deliberately not added to the current baseline and do not authorize database changes or dashboard publication.
+
+### PHEV absolute stock change and PHEV percentage stock growth
+
+- Definition: Compare `phev_cars` at two KBA snapshots for the same geography and table grain.
+- Formulas: `PHEV_t2 - PHEV_t1`; `100 * (PHEV_t2 - PHEV_t1) / PHEV_t1`.
+- Units: Registered vehicles and percent.
+- Source and grain: `core.kba_district_ev_stock`, same district/state/national geography plus two explicit `reference_date` values.
+- Required controls: Do not mix the 400-district total with the KBA `Deutschland` row; do not interpret stock change as sales.
+- Status: DEFINED BUT NOT VALIDATED. The formulas mirror the validated BEV change measures, but no independent result has been approved for this catalog.
+
+### PHEV share of passenger cars
+
+- Definition: PHEV stock divided by `passenger_cars` from the same FZ 27.15 row and date.
+- Formula: `100 * SUM(phev_cars) / SUM(passenger_cars)`.
+- Units: Percent.
+- Source and grain: `core.kba_district_ev_stock`; district, state aggregate, or 400-district aggregate plus `reference_date`.
+- Required controls: Use only the confirmed FZ 27.15 denominator and keep the district-versus-Deutschland reconciliation visible.
+- Status: DEFINED BUT NOT VALIDATED. Owner approval and an independent reconciliation are required before it becomes a published KPI.
+
+### Administrative city/county comparison
+
+- Definition: Compare a specified registered infrastructure measure by the source `bnetza_admin_type` or an explicitly approved KBA administrative type.
+- Formula: For each approved type, `COUNT(*)` equipment rows, `COUNT(*)` point slots, or another already validated measure; no composite score.
+- Units: Depends on the selected measure.
+- Source and grain: BNetzA equipment/point tables plus `reference.bnetza_kba_district_crosswalk_2026`; source geography or KBA code and BNetzA date.
+- Required controls: Decide whether the comparison is at BNetzA source geography or KBA code, preserve city/county collisions, and handle Trier only after aggregation to code `07211`.
+- Status: PROPOSED — REQUIRES APPROVAL. The local crosswalk has 107 source rows classified as city and 294 as county, but this is not an official boundary review.
+
+### Operator breakdown
+
+- Definition: Group registered equipment by the raw `operator_name`; optionally report declared point counts as a separate equipment-level measure.
+- Formula: `COUNT(*)` equipment rows and `SUM(declared_point_count)` by raw operator value.
+- Units: Equipment records and declared point slots.
+- Source and grain: `core.charging_equipment`; operator and BNetzA reference date.
+- Required controls: Decide whether legal-name normalization is allowed; do not treat raw spelling variants as one operator without an approved crosswalk; never infer market share or ownership.
+- Status: PROPOSED — REQUIRES APPROVAL. The current field has 11,790 distinct non-null values, but no operator normalization or validation report exists.
+
+### Payment-method, opening-hours, and connector-type distributions
+
+- Definition: Descriptive field distributions from the source text. Payment methods and connector types may be multi-valued; opening fields describe the published schedule text.
+- Formula: For a token-presence view, `COUNT(*)` equipment or point rows containing each token divided by the relevant equipment or point-row denominator. Multi-label shares may overlap. A raw-string distribution uses `COUNT(*) GROUP BY` the unmodified source text.
+- Units: Equipment-row share, point-row share, or raw value counts.
+- Source and grain: `core.charging_equipment.payment_methods`, `opening_hours`, `opening_weekdays`, `opening_times`; `core.charging_point.connector_types`; BNetzA snapshot.
+- Required controls: Preserve raw text, define tokenization and placeholder handling such as `Keine Angabe`, and do not treat opening hours as real-time availability or connector text as a connector count.
+- Status: PROPOSED — REQUIRES APPROVAL. The fields are present, but the token-level denominator and display treatment have not been approved or independently validated.
+
+### KBA ownership, postcode, and municipality analyses
+
+- Definition: Report commercial/private BEV and PHEV stock at KBA postcode or municipality grain; ownership shares may be calculated only after a denominator is approved.
+- Formula: Counts are `SUM(commercial_bev)`, `SUM(private_bev)`, `SUM(commercial_phev)`, and `SUM(private_phev)` by geography and date. A candidate ownership share is `commercial_bev / (commercial_bev + private_bev)` or the analogous PHEV formula.
+- Units: Registered vehicles and percentage shares.
+- Source and grain: `core.kba_postcode_ev_stock` at `postal_code` and `reference_date`; `core.kba_municipality_ev_stock` at `municipality_name`/`district_code` and `reference_date`.
+- Required controls: Treat postcode, municipality, district, state, and national tables as alternative grains; inspect `possible_total_row`; do not add commercial and private values to unrelated totals or stack postcode and municipality rows.
+- Status: PROPOSED — REQUIRES APPROVAL. The source tables are available, but no final ownership denominator or alternative-grain validation has been approved.
+
+## Optional future BBSR enrichment
+
+BBSR settlement or spatial typology is not present in the current source inventory and has not been downloaded or integrated. It is a proposed enrichment dimension, not a current KPI. Any future use requires approval of the source, boundary vintage, point-to-area allocation method, administrative crosswalk preservation, licensing, and the intended interpretation. The current status is PROPOSED — REQUIRES APPROVAL.
 
 ## Metrics not supported by current data
 
-The current sources and schema do not support charging utilization, sessions, actual energy delivery, queue times, reliability, real-time availability, or charger-caused vehicle adoption. These remain outside the KPI catalog until suitable sources and definitions are approved.
+| Concept | Status | Why it is unsupported | What may be reported instead |
+|---|---|---|---|
+| Charging utilization or occupancy | UNSUPPORTED BY CURRENT SOURCES | No sessions, dwell time, or utilization observations exist | Declared point counts and power mix only |
+| Charging sessions or actual energy delivery | UNSUPPORTED BY CURRENT SOURCES | The sources contain no session or kWh fields | Declared equipment nominal power, clearly labelled as nominal |
+| Queue time or customer waiting | UNSUPPORTED BY CURRENT SOURCES | No queue or arrival observations exist | No substitute KPI |
+| Reliability, uptime, or real-time availability | UNSUPPORTED BY CURRENT SOURCES | Published status and opening schedule are snapshots/text, not event or availability histories | Equipment status and opening text only as descriptive source fields |
+| Vehicle sales or charger-caused adoption | UNSUPPORTED BY CURRENT SOURCES | KBA values are stock snapshots and the project has no causal design | Descriptive stock change and explicitly exploratory comparisons |
+
+These exclusions are analytical controls. Declared power is not delivered energy, the equipment `status` field is not uptime, opening hours are not real-time availability, and BEV/PHEV stock growth is not new vehicle sales.

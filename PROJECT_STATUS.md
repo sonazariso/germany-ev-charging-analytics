@@ -2,11 +2,11 @@
 
 ## Current Batch
 
-Batch 06 — Geographic analytics layer deployment (complete; verified backup, transactional DuckDB deployment, independent read-only validation, and local documentation update).
+Batch 06.1 — KPI documentation audit (complete; English catalog reconciled against validated evidence, candidate domains explicitly status-labeled, and private Persian reference generated outside the repository; no data or database changes).
 
 ## Last completed Batch
 
-Batch 06 — Permanent geographic reference and analytics views deployed for the approved local snapshots.
+Batch 06.1 — KPI documentation audit completed after the Batch 06 geographic deployment.
 
 ## Latest validated metrics
 
@@ -46,6 +46,9 @@ The deployed maximum-per-point parser classifies 156,155 points at or below 22 k
 - Batch 06 `analytics.kba_district_charging_vs_bev_2026` combined view.
 - Source-aware `analytics.charging_by_state` view with unchanged baseline metrics.
 - Reproducible deployment SQL, controlled deployment script, independent validator, and verified ignored backup.
+- Batch 06.1 English KPI documentation audit and comparison report.
+- Batch 06.1 status vocabulary separating validated, provisional, exploratory, not-yet-validated, proposed, and unsupported measures.
+- Private Persian KPI reference maintained outside the Git worktree.
 - Persistent AGENTS.md, changelog, and local Git configuration.
 
 ## Open issues
@@ -55,19 +58,22 @@ The deployed maximum-per-point parser classifies 156,155 points at or below 22 k
 - The 400-district KBA total differs from the state-level Deutschland total because of the current Sonstige/reporting-structure reconciliation.
 - One BNetzA coordinate falls outside a broad Germany bounding check and remains uncorrected.
 - BNetzA and KBA snapshot dates are not contemporaneous, and the BNetzA register is not exhaustive.
+- PHEV change/growth and PHEV passenger-car penetration are defined as candidates but remain unvalidated and require owner approval.
+- Operator, city/county, payment/opening/connector, and KBA ownership/postcode/municipality analyses remain proposed pending denominator, grain, and normalization decisions.
 - Tableau reporting, BBSR enrichment, final license review, and GitHub publication are incomplete.
 
 ## Pending decisions
 
 - Complete authoritative review of the provisional crosswalk and decide the final display treatment of shared Trier code 07211.
 - Decide whether point-power parsing becomes a reusable core field rather than remaining in the deployed geographic view.
+- Approve or defer the candidate KPI domains recorded in the Batch 06.1 audit, including PHEV change/growth, city/county, operator, descriptive source fields, and KBA ownership/postcode/municipality analyses.
 - Decide whether BBSR settlement typology adds value and can be reused.
 - Complete source-derived extract and publication licensing review.
 
 ## Next planned work
 
-Independent geographic review, KBA reconciliation, KPI hardening, optional BBSR assessment, Tableau extract preparation, dashboard development, and final publication review.
+Owner review of candidate KPI domains, independent geographic review, KBA reconciliation, KPI hardening, optional BBSR assessment, Tableau extract preparation, dashboard development, and final publication review.
 
 ## Last local Git commit reference
 
-The Batch 06 local commit hash is returned in the handoff; no remote is configured.
+The Batch 06.1 local commit hash is returned in the handoff; no remote is configured.

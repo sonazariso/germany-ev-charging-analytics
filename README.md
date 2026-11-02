@@ -138,7 +138,7 @@ The local DuckDB database, virtual environment, raw workbooks, temporary files, 
 - [Roadmap](docs/roadmap.md)
 - [Decision log](docs/decisions.md)
 - [GitHub publication checklist](docs/github-publication-checklist.md)
-- [Phase validation reports](reports/phase01_data_profile.md), [Phase 02 schema inspection](reports/phase02_schema_inspection.md), [Phase 03 DuckDB validation](reports/phase03_duckdb_validation.md), [Batch 03 crosswalk validation](reports/batch03_crosswalk_validation.md), and [Batch 06 geographic deployment](reports/batch06_geographic_deployment.md)
+- [Phase validation reports](reports/phase01_data_profile.md), [Phase 02 schema inspection](reports/phase02_schema_inspection.md), [Phase 03 DuckDB validation](reports/phase03_duckdb_validation.md), [Batch 03 crosswalk validation](reports/batch03_crosswalk_validation.md), [Batch 06 geographic deployment](reports/batch06_geographic_deployment.md), and [Batch 06.1 KPI documentation audit](reports/batch06-1_kpi_documentation_audit.md)
 
 ## Important limitations
 

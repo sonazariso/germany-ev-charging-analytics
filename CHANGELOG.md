@@ -39,3 +39,12 @@ This changelog records project milestones and local repository changes. Historic
 - Added reproducible deployment SQL, controlled deployment code, and an independent read-only validation suite.
 - Documented the deployed grains, source dates, provisional mappings, shared Trier treatment, backup evidence, and remaining limitations.
 - Did not modify source workbooks or the Crosswalk CSV; no remote was added and nothing was uploaded.
+
+## 2026-11-02 — Batch 06.1
+
+- Audited the English KPI catalog against the 16 requested metric domains and the validated local reports/source fields.
+- Preserved the 20 existing numbered KPI definitions and added explicit state/district distribution and data-quality coverage definitions.
+- Added status distinctions for validated, provisional, exploratory, defined-but-not-validated, proposed, and unsupported measures.
+- Recorded PHEV candidate measures, city/county, operator, descriptive source-field, KBA ownership/postcode/municipality, BBSR, and unsupported real-time domains without promoting unapproved analyses.
+- Added `reports/batch06-1_kpi_documentation_audit.md` and generated the private Persian KPI reference outside the Git worktree.
+- Did not modify source workbooks, DuckDB objects, the Crosswalk CSV, or raw data; no remote was added and nothing was uploaded or published.
