@@ -280,3 +280,42 @@ points, and 2,362,218 July BEVs. These totals describe KBA registration-region
 coverage only; they are not BBSR urban/rural KPIs. BBSR-to-KBA integration is
 **NOT IMPLEMENTED** pending owner approval of a dated authoritative bridge,
 vintage treatment, mixed-region handling, and any category-level reporting.
+
+## Batch 12 two-path BBSR integration investigation
+
+Batch 12 evaluated two separate, read-only paths in
+[`reports/batch12_bbsr_integration_paths.md`](../reports/batch12_bbsr_integration_paths.md),
+reproduced by
+[`scripts/12_audit_bbsr_integration_paths.py`](../scripts/12_audit_bbsr_integration_paths.py)
+with the non-operational output in
+[`reports/batch12_bbsr_integration_paths_audit.csv`](../reports/batch12_bbsr_integration_paths_audit.csv).
+
+Path A starts from the 401 BNetzA state/district source combinations and uses
+state, administrative type, and normalized administrative identity to identify
+a BBSR 2025 Kreis candidate. It does not use the KBA code as proof and does not
+claim that a BNetzA field is AGS, ARS, KBA, or BBSR KRS. The result is 399
+`VERIFIED_COMPATIBLE`, one `CONDITIONAL_VINTAGE` Main-Kinzig-Kreis row, one
+`UNRESOLVED` Hanau row, and no mixed or conflicting source rows. The verified
+rows represent 117,077 of 117,662 equipment records and 210,262 of 211,253
+charging points. This supports only a conditional, charging-only descriptive
+enrichment at BNetzA source geography, with the BNetzA and BBSR dates visible.
+
+Path B starts from the 400 KBA registration regions and requires a dated,
+authoritative relationship to administrative Kreis geography before a BBSR
+class can be assigned. The result remains 0 strict verified regions, points, or
+July BEVs; the statuses are one `MIXED` Trier region, two
+`VINTAGE_CONFLICT` Hanau/Main-Kinzig rows, 397 `UNRESOLVED`, and no
+`CONFLICTING` rows. The five-digit prefix intersections remain diagnostic
+candidate evidence only. KBA `07211` remains the combined Trier /
+Trier-Saarburg registration region with 7,869 July BEVs counted once and no
+allocation between the two BBSR rows.
+
+The official resources reviewed in Batch 12 include Destatis GV-ISys and dated
+administrative extracts, BBSR reference downloads and the Umsteigeschlüssel, the
+Federal Employment Agency political-structure reference, KBA FZ 27 metadata,
+and official Hanau/Trier administrative pages. None supplied a universal,
+dated KBA registration-region to AGS/ARS/KRS/BBSR bridge for all 400 KBA
+regions. Accordingly, Path A is **CONDITIONAL GO** for a separate,
+non-operational charging-only descriptive path, while Path B is **NO-GO** for
+production BBSR assignment or BBSR-based BEV ratios. No Crosswalk row, BBSR
+reference row, DuckDB object, KPI definition, or production mapping changed.

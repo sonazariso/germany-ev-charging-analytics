@@ -111,6 +111,19 @@ This log separates approved decisions, implementation details, and pending propo
 - Consequences: Coverage reconciles to 400 KBA regions, 211,253 charging points, and 2,362,218 July BEVs. The result is an audit of classification readiness, not a BBSR KPI.
 - Status: Applied in the Batch 11 audit only; no analytical view or KPI formula changed.
 
+### Batch 12 two-path BBSR integration investigation
+
+- Decision: Keep the BNetzA administrative charging path and the KBA registration path separate; do not promote either audit output to the operational Crosswalk or DuckDB.
+- Reason: Path A has a usable source-grain identity assessment for 399 rows but still has a 2025/2026 vintage boundary and Hanau gap. Path B has no verified universal, dated KBA-to-administration-to-BBSR bridge and remains strictly unverified for all 400 KBA regions.
+- Consequences: Path A is **CONDITIONAL GO** only for a separately labelled, charging-only descriptive enrichment at BNetzA source geography. Path B is **NO-GO** for production BBSR assignment or BBSR-based BEV ratios. Hanau remains unresolved in Path A, Main-Kinzig remains conditional, and KBA `07211` remains mixed with no Trier stock allocation.
+- Status: Approved and completed within the Batch 12 read-only investigation scope; any future implementation requires a new owner decision.
+- Evidence: [`reports/batch12_bbsr_integration_paths.md`](../reports/batch12_bbsr_integration_paths.md), [`scripts/12_audit_bbsr_integration_paths.py`](../scripts/12_audit_bbsr_integration_paths.py), and the non-operational CSV output.
+
+- Decision: Preserve full denominators and source dates for both Batch 12 paths.
+- Reason: Coverage must not be increased by dropping unresolved source districts, assigning a prefix candidate as a code-system bridge, duplicating KBA infrastructure across stock dates, or allocating shared Trier stock.
+- Consequences: Path A reports 399 verified rows covering 117,077 equipment records and 210,262 points; Path B reports 0 strict verified regions, points, or July BEVs and retains 397 unresolved regions plus the mixed/vintage exceptions.
+- Status: Applied in the Batch 12 audit only; no KPI definition or analytical value changed.
+
 ### Batch 06 permanent geographic layer deployment
 
 - Decision: Deploy the approved geographic reference table and two snapshot-specific analytics views to the existing DuckDB file, and correct `analytics.charging_by_state` to use `(source_id, excel_row)` for point aggregation and joins.
@@ -161,4 +174,10 @@ This log separates approved decisions, implementation details, and pending propo
 - Resolve the source_id omission in analytics.charging_by_state before multi-snapshot loading.
 - Approve a reusable point-power parser/view.
 - Approve or defer the dated BBSR/KBA compatibility bridge and any BBSR category-level KPI or Tableau use; the separate BBSR reference itself is implemented.
+- Decide whether to use the 399 Path A rows only for a non-operational charging-only descriptive view at BNetzA source grain, with the BNetzA 2026/BBSR 2025 vintage note visible.
+- Decide whether a post-2026 BBSR reference is required before any Hanau/Main-Kinzig category comparison; do not inherit Main-Kinzig type 2 for Hanau without authoritative evidence.
+- Decide whether to commission a product-specific, dated KBA-to-AGS/ARS/KRS bridge investigation; do not approve a universal five-digit prefix rule.
+- Reaffirm that KBA `07211` remains the combined Trier/Trier-Saarburg display region and that its 7,869 July BEVs are not allocated between BBSR rows.
+- Decide whether historical KBA snapshots are required before publishing pre-2026 or cross-vintage regional trends.
+- Approve any new source download, future DuckDB object, Tableau enrichment, or BBSR KPI separately; none is authorized by Batch 12.
 - Complete source-data redistribution and final public-extract licensing review.

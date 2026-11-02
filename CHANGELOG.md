@@ -101,3 +101,12 @@ This changelog records project milestones and local repository changes. Historic
 - Validated strict audit results: 0 `EXACT`, 0 `HOMOGENEOUS_COMPOSITE`, 1 `MIXED` Trier region, 2 `VINTAGE_CONFLICT` Hanau/Main-Kinzig regions, 397 `UNRESOLVED`, and 0 `CONFLICTING`.
 - Confirmed full-denominator reconciliation to 211,253 charging points and 2,362,218 July 2026 BEVs without duplicating Trier or summing infrastructure across KBA dates; strict BBSR classification coverage remains zero.
 - Updated geographic methodology, data-quality, decisions, roadmap, project status, and this changelog. BBSR-to-KBA integration remains **NOT IMPLEMENTED**; no source CSV, DuckDB object, KPI formula, dependency, remote, upload, or publication was changed.
+
+## 2026-11-02 — Batch 12
+
+- Added `scripts/12_audit_bbsr_integration_paths.py`, a deterministic read-only investigation of the separate BNetzA administrative-to-BBSR and KBA-to-administration-to-BBSR paths.
+- Added `reports/batch12_bbsr_integration_paths.md` and the clearly non-operational `reports/batch12_bbsr_integration_paths_audit.csv`, preserving 401 Path A source districts and 400 Path B KBA regions with dates, candidate identifiers, evidence statuses, and coverage fields.
+- Validated Path A as 399 `VERIFIED_COMPATIBLE`, one `CONDITIONAL_VINTAGE` Main-Kinzig-Kreis row, and one `UNRESOLVED` Hanau row; verified rows cover 99.502813% of equipment and 99.530894% of charging points.
+- Confirmed Path B remains 0 strict verified regions, points, or July BEVs: 1 `MIXED` Trier region, 2 `VINTAGE_CONFLICT` Hanau/Main-Kinzig rows, 397 `UNRESOLVED`, and 0 `CONFLICTING`.
+- Reviewed official Destatis, BBSR, Federal Employment Agency, KBA, Hessen, and Trier documentation; no universal dated KBA-to-AGS/ARS/KRS/BBSR bridge was verified. Path A is **CONDITIONAL GO** only for a separate charging-only descriptive path; Path B is **NO-GO** for production BBSR assignment or BBSR-based BEV ratios.
+- Updated geographic methodology, data-quality, decisions, roadmap, project status, and README. No DuckDB object, Crosswalk row, BBSR CSV, KPI definition, dependency, dataset download, remote, upload, or publication was changed.

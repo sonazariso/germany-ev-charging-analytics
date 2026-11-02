@@ -240,6 +240,39 @@ This audit does not change the Crosswalk, BBSR CSV, DuckDB, KPI formulas, or
 Tableau readiness. Unresolved regions remain in every denominator, and no
 classification or vehicle stock is estimated or allocated.
 
+### Batch 12 two-path BBSR integration investigation
+
+Batch 12 added a deterministic, read-only audit for the separate BNetzA-to-BBSR
+and KBA-to-administration-to-BBSR paths. The detailed evidence is in
+[reports/batch12_bbsr_integration_paths.md](../reports/batch12_bbsr_integration_paths.md),
+the implementation is in
+[scripts/12_audit_bbsr_integration_paths.py](../scripts/12_audit_bbsr_integration_paths.py),
+and the 801-row output is explicitly non-operational:
+[reports/batch12_bbsr_integration_paths_audit.csv](../reports/batch12_bbsr_integration_paths_audit.csv).
+
+| Check | Observed result | Status / quality interpretation |
+|---|---:|---|
+| Path A source districts audited | 401 | Every BNetzA state/district combination is represented once. |
+| Path A statuses | 399 verified / 1 conditional vintage / 1 unresolved / 0 mixed / 0 conflicting | Charging-only source-grain compatibility assessment; no production mapping. |
+| Path A verified equipment coverage | 117,077 / 117,662 = 99.502813% | Conditional descriptive coverage with BNetzA/BBSR dates visible. |
+| Path A verified point coverage | 210,262 / 211,253 = 99.530894% | Charging points counted at point grain; unresolved rows remain in denominator. |
+| Path B KBA regions audited | 400 | Every unique KBA registration code is represented once. |
+| Path B statuses | 0 exact / 0 homogeneous / 1 mixed / 2 vintage / 397 unresolved / 0 conflicting | No authoritative dated KBA-to-BBSR bridge was verified. |
+| Path B strict verified coverage | 0 regions / 0 points / 0 July BEVs | No BBSR category or BBSR-based vehicle ratio is production-ready. |
+| Path B denominator | 400 / 211,253 / 2,362,218 | KBA regions / charging points / July 2026 BEVs reconcile independently of classification. |
+
+The Path A `UNRESOLVED` row is current Hanau because the BBSR 2025 reference has
+no separate Hanau row; current Main-Kinzig-Kreis is `CONDITIONAL_VINTAGE` because
+the 2025 BBSR stand predates the 2026-01-01 separation. Path B keeps KBA
+`07211` as a mixed Trier/Trier-Saarburg registration region, counts its 503
+charging points and 7,869 July BEVs once, and applies no allocation. The audit
+preserves the BBSR 400-row / 362-Kreisregion baseline and does not treat
+five-digit prefix similarity as code-system evidence.
+
+The script opened DuckDB read-only, inspected actual columns, verified source
+fingerprints, and produced deterministic output. No DuckDB, Crosswalk, BBSR
+CSV, KPI, or operational status changed; no dataset was downloaded or imported.
+
 ### Known coordinate exception
 
 All current equipment rows have non-null coordinates. One row falls outside a broad Germany check because its longitude is 4.0. The source record is not corrected or removed; it remains an exception for future coordinate review.

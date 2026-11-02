@@ -4,7 +4,7 @@
 
 This portfolio project builds a reproducible, Germany-wide analytical foundation for comparing the published public-charging register with registered passenger-car stock. It preserves the original BNetzA, KBA, and separately versioned BBSR reference workbooks, separates charging equipment from charging points, and keeps snapshot dates visible throughout the workflow.
 
-The current implementation is a validated local DuckDB model, a deployed still-provisional geographic analytics layer, a separate validated BBSR administrative reference, and a non-operational Batch 11 compatibility audit. BBSR has not been assigned to KBA registration regions or used in a KPI; Tableau Public reporting remains incomplete.
+The current implementation is a validated local DuckDB model, a deployed still-provisional geographic analytics layer, a separate validated BBSR administrative reference, and non-operational Batch 11/12 compatibility audits. Batch 12 found a conditional charging-only Path A assessment at BNetzA source geography, but BBSR has not been assigned to KBA registration regions or used in a KPI; Tableau Public reporting remains incomplete.
 
 ## Why this matters
 
@@ -82,11 +82,11 @@ The current architecture is described in [docs/architecture.md](docs/architectur
 
 ## Current implementation status
 
-Completed local work includes source discovery and profiling, schema inspection, lossless raw ingestion, initial core normalization, read-only validation, charging-power exploration, a 401-row BNetzA-to-KBA crosswalk, a reusable read-only batch runner, the validated Batch 06 geographic layer, the Batch 10 BBSR four-category reference build, and the Batch 11 read-only compatibility audit for all 400 KBA regions.
+Completed local work includes source discovery and profiling, schema inspection, lossless raw ingestion, initial core normalization, read-only validation, charging-power exploration, a 401-row BNetzA-to-KBA crosswalk, a reusable read-only batch runner, the validated Batch 06 geographic layer, the Batch 10 BBSR four-category reference build, the Batch 11 read-only compatibility audit for all 400 KBA regions, and the Batch 12 two-path BBSR compatibility investigation.
 
 Batch 04 established the English project documentation, persistent project instructions, tracking files, safe local Git configuration, and the first local baseline commit. Batch 05 validated the pre-integration geographic model. Batch 06 deployed the approved permanent objects after a verified backup and independent validation; source workbooks and the Crosswalk CSV remained unchanged.
 
-Not complete: a dated BBSR/KBA compatibility bridge, BBSR category-level KPIs, Tableau data preparation, dashboard development, final license review, and GitHub publication. The Batch 11 audit found no strict `EXACT` or `HOMOGENEOUS_COMPOSITE` coverage; the BBSR reference and audit output are deliberately separate from DuckDB and the existing Crosswalk.
+Not complete: a dated BBSR/KBA compatibility bridge, production BBSR category-level KPIs, Tableau data preparation, dashboard development, final license review, and GitHub publication. Batch 12 found 399 conditional Path A source-grain matches for charging-only description, but no strict Path B KBA classification coverage; the BBSR reference and both audit outputs remain deliberately separate from DuckDB and the existing Crosswalk.
 
 ## Reproducibility
 
@@ -106,6 +106,9 @@ python3 scripts/10_build_bbsr_reference.py
 # Approved Batch 06 deployment and independent validation
 .venv/bin/python scripts/06_deploy_geographic_layer.py --json
 .venv/bin/python scripts/06_validate_geographic_layer.py --json
+
+# Batch 12 read-only two-path BBSR compatibility audit
+.venv/bin/python scripts/12_audit_bbsr_integration_paths.py
 ~~~
 
 The DuckDB build command is documented in [docs/reproducibility.md](docs/reproducibility.md) and must only be run when a database rebuild is explicitly approved. The Batch 06 deployment is the approved exception for the permanent geographic objects and creates an ignored local backup before modification.
@@ -143,7 +146,7 @@ The local DuckDB database, virtual environment, raw workbooks, temporary files, 
 - [Roadmap](docs/roadmap.md)
 - [Decision log](docs/decisions.md)
 - [GitHub publication checklist](docs/github-publication-checklist.md)
-- [Phase validation reports](reports/phase01_data_profile.md), [Phase 02 schema inspection](reports/phase02_schema_inspection.md), [Phase 03 DuckDB validation](reports/phase03_duckdb_validation.md), [Batch 03 crosswalk validation](reports/batch03_crosswalk_validation.md), [Batch 06 geographic deployment](reports/batch06_geographic_deployment.md), [Batch 06.1 KPI documentation audit](reports/batch06-1_kpi_documentation_audit.md), [Batch 09 BBSR feasibility](reports/batch09_bbsr_feasibility.md), [Batch 10 BBSR reference validation](reports/batch10_bbsr_reference_validation.md), and [Batch 11 BBSR/KBA compatibility audit](reports/batch11_bbsr_kba_compatibility.md)
+- [Phase validation reports](reports/phase01_data_profile.md), [Phase 02 schema inspection](reports/phase02_schema_inspection.md), [Phase 03 DuckDB validation](reports/phase03_duckdb_validation.md), [Batch 03 crosswalk validation](reports/batch03_crosswalk_validation.md), [Batch 06 geographic deployment](reports/batch06_geographic_deployment.md), [Batch 06.1 KPI documentation audit](reports/batch06-1_kpi_documentation_audit.md), [Batch 09 BBSR feasibility](reports/batch09_bbsr_feasibility.md), [Batch 10 BBSR reference validation](reports/batch10_bbsr_reference_validation.md), [Batch 11 BBSR/KBA compatibility audit](reports/batch11_bbsr_kba_compatibility.md), and [Batch 12 two-path BBSR investigation](reports/batch12_bbsr_integration_paths.md)
 
 ## Important limitations
 
@@ -152,12 +155,12 @@ The local DuckDB database, virtual environment, raw workbooks, temporary files, 
 - BNetzA infrastructure is dated 2026-09-30; the latest KBA stock snapshot is dated 2026-07-01. Ratios are not contemporaneous.
 - The crosswalk has 401 BNetzA combinations and 400 KBA codes because Trier city and Trier-Saarburg share code 07211. Charging metrics must be aggregated by KBA code before joining vehicle stock.
 - Twenty-two aliases and the two shared Trier source mappings (24 provisional mappings total) are provisional local-snapshot mappings pending authoritative review.
-- The BBSR reference uses the 2025 geographic stand and contains 400 Kreis rows / 362 Kreisregion keys. It is not a KBA registration-region classification; Hanau has no separate row in this vintage, and Trier city/Trier-Saarburg retain types 1 and 3 separately.
+- The BBSR reference uses the 2025 geographic stand and contains 400 Kreis rows / 362 Kreisregion keys. It is not a KBA registration-region classification; Hanau has no separate row in this vintage, and Trier city/Trier-Saarburg retain types 1 and 3 separately. Batch 12 found Path A 399 verified-compatible source rows plus one Main-Kinzig vintage condition and one Hanau unresolved row; Path B remains 0 strict verified KBA regions.
 - The deployed analytics.charging_by_state view uses source_id and equipment Excel row in both the point aggregation and join. The current database still contains one BNetzA infrastructure snapshot; future multi-snapshot loads require re-running the same source-aware validations.
 - No source supports utilization, sessions, energy delivered, queue times, reliability, or causality.
 
 ## Roadmap
 
-The next stages are owner approval of the BBSR compatibility bridge and mixed-region treatment, KPI hardening, Tableau extract preparation, dashboard development, final quality and licensing review, and only then an explicitly approved GitHub publication.
+The next stages are owner approval of the conditional Path A charging-only use, a dated KBA compatibility bridge and mixed-region treatment, KPI hardening, Tableau extract preparation, dashboard development, final quality and licensing review, and only then an explicitly approved GitHub publication.
 
 Code is covered by the existing MIT LICENSE. Official source data retain the licenses and attribution requirements declared in the source manifest; redistribution and final publication rights require a separate review.
