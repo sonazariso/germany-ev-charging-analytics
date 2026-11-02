@@ -290,6 +290,45 @@ national point share, owner-override counts, and the explicit zero
 `unclassified_district_count`. Its scenario version and source-vintage fields
 remain visible in every row.
 
+### reference.bnetza_bbsr_historical_harmonization_2025
+
+Grain: one current BNetzA 2026-09-30 source state/district component per row,
+mapped to one historical BBSR 2025 administrative target. The table preserves
+the infrastructure and BBSR reference dates, source/target names and codes,
+raw BBSR city/county form evidence, source-component role, mapping method,
+boundary-compatibility status, evidence reference, and validation notes.
+
+Hanau and the remaining Main-Kinzig source row both target historical BBSR
+`06435000` type 2. The table does not assert a 2026 BBSR type for Hanau. City
+Kassel targets `06611000 Kassel, documenta-Stadt` type 1; Landkreis Kassel
+targets `06633000 Kassel` type 2. The versioned unique key is
+`(harmonization_version, bnetza_source_id, bnetza_state_name,
+bnetza_district_name)`.
+
+### analytics.charging_by_bbsr_district_2025_harmonized
+
+Grain: one historical BBSR 2025 target administrative unit after aggregating
+the current BNetzA source components. It exposes `source_component_count` and
+`source_component_names`, `historical_boundary_basis`, mapping/evidence fields,
+both source dates, equipment and charging-point measures, maximum-per-point
+power bands, equipment nominal power, and status metadata. It has 400 rows from
+401 source components. Hanau plus remaining Main-Kinzig is one target with 585
+equipment and 991 points.
+
+The view is charging-only. It does not read KBA vehicle stock, the KBA
+Crosswalk, BEV, or PHEV measures. Source rows remain unchanged in the core
+tables and original Batch 13/13.1 views.
+
+### analytics.charging_by_bbsr_type_2025_harmonized
+
+Grain: one historical BBSR compact settlement type, codes 1–4. It reports the
+historical target count separately from the current source-component count and
+reconciles to the national BNetzA totals. The target counts are 68 / 131 / 98 /
+103; source components are 68 / 132 / 98 / 103 because Hanau and remaining
+Main-Kinzig are two current components of one historical type-2 target. There
+is no unclassified target row. National point shares use all 211,253 charging
+points.
+
 ### analytics.kba_national_quarterly_stock
 
 Grain: one retained national historical stock observation per stock_date after de-duplicating overlapping report snapshots. Columns are source_id, report_snapshot, excel_row, stock_date, passenger_bev, passenger_phev, and passenger_cars_total.
@@ -305,5 +344,7 @@ Grain: one retained national historical stock observation per stock_date after d
 - Keep BBSR `KRS` and `Kreisregion` codes as strings and do not require BBSR codes to be globally unique across BNetzA source rows.
 - Treat the official Batch 13 BBSR category KPIs as descriptive measures of 399 verified-compatible BNetzA source districts; keep Main-Kinzig and Hanau in the official baseline `UNCLASSIFIED` group.
 - Treat Batch 13.1 scenario category KPIs as a separate owner-approved analytical scenario. Hanau category 1 is not an official BBSR 2025/2026 classification; Main-Kinzig category 2 is a historical carry-forward with a 2026 boundary caveat; both override rows have `official_bbsr_verification = false`.
+- Treat Batch 13.2 as a separate historical BBSR 2025 target-unit harmonization. It corrects Kassel city only in the new layer and combines current Hanau with remaining Main-Kinzig to historical BBSR `06435000` type 2; it is not an official 2026 Hanau classification.
+- Preserve both BNetzA `2026-09-30` and BBSR `2025-12-31` dates in Batch 13.2 outputs, and retain source-component names/counts so target-unit aggregation is auditable.
 - Do not join BBSR views to KBA vehicle stock or infer a BBSR type for KBA registration regions.
 - Do not infer utilization, energy delivery, or causality from these tables.

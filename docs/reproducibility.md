@@ -164,6 +164,47 @@ Hanau-separation caveat. Neither override is `VERIFIED_COMPATIBLE`, and no KBA
 vehicle stock or Trier allocation is introduced. Full evidence is in
 [`reports/batch13_1_bbsr_scenario_classification.md`](../reports/batch13_1_bbsr_scenario_classification.md).
 
+## Batch 13.2 historical BBSR boundary harmonization
+
+Run the reproducible reference/audit build first:
+
+~~~bash
+.venv/bin/python scripts/13_2_deploy_hanau_geographic_harmonization.py \
+  --build-reference-only --json
+~~~
+
+Run the read-only preflight, then deploy the separate historical target-unit
+objects:
+
+~~~bash
+.venv/bin/python scripts/13_2_deploy_hanau_geographic_harmonization.py \
+  --dry-run --json
+.venv/bin/python scripts/13_2_deploy_hanau_geographic_harmonization.py \
+  --json
+~~~
+
+For the repeat-safe check, reuse the verified ignored backup from the first
+deployment:
+
+~~~bash
+.venv/bin/python scripts/13_2_deploy_hanau_geographic_harmonization.py \
+  --backup-path data/backups/ev_charging_pre_batch13_2_20261102_231615.duckdb \
+  --json
+~~~
+
+The script validates the raw BBSR `SLK2025` administrative form, performs strict
+and semantic bidirectional anti-joins, records the Hanau legal boundary
+evidence, and maps 401 BNetzA source components to 400 historical BBSR target
+units. It creates only
+`reference.bnetza_bbsr_historical_harmonization_2025`,
+`analytics.charging_by_bbsr_district_2025_harmonized`, and
+`analytics.charging_by_bbsr_type_2025_harmonized`. The transaction is preceded
+by a lock/WAL check and a read-only backup validation; post-deployment checks
+snapshot the official Batch 13/13.1, Crosswalk, KBA, and state objects. No KBA
+vehicle stock, Crosswalk assignment, or Trier allocation is introduced. See
+[`reports/batch13_2_hanau_geographic_harmonization.md`](../reports/batch13_2_hanau_geographic_harmonization.md)
+for the evidence and expected totals.
+
 For a custom query:
 
 ~~~bash

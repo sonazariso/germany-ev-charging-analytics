@@ -1,0 +1,126 @@
+{
+  "audit": {
+    "anti_join_audit": {
+      "interpretation": {
+        "bbsr_only_code": "06611000",
+        "bbsr_only_name": "Kassel, documenta-Stadt",
+        "bnetza_only_current_unit": "Hessen | Kreisfreie Stadt Hanau",
+        "kassel_alias_reconciled": true,
+        "kreis_vs_kreisregion_explains_68_vs_67": false
+      },
+      "semantic_alias_normalized": {
+        "bbsr_only": [],
+        "bnetza_only": [
+          {
+            "administrative_form": "city",
+            "bnetza_district_name": "Kreisfreie Stadt Hanau",
+            "identity_key": "HANAU",
+            "state_name": "Hessen"
+          }
+        ]
+      },
+      "strict": {
+        "bbsr_only": [
+          {
+            "administrative_form": "city",
+            "bbsr_code": "06611000",
+            "bbsr_name": "Kassel, documenta-Stadt",
+            "identity_key": "KASSELDOCUMENTA",
+            "state_name": "Hessen"
+          }
+        ],
+        "bnetza_only": [
+          {
+            "administrative_form": "city",
+            "bnetza_district_name": "Kreisfreie Stadt Hanau",
+            "identity_key": "HANAU",
+            "state_name": "Hessen"
+          },
+          {
+            "administrative_form": "city",
+            "bnetza_district_name": "Kreisfreie Stadt Kassel",
+            "identity_key": "KASSEL",
+            "state_name": "Hessen"
+          }
+        ]
+      }
+    },
+    "correction": {
+      "batch13_2_target": "06611000 | Kassel, documenta-Stadt | type 1",
+      "preserved_batch13_target": "06633000 | Kassel | type 2",
+      "source": "Hessen | Kreisfreie Stadt Kassel"
+    },
+    "hanau_boundary": {
+      "boundary_effective": "2026-01-01",
+      "classification_claim": "historical BBSR 2025 target only; not an official 2026 Hanau BBSR type",
+      "historical_target": "06435000 | Main-Kinzig-Kreis",
+      "source_components": [
+        "Hessen | Kreisfreie Stadt Hanau",
+        "Hessen | Landkreis Main-Kinzig-Kreis"
+      ]
+    },
+    "historical_target_rows": 400,
+    "historical_target_type_counts": {
+      "1": 68,
+      "2": 131,
+      "3": 98,
+      "4": 103
+    },
+    "preserved_batch13_bridge_audit": {
+      "preserved_kassel_city_join": {
+        "bbsr_code": "06633000",
+        "bbsr_name": "Kassel",
+        "classification": "INCORRECT_PRESERVED_BATCH13_JOIN_CORRECTED_ONLY_IN_BATCH13_2",
+        "type_code": "2"
+      },
+      "preserved_kassel_county_join": {
+        "bbsr_code": "06633000",
+        "bbsr_name": "Kassel",
+        "type_code": "2"
+      },
+      "rows": 401
+    },
+    "scope_controls": {
+      "batch13_1_scenario_changed": false,
+      "historical_target_is_official_2026_hanau_type": false,
+      "kba_crosswalk_used_for_assignment": false,
+      "kba_objects_changed": false,
+      "official_batch13_objects_changed": false
+    },
+    "source_component_counts_by_target": {
+      "1": 399,
+      "2": 1
+    },
+    "source_hashes": {
+      "bbsr_csv_sha256": "e35c57da8d8f675fa132b629e6dda43180a18e5b78b95e1e72de30069a062e65",
+      "bbsr_raw_workbook_sha256": "083f7740c3cf2d858c79482e63ca6c7e4680248c5bd6e207ebc9df6ede953525",
+      "expected_bbsr_csv_sha256": "e35c57da8d8f675fa132b629e6dda43180a18e5b78b95e1e72de30069a062e65",
+      "expected_bbsr_raw_workbook_sha256": "083f7740c3cf2d858c79482e63ca6c7e4680248c5bd6e207ebc9df6ede953525"
+    },
+    "source_rows": 401
+  },
+  "harmonization_version": "batch13.2-2026-11-02-bbsr-2025-historical-boundary",
+  "manifest_version": 1,
+  "reference_file": "data/reference/bnetza_bbsr_historical_harmonization_2025.csv",
+  "reference_row_count": 401,
+  "reference_sha256": "26b7b177b11f19628d85c7195975d75232804567b43d964f99acb8fcd8f84661",
+  "rules": {
+    "bbsr_city_county_form_source": "raw workbook SLK2025/SLK_NAME",
+    "grain": "one BNetzA 2026 state/district source component per row",
+    "historical_hanau_type_claimed": false,
+    "historical_target_grain": "one BBSR 2025 KRS2025 administrative district after source-component aggregation",
+    "kba_code_used_for_assignment": false,
+    "official_batch13_and_batch13_1_objects_preserved": true,
+    "official_bbsr_reference_preserved": true
+  },
+  "source_vintage": {
+    "bbsr_csv": "data/reference/bbsr_settlement_types_2025.csv",
+    "bbsr_csv_sha256": "e35c57da8d8f675fa132b629e6dda43180a18e5b78b95e1e72de30069a062e65",
+    "bbsr_raw_workbook": "data/raw/bbsr/raumgliederungen-referenzen-2025.xlsx",
+    "bbsr_raw_workbook_sha256": "083f7740c3cf2d858c79482e63ca6c7e4680248c5bd6e207ebc9df6ede953525",
+    "bbsr_reference_date": "2025-12-31",
+    "bnetza_reference_date": "2026-09-30",
+    "bnetza_source_id": "bnetza_charging_2026_09_30"
+  },
+  "sql_file": "sql/13_2_hanau_geographic_harmonization.sql"
+}

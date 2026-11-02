@@ -484,6 +484,38 @@ result, comparison with the official baseline, evidence URLs, and limitations
 are in
 [`reports/batch13_1_bbsr_scenario_classification.md`](../reports/batch13_1_bbsr_scenario_classification.md).
 
+## Batch 13.2 historical BBSR boundary harmonization KPIs
+
+Batch 13.2 adds a third, versioned charging-only path. It preserves the
+official Batch 13 baseline and the Batch 13.1 owner scenario, while mapping
+the BNetzA `2026-09-30` source components to the BBSR `2025-12-31` historical
+target geography. It is a historical target-unit harmonization, not an
+official 2026 Hanau BBSR classification.
+
+### 26. Charging infrastructure by historical BBSR district
+
+- Definition: Aggregate current BNetzA source rows to one BBSR 2025 `KRS2025` target unit. Hanau and the remaining Main-Kinzig source row are combined into historical BBSR `06435000`; Kassel city is corrected to `06611000 Kassel, documenta-Stadt`, type 1, while Landkreis Kassel remains `06633000`, type 2.
+- Grain and dates: target BBSR administrative district; source infrastructure `2026-09-30`; historical BBSR stand `2025-12-31`. The view exposes both dates, source-component names/count, mapping method, boundary status, and validation notes.
+- Coverage: 401 source components aggregate to 400 historical target rows with type counts 68 / 131 / 98 / 103. Type 2 has 131 historical targets and 132 current source components because Hanau and remaining Main-Kinzig are one historical target.
+- Hanau/Main-Kinzig target: 585 equipment, 991 points, 613 normal, 378 fast, 327 points >=150 kW, 77 points >=350 kW, and 63.4820 MW.
+- Controls: the raw BBSR `SLK2025` field independently supplies city/county form; strict and semantic bidirectional anti-joins are recorded; the KBA Crosswalk is not used as BBSR assignment proof; original BNetzA source data remains unchanged.
+- Status: `VALIDATED` for reproducible charging arithmetic and historical target reconstruction; `PROVISIONAL` for any interpretation beyond the documented boundary vintage. The layer does not assign a 2026 BBSR type to Hanau.
+
+### 27. Charging infrastructure by historical BBSR settlement type
+
+- Definition: Aggregate the historical BBSR target-unit view into compact BBSR types 1–4. There is no `UNCLASSIFIED` target row after the documented Hanau/Main-Kinzig reconstruction.
+- National reconciliation: 117,662 equipment, 211,253 points, 156,155 normal, 55,098 fast, 40,950 points >=150 kW, 6,950 points >=350 kW, and 9,215.4173 MW.
+- Comparison: the official Batch 13 five-row baseline and the Batch 13.1 four-row owner scenario remain deployed and unchanged so downstream users can compare official, scenario, and historical-harmonized outputs.
+- Controls: retain source component count and names, use the maximum valid declared-power token per point, keep all source dates visible, and do not join KBA BEV/PHEV stock or allocate Trier stock.
+- Status: `VALIDATED` for the charging-only historical comparison; not a vehicle-stock KPI and not evidence of an official post-2025 BBSR publication.
+
+The deployed relations are `reference.bnetza_bbsr_historical_harmonization_2025`,
+`analytics.charging_by_bbsr_district_2025_harmonized`, and
+`analytics.charging_by_bbsr_type_2025_harmonized`. The detailed anti-join
+audit, official boundary evidence, layer comparison, and backup provenance are
+in
+[`reports/batch13_2_hanau_geographic_harmonization.md`](../reports/batch13_2_hanau_geographic_harmonization.md).
+
 ## Optional future BBSR/KBA enrichment
 
 BBSR settlement or spatial typology remains a separate, versioned reference for

@@ -21,6 +21,7 @@ This roadmap distinguishes established work from planned work. A planned item is
 - Batch 12: completed a read-only two-path BBSR compatibility investigation, with a conditional charging-only Path A assessment, a no-go Path B assessment, full denominators, and no production integration.
 - Batch 13: deployed the approved source-grain BBSR charging-only bridge and category views with 399 verified classifications, two visible unclassified districts, full charging reconciliation, and no KBA stock integration.
 - Batch 13.1: deployed the separate owner-approved Hanau/Main-Kinzig analytical scenario with a two-row override reference, 401 classified source districts, zero scenario-unclassified districts, and no change to the official Batch 13 baseline.
+- Batch 13.2: audited the BBSR 68-versus-67 discrepancy, corrected the Kassel city/county join only in a new layer, and deployed a historical Hanau/Main-Kinzig BBSR 2025 harmonization with 401 source components, 400 target units, and full national reconciliation.
 
 These are project milestones supported by local artifacts. They are not historical Git commits unless a local commit is explicitly identified in the handoff.
 
@@ -60,6 +61,7 @@ These are project milestones supported by local artifacts. They are not historic
 - [x] Evaluate separate BNetzA-to-BBSR and KBA-to-administration-to-BBSR paths in Batch 12; preserve Path A/Path B evidence statuses and keep all outputs non-operational.
 - [x] Approve and deploy the separate BNetzA-source-grain charging-only BBSR bridge and category views; preserve mixed/unresolved status, Hanau treatment, and no Trier allocation.
 - [x] Deploy the owner-approved 2026 Hanau/Main-Kinzig scenario as a separate, versioned charging-only layer; preserve the official BBSR 2025 five-row baseline and explicit non-official provenance.
+- [x] Independently explain the 68-versus-67 discrepancy, document official Hanau boundary evidence, and deploy the historical BBSR 2025 target-unit harmonization without changing Batch 13, Batch 13.1, KBA, or Crosswalk objects.
 - [ ] Approve a dated BBSR/KBA compatibility bridge before any KBA-level BBSR classification or vehicle-stock ratio.
 - [ ] Decide whether a post-2026 BBSR vintage, a product-specific KBA bridge, historical KBA snapshots, or future Tableau work is required; no universal prefix rule or Trier allocation is approved.
 - [ ] Further KPI validation and dashboard-specific denominator review.

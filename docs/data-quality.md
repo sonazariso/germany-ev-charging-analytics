@@ -323,6 +323,34 @@ category 1 is an owner-approved analytical assumption, not an official BBSR
 2025/2026 classification. Main-Kinzig category 2 is a historical carry-forward
 with the 2026 Hanau-separation caveat.
 
+### Batch 13.2 historical BBSR boundary harmonization validation
+
+Batch 13.2 adds a separate historical target-unit layer after an independent
+two-way audit of the 68-versus-67 discrepancy. The strict anti-join identifies
+one BBSR-only Kassel city label and two BNetzA-only labels (Kassel city alias
+and current Hanau); semantic alias normalization reconciles Kassel and leaves
+Hanau as the genuine 2025/2026 vintage difference. Kreis versus Kreisregion
+does not explain the discrepancy: 36 multi-district groups are type-homogeneous
+and type 1 has no duplicated Kreisregion group.
+
+| Check | Result | Interpretation |
+|---|---:|---|
+| Harmonization reference rows / unique source keys | 401 / 401 | Every BNetzA 2026 source component is represented once. |
+| Historical BBSR target rows / distinct target codes | 400 / 400 | One target row per BBSR 2025 administrative unit after aggregation. |
+| Historical type counts | 68 / 131 / 98 / 103 | Exact BBSR 2025 counts for compact types 1–4. |
+| Hanau + remaining Main-Kinzig target | 2 components; 585 equipment / 991 points | Reconstructed to BBSR `06435000`, historical type 2 only. |
+| Kassel city correction | `06611000`, type 1 | Preserved Batch 13 bridge remains unchanged; correction is new-layer only. |
+| National charging reconciliation | PASS | 117,662 equipment; 211,253 points; all power bands and 9,215.4173 MW reconcile. |
+| Existing Batch 13 / 13.1 / KBA snapshots | PASS | Protected object snapshots match pre-deployment state. |
+| SQL KBA/BEV/PHEV reference check | PASS | New layer is charging-only and does not join vehicle stock. |
+| Repeat deployment | PASS | Same verified reference and backup produce the same object results. |
+
+The official Hessian law supports the exact historical boundary union effective
+`2026-01-01`; official population series are context only. The new layer does
+not manufacture an official 2026 Hanau BBSR classification. Full evidence,
+population-vintage notes, comparison tables, and backup provenance are in
+[`reports/batch13_2_hanau_geographic_harmonization.md`](../reports/batch13_2_hanau_geographic_harmonization.md).
+
 ### Known coordinate exception
 
 All current equipment rows have non-null coordinates. One row falls outside a broad Germany check because its longitude is 4.0. The source record is not corrected or removed; it remains an exception for future coordinate review.

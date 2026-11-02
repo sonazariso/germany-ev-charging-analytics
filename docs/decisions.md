@@ -141,6 +141,15 @@ This log separates approved decisions, implementation details, and pending propo
 - Consequences: `reference.bnetza_bbsr_owner_override_2026` has exactly two rows; the scenario district view has 401 rows; the scenario type view has four rows with zero unclassified districts. The official five-row `analytics.charging_by_bbsr_type_2025` summary remains available and unchanged. National charging totals remain 117,662 equipment, 211,253 points, and 9,215.4173 MW.
 - Evidence: [`data/reference/bnetza_bbsr_owner_override_2026.csv`](../data/reference/bnetza_bbsr_owner_override_2026.csv), [`sql/13_1_bbsr_scenario.sql`](../sql/13_1_bbsr_scenario.sql), [`scripts/13_1_deploy_bbsr_scenario.py`](../scripts/13_1_deploy_bbsr_scenario.py), and [`reports/batch13_1_bbsr_scenario_classification.md`](../reports/batch13_1_bbsr_scenario_classification.md).
 
+### Batch 13.2 historical BBSR boundary harmonization
+
+- Decision: Add a separate, versioned historical BBSR target-unit layer after independently auditing the BBSR 68-versus-67 discrepancy; preserve the official Batch 13 bridge/views and the Batch 13.1 owner scenario unchanged.
+- Reason: Strict anti-joins identify an existing Kassel city/county join error plus the expected Hanau vintage difference. The official Hessian boundary law supports reconstructing the pre-2026 Main-Kinzig target as Hanau plus the remaining Main-Kinzig component.
+- Controls: Use raw BBSR `SLK2025` to distinguish city and county, correct Kassel only in the new layer, aggregate Hanau and remaining Main-Kinzig to historical BBSR `06435000` type 2, retain both source dates, and do not claim an official 2026 Hanau BBSR type. Do not use KBA codes as BBSR assignment proof, join vehicle stock, allocate Trier stock, or change the Crosswalk.
+- Consequences: 401 BNetzA source components map to 400 historical BBSR target units with type counts 68 / 131 / 98 / 103. National charging totals remain 117,662 equipment, 211,253 points, and 9,215.4173 MW; the Hanau/Main-Kinzig target is 585 equipment and 991 points.
+- Status: Approved and implemented locally after a verified ignored backup, transactional deployment, protected-object snapshots, read-only validation, and repeat-safe execution.
+- Evidence: [`sql/13_2_hanau_geographic_harmonization.sql`](../sql/13_2_hanau_geographic_harmonization.sql), [`scripts/13_2_deploy_hanau_geographic_harmonization.py`](../scripts/13_2_deploy_hanau_geographic_harmonization.py), versioned reference CSV/manifest, and [`reports/batch13_2_hanau_geographic_harmonization.md`](../reports/batch13_2_hanau_geographic_harmonization.md).
+
 ### Batch 06 permanent geographic layer deployment
 
 - Decision: Deploy the approved geographic reference table and two snapshot-specific analytics views to the existing DuckDB file, and correct `analytics.charging_by_state` to use `(source_id, excel_row)` for point aggregation and joins.

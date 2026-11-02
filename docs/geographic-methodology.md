@@ -376,3 +376,39 @@ allocate the shared Trier registration-region stock. Evidence is recorded in
 the reference CSV and in
 [`reports/batch13_1_bbsr_scenario_classification.md`](../reports/batch13_1_bbsr_scenario_classification.md),
 with the [Hanau municipal page](https://www.hanau.de/wirtschaft/profil-und-standortvorteile/hanau-in-zahlen/), [Hessen press statement](https://innen.hessen.de/presse/stadt-hanau-erhaelt-20-millionen-euro), and [Hessen municipalities page](https://innen.hessen.de/kommunales/kommunen/gemeinden-und-landkreise).
+
+## Batch 13.2 historical BBSR boundary harmonization
+
+Batch 13.2 resolves the 68-versus-67 discrepancy independently before adding a
+new analytical layer. A strict bidirectional anti-join finds BBSR-only
+`06611000 Kassel, documenta-Stadt` and BNetzA-only `Kreisfreie Stadt Kassel`
+plus `Kreisfreie Stadt Hanau`. Semantic alias normalization reconciles the two
+Kassel labels and leaves Hanau as the only genuine current-versus-2025 vintage
+difference. The BBSR `Kreis`/`Kreisregion` distinction changes aggregation
+grain but does not explain the discrepancy: all 36 multi-district Kreisregion
+groups are compact-type homogeneous and type 1 has no duplicated group.
+
+The preserved Batch 13 bridge incorrectly places both Kassel city and Kassel
+county on BBSR `06633000` type 2. The new mapping uses the raw BBSR `SLK2025`
+administrative-form field and maps city Kassel to `06611000` type 1 while
+leaving the official bridge unchanged.
+
+The official Hessian boundary law makes Hanau independent and removes it from
+Main-Kinzig-Kreis on `2026-01-01`; its listed remaining municipalities support
+the historical union of Hanau plus the remaining Main-Kinzig component. The
+new layer applies the existing BBSR 2025 type 2 to that historical target only.
+It does not invent an official 2026 Hanau type. Population fields (`bev25` in
+the BBSR workbook and official Hessian/Hanau population series) are retained
+as vintage context, not used as a replacement classification rule.
+
+The deployed objects are
+`reference.bnetza_bbsr_historical_harmonization_2025`,
+`analytics.charging_by_bbsr_district_2025_harmonized`, and
+`analytics.charging_by_bbsr_type_2025_harmonized`. They map 401 current source
+components to 400 historical target units, preserve both source dates, and
+reconcile to 117,662 equipment, 211,253 points, 156,155 normal points, 55,098
+fast points, 40,950 points >=150 kW, 6,950 points >=350 kW, and 9,215.4173 MW.
+The Hanau/Main-Kinzig target is 585 equipment and 991 points. No KBA stock,
+Crosswalk assignment, Trier allocation, or existing Batch 13/13.1 object was
+changed. Full evidence and validation are in
+[`reports/batch13_2_hanau_geographic_harmonization.md`](../reports/batch13_2_hanau_geographic_harmonization.md).

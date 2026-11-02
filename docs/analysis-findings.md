@@ -149,3 +149,32 @@ and 103 for types 1–4. Trier city remains category 1 and Trier-Saarburg
 category 3 as separate source rows with 201 and 302 points; no KBA stock is
 integrated. The scenario is charging-only and source-grain, not a KBA-level
 BBSR integration.
+
+## Batch 13.2 historical BBSR geography finding
+
+The independent 68-versus-67 audit found two distinct causes. First, the
+preserved Batch 13 identity logic matched BNetzA `Kreisfreie Stadt Kassel` to
+BBSR `06633000 Kassel` (county, type 2) instead of BBSR's official city row
+`06611000 Kassel, documenta-Stadt` (type 1). Second, Hanau is a current
+independent city that is absent from the BBSR 2025 stand because its separation
+from Main-Kinzig-Kreis took effect on `2026-01-01`. Strict and semantic
+bidirectional anti-joins make the two effects explicit. The 400 BBSR
+`Kreis`/362 `Kreisregion` grain distinction does not explain the missing type-1
+row; the 36 multi-district groups are compact-type homogeneous.
+
+The official Hessian boundary law lists Hanau's separation and the remaining
+Main-Kinzig municipalities, supporting the historical union of Hanau plus the
+remaining current Main-Kinzig row for the former BBSR 2025 target. Batch 13.2
+therefore applies the actual BBSR 2025 Main-Kinzig type 2 to the reconstructed
+historical target. It does not infer a type for current Hanau in 2026, and
+official census-based and municipal-register population numbers are kept as
+different context measures rather than used as a classification formula.
+
+The new layer maps 401 current source components to 400 historical BBSR target
+units, with target type counts 68 / 131 / 98 / 103. It reconciles to 117,662
+equipment, 211,253 points, 156,155 normal points, 55,098 fast points, 40,950
+points >=150 kW, 6,950 points >=350 kW, and 9,215.4173 MW. The combined
+Hanau/Main-Kinzig target is 585 equipment and 991 points. The official Batch 13
+baseline and Batch 13.1 scenario remain separate comparison layers; KBA stock,
+the Crosswalk, and Trier allocation are unchanged. Full evidence is in
+[`reports/batch13_2_hanau_geographic_harmonization.md`](../reports/batch13_2_hanau_geographic_harmonization.md).

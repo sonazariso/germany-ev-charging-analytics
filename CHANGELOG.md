@@ -128,3 +128,12 @@ This changelog records project milestones and local repository changes. Historic
 - Applied Hanau's category 1 as `OWNER_APPROVED_SCENARIO` and Main-Kinzig's category 2 as `HISTORICAL_BBSR_CARRY_FORWARD`; both remain `official_bbsr_verification = false` and are not labelled `VERIFIED_COMPATIBLE`.
 - Reclassified the database-derived 585 equipment records and 991 charging points from the official baseline `UNCLASSIFIED` group into scenario categories 1 and 2. The scenario covers 401 districts with zero unclassified districts and reconciles all national charging totals.
 - Added `reports/batch13_1_bbsr_scenario_classification.md` and updated the English documentation plus the private Persian KPI reference outside the Git worktree. No KBA stock integration, Trier allocation, Tableau work, remote, upload, or publication was performed.
+
+## 2026-11-02 — Batch 13.2
+
+- Added the independent strict and semantic bidirectional audit explaining the BBSR 68-versus-67 discrepancy: the preserved Batch 13 bridge maps Kassel city to the county row, while Hanau is the genuine current-versus-2025 vintage difference; Kreis versus Kreisregion does not explain the mismatch.
+- Added official Hanau boundary evidence and a documented historical union rule: Hanau and the remaining Main-Kinzig source row aggregate to historical BBSR `06435000` type 2; the layer does not claim an official 2026 Hanau BBSR classification.
+- Added the deterministic `data/reference/bnetza_bbsr_historical_harmonization_2025.csv` and manifest, using raw BBSR `SLK2025` to independently preserve city/county form and correcting Kassel city to `06611000` type 1 only in the new layer.
+- Added `scripts/13_2_deploy_hanau_geographic_harmonization.py` and `sql/13_2_hanau_geographic_harmonization.sql` with read-only preflight, anti-join checks, lock/WAL checks, verified backup, transactional deployment, protected-object snapshots, national reconciliation, and repeat-safe validation.
+- Deployed only the new Batch 13.2 reference table and historical district/type views. The official Batch 13 baseline, Batch 13.1 scenario, Crosswalk, KBA objects, raw/core data, and Trier handling remain unchanged.
+- Added `reports/batch13_2_hanau_geographic_harmonization.md` and updated the English documentation plus the private Persian KPI reference outside the Git worktree. No remote, upload, publication, vehicle-stock join, or source workbook modification was performed.
