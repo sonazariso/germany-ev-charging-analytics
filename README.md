@@ -4,7 +4,7 @@
 
 This portfolio project builds a reproducible, Germany-wide analytical foundation for comparing the published public-charging register with registered passenger-car stock. It preserves the original BNetzA and KBA workbooks, separates charging equipment from charging points, and keeps snapshot dates visible throughout the workflow.
 
-The current implementation is a validated local DuckDB model plus a versioned, still-provisional geographic crosswalk. Tableau Public reporting and final geographic integration are planned; no Tableau dashboard or BBSR enrichment is complete.
+The current implementation is a validated local DuckDB model plus a deployed, still-provisional geographic analytics layer. Tableau Public reporting and BBSR enrichment are not complete.
 
 ## Why this matters
 
@@ -62,11 +62,11 @@ flowchart LR
     F --> G[Existing analytics views]
     F --> H[Read-only batch analysis runner]
     H --> I[Versioned geographic crosswalk CSV]
-    I -. planned .-> J[Aggregated district analytics layer]
+    I --> J[Deployed geographic reference and analytics views]
     J -. planned .-> K[Tableau Public extracts and dashboard]
 ~~~
 
-The current architecture is described in [docs/architecture.md](docs/architecture.md). The minimum geographic layer remains a design proposal and has not been applied to DuckDB.
+The current architecture is described in [docs/architecture.md](docs/architecture.md). Batch 06 deployed the approved geographic layer to the local DuckDB file; the crosswalk itself remains provisional.
 
 ## Core analytical questions
 
@@ -78,11 +78,11 @@ The current architecture is described in [docs/architecture.md](docs/architectur
 
 ## Current implementation status
 
-Completed local work includes source discovery and profiling, schema inspection, lossless raw ingestion, initial core normalization, read-only validation, charging-power exploration, a 401-row BNetzA-to-KBA crosswalk, and a reusable read-only batch runner.
+Completed local work includes source discovery and profiling, schema inspection, lossless raw ingestion, initial core normalization, read-only validation, charging-power exploration, a 401-row BNetzA-to-KBA crosswalk, a reusable read-only batch runner, and the validated Batch 06 geographic layer.
 
-Batch 04 established the English project documentation, persistent project instructions, tracking files, safe local Git configuration, and the first local baseline commit. Batch 05 validated the pre-integration geographic model and documented proposed permanent objects with read-only SQL; it did not modify source workbooks, the Crosswalk CSV, or DuckDB tables/views.
+Batch 04 established the English project documentation, persistent project instructions, tracking files, safe local Git configuration, and the first local baseline commit. Batch 05 validated the pre-integration geographic model. Batch 06 deployed the approved permanent objects after a verified backup and independent validation; source workbooks and the Crosswalk CSV remained unchanged.
 
-Not complete: authoritative geographic verification, permanent geographic DuckDB objects, independent crosswalk review, BBSR suitability assessment, Tableau data preparation, dashboard development, final license review, and GitHub publication.
+Not complete: authoritative geographic verification, independent crosswalk review, BBSR suitability assessment, Tableau data preparation, dashboard development, final license review, and GitHub publication.
 
 ## Reproducibility
 
@@ -97,9 +97,13 @@ python3 scripts/03_inspect_schema.py
 .venv/bin/python scripts/04_build_geographic_crosswalk.py
 .venv/bin/python scripts/batch_analysis.py --demo \
   --report reports/batch03_batch_runner_demo.md
+
+# Approved Batch 06 deployment and independent validation
+.venv/bin/python scripts/06_deploy_geographic_layer.py --json
+.venv/bin/python scripts/06_validate_geographic_layer.py --json
 ~~~
 
-The DuckDB build command is documented in [docs/reproducibility.md](docs/reproducibility.md) and must only be run when a database rebuild is explicitly approved. The current database is inspected read-only.
+The DuckDB build command is documented in [docs/reproducibility.md](docs/reproducibility.md) and must only be run when a database rebuild is explicitly approved. The Batch 06 deployment is the approved exception for the permanent geographic objects and creates an ignored local backup before modification.
 
 ## Repository structure
 
@@ -112,8 +116,8 @@ data/profiles/
               Source inventories and validation JSON artifacts
 docs/         English project documentation
 reports/      Human-readable validation reports
-scripts/      Download, profile, ingest, crosswalk, and batch-runner code
-sql/          Prospective DuckDB settings and design SQL
+scripts/      Download, profile, ingest, crosswalk, deployment, and validation code
+sql/          DuckDB settings and reproducible deployment SQL
 tableau/      Planned Tableau reporting notes
 ~~~
 
@@ -134,7 +138,7 @@ The local DuckDB database, virtual environment, raw workbooks, temporary files, 
 - [Roadmap](docs/roadmap.md)
 - [Decision log](docs/decisions.md)
 - [GitHub publication checklist](docs/github-publication-checklist.md)
-- [Phase validation reports](reports/phase01_data_profile.md), [Phase 02 schema inspection](reports/phase02_schema_inspection.md), [Phase 03 DuckDB validation](reports/phase03_duckdb_validation.md), and [Batch 03 crosswalk validation](reports/batch03_crosswalk_validation.md)
+- [Phase validation reports](reports/phase01_data_profile.md), [Phase 02 schema inspection](reports/phase02_schema_inspection.md), [Phase 03 DuckDB validation](reports/phase03_duckdb_validation.md), [Batch 03 crosswalk validation](reports/batch03_crosswalk_validation.md), and [Batch 06 geographic deployment](reports/batch06_geographic_deployment.md)
 
 ## Important limitations
 
@@ -143,7 +147,7 @@ The local DuckDB database, virtual environment, raw workbooks, temporary files, 
 - BNetzA infrastructure is dated 2026-09-30; the latest KBA stock snapshot is dated 2026-07-01. Ratios are not contemporaneous.
 - The crosswalk has 401 BNetzA combinations and 400 KBA codes because Trier city and Trier-Saarburg share code 07211. Charging metrics must be aggregated by KBA code before joining vehicle stock.
 - Twenty-two aliases and the two shared Trier source mappings (24 provisional mappings total) are provisional local-snapshot mappings pending authoritative review.
-- The current analytics.charging_by_state view omits source_id from one equipment-to-point aggregation join. It is safe for the current single BNetzA snapshot only as a documented limitation, not as a resolved design.
+- The deployed analytics.charging_by_state view uses source_id and equipment Excel row in both the point aggregation and join. The current database still contains one BNetzA infrastructure snapshot; future multi-snapshot loads require re-running the same source-aware validations.
 - No source supports utilization, sessions, energy delivered, queue times, reliability, or causality.
 
 ## Roadmap

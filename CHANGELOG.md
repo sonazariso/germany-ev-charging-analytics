@@ -30,3 +30,12 @@ This changelog records project milestones and local repository changes. Historic
 - Documented the proposed permanent reference table and analytical views, including source dates, mapping flags, Trier handling, the existing state-view join correction, and backup/rollback requirements.
 - Added the Batch 05 pre-integration review report and updated geographic, KPI, and data-quality documentation.
 - Did not modify the Crosswalk CSV, source workbooks, or DuckDB; no remote was added and nothing was uploaded.
+
+## 2026-11-02 — Batch 06
+
+- Created and verified a byte-preserving pre-deployment DuckDB backup before the approved database change.
+- Deployed `reference.bnetza_kba_district_crosswalk_2026`, `analytics.charging_by_kba_district_2026_09_30`, and `analytics.kba_district_charging_vs_bev_2026`.
+- Corrected `analytics.charging_by_state` to aggregate and join charging points on `(source_id, equipment_excel_row)` while preserving the 16-state baseline output.
+- Added reproducible deployment SQL, controlled deployment code, and an independent read-only validation suite.
+- Documented the deployed grains, source dates, provisional mappings, shared Trier treatment, backup evidence, and remaining limitations.
+- Did not modify source workbooks or the Crosswalk CSV; no remote was added and nothing was uploaded.

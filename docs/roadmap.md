@@ -12,10 +12,12 @@ This roadmap distinguishes established work from planned work. A planned item is
 - Batch 02: charging-power and geographic-readiness analysis.
 - Batch 03: versioned BNetzA-to-KBA crosswalk and reusable read-only Batch Analysis Runner.
 - Batch 04: professional English documentation, project governance files, safe local Git setup, and the local baseline commit.
+- Batch 05: read-only pre-integration geographic validation and permanent-layer design.
+- Batch 06: verified-backup deployment of the permanent geographic layer and source-aware state-view correction.
 
-These are project milestones supported by local artifacts. They are not historical Git commits.
+These are project milestones supported by local artifacts. They are not historical Git commits unless a local commit is explicitly identified in the handoff.
 
-## Current Batch 04 completion
+## Current Batch 06 completion
 
 - [x] Document current architecture and data lineage.
 - [x] Document source metadata, checksums, worksheet coverage, and licenses from the manifest and profiles.
@@ -23,6 +25,10 @@ These are project milestones supported by local artifacts. They are not historic
 - [x] Create a KPI catalog with formula, denominator, grain, date, status, and limitations.
 - [x] Separate verified findings, exploratory results, and open questions.
 - [x] Record crosswalk methodology, provisional aliases, and Trier handling.
+- [x] Approve and deploy the minimum geographic DuckDB integration design.
+- [x] Create and validate a pre-deployment backup before the approved schema change.
+- [x] Build and validate permanent geographic reference and aggregate objects.
+- [x] Correct and validate the source-aware state view.
 - [x] Establish persistent project instructions and tracking files.
 - [x] Initialize Git locally without a remote.
 
@@ -30,9 +36,6 @@ These are project milestones supported by local artifacts. They are not historic
 
 - [ ] Independent review of every provisional geographic alias.
 - [ ] Decision on the final treatment and display of shared Trier/Trier-Saarburg registration code 07211.
-- [ ] Approval of the minimum geographic DuckDB integration design.
-- [ ] Create a backup/recovery plan before any approved schema change.
-- [ ] Build and validate permanent geographic reference and aggregate objects.
 - [ ] Reconcile KBA district versus state-level Sonstige and national-total differences.
 - [ ] Decide whether maximum-per-point power parsing becomes a reusable view or core field.
 - [ ] Assess BBSR suitability, boundary vintages, and licensing; do not download until approved.

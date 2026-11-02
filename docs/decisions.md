@@ -61,6 +61,15 @@ This log separates approved decisions, implementation details, and pending propo
 - Status: Approved and implemented in the crosswalk validation logic; permanent DuckDB integration is pending.
 - Evidence: Batch 03 aggregate-before-join check.
 
+### Batch 06 permanent geographic layer deployment
+
+- Decision: Deploy the approved geographic reference table and two snapshot-specific analytics views to the existing DuckDB file, and correct `analytics.charging_by_state` to use `(source_id, excel_row)` for point aggregation and joins.
+- Reason: The Batch 05 read-only validation established the required grains, power-band parser, mapping flags, and aggregate-before-join rule; Batch 06 approval authorized the permanent local implementation.
+- Consequences: The reference table preserves all 401 CSV rows and 24 provisional mappings; charging metrics are unique at 400 KBA codes; combined rows retain the BNetzA date and actual KBA stock date; infrastructure values repeat across KBA dates and must not be summed.
+- Backup and rollback: Create and independently validate a timestamped ignored backup before database modification; apply the deployment in one transaction; use the verified backup or an approved object-level rollback if restoration is needed.
+- Status: Approved and implemented locally in Batch 06. No source workbook or Crosswalk CSV was modified.
+- Evidence: `sql/06_geographic_layer.sql`, `scripts/06_deploy_geographic_layer.py`, `scripts/06_validate_geographic_layer.py`, and `reports/batch06_geographic_deployment.md`.
+
 ### No premature causal conclusions
 
 - Decision: Treat vehicle-stock growth and infrastructure mix as descriptive comparisons, not causal evidence.

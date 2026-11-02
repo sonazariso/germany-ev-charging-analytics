@@ -27,11 +27,13 @@ All KPIs must carry the source reference date and the geographic grain in the ou
 
 Power KPIs use a read-only derivation from connector_power_raw: split each point's semicolon-separated text, parse numeric tokens, and classify by the maximum token in that point row. This is distinct from connector_power_kw_single, which is populated only for a single numeric raw value.
 
-### Batch 05 regional validation note
+### Batch 05/06 regional validation and deployed-layer note
 
 The same definitions were recomputed at KBA district-code grain after mapping the 401 BNetzA source geographies and aggregating to 400 KBA codes. The regional result retained 117,662 equipment rows and 211,253 point slots, with 156,155 normal points, 55,098 fast points, 40,950 points at least 150 kW, 6,950 points at least 350 kW, and 9,215.4173 MW of declared equipment nominal power. Percentages use the point-slot denominator within each KBA code. All regional outputs must carry `bnetza_reference_date = 2026-09-30`, the actual KBA `reference_date`, and the mapping verification flags.
 
 The combined validation grain is one KBA district code per KBA stock date: 400 codes × three dates = 1,200 rows. Infrastructure measures are repeated beside the three KBA snapshots for comparison and must never be summed across dates. The 24 provisional source mappings remain visible as quality flags; they are not promoted to officially verified mappings.
+
+Batch 06 deployed these definitions in `analytics.charging_by_kba_district_2026_09_30` and `analytics.kba_district_charging_vs_bev_2026`. The regional view exposes `normal_charging_point_count`, `fast_charging_point_count`, `points_ge_150_kw`, `points_ge_350_kw`, `fast_charging_share_pct`, `high_power_charging_share_pct`, `equipment_nominal_power_kw`, `equipment_nominal_power_mw`, and `points_without_valid_power`. The combined view adds KBA state/district names, the actual `kba_reference_date`, `bev_per_registered_charging_point`, passenger-car/BEV/PHEV stock, and the same mapping-quality flags. The BEV-per-point ratio remains PROVISIONAL because the infrastructure and vehicle dates differ, the BNetzA register is not exhaustive, and the crosswalk remains partly provisional.
 
 ## Charging infrastructure KPIs
 

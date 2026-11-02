@@ -2,13 +2,13 @@
 
 ## Status and decision boundary
 
-This is a Batch 05 design proposal. The read-only validation passed for the current local snapshots, but none of the objects below has been deployed to DuckDB. The Crosswalk CSV, source workbooks, and existing database objects remain unchanged.
+Batch 05 established this design proposal and Batch 06 deployed its approved local implementation. The Crosswalk CSV and source workbooks remain unchanged. The executable definitions are in [sql/06_geographic_layer.sql](../sql/06_geographic_layer.sql), and the deployment/validation evidence is in [reports/batch06_geographic_deployment.md](../reports/batch06_geographic_deployment.md).
 
 The design is intentionally limited to the existing BNetzA and KBA sources. It does not add BBSR, boundary geometries, utilization data, energy delivery, or a second infrastructure snapshot.
 
 ## Inputs and snapshot meaning
 
-The proposed layer uses:
+The deployed layer uses:
 
 - BNetzA charging equipment and point slots from `2026-09-30`, identified by source ID `bnetza_charging_2026_09_30`.
 - KBA FZ 27.15 district stock from `2026-01-01`, `2026-04-01`, and `2026-07-01`.
@@ -16,24 +16,24 @@ The proposed layer uses:
 
 The crosswalk reference date is not a replacement for the KBA stock date. The analytical join must keep `bnetza_reference_date` and the actual `kba_reference_date` from `core.kba_district_ev_stock` visible in every combined row. The infrastructure measures are repeated for each KBA stock date for comparison; they are not summed across dates.
 
-## Proposed objects
+## Deployed objects
 
-The current database has only `raw`, `core`, and `analytics` schemas. A future approved migration may add `reference`; the names below are proposed and are not currently present.
+The current database has `raw`, `core`, `reference`, and `analytics` schemas. The names and grains below are the approved Batch 06 objects.
 
 | Object | Type | Row grain | Proposed unique key | Purpose |
 |---|---|---|---|---|
-| `reference.bnetza_kba_district_crosswalk` | table | One BNetzA source snapshot, state/district pair, and crosswalk version | `(crosswalk_version, bnetza_source_id, bnetza_state_name, bnetza_district_name)` | Permanent, auditable copy of the approved CSV mapping and its verification fields |
-| `analytics.charging_by_kba_district` | view | One BNetzA source snapshot and KBA district code; an unmapped quality row may have a null code | `(bnetza_source_id, kba_district_code)` for mapped rows | Equipment, point, power-band, and mapping-quality measures after aggregate-before-join |
-| `analytics.charging_vs_kba_district_stock` | view | One BNetzA source snapshot, KBA district code, and KBA stock reference date | `(bnetza_source_id, kba_district_code, kba_reference_date)` for mapped rows | Combined descriptive infrastructure/vehicle relation with both source dates and quality flags |
+| `reference.bnetza_kba_district_crosswalk_2026` | table | One BNetzA source snapshot, state/district pair, and crosswalk version | `(crosswalk_version, bnetza_source_id, bnetza_state_name, bnetza_district_name)` | Permanent, auditable copy of the approved CSV mapping and its verification fields |
+| `analytics.charging_by_kba_district_2026_09_30` | view | One BNetzA source snapshot and KBA district code; an unmapped quality row may have a null code | `(bnetza_source_id, kba_district_code)` for mapped rows | Equipment, point, power-band, and mapping-quality measures after aggregate-before-join |
+| `analytics.kba_district_charging_vs_bev_2026` | view | One BNetzA source snapshot, KBA district code, and KBA stock reference date | `(bnetza_source_id, kba_district_code, kba_reference_date)` for mapped rows | Combined descriptive infrastructure/vehicle relation with both source dates and quality flags |
 
 The reference table should retain every current CSV column, including `mapping_status`, `mapping_method`, `verification_status`, `mapping_note`, `evidence_url`, and the source aggregate fields. `bnetza_source_id` is a load-time lineage field derived from the source manifest; adding it to a future permanent table does not authorize changing the current CSV.
 
 ## Reference-table definition
 
-The following is design SQL only. It must not be run until the layer design, backup, and rollback plan are approved.
+The following is the design-history table definition. The deployed SQL is maintained in `sql/06_geographic_layer.sql` and was run only after the Batch 06 approval, backup, and rollback checks.
 
 ~~~sql
-CREATE TABLE reference.bnetza_kba_district_crosswalk (
+CREATE TABLE reference.bnetza_kba_district_crosswalk_2026 (
     crosswalk_version VARCHAR NOT NULL,
     bnetza_source_id VARCHAR NOT NULL,
     bnetza_reference_date DATE NOT NULL,
@@ -63,15 +63,15 @@ The target KBA code is not unique in the reference table: code `07211` is intent
 
 ## Charging aggregation definition
 
-`analytics.charging_by_kba_district` must aggregate equipment and point measures separately. This prevents equipment nominal power from being multiplied by the number of point slots. The source-aware equipment-to-point join uses both `source_id` and Excel row. The point-level power parser splits every semicolon-separated token, converts decimal commas to decimal points, keeps only successfully parsed numeric values, and uses the maximum value within the point. It never sums connector powers.
+`analytics.charging_by_kba_district_2026_09_30` aggregates equipment and point measures separately. This prevents equipment nominal power from being multiplied by the number of point slots. The source-aware equipment-to-point join uses both `source_id` and Excel row. The point-level power parser splits every semicolon-separated token, converts decimal commas to decimal points, keeps only successfully parsed numeric values, and uses the maximum value within the point. It never sums connector powers.
 
-The following definition is design SQL only. The literal source ID and date are shown to make the current snapshot contract explicit; an approved implementation may resolve them from a source catalog.
+The following definition is design-history SQL. The literal source ID and date make the current snapshot contract explicit; the deployed implementation keeps these values in the reproducible SQL template.
 
 ~~~sql
-CREATE VIEW analytics.charging_by_kba_district AS
+CREATE VIEW analytics.charging_by_kba_district_2026_09_30 AS
 WITH current_crosswalk AS (
     SELECT *
-    FROM reference.bnetza_kba_district_crosswalk
+    FROM reference.bnetza_kba_district_crosswalk_2026
     WHERE crosswalk_version = '2026-07-01'
       AND bnetza_source_id = 'bnetza_charging_2026_09_30'
       AND bnetza_reference_date = DATE '2026-09-30'
@@ -215,7 +215,7 @@ The current validation produced 400 mapped regional rows with no null KBA code, 
 The combined view must join the regional result to KBA district stock by code only after the charging aggregation is complete. KBA uniqueness must be checked at `(district_code, reference_date)` before the view is created.
 
 ~~~sql
-CREATE VIEW analytics.charging_vs_kba_district_stock AS
+CREATE VIEW analytics.kba_district_charging_vs_bev_2026 AS
 SELECT c.bnetza_source_id,
        c.bnetza_reference_date,
        c.kba_district_code,
@@ -236,7 +236,7 @@ SELECT c.bnetza_source_id,
        k.passenger_cars,
        k.bev_cars,
        k.phev_cars
-FROM analytics.charging_by_kba_district c
+FROM analytics.charging_by_kba_district_2026_09_30 c
 LEFT JOIN core.kba_district_ev_stock k
   ON k.district_code = c.kba_district_code;
 ~~~
@@ -252,9 +252,9 @@ This produces 400 x 3 = 1,200 combined rows for the current snapshots. The BNetz
 - `kba_district_code` is not a unique key in the reference table; it becomes unique only after source-geography aggregation.
 - The KBA stock relation must retain one row per district code and stock date. The shared Trier code therefore has three stock rows, not six.
 
-## Existing state-view correction
+## Deployed state-view correction
 
-The current `analytics.charging_by_state` view is not changed in Batch 05. Its point subquery groups by `equipment_excel_row` only and joins on Excel row only. The minimal source-aware correction is:
+Before Batch 06, `analytics.charging_by_state` grouped its point subquery by `equipment_excel_row` only and joined on Excel row only. Batch 06 applied the following source-aware correction:
 
 ~~~sql
 LEFT JOIN (
@@ -266,11 +266,11 @@ LEFT JOIN (
  AND e.excel_row = p.equipment_excel_row
 ~~~
 
-The correction still requires an approved migration and validation against the current single-snapshot totals before it is deployed. The Batch 05 geographic views must not depend on the unsafe view.
+The deployed view was validated against the recorded 16-state baseline and an independent source-aware aggregation. The Batch 06 geographic views do not depend on the state view.
 
-## Pre-deployment acceptance checks
+## Deployment acceptance checks
 
-The following checks are required before any permanent object is created:
+The following checks were used before and after deployment and remain required for a future source-date change:
 
 | Check | Current expected result |
 |---|---:|
@@ -292,13 +292,13 @@ The following checks are required before any permanent object is created:
 
 The power-band identity must hold for every regional row: normal points plus fast points equals all point slots; the high-power bands must be nested within fast points; and percentages must use the point-slot denominator. Equipment nominal power must be aggregated before any equipment-to-point join.
 
-## Backup and rollback considerations
+## Backup and rollback record
 
-Before an approved schema change:
+Before the approved Batch 06 schema change:
 
 1. Close all DuckDB writers and record the baseline database hash, size, and current Git commit.
-2. Make a byte-preserving backup outside the tracked repository tree, with the source date and migration identifier in the filename. Include any associated WAL only if it exists and the recovery procedure requires it.
-3. Test the DDL against a copy of the backup first. Prefer building a new database copy and atomically switching only after all acceptance checks pass.
-4. Keep the current database untouched until the new objects have been validated against the read-only Batch 05 results.
+2. Make a byte-preserving backup under an ignored local backup directory, with the source date and migration identifier in the filename. Include any associated WAL only if it exists and the recovery procedure requires it.
+3. Validate the backup through a separate read-only connection, including baseline table counts and the state-view row count.
+4. Apply the DDL in one transaction and validate the new objects against the read-only Batch 05 results before treating the deployment as successful.
 
-Rollback is to stop using the new copy and restore the byte-preserving baseline backup or remove only the newly created objects inside an approved transaction. No rollback should delete source workbooks, the curated CSV, or the original baseline database. These steps are design requirements only; no backup, DDL, or rollback action was executed in Batch 05.
+Batch 06 executed this procedure. The verified pre-deployment backup was `data/backups/ev_charging_pre_batch06_20261102_113900.duckdb`; its size was 39,071,744 bytes, its SHA-256 was `a51b350d337ba8fa057dc62406e38bcda1d9872a41b606629b815c110f10d11a`, it had no WAL, and a separate read-only connection confirmed the baseline counts. Rollback remains to stop using the deployed objects and restore this backup, or remove only the newly created/modified objects inside an explicitly approved transaction. No rollback should delete source workbooks, the curated CSV, or the original baseline database.

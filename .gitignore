@@ -26,6 +26,7 @@ data/raw/**
 *.part
 data/staging/
 data/analytics/
+data/backups/
 data/tmp/
 .data_cache/
 *.tmp

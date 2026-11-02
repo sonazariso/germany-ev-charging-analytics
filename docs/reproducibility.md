@@ -9,7 +9,7 @@ The current verified local environment is:
 - DuckDB requirement declared in requirements-phase03.txt: duckdb >=1.3 and <3
 - macOS local filesystem workflow
 
-The Phase 01 profiling scripts use Python standard-library modules only. DuckDB is needed for the database, crosswalk, and batch-runner stages. The current Batch 04 did not install packages or change the environment.
+The Phase 01 profiling scripts use Python standard-library modules only. DuckDB is needed for the database, crosswalk, batch-runner, deployment, and validation stages. Batch 06 used the existing `.venv` environment and did not install packages or change DuckDB memory or thread settings.
 
 ## Source acquisition and verification
 
@@ -43,7 +43,7 @@ The existing build script uses the four verified source profiles, creates a temp
 
 This command is a read-write rebuild workflow. It is not part of normal read-only analysis and must not be run during a review unless a database rebuild is explicitly approved. The current database was not rebuilt in Batch 04.
 
-The current database contains raw, core, and analytics objects described in [the data dictionary](data-dictionary.md). The original source files remain outside the Git baseline.
+The current database contains raw, core, reference, and analytics objects described in [the data dictionary](data-dictionary.md). The original source files and local DuckDB file remain outside the Git baseline.
 
 ## Validation
 
@@ -56,6 +56,24 @@ The existing reports provide the established checks:
 ~~~
 
 The crosswalk script opens DuckDB with read_only=True and writes the curated reference CSV and its Markdown validation report. The batch runner opens one read-only connection, accepts multiple named SELECT or WITH queries, consumes every result to record row counts, and closes the connection.
+
+## Batch 06 geographic deployment
+
+The approved deployment command opens the existing DuckDB file read-only for preflight, verifies the Crosswalk CSV and source-key coverage, checks for open DuckDB handles and WAL state, creates a timestamped ignored backup under `data/backups/`, validates that backup through a separate read-only connection, and then applies `sql/06_geographic_layer.sql` in one transaction:
+
+~~~bash
+.venv/bin/python scripts/06_deploy_geographic_layer.py --json
+~~~
+
+The deployment never rebuilds or overwrites the database. It creates or validates the permanent crosswalk table and two geographic views, and corrects `analytics.charging_by_state` only after recording its current output. A failed in-transaction acceptance check rolls back the uncommitted database changes.
+
+Run the independent post-deployment suite with a read-only connection:
+
+~~~bash
+.venv/bin/python scripts/06_validate_geographic_layer.py --json
+~~~
+
+The validator checks source retention, exact crosswalk equality, mapping uniqueness, maximum-per-point power bands, aggregate-before-join totals, KBA date keys, Trier treatment, the combined view, and the source-aware state-view output. Backups, the DuckDB file, WALs, and temporary analytical artifacts are ignored and must not be committed.
 
 For a custom query:
 
@@ -101,7 +119,7 @@ Do not kill processes to clear a lock. If a read-only connection fails because a
 
 ## DBeaver
 
-DBeaver is optional. If used, create a DuckDB connection to data/analytics/ev_charging.duckdb and inspect raw, core, and analytics schemas. Keep the Python build and analysis processes closed when DBeaver needs exclusive access. Prefer a read-only connection for inspection and do not run DDL from the client unless the database change has been separately approved.
+DBeaver is optional. If used, create a DuckDB connection to data/analytics/ev_charging.duckdb and inspect raw, core, reference, and analytics schemas. Keep the Python build and analysis processes closed when DBeaver needs exclusive access. Prefer a read-only connection for inspection and do not run DDL from the client unless the database change has been separately approved.
 
 ## Tableau Public
 

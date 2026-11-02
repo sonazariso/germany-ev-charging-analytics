@@ -108,15 +108,35 @@ The regional query classified each point from all semicolon-separated `connector
 
 The 2026-09-30 infrastructure measures were kept separate from KBA stock dates 2026-01-01, 2026-04-01, and 2026-07-01. Infrastructure values repeat beside each KBA date in the 1,200-row combined grain; they are not summed across the three dates. January and April BEV-to-point ratios must not be described as contemporaneous infrastructure coverage, and the July comparison is still cross-snapshot because the infrastructure date is September.
 
-The design proposal and non-executed SQL definitions are in [geographic-layer-design.md](geographic-layer-design.md). The Crosswalk CSV was not modified.
+The design proposal and deployment history are in [geographic-layer-design.md](geographic-layer-design.md). The Crosswalk CSV was not modified.
+
+### Batch 06 deployed geographic validation
+
+Batch 06 created a verified pre-change backup, deployed the permanent reference and analytics objects in one DuckDB transaction, and ran an independent read-only validation process. The backup was byte-preserving and readable from a separate read-only connection; its equipment, point, KBA, and state-view counts matched the pre-deployment baseline. The deployment script is repeat-safe: a second run inspected and validated existing objects rather than duplicating the table or blindly replacing validated geographic views.
+
+| Check | Observed result | Status |
+|---|---:|---|
+| Reference table rows / unique BNetzA keys | 401 / 401 | PASS |
+| Unique KBA codes / provisional rows | 400 / 24 | PASS; provisional retained |
+| Regional view rows | 400 | PASS |
+| Regional equipment / point / declared point totals | 117,662 / 211,253 / 211,253 | PASS |
+| Normal / fast points | 156,155 / 55,098 | PASS |
+| Points at least 150 / 350 kW | 40,950 / 6,950 | PASS |
+| Points without valid maximum parsed power | 0 | PASS |
+| Combined KBA code/date rows | 1,200 | PASS |
+| Duplicate combined `(kba_district_code, kba_reference_date)` keys | 0 | PASS |
+| July district BEV stock | 2,362,218 | PASS |
+| July shared Trier code 07211 BEV stock | 7,869 counted once | PASS |
+
+The direct core recomputation matched the deployed regional view. The state-view comparison retained all 16 states and every baseline equipment, declared-point, and populated-point value. The exact backup path, hash, and validation evidence are recorded in [reports/batch06_geographic_deployment.md](../reports/batch06_geographic_deployment.md).
 
 ### Known coordinate exception
 
 All current equipment rows have non-null coordinates. One row falls outside a broad Germany check because its longitude is 4.0. The source record is not corrected or removed; it remains an exception for future coordinate review.
 
-## Existing source-aware JOIN issue
+## Resolved source-aware JOIN issue
 
-analytics.charging_by_state calculates point counts in a subquery grouped only by equipment_excel_row and joins it to equipment on Excel row alone. It omits source_id. With one BNetzA snapshot the current totals reconcile, but the view is unsafe for multiple BNetzA source IDs because equal Excel row numbers could cross-match. Batch 04 documents this issue, and Batch 05 reconfirmed it without modifying the view. The minimum correction is to group the point subquery by `(source_id, equipment_excel_row)` and join on both fields; that correction remains pending approval.
+Before Batch 06, analytics.charging_by_state calculated point counts in a subquery grouped only by equipment_excel_row and joined on Excel row alone. Batch 06 corrected the subquery to group by `(source_id, equipment_excel_row)` and joined on both fields. The post-deployment result matches the independent source-aware aggregation and the recorded 16-state baseline. Future multi-snapshot loading must retain this key.
 
 ## Meaning of the existing PASS results
 
@@ -132,7 +152,7 @@ They are not proof that a provisional alias is an official boundary mapping, and
 ## Recommendations and open quality work
 
 - Obtain an authoritative administrative crosswalk or independent human review for all provisional aliases and the shared Trier registration region.
-- Repair or replace the source-aware state view before loading multiple BNetzA snapshots.
+- Re-run the source-aware state-view validation if another BNetzA snapshot is added.
 - Decide whether point-power parsing should become a documented reusable SQL view or a new approved core field. Do not overwrite the raw text.
 - Reconcile the 2,829 state-level Sonstige BEVs and the passenger-car denominator difference before a national cross-grain KPI is published.
 - Review the one coordinate exception without altering the source record.

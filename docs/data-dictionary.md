@@ -2,7 +2,7 @@
 
 ## Database inventory
 
-The current local database is data/analytics/ev_charging.duckdb. It contains three schemas and the following objects. Counts are read-only observations from the current file.
+The current local database is data/analytics/ev_charging.duckdb. It contains four schemas and the following objects. Counts are read-only observations from the current file.
 
 | Schema | Object | Type | Current rows |
 |---|---|---|---:|
@@ -14,9 +14,12 @@ The current local database is data/analytics/ev_charging.duckdb. It contains thr
 | core | kba_district_ev_stock | table | 1,200 |
 | core | kba_postcode_ev_stock | table | 24,586 |
 | core | kba_municipality_ev_stock | table | 32,229 |
+| reference | bnetza_kba_district_crosswalk_2026 | table | 401 |
 | analytics | charging_by_state | view | 16 state rows |
 | analytics | charging_point_public | view | 211,253 joined point rows |
 | analytics | kba_national_quarterly_stock | view | historical observations |
+| analytics | charging_by_kba_district_2026_09_30 | view | 400 KBA district rows |
+| analytics | kba_district_charging_vs_bev_2026 | view | 1,200 KBA code/date rows |
 
 All columns are nullable according to the current DuckDB information schema. Nullability in this document therefore describes the database definition; the quality section reports observed null or exception counts.
 
@@ -134,7 +137,19 @@ Grain: one joined charging-point slot. It exposes equipment_id, point_number, st
 
 Grain: one row per current BNetzA state_name. Columns are state_name VARCHAR, equipment_rows BIGINT, declared_points HUGEINT, and populated_point_slots HUGEINT.
 
-The view currently counts point slots through a subquery grouped only by equipment_excel_row and joins only on that value. source_id is omitted. That is a known multi-snapshot issue and is documented rather than changed in Batch 04.
+Batch 06 corrected the point subquery to group by `(source_id, equipment_excel_row)` and to join on both fields. The output column names, order, 16-state grain, and current metrics remain unchanged.
+
+### reference.bnetza_kba_district_crosswalk_2026
+
+Grain: one row per BNetzA source snapshot, state/district combination, and crosswalk version. The 401-row table preserves every CSV field and adds `bnetza_source_id` for source lineage. `kba_district_code` is VARCHAR so leading zeroes are preserved. The source-geography key is unique across `(crosswalk_version, bnetza_source_id, bnetza_state_name, bnetza_district_name)`; KBA code `07211` intentionally occurs twice for Trier and Trier-Saarburg. `mapping_status`, `mapping_method`, `verification_status`, `mapping_note`, and `evidence_url` are audit fields; provisional rows remain provisional.
+
+### analytics.charging_by_kba_district_2026_09_30
+
+Grain: one row per KBA district code after aggregating the BNetzA 2026-09-30 equipment and point relations. Equipment and point metrics are aggregated separately before they are combined. The view retains `bnetza_reference_date`, equipment count, populated and declared point counts, maximum-per-point power bands, percentage fields, equipment nominal power in kW and MW, and mapping-quality fields (`mapping_status`, `mapping_verification_status`, `source_geography_rows`, `provisional_mapping_rows`, and `unmapped_source_geography_rows`). `points_without_valid_power` is an explicit unknown-power count and is not silently placed in a power band.
+
+### analytics.kba_district_charging_vs_bev_2026
+
+Grain: one KBA district code per actual KBA stock reference date. The view joins the unique KBA-code charging result to `core.kba_district_ev_stock` by district code after charging aggregation. It exposes KBA state/district names, `kba_reference_date`, `bnetza_reference_date`, passenger-car/BEV/PHEV stock, infrastructure metrics, `bev_per_registered_charging_point`, and the geographic quality fields. The current grain is 400 codes × three dates = 1,200 rows. Infrastructure measures repeat beside each KBA date and must not be summed across dates.
 
 ### analytics.kba_national_quarterly_stock
 

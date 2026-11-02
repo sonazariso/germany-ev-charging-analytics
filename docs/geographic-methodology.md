@@ -14,7 +14,7 @@ The geographic layer aligns BNetzA charging records with KBA district stock with
 
 Coverage validation is not geographic correctness. The fact that all 401 source combinations have a local KBA target proves row coverage in this snapshot; it does not prove official boundary equivalence.
 
-## Batch 05 pre-integration validation
+## Batch 05 pre-integration validation and Batch 06 deployment
 
 The geographic model was validated with one DuckDB connection opened using `read_only=True`. The validation recomputed charging measures from `core.charging_equipment` and `core.charging_point`; it did not use the Crosswalk CSV's pre-aggregated measures as the analytical source.
 
@@ -25,7 +25,11 @@ The geographic model was validated with one DuckDB connection opened using `read
 - The 401 source combinations mapped to 400 distinct KBA codes. All 24 provisional mappings remained explicitly flagged: 22 aliases and two Trier shared-region rows.
 - Joining the 400 aggregated regional rows to the three KBA snapshots produced 1,200 code/date rows. July district BEV stock remained 2,362,218, and the shared Trier code was joined once per date rather than once per source row.
 
-The permanent-object proposal, including SQL definitions and acceptance checks, is in [the geographic layer design](geographic-layer-design.md). No permanent geographic table or view was created in Batch 05.
+The permanent-object proposal and acceptance checks are in [the geographic layer design](geographic-layer-design.md). Batch 06 implemented that approved design in the local DuckDB file as `reference.bnetza_kba_district_crosswalk_2026`, `analytics.charging_by_kba_district_2026_09_30`, and `analytics.kba_district_charging_vs_bev_2026`. The executable definitions are maintained in [sql/06_geographic_layer.sql](../sql/06_geographic_layer.sql).
+
+Before modification, the deployment checked the 117,662 equipment rows, 211,253 point rows, 1,200 KBA rows, 401 source-geography keys, 400 KBA codes, 24 provisional mappings, exact source-aware mapping coverage, and the 16-state baseline. It then created and read back a byte-preserving ignored backup through a separate read-only connection. The DDL ran in one transaction and the independent validator recomputed the regional totals from core tables.
+
+The deployed regional view retains equipment and point measures at separate aggregation stages, uses the maximum valid semicolon-delimited connector-power token within each point, exposes `points_without_valid_power`, and retains mapping-quality indicators. The combined view has one row per KBA code and actual KBA stock date, with infrastructure values repeated across the three stock dates rather than summed.
 
 ## Matching method
 

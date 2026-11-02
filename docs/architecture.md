@@ -24,11 +24,11 @@ flowchart LR
     L --> P[scripts/batch_analysis.py]
     O --> P
     M -. planned extract .-> Q[Tableau Public]
-    O -. planned integration .-> R[Geographic analytics layer]
-    L -. planned .-> R
+    O --> R[Deployed geographic analytics layer]
+    L --> R
 ~~~
 
-The dashed components are not complete. No Tableau workbook or permanent geographic DuckDB object exists in the current project. Batch 05 validates the proposed pre-integration design in [geographic-layer-design.md](geographic-layer-design.md); that document is design-only and does not represent deployed DuckDB objects.
+The Tableau path remains planned. Batch 06 deployed the approved geographic reference table and analytics views to the local DuckDB file; the crosswalk mappings remain partly provisional and are not an official boundary gazetteer.
 
 ## Source and ingestion stages
 
@@ -39,6 +39,7 @@ The dashed components are not complete. No Tableau workbook or permanent geograp
 5. scripts/03_build_duckdb.py inserts all populated raw worksheet rows, then creates the initial core tables and analytics views.
 6. scripts/04_build_geographic_crosswalk.py opens DuckDB read-only and writes a versioned CSV crosswalk plus a validation report.
 7. scripts/batch_analysis.py runs named SELECT or WITH queries on one read-only DuckDB connection and writes one structured Markdown report.
+8. scripts/06_deploy_geographic_layer.py performs the approved backup, prerequisite checks, transactional deployment, and state-view correction; scripts/06_validate_geographic_layer.py independently validates the deployed objects read-only.
 
 ## DuckDB schemas
 
@@ -62,15 +63,21 @@ The current core schema contains:
 - core.kba_postcode_ev_stock: postcode-level BEV/PHEV values from FZ 27.16.
 - core.kba_municipality_ev_stock: municipality-level commercial/private BEV/PHEV values from FZ 27.17.
 
+### reference
+
+- reference.bnetza_kba_district_crosswalk_2026: one row per BNetzA source state/district combination for crosswalk version 2026-07-01, with source lineage, KBA identifiers, mapping method/status, verification fields, notes, evidence URL, and source aggregates. Its 401 rows map to 400 KBA codes because both Trier source rows use code 07211.
+
 ### analytics
 
 The current views are:
 
 - analytics.charging_point_public: public charging-point detail joined to its equipment attributes; the source Public Key is not exposed.
-- analytics.charging_by_state: state-level equipment and populated-point counts.
+- analytics.charging_by_state: state-level equipment and populated-point counts using source-aware point aggregation and joins on (source_id, excel_row).
+- analytics.charging_by_kba_district_2026_09_30: one row per KBA district code for the BNetzA 2026-09-30 snapshot, with separate equipment and point aggregates, maximum-per-point power bands, percentages, and mapping-quality flags.
+- analytics.kba_district_charging_vs_bev_2026: one row per KBA district code and actual KBA stock reference date, retaining both source dates and provisional geographic indicators.
 - analytics.kba_national_quarterly_stock: de-duplicated national historical rows from FZ 27.9.
 
-The state view has a known source-aware join issue: its point-count subquery groups only by Excel row and the join omits source_id. It was not modified in Batch 04 or Batch 05. The issue must be resolved or explicitly constrained before multiple BNetzA snapshots are loaded together.
+The state view’s source-aware join issue was corrected in Batch 06. Its output column names, order, 16-state grain, and current metrics were preserved. Any future multi-snapshot load must retain the same source-aware key.
 
 ## Equipment-to-point relationship
 
@@ -84,28 +91,27 @@ equipment_id is retained as the source identifier, but the build and validation 
 
 connector_types and connector_power_raw are point-level text fields. A semicolon-separated power string remains within one point row; it is not exploded into multiple points or connectors.
 
-## Geographic crosswalk and planned reporting layer
+## Geographic crosswalk and deployed reporting layer
 
-The current crosswalk is a curated CSV reference with 401 BNetzA state/district rows and 400 distinct KBA district codes. It is not a DuckDB table or view. It includes mapping method, verification status, notes, evidence URL, and pre-aggregated BNetzA measures for the source geography.
+The current crosswalk is a curated CSV reference with 401 BNetzA state/district rows and 400 distinct KBA district codes. Batch 06 also loaded an auditable copy into reference.bnetza_kba_district_crosswalk_2026. The CSV remains the versioned input; the DuckDB table adds bnetza_source_id for lineage and preserves all mapping method, verification status, notes, evidence URL, and source aggregate fields.
 
-The minimum approved-for-design geographic model is:
+The deployed geographic model is:
 
-1. A reference relation containing one row per BNetzA state/district combination and its KBA code.
-2. A charging aggregation at KBA district code and BNetzA reference date.
-3. A KBA district-stock relation at KBA district code and KBA reference date.
-4. A joined analytical relation at KBA district code with explicit infrastructure and vehicle dates.
+1. reference.bnetza_kba_district_crosswalk_2026, one row per BNetzA state/district combination and its KBA code.
+2. analytics.charging_by_kba_district_2026_09_30, one row per KBA code and BNetzA reference date.
+3. analytics.kba_district_charging_vs_bev_2026, one row per KBA code and actual KBA stock reference date.
 
 Charging must be aggregated by KBA code before joining KBA stock. This is mandatory because Kreisfreie Stadt Trier and Landkreis Trier-Saarburg both map to KBA registration-region code 07211. A raw 401-row join would duplicate that KBA stock.
 
-## Proposed SQL definitions — design-only history
+## Deployment SQL and design history
 
-The authoritative Batch 05 proposal, including source-aware joins, maximum-per-point power parsing, mapping flags, snapshot dates, acceptance checks, and backup/rollback requirements, is [geographic-layer-design.md](geographic-layer-design.md). The abbreviated definitions below are retained as architecture history and must not be executed as-is.
+The authoritative executable definitions are in [sql/06_geographic_layer.sql](../sql/06_geographic_layer.sql), executed by [scripts/06_deploy_geographic_layer.py](../scripts/06_deploy_geographic_layer.py). The detailed design and acceptance checks remain in [geographic-layer-design.md](geographic-layer-design.md). The abbreviated definitions below are retained as architecture history and are not the deployment source.
 
-The following abbreviated definitions show the intended grain and join order. They were not executed in Batch 04 or Batch 05 and are not present as permanent DuckDB objects.
+The following abbreviated definitions show the intended grain and join order. They are historical shorthand; the deployed object names and full power/parser logic are in the SQL file.
 
 ~~~sql
 -- Planned reference relation; current source is the curated CSV.
-CREATE TABLE reference.bnetza_kba_district_crosswalk (
+CREATE TABLE reference.bnetza_kba_district_crosswalk_2026 (
     crosswalk_version VARCHAR,
     bnetza_reference_date DATE,
     kba_reference_date DATE,
@@ -122,7 +128,7 @@ CREATE TABLE reference.bnetza_kba_district_crosswalk (
 );
 
 -- Planned charging aggregation: one row per KBA code and BNetzA snapshot.
-CREATE VIEW analytics.charging_by_kba_district AS
+CREATE VIEW analytics.charging_by_kba_district_2026_09_30 AS
 SELECT
     c.kba_district_code,
     SUM(equipment_rows) AS equipment_rows,
@@ -130,12 +136,12 @@ SELECT
     SUM(charging_point_slots) AS charging_point_slots,
     SUM(equipment_nominal_power_kw) AS equipment_nominal_power_kw,
     DATE '2026-09-30' AS bnetza_reference_date
-FROM reference.bnetza_kba_district_crosswalk c
+FROM reference.bnetza_kba_district_crosswalk_2026 c
 WHERE c.mapping_status = 'mapped'
 GROUP BY c.kba_district_code;
 
 -- Planned vehicle join: preserve one KBA row per code and date.
-CREATE VIEW analytics.charging_vs_bev_by_kba_district AS
+CREATE VIEW analytics.kba_district_charging_vs_bev_2026 AS
 SELECT
     c.kba_district_code,
     c.bnetza_reference_date,
@@ -145,7 +151,7 @@ SELECT
     k.passenger_cars,
     k.bev_cars,
     k.phev_cars
-FROM analytics.charging_by_kba_district c
+FROM analytics.charging_by_kba_district_2026_09_30 c
 LEFT JOIN core.kba_district_ev_stock k
   ON k.district_code = c.kba_district_code
  AND k.reference_date = DATE '2026-07-01';
@@ -160,4 +166,4 @@ The final implementation must add source-date keys, preserve unmapped/provisiona
 - KBA district rows, postcode rows, municipality rows, and state-level rows are alternative reporting grains. They must not be summed together as though they were additive partitions.
 - The latest infrastructure and vehicle dates are not contemporaneous.
 - No utilization or energy-delivery tables exist.
-- The existing state view must be repaired or replaced before multi-snapshot loading.
+- The deployed state view is source-aware; future multi-snapshot loading must retain the (source_id, excel_row) equipment key and rerun the validation suite.
