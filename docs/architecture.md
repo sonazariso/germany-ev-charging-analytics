@@ -44,6 +44,8 @@ The Tableau path remains planned. Batch 06 deployed the approved geographic refe
 7. scripts/batch_analysis.py runs named SELECT or WITH queries on one read-only DuckDB connection and writes one structured Markdown report.
 8. scripts/06_deploy_geographic_layer.py performs the approved backup, prerequisite checks, transactional deployment, and state-view correction; scripts/06_validate_geographic_layer.py independently validates the deployed objects read-only.
 9. scripts/10_build_bbsr_reference.py reads the preserved BBSR workbook, inspects every worksheet, extracts the approved four-category Kreisreferenz grain, and writes a deterministic CSV plus source/derived checksums. The reference path stops outside DuckDB and the BNetzA-to-KBA Crosswalk.
+10. scripts/12_audit_bbsr_integration_paths.py audits the BNetzA-source and KBA-registration paths read-only; its Path A output is the evidence input for the approved charging-only deployment.
+11. scripts/13_deploy_bbsr_charging_layer.py independently rechecks Path A identities, creates/validates the versioned BNetzA-to-BBSR bridge, validates a safe backup, and deploys only the new BBSR reference and charging views transactionally.
 
 ## DuckDB schemas
 
@@ -70,6 +72,7 @@ The current core schema contains:
 ### reference
 
 - reference.bnetza_kba_district_crosswalk_2026: one row per BNetzA source state/district combination for crosswalk version 2026-07-01, with source lineage, KBA identifiers, mapping method/status, verification fields, notes, evidence URL, and source aggregates. Its 401 rows map to 400 KBA codes because both Trier source rows use code 07211.
+- reference.bnetza_bbsr_district_bridge_2025: one row per BNetzA source state/district combination. It preserves BBSR KRS/Kreisregion fields as strings, source dates, Path A evidence, and compatibility status. Its only uniqueness rule is the composite BNetzA source key; BBSR codes are not globally unique in this table.
 
 ### analytics
 
@@ -80,6 +83,8 @@ The current views are:
 - analytics.charging_by_kba_district_2026_09_30: one row per KBA district code for the BNetzA 2026-09-30 snapshot, with separate equipment and point aggregates, maximum-per-point power bands, percentages, and mapping-quality flags.
 - analytics.kba_district_charging_vs_bev_2026: one row per KBA district code and actual KBA stock reference date, retaining both source dates and provisional geographic indicators.
 - analytics.kba_national_quarterly_stock: de-duplicated national historical rows from FZ 27.9.
+- analytics.charging_by_bbsr_district_2025: one row per original BNetzA state/district combination, with dated BBSR enrichment and charging-only equipment/point metrics.
+- analytics.charging_by_bbsr_type_2025: five rows for BBSR types 1–4 and `UNCLASSIFIED`; category point-share denominators include all 401 source districts.
 
 The state view’s source-aware join issue was corrected in Batch 06. Its output column names, order, 16-state grain, and current metrics were preserved. Any future multi-snapshot load must retain the same source-aware key.
 
@@ -128,8 +133,9 @@ while KBA combines their stock under 07211.
 
 See [reports/batch09_bbsr_feasibility.md](../reports/batch09_bbsr_feasibility.md)
 for the source register, strategy assessment, proposed minimal model, and
-validation gates. No BBSR schema or analytical object exists in the current
-database.
+validation gates. At the Batch 10 boundary no BBSR schema or analytical object
+existed in the database; Batch 13 now adds only the separately named
+source-grain bridge and charging-only views described below.
 
 ## Batch 10 BBSR reference path — separate from DuckDB
 
@@ -147,15 +153,38 @@ KRS2025 administrative Kreis row; repeated Kreisregion keys preserve the
 original component relationship. The raw workbook remains ignored under
 data/raw/bbsr/.
 
-This is a reference dimension, not a KBA registration-region table. The current
-implementation does not add BBSR to DuckDB, change the existing Crosswalk, assign
-one BBSR type to KBA codes, calculate BBSR KPIs, or allocate the shared Trier
-stock. Future compatibility work must retain source systems, effective dates,
-classification vintages, and visible statuses such as mixed_or_unresolved and
-vintage_mismatch.
+This is a reference dimension, not a KBA registration-region table. Batch 13
+uses it through a separate, versioned BNetzA-source-grain bridge; it does not
+change the existing Crosswalk, assign one BBSR type to KBA codes, join KBA
+stock, or allocate the shared Trier stock. Future compatibility work must
+retain source systems, effective dates, classification vintages, and visible
+statuses such as mixed_or_unresolved and vintage_mismatch.
 
 See reports/batch09_bbsr_feasibility.md for the strategy assessment and
 reports/batch10_bbsr_reference_validation.md for the source/build evidence.
+
+## Batch 13 BBSR charging-only layer
+
+Batch 13 implements the approved Path A use at the original BNetzA
+state/district grain. The reproducible bridge is
+`data/reference/bnetza_bbsr_bridge_2025.csv`; the deployment definitions are
+[`sql/13_bbsr_charging_layer.sql`](../sql/13_bbsr_charging_layer.sql) and
+[`scripts/13_deploy_bbsr_charging_layer.py`](../scripts/13_deploy_bbsr_charging_layer.py).
+
+The bridge has 401 rows: 399 `VERIFIED_COMPATIBLE`, one conditional-vintage
+Main-Kinzig-Kreis row, and one unresolved Hanau row. Settlement types are
+populated only for the 399 verified rows. Main-Kinzig's BBSR administrative
+and Kreisregion code is retained as pre-change evidence but its type is NULL;
+Hanau has no BBSR 2025 row and remains fully unclassified.
+
+The two analytics views calculate equipment and point metrics separately. Point
+power is parsed from semicolon-separated raw text, decimal commas are accepted,
+and the maximum valid token is used once per point. The summary view reports
+within-category shares separately from each category's share of all 211,253
+registered points, with the latter denominator explicitly including
+`UNCLASSIFIED`. No KBA table, BEV/PHEV field, or vehicle-stock denominator is
+used. Full results and backup evidence are in
+[`reports/batch13_bbsr_charging_deployment.md`](../reports/batch13_bbsr_charging_deployment.md).
 
 ## Deployment SQL and design history
 

@@ -110,3 +110,12 @@ This changelog records project milestones and local repository changes. Historic
 - Confirmed Path B remains 0 strict verified regions, points, or July BEVs: 1 `MIXED` Trier region, 2 `VINTAGE_CONFLICT` Hanau/Main-Kinzig rows, 397 `UNRESOLVED`, and 0 `CONFLICTING`.
 - Reviewed official Destatis, BBSR, Federal Employment Agency, KBA, Hessen, and Trier documentation; no universal dated KBA-to-AGS/ARS/KRS/BBSR bridge was verified. Path A is **CONDITIONAL GO** only for a separate charging-only descriptive path; Path B is **NO-GO** for production BBSR assignment or BBSR-based BEV ratios.
 - Updated geographic methodology, data-quality, decisions, roadmap, project status, and README. No DuckDB object, Crosswalk row, BBSR CSV, KPI definition, dependency, dataset download, remote, upload, or publication was changed.
+
+## 2026-11-02 — Batch 13
+
+- Added `scripts/13_deploy_bbsr_charging_layer.py` and `sql/13_bbsr_charging_layer.sql` for repeat-safe, transaction-based deployment with read-only preflight, verified backup validation, source fingerprints, and existing-KBA integrity checks.
+- Added the reproducible `data/reference/bnetza_bbsr_bridge_2025.csv` and deterministic provenance manifest. The bridge keeps one row per BNetzA state/district, preserves string BBSR codes, and records 399 `VERIFIED_COMPATIBLE`, one `CONDITIONAL_VINTAGE` Main-Kinzig-Kreis, and one `UNRESOLVED` Hanau row.
+- Deployed `reference.bnetza_bbsr_district_bridge_2025`, `analytics.charging_by_bbsr_district_2025`, and `analytics.charging_by_bbsr_type_2025` without changing the KBA Crosswalk or any existing KBA/state object.
+- Implemented charging-only BBSR KPIs with separate equipment/point aggregation, composite source-local keys, maximum-per-point semicolon-token power parsing, explicit unknown-power reporting, all equipment statuses, and a five-group national reconciliation.
+- Validated 117,662 equipment rows, 211,253 points, 156,155 normal points, 55,098 fast points, 40,950 points >=150 kW, 6,950 points >=350 kW, and 9,215.4173 MW. `UNCLASSIFIED` contains Hanau and Main-Kinzig: 585 equipment and 991 points.
+- Added `reports/batch13_bbsr_charging_deployment.md` and updated the English documentation and private Persian KPI reference. No new dataset, dependency, remote, upload, or publication was added.

@@ -95,6 +95,32 @@ Run the independent post-deployment suite with a read-only connection:
 
 The validator checks source retention, exact crosswalk equality, mapping uniqueness, maximum-per-point power bands, aggregate-before-join totals, KBA date keys, Trier treatment, the combined view, and the source-aware state-view output. Backups, the DuckDB file, WALs, and temporary analytical artifacts are ignored and must not be committed.
 
+## Batch 13 BBSR charging-only deployment
+
+The approved Batch 13 command builds or validates the deterministic source-grain
+bridge, verifies the Batch 12 Path A evidence and BBSR reference, validates a
+read-only backup before writing, and deploys the new objects transactionally:
+
+~~~bash
+.venv/bin/python scripts/13_deploy_bbsr_charging_layer.py --json
+~~~
+
+For a repeat-safe run using the verified Batch 13 backup:
+
+~~~bash
+.venv/bin/python scripts/13_deploy_bbsr_charging_layer.py \
+  --backup-path data/backups/ev_charging_pre_batch13_20261102_222612.duckdb \
+  --json
+~~~
+
+The script uses no new dependency or dataset. It writes the approved bridge
+CSV and manifest, creates `reference.bnetza_bbsr_district_bridge_2025`, and
+creates `analytics.charging_by_bbsr_district_2025` plus
+`analytics.charging_by_bbsr_type_2025`. It does not modify the KBA Crosswalk,
+join KBA stock, classify KBA registration regions, or allocate Trier stock.
+Run the command a second time and inspect the JSON evidence; the existing
+bridge must match exactly and no duplicate rows may appear.
+
 For a custom query:
 
 ~~~bash

@@ -212,11 +212,11 @@ the build evidence is in [reports/batch10_bbsr_reference_validation.md](../repor
   Zulassungsbezirk)**. Boundary-vintage limitations must remain visible in any
   historical or cross-source comparison.
 
-The recommendation is **CONDITIONAL GO** for a separate, versioned BBSR reference
-and controlled compatibility layer, and **NO-GO** for direct assignment of one
-BBSR category to all current KBA codes. Batch 10 implements only the separate
-versioned reference; no BBSR table, view, Crosswalk row, KPI formula, KBA
-classification, or stock allocation was added.
+The recommendation was **CONDITIONAL GO** for a separate, versioned BBSR
+reference and controlled compatibility layer, and **NO-GO** for direct
+assignment of one BBSR category to all current KBA codes. Batch 10 implemented
+only the separate reference; Batch 13 later implemented the approved
+source-grain charging-only path without changing the Crosswalk or KBA layer.
 
 ## Relationship to future BBSR settlement types
 
@@ -227,8 +227,9 @@ KBA compatibility bridge, retain source and classification vintages, and expose
 `mixed_or_unresolved` and `vintage_mismatch` statuses. It must aggregate charging
 before joining KBA stock, never allocate shared Trier stock without approval, and
 must not imply that a settlement type is a KBA registration district. The
-versioned BBSR reference is available outside DuckDB and the Crosswalk, while
-KBA compatibility and category-level KPI use remain pending approval.
+versioned BBSR reference is available outside the Crosswalk. Batch 13 now
+supports source-grain charging-only category KPIs; KBA compatibility and any
+vehicle-stock category use remain pending approval.
 
 ## Batch 10 BBSR reference validation
 
@@ -317,5 +318,30 @@ and official Hanau/Trier administrative pages. None supplied a universal,
 dated KBA registration-region to AGS/ARS/KRS/BBSR bridge for all 400 KBA
 regions. Accordingly, Path A is **CONDITIONAL GO** for a separate,
 non-operational charging-only descriptive path, while Path B is **NO-GO** for
-production BBSR assignment or BBSR-based BEV ratios. No Crosswalk row, BBSR
-reference row, DuckDB object, KPI definition, or production mapping changed.
+production BBSR assignment or BBSR-based BEV ratios. Batch 13 adds only the
+separate, source-grain charging layer described below; it does not change the
+Crosswalk, KBA views, or vehicle-stock measures.
+
+## Batch 13 charging-only BBSR deployment
+
+Batch 13 implements Path A at the original BNetzA state/district grain. The
+versioned bridge preserves the BNetzA source identity, both source dates, BBSR
+administrative/Kreisregion identifiers, settlement type where verified, the
+Batch 12 evidence reference, and a visible compatibility status. It contains
+401 rows: 399 `VERIFIED_COMPATIBLE`, one `CONDITIONAL_VINTAGE`
+Main-Kinzig-Kreis row, and one `UNRESOLVED` Hanau row.
+
+Only the 399 verified rows receive a settlement type. Main-Kinzig's BBSR
+administrative and Kreisregion code is retained as pre-change evidence but its
+type is NULL; Hanau has no BBSR 2025 row and remains unclassified. The summary
+view therefore has four BBSR categories plus `UNCLASSIFIED`, and the latter
+contains 585 equipment rows and 991 charging points. Verified coverage remains
+399/401 districts, 117,077/117,662 equipment (99.502813%), and
+210,262/211,253 points (99.530894%).
+
+The charging views are independent of KBA stock and the existing Crosswalk.
+Equipment and point metrics are aggregated separately. Point classification
+splits semicolon-separated `connector_power_raw` values, normalizes decimal
+commas, takes the maximum valid power per point, and exposes any unclassifiable
+power count. Trier city and Trier-Saarburg remain separate source rows with
+types 1 and 3; no shared KBA stock is joined or allocated.

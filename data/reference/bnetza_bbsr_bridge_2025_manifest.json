@@ -1,0 +1,38 @@
+{
+  "bbsr_reference": {
+    "path": "data/reference/bbsr_settlement_types_2025.csv",
+    "reference_date": "2025-12-31",
+    "sha256": "e35c57da8d8f675fa132b629e6dda43180a18e5b78b95e1e72de30069a062e65",
+    "source_version": "raumgliederungen-referenzen-2025.xlsx | Kreisreferenz | geographic stand 2025-12-31"
+  },
+  "bbsr_source_manifest_sha256": "ba3540bf447a5c843a5a9d8fcdf224803edd26556c27e1e80a24b56a3f59a60c",
+  "bridge_file": "data/reference/bnetza_bbsr_bridge_2025.csv",
+  "bridge_sha256": "b8a5e025fe74b2dfec9b338c7ae79648776bd6150dbf8f979518329c2baa3846",
+  "bridge_version": "batch13-2026-11-02-path-a-bbsr-2025",
+  "manifest_version": 1,
+  "rules": {
+    "assignment_basis": "direct state + administrative form + normalized administrative identity",
+    "grain": "one original BNetzA state/district combination",
+    "hanau_settlement_type": null,
+    "kba_code_used_as_assignment_proof": false,
+    "main_kinzig_settlement_type": null,
+    "trier_stock_allocated": false
+  },
+  "source_audit": {
+    "path": "reports/batch12_bbsr_integration_paths_audit.csv",
+    "scope": "Batch 12 PATH_A only",
+    "sha256": "f4d681fc81ac700b73521b9da81689073df183f6664866e2dcb9397a89d9d644",
+    "version": "batch12-2026-11-02-two-path-strict-evidence"
+  },
+  "validation": {
+    "classifiable_rows": 399,
+    "conditional_vintage_rows": 1,
+    "source_rows": 401,
+    "unclassified_source_keys": [
+      "Hessen|Kreisfreie Stadt Hanau",
+      "Hessen|Landkreis Main-Kinzig-Kreis"
+    ],
+    "unresolved_rows": 1,
+    "verified_compatible_rows": 399
+  }
+}

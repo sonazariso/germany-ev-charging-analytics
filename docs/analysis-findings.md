@@ -89,7 +89,7 @@ The correct exploratory workflow aggregates charging measures to KBA code before
 - The published register contains source status and commissioning dates but no sessions, energy, uptime, or queue data.
 - Connector-power parsing is derived from raw text; the helper column connector_power_kw_single is intentionally incomplete for multi-value strings.
 - KBA worksheets contain alternative breakdowns and subtotal rows. Only the approved normalized tables are used for the current findings.
-- The existing analytics.charging_by_state view omits source_id in one point aggregation join and requires a design decision before multi-snapshot use.
+- The existing analytics.charging_by_state view is source-aware after the Batch 06 correction; any future multi-snapshot loading must retain the `(source_id, excel_row)` key.
 - One source coordinate is outside a broad Germany bounding check and remains uncorrected.
 
 ## Open analytical questions
@@ -101,3 +101,23 @@ The correct exploratory workflow aggregates charging measures to KBA code before
 5. How should the 2,829 Sonstige BEVs and the different national passenger-car totals be presented in the final dashboard?
 6. Which BBSR settlement typology, if any, would add value without replacing administrative geography?
 7. Which compact Tableau extract can be published while respecting source licensing and field-level disclosure review?
+
+## Batch 13 BBSR charging-only findings
+
+Batch 13 deployed the approved Path A enrichment at the original BNetzA
+state/district grain. The result contains 401 districts: 399 verified,
+one conditional-vintage Main-Kinzig-Kreis row, and one unresolved Hanau row.
+The BBSR settlement type is populated only for the 399 verified rows.
+
+The five reporting groups reconcile to 117,662 equipment records, 211,253
+charging points, 156,155 normal points, 55,098 fast points, 40,950 points at
+least 150 kW, 6,950 points at least 350 kW, and 9,215.4173 MW of declared
+equipment nominal power. The `UNCLASSIFIED` group contains 585 equipment rows
+and 991 points. Category point shares use all registered points, including that
+unclassified group.
+
+The descriptive category results are not a KBA classification and contain no
+BEV/PHEV stock. Hanau does not inherit Main-Kinzig's type; Main-Kinzig's
+pre-change BBSR administrative/Kreisregion code is retained without a type.
+Trier city and Trier-Saarburg remain separate source rows with types 1 and 3;
+their shared KBA vehicle stock is neither joined nor allocated.

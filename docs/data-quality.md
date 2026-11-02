@@ -273,6 +273,29 @@ The script opened DuckDB read-only, inspected actual columns, verified source
 fingerprints, and produced deterministic output. No DuckDB, Crosswalk, BBSR
 CSV, KPI, or operational status changed; no dataset was downloaded or imported.
 
+### Batch 13 BBSR charging-only deployment
+
+Batch 13 deployed the approved source-grain Path A layer with a verified backup
+and transaction. The bridge and both views passed the following checks:
+
+| Check | Result | Interpretation |
+|---|---:|---|
+| BNetzA bridge rows / unique source keys | 401 / 401 | Every source district remains represented once. |
+| Bridge statuses | 399 verified / 1 conditional vintage / 1 unresolved | Main-Kinzig and Hanau remain visible exceptions. |
+| Classifiable / unclassified districts | 399 / 2 | Only verified rows receive a BBSR type; unclassified is Hanau + Main-Kinzig. |
+| Unclassified equipment / points | 585 / 991 | 0.497187% / 0.469106% of national totals. |
+| BBSR district analytics rows | 401 | One row per original BNetzA state/district. |
+| BBSR type summary rows | 5 | Types 1–4 plus `UNCLASSIFIED`; national point-share denominator includes all rows. |
+| Point-power parse coverage | 211,253 / 211,253 | Maximum valid semicolon-token parser; 0 unclassifiable points. |
+| National charging reconciliation | PASS | Equipment, points, bands, and 9,215.4173 MW reconcile. |
+| Existing KBA object integrity | PASS | Crosswalk, KBA regional/combined views, and state view unchanged. |
+
+The deployment was executed twice with the same bridge and verified backup; the
+second execution did not duplicate objects or bridge rows. New BBSR views do
+not reference KBA, BEV, or PHEV measures. Hanau does not inherit Main-Kinzig's
+type, Main-Kinzig's pre-change code is retained without a type, and Trier city
+and Trier-Saarburg remain separate without stock allocation.
+
 ### Known coordinate exception
 
 All current equipment rows have non-null coordinates. One row falls outside a broad Germany check because its longitude is 4.0. The source record is not corrected or removed; it remains an exception for future coordinate review.

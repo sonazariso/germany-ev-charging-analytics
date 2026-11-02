@@ -96,8 +96,8 @@ The source licenses and required attributions are metadata in the local manifest
 Batch 09 identified the official BBSR four-category settlement-structural district
 typology. Batch 10 acquired the latest suitable official workbook, preserved it
 locally under data/raw/bbsr/ (ignored by Git), and built a versioned derived
-reference outside DuckDB. It is not used in a current KPI or assigned to a KBA
-registration region.
+reference. Batch 13 uses that reference in a separate BNetzA-source-grain,
+charging-only KPI path; it is not assigned to KBA registration regions.
 
 | Field | Investigated value |
 |---|---|
@@ -128,6 +128,23 @@ KRS2025 administrative Kreis row and these stable fields:
 - source_sheet_name
 - source_excel_row
 - administrative_district_code / administrative_district_name
+
+## Batch 13 source-grain bridge
+
+The Batch 13 bridge at
+`data/reference/bnetza_bbsr_bridge_2025.csv` is generated only from the local
+BNetzA source identities, the Batch 12 Path A evidence, and the BBSR 2025
+reference. Its metadata sidecar is
+`data/reference/bnetza_bbsr_bridge_2025_manifest.json`.
+
+The BNetzA infrastructure source is the preserved
+`Ladesaeulenregister_BNetzA_2026-09-30.xlsx` snapshot. The bridge has 401 source
+rows: 399 verified-compatible, one conditional-vintage Main-Kinzig-Kreis row,
+and one unresolved Hanau row. It does not use a KBA code as geographic proof,
+does not change `bnetza_kba_district_crosswalk_2026`, and does not use KBA stock.
+
+For exact deployment provenance and checksums, see
+[`reports/batch13_bbsr_charging_deployment.md`](../reports/batch13_bbsr_charging_deployment.md).
 - federal_state_code / federal_state_name
 - kreisregion_code / kreisregion_name
 - settlement_type_code / settlement_type_name_de

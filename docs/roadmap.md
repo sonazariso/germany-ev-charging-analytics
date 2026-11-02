@@ -19,6 +19,7 @@ This roadmap distinguishes established work from planned work. A planned item is
 - Batch 10: acquired and validated the latest suitable official BBSR reference, preserved source provenance, and built a separate four-category Kreis CSV without changing DuckDB or the Crosswalk.
 - Batch 11: completed a read-only BBSR/KBA compatibility and coverage audit for all 400 KBA regions, with explicit non-operational statuses and no production integration.
 - Batch 12: completed a read-only two-path BBSR compatibility investigation, with a conditional charging-only Path A assessment, a no-go Path B assessment, full denominators, and no production integration.
+- Batch 13: deployed the approved source-grain BBSR charging-only bridge and category views with 399 verified classifications, two visible unclassified districts, full charging reconciliation, and no KBA stock integration.
 
 These are project milestones supported by local artifacts. They are not historical Git commits unless a local commit is explicitly identified in the handoff.
 
@@ -56,9 +57,9 @@ These are project milestones supported by local artifacts. They are not historic
 - [x] Acquire and build the versioned BBSR four-category administrative reference in Batch 10; preserve raw source outside Git and keep it separate from KBA classification.
 - [x] Audit BBSR/KBA compatibility, Hanau/Main-Kinzig vintage conflict, Trier mixed coverage, Kreisregion relationships, and full-denominator coverage in Batch 11; keep statuses non-operational.
 - [x] Evaluate separate BNetzA-to-BBSR and KBA-to-administration-to-BBSR paths in Batch 12; preserve Path A/Path B evidence statuses and keep all outputs non-operational.
-- [ ] Approve a dated BBSR/KBA compatibility bridge, mixed/unresolved status, Hanau treatment, and any future BBSR reference model before implementation.
-- [ ] Decide whether the 399 Path A rows may support a labelled charging-only descriptive view at BNetzA source grain.
-- [ ] Decide whether a post-2026 BBSR vintage, a product-specific KBA bridge, historical KBA snapshots, or any future DuckDB/Tableau/KPI work is required; no universal prefix rule or Trier allocation is approved.
+- [x] Approve and deploy the separate BNetzA-source-grain charging-only BBSR bridge and category views; preserve mixed/unresolved status, Hanau treatment, and no Trier allocation.
+- [ ] Approve a dated BBSR/KBA compatibility bridge before any KBA-level BBSR classification or vehicle-stock ratio.
+- [ ] Decide whether a post-2026 BBSR vintage, a product-specific KBA bridge, historical KBA snapshots, or future Tableau work is required; no universal prefix rule or Trier allocation is approved.
 - [ ] Further KPI validation and dashboard-specific denominator review.
 - [ ] Prepare compact Tableau extracts and source-date metadata.
 - [ ] Develop a Germany-wide overview and selected drill-down dashboard.

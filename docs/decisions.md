@@ -95,7 +95,7 @@ This log separates approved decisions, implementation details, and pending propo
 - Decision: Acquire the latest suitable official BBSR reference workbook and build a versioned local four-category Kreis reference outside DuckDB and the existing BNetzA-to-KBA Crosswalk.
 - Reason: The owner approved a reproducible BBSR reference while explicitly excluding complete INKAR, KBA classification, shared Trier allocation, KPI changes, and database changes.
 - Consequences: The 2025 geographic stand is preserved at one row per BBSR KRS2025 administrative Kreis row, with Kreisregion relationships, source version, reference date, source lineage, and checksums visible. The raw workbook remains ignored by Git.
-- Status: Approved and implemented in Batch 10. BBSR-to-KBA compatibility, mixed/unresolved treatment, and category-level KPI use remain pending.
+- Status: Approved and implemented in Batch 10. BBSR-to-KBA compatibility and mixed/unresolved KBA treatment remained pending until the separately approved Batch 13 source-grain charging-only layer.
 - Evidence: scripts/10_build_bbsr_reference.py, data/reference/bbsr_settlement_types_2025.csv, data/reference/bbsr_source_manifest.json, and reports/batch10_bbsr_reference_validation.md.
 
 ### Batch 11 non-operational BBSR–KBA compatibility audit
@@ -123,6 +123,15 @@ This log separates approved decisions, implementation details, and pending propo
 - Reason: Coverage must not be increased by dropping unresolved source districts, assigning a prefix candidate as a code-system bridge, duplicating KBA infrastructure across stock dates, or allocating shared Trier stock.
 - Consequences: Path A reports 399 verified rows covering 117,077 equipment records and 210,262 points; Path B reports 0 strict verified regions, points, or July BEVs and retains 397 unresolved regions plus the mixed/vintage exceptions.
 - Status: Applied in the Batch 12 audit only; no KPI definition or analytical value changed.
+
+### Batch 13 BBSR charging-only analytics deployment
+
+- Decision: Deploy a separate, versioned BNetzA-to-BBSR bridge and charging-only analytics layer at the original BNetzA state/district grain.
+- Reason: Batch 12 Path A independently supports 399 source-grain identities, while Main-Kinzig has a boundary-vintage condition and Hanau is absent from the BBSR 2025 reference. Charging-only analysis does not require a KBA vehicle-stock denominator.
+- Consequences: `reference.bnetza_bbsr_district_bridge_2025` has 401 rows; `analytics.charging_by_bbsr_district_2025` has 401 rows; `analytics.charging_by_bbsr_type_2025` has four categories plus `UNCLASSIFIED`. Main-Kinzig and Hanau remain unclassified for category KPIs.
+- Controls: Do not modify the KBA Crosswalk, assign BBSR to KBA registration regions, join BEV/PHEV stock, or allocate Trier stock. Keep BNetzA/BBSR dates, status, evidence, and unclassified rows visible.
+- Status: Approved and implemented locally after a verified ignored backup, transaction validation, independent read-only checks, and repeat execution.
+- Evidence: [`sql/13_bbsr_charging_layer.sql`](../sql/13_bbsr_charging_layer.sql), [`scripts/13_deploy_bbsr_charging_layer.py`](../scripts/13_deploy_bbsr_charging_layer.py), bridge CSV/manifest, and [`reports/batch13_bbsr_charging_deployment.md`](../reports/batch13_bbsr_charging_deployment.md).
 
 ### Batch 06 permanent geographic layer deployment
 
@@ -170,14 +179,12 @@ This log separates approved decisions, implementation details, and pending propo
 - Approve whether the 22 row/entity-supported aliases may move out of the operational provisional status; retain the two Trier rows as a combined KBA registration region unless direct allocation evidence is found.
 - Replace or supplement the provisional crosswalk with an authoritative KBA-to-administrative reference that explicitly identifies the code system and effective date.
 - Decide whether a dated historical-boundary compatibility note and additional pre-2026 KBA snapshots are required before publishing any historical or cross-product regional trend.
-- Approve permanent reference and geographic aggregate objects in DuckDB.
-- Resolve the source_id omission in analytics.charging_by_state before multi-snapshot loading.
+- Keep the deployed source-aware `analytics.charging_by_state` definition before any multi-snapshot loading.
 - Approve a reusable point-power parser/view.
-- Approve or defer the dated BBSR/KBA compatibility bridge and any BBSR category-level KPI or Tableau use; the separate BBSR reference itself is implemented.
-- Decide whether to use the 399 Path A rows only for a non-operational charging-only descriptive view at BNetzA source grain, with the BNetzA 2026/BBSR 2025 vintage note visible.
+- Keep the Batch 13 source-grain BBSR category KPIs descriptive; approve any future BBSR-to-KBA bridge or Tableau use separately.
 - Decide whether a post-2026 BBSR reference is required before any Hanau/Main-Kinzig category comparison; do not inherit Main-Kinzig type 2 for Hanau without authoritative evidence.
 - Decide whether to commission a product-specific, dated KBA-to-AGS/ARS/KRS bridge investigation; do not approve a universal five-digit prefix rule.
 - Reaffirm that KBA `07211` remains the combined Trier/Trier-Saarburg display region and that its 7,869 July BEVs are not allocated between BBSR rows.
 - Decide whether historical KBA snapshots are required before publishing pre-2026 or cross-vintage regional trends.
-- Approve any new source download, future DuckDB object, Tableau enrichment, or BBSR KPI separately; none is authorized by Batch 12.
+- Approve any new source download, future KBA-level DuckDB object, or Tableau enrichment separately; no KBA–BBSR integration is authorized by Batch 13.
 - Complete source-data redistribution and final public-extract licensing review.

@@ -2,9 +2,10 @@
 
 ## Tracked BBSR reference (outside DuckDB)
 
-Batch 10 adds a separately versioned, source-derived CSV reference. It is not a
-DuckDB table, does not replace the BNetzA-to-KBA Crosswalk, and is not a current
-KBA enrichment or KPI input.
+Batch 10 adds a separately versioned, source-derived CSV reference. The CSV
+remains outside DuckDB and does not replace the BNetzA-to-KBA Crosswalk. Batch
+13 consumes it only through a separate BNetzA-source-grain bridge for
+charging-only descriptive KPIs; it is not a KBA enrichment.
 
 | Artifact | Grain | Rows | Reference |
 |---|---|---:|---|
@@ -25,6 +26,30 @@ source checksum, derived checksum, and validation evidence are recorded in
 data/reference/bbsr_source_manifest.json. The raw workbook is intentionally
 excluded from Git.
 
+## Batch 13 BNetzA-to-BBSR bridge
+
+`data/reference/bnetza_bbsr_bridge_2025.csv` and
+`reference.bnetza_bbsr_district_bridge_2025` have one row per original BNetzA
+state/district combination. The bridge preserves source dates, BBSR KRS and
+Kreisregion identifiers, evidence references, and the Path A compatibility
+status. The database table uses a unique composite BNetzA source key; BBSR
+codes are VARCHAR and are deliberately not globally unique.
+
+| Column | Meaning | Rule |
+|---|---|---|
+| bridge_version | Batch 13 bridge version | Keep fixed for repeat-safe deployment |
+| bnetza_source_id / bnetza_reference_date | BNetzA source lineage | Current source is `bnetza_charging_2026_09_30`, dated `2026-09-30` |
+| bnetza_state_name / bnetza_district_name / bnetza_admin_type | Original source geography | Grain and join key; no KBA code is used as proof |
+| bbsr_reference_date / bbsr_source_version | BBSR vintage and source | `2025-12-31` geographic stand remains visible |
+| bbsr_administrative_district_code / bbsr_kreisregion_code | BBSR identifiers | VARCHAR; leading zeroes retained; multiple source rows may share a Kreisregion |
+| bbsr_settlement_type_code / bbsr_settlement_type_name_de | Four-category type | Populated only for 399 verified rows; NULL for Main-Kinzig and Hanau |
+| geographic_compatibility_status | Path A status | 399 `VERIFIED_COMPATIBLE`, one `CONDITIONAL_VINTAGE`, one `UNRESOLVED` |
+| evidence_method / evidence_source_reference / validation_notes | Provenance and safeguards | Preserve the independent Batch 12 evidence and explicit no-allocation rules |
+
+Main-Kinzig retains its pre-change BBSR administrative/Kreisregion code as
+evidence but no settlement type. Hanau has no separate BBSR 2025 row. Neither
+row may inherit a type from the other.
+
 ## Database inventory
 
 The current local database is data/analytics/ev_charging.duckdb. It contains four schemas and the following objects. Counts are read-only observations from the current file.
@@ -40,11 +65,14 @@ The current local database is data/analytics/ev_charging.duckdb. It contains fou
 | core | kba_postcode_ev_stock | table | 24,586 |
 | core | kba_municipality_ev_stock | table | 32,229 |
 | reference | bnetza_kba_district_crosswalk_2026 | table | 401 |
+| reference | bnetza_bbsr_district_bridge_2025 | table | 401 |
 | analytics | charging_by_state | view | 16 state rows |
 | analytics | charging_point_public | view | 211,253 joined point rows |
 | analytics | kba_national_quarterly_stock | view | historical observations |
 | analytics | charging_by_kba_district_2026_09_30 | view | 400 KBA district rows |
 | analytics | kba_district_charging_vs_bev_2026 | view | 1,200 KBA code/date rows |
+| analytics | charging_by_bbsr_district_2025 | view | 401 BNetzA source districts |
+| analytics | charging_by_bbsr_type_2025 | view | 5 settlement/reporting groups |
 
 All columns are nullable according to the current DuckDB information schema. Nullability in this document therefore describes the database definition; the quality section reports observed null or exception counts.
 
@@ -176,6 +204,35 @@ Grain: one row per KBA district code after aggregating the BNetzA 2026-09-30 equ
 
 Grain: one KBA district code per actual KBA stock reference date. The view joins the unique KBA-code charging result to `core.kba_district_ev_stock` by district code after charging aggregation. It exposes KBA state/district names, `kba_reference_date`, `bnetza_reference_date`, passenger-car/BEV/PHEV stock, infrastructure metrics, `bev_per_registered_charging_point`, and the geographic quality fields. The current grain is 400 codes × three dates = 1,200 rows. Infrastructure measures repeat beside each KBA date and must not be summed across dates.
 
+### analytics.charging_by_bbsr_district_2025
+
+Grain: one original BNetzA state/district combination. The view carries the
+BNetzA infrastructure date, BBSR 2025 reference date, BBSR administrative and
+Kreisregion identifiers, settlement type fields, geographic compatibility
+status, provenance, equipment/point counts, maximum-per-point power bands,
+nominal equipment power in kW/MW, and within-district fast/high-power shares.
+
+Equipment metrics are aggregated from `core.charging_equipment` before points
+are joined. Point metrics are aggregated from `core.charging_point` using
+`source_id + equipment_excel_row + point_number`; semicolon-separated
+`connector_power_raw` tokens are parsed with decimal-comma normalization and the
+maximum valid value is used once per point. `unclassifiable_power_point_count`
+is explicit. All equipment statuses remain included and are exposed in
+`equipment_statuses_present`.
+
+This view never joins `core.kba_district_ev_stock`, the KBA Crosswalk, BEV, or
+PHEV measures. Hanau and Main-Kinzig remain visible with NULL BBSR settlement
+type fields.
+
+### analytics.charging_by_bbsr_type_2025
+
+Grain: one settlement category. It emits codes 1–4 and `UNCLASSIFIED`.
+Category fast/high-power shares are within-category percentages. The
+`share_of_all_registered_charging_points_pct` field uses all 211,253 charging
+points, including unclassified source districts, and
+`point_share_denominator_scope` states that denominator explicitly. The view
+contains no KBA vehicle-stock measures and does not calculate BEV-per-point.
+
 ### analytics.kba_national_quarterly_stock
 
 Grain: one retained national historical stock observation per stock_date after de-duplicating overlapping report snapshots. Columns are source_id, report_snapshot, excel_row, stock_date, passenger_bev, passenger_phev, and passenger_cars_total.
@@ -188,4 +245,7 @@ Grain: one retained national historical stock observation per stock_date after d
 - Treat equipment counts, populated point slots, connector-power classes, and declared equipment power as different measures.
 - Treat KBA district, postcode, municipality, state, and national tables as alternative grains, not additive partitions.
 - Keep the 2026-09-30 BNetzA date and KBA dates in every combined output.
+- Keep BBSR `KRS` and `Kreisregion` codes as strings and do not require BBSR codes to be globally unique across BNetzA source rows.
+- Treat BBSR category KPIs as descriptive measures of 399 verified-compatible BNetzA source districts; keep Main-Kinzig and Hanau in `UNCLASSIFIED`.
+- Do not join BBSR views to KBA vehicle stock or infer a BBSR type for KBA registration regions.
 - Do not infer utilization, energy delivery, or causality from these tables.

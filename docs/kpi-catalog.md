@@ -434,16 +434,38 @@ The following definitions document gaps identified by the audit. They are delibe
 - Required controls: Treat postcode, municipality, district, state, and national tables as alternative grains; inspect `possible_total_row`; do not add commercial and private values to unrelated totals or stack postcode and municipality rows.
 - Status: PROPOSED — REQUIRES APPROVAL. The source tables are available, but no final ownership denominator or alternative-grain validation has been approved.
 
-## Optional future BBSR enrichment
+## Batch 13 BBSR charging-only KPIs
 
-BBSR settlement or spatial typology is now present as a separate, versioned
-reference artifact built in Batch 10, but it has not been integrated into DuckDB,
-the BNetzA-to-KBA Crosswalk, or a current KPI. Batch 09 and Batch 10 established
-the official 2025 source, grain, checksums, and compatibility limitations. It is
-still a proposed enrichment dimension, not a current KPI.
-Any future use requires approval of the source, boundary vintage, compatibility
-bridge, mixed-region treatment, licensing, and intended interpretation. No formula
-or current KPI value is changed by the candidate definitions below.
+Batch 13 adds a separate, validated descriptive path at the original BNetzA
+state/district grain. It is not a BBSR-to-KBA integration and it does not use
+KBA vehicle stock.
+
+### 23. Charging infrastructure by BBSR district
+
+- Definition: One row per BNetzA state/district enriched with the BBSR 2025 administrative/Kreisregion reference where the Path A identity is verified.
+- Measures: Equipment count, charging-point count, normal/fast point counts, points >=150 kW, points >=350 kW, unclassifiable power points, nominal equipment power, fast-point share, and high-power share.
+- Formula: Equipment metrics are aggregated from equipment rows; point metrics are aggregated from point rows after maximum-per-point parsing of semicolon-separated connector-power tokens. Shares use point counts in the same source district.
+- Grain and dates: BNetzA state/district; infrastructure `2026-09-30`; BBSR geographic stand `2025-12-31`.
+- Coverage: 401 rows; 399 `VERIFIED_COMPATIBLE`, one conditional Main-Kinzig row, and one unresolved Hanau row. All 401 remain in the denominator.
+- Controls: Use `(source_id, excel_row)` and `(source_id, equipment_excel_row)` joins; preserve all equipment statuses; do not join KBA stock or use the Crosswalk as BBSR proof.
+- Status: VALIDATED for source-grain arithmetic and coverage; geographic interpretation is conditional on the visible BBSR vintage/status.
+
+### 24. Charging infrastructure by BBSR settlement type
+
+- Definition: Aggregate the district view into BBSR codes 1–4 plus `UNCLASSIFIED`.
+- Measures: Districts, equipment, points, power bands, within-category fast/high-power shares, nominal power in MW, and each category's share of all registered charging points.
+- Denominators: Within-category shares use that category's charging points. National point share uses all 211,253 points, explicitly including `UNCLASSIFIED`.
+- Coverage: Four valid categories cover 399 verified source districts; `UNCLASSIFIED` contains Hanau and Main-Kinzig (585 equipment, 991 points).
+- Controls: Do not include BEV/PHEV stock, calculate BEV-per-point, or infer a category for a KBA registration region. Keep the BNetzA and BBSR dates visible.
+- Status: VALIDATED descriptive infrastructure KPI; not a vehicle or utilization KPI.
+
+## Optional future BBSR/KBA enrichment
+
+BBSR settlement or spatial typology remains a separate, versioned reference for
+the current charging-only KPIs. Future KBA-level enrichment or any BBSR-based
+vehicle ratio still requires approval of a dated KBA compatibility bridge,
+boundary vintage, mixed-region treatment, licensing, and intended
+interpretation. No current Batch 13 KPI assigns a BBSR type to a KBA code.
 
 | Planned analytical candidate | Suitable future grain | Current status and control |
 |---|---|---|
