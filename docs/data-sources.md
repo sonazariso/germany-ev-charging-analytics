@@ -277,3 +277,13 @@ KBA-compatible vehicle datasets. KBA registration-region outputs retain
 `07211` as the combined `TRIER-SAARBURG` geography and do not allocate it to
 the two BBSR Trier rows. No new dataset was downloaded and no source workbook
 was changed.
+
+## Batch 21 presentation derivations
+
+Batch 21 reuses those nine outputs and adds no new external source. The only
+new data files are deterministic presentation contracts: four mutually
+exclusive power bands derived from the national BNetzA counts, and a two-row
+equipment-status breakdown read from `core.charging_equipment.status` with a
+read-only DuckDB query. Both retain the BNetzA reference date and are
+documented in [`docs/tableau-executive-overview.md`](tableau-executive-overview.md)
+and [`reports/batch21_tableau_overview_validation.md`](../reports/batch21_tableau_overview_validation.md).

@@ -2,6 +2,16 @@
 
 This changelog records project milestones and local repository changes. Historical Batch 01–03 entries describe work evidenced by local reports; they do not imply historical Git commits or inferred dates.
 
+## 2026-11-03 — Batch 21
+
+- Added `scripts/21_prepare_tableau_overview.py`, a deterministic read-only preparation and validation script for the approved `01 — National Summary` and `02 — Geographic View` dashboards.
+- Added the mutually exclusive four-band presentation contract at `data/exports/tableau/preparation/power_band_distribution_2026_09_30.csv` and the published equipment-status contract at `data/exports/tableau/preparation/equipment_status_breakdown_2026_09_30.csv`.
+- Added `docs/tableau-executive-overview.md` with exact source files, worksheet definitions, fields, aggregations, calculations, design tokens, dashboard geometry, geographic safeguards and manual Tableau Desktop steps.
+- Added `reports/batch21_tableau_overview_validation.md` with `DATA_PREPARATION_PASS`, source/export checksums, national and 16-state reconciliations, actual 33-row KBA history validation, derived hashes and screenshot/workbook status.
+- Confirmed 117,662 equipment, 211,253 points, all four mutually exclusive power bands, 9,215.4173 MW, national July BEV/PHEV 2,365,047/1,226,863, sixteen-state July BEV/PHEV 2,362,218/1,225,241, and the 2,829 `Sonstige` BEV distinction.
+- Confirmed no Batch 19 CSV, DuckDB, raw source, reference crosswalk, backup, remote, upload or publication changed. Tableau Desktop is installed, but no approved authoring bridge was available; no `.twb`, `.twbx` or screenshot is claimed.
+- Updated the README, project status, architecture, Tableau semantic/relationship documents, KPI catalog, data dictionary, decisions, roadmap, reproducibility guide, data-source notes, Tableau handoff README and the private Persian reference outside Git.
+
 ## 2026-11-03 — Batch 20
 
 - Added the design-only Tableau semantic model specification in `docs/tableau-semantic-model.md`, with separate subject models, date roles, measure behavior, alternative-model evaluation, and future implementation prerequisites.

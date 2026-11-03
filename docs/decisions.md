@@ -410,3 +410,24 @@ The following decisions are the concise project-log form:
 - Consequence: Batch 20 creates design documentation, validation evidence and
   a complete 59-KPI mapping only. No Tableau asset, physical mart, DuckDB
   object, export, source, remote or publication is created.
+
+## Batch 21 — approved two-page Tableau executive overview preparation (2026-11-03)
+
+- Decision: Implement only the two approved pages, `01 — National Summary` and
+  `02 — Geographic View`, over the validated Batch 19 exports and two small
+  deterministic presentation CSVs.
+- Decision: Use separate Tableau data sources for national charging, power
+  bands, national KBA history, equipment status, state charging and the fixed
+  state comparison. Do not add unapproved Fact-to-Fact relationships.
+- Decision: Derive the four charging slices as normal, fast-but-below-150,
+  high-power-below-350 and ultra-fast so the donut and bar chart total exactly
+  211,253 points. Keep `In Wartung` 20 visible in the status worksheet.
+- Decision: Use the national KBA `Deutschland` total for the national cards,
+  the fixed 16-state comparison for page two, and preserve the 2,829 BEV
+  `Sonstige` difference rather than placing it in a state.
+- Decision: The map may use only official Tableau geographic recognition of all
+  16 Bundesländer. If recognition fails, leave the map pending; do not create
+  fabricated boundaries or copy state values from mockups.
+- Consequence: Data preparation and documentation pass, but native workbook
+  authoring, screenshots, map verification and a real `.twb`/`.twbx` remain
+  manual. No public publication is authorized or attempted.

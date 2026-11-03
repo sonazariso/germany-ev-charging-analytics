@@ -148,3 +148,23 @@ dates, and provenance. Equal row counts (400) do not prove equivalence.
 - `07211` has exactly one KBA registration-region row per date and is retained
   as `TRIER-SAARBURG`.
 - No KBA-to-BBSR relationship is verified or enabled.
+
+## 7. Batch 21 executive workbook binding
+
+The two-page executive overview uses separate Tableau data sources rather than
+relationships: national charging, derived power bands, national KBA history,
+derived equipment status, state charging, and the fixed state comparison. The
+two derived presentation files are deterministic reshapes of already validated
+measures; they do not introduce a new analytical grain or a new source.
+
+The map, top-state ranking and fast-share highlight use the 16-row state
+charging source. The state comparison table and BEV-penetration chart use the
+16-row pre-combined state comparison source with KBA `2026-07-01` and BNetzA
+`2026-09-30` fixed in the source contract. No state charging row is related to
+the three-row-per-state KBA state export, and no national `Deutschland` or
+`Sonstige` row is placed in the state view.
+
+Manual map validation must confirm all 16 official Tableau state geometries;
+failure to resolve a geometry leaves the map pending rather than authorizing a
+fabricated boundary. Worksheet mappings and assembly instructions are in
+[`docs/tableau-executive-overview.md`](tableau-executive-overview.md).

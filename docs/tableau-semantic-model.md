@@ -211,3 +211,30 @@ None of these tables or files is created in Batch 20.
 - [Semantic-model validation report](../reports/batch20_semantic_model_validation.md)
 - [Architecture decision](../reports/batch20_architecture_decision.md)
 - [59-KPI model mapping](../reports/batch20_kpi_model_mapping.csv)
+
+## 9. Batch 21 implementation binding
+
+Batch 21 applies the separate-source recommendation to exactly two executive
+dashboards without changing the logical fact contracts. The initial workbook
+source list is:
+
+- one-row national BNetzA charging;
+- four-row mutually exclusive power bands;
+- 33-row national KBA history;
+- two-row equipment status;
+- 16-row state BNetzA charging; and
+- the existing 16-row pre-combined state EV/charging comparison.
+
+Each worksheet is assigned to one of these sources. No relationship is created
+between them, and no national row is unioned with state rows. The state table
+and BEV penetration chart use the pre-combined fixed-date comparison rather
+than rebuilding a relationship between three KBA dates and one BNetzA row.
+
+The presentation specification defines Tableau calculated fields as ratios of
+aggregated numerators and denominators. It retains the canonical KPI statuses;
+`bevs_per_charging_point` is excluded from the executive table, and no
+`NOT_SUPPORTED` KPI is promoted. See
+[`docs/tableau-executive-overview.md`](tableau-executive-overview.md) for
+worksheet-level instructions and
+[`reports/batch21_tableau_overview_validation.md`](../reports/batch21_tableau_overview_validation.md)
+for measured checks.

@@ -1,0 +1,5 @@
+power_band_order,power_band,bnetza_reference_date,charging_point_count,charging_point_share_pct
+1,Normal ≤22 kW,2026-09-30,156155,73.9184768974
+2,Fast >22 and <150 kW,2026-09-30,14148,6.6971829986
+3,High power ≥150 and <350 kW,2026-09-30,34000,16.094445996
+4,Ultra-fast ≥350 kW,2026-09-30,6950,3.289894108

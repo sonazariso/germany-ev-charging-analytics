@@ -419,3 +419,30 @@ The 59-row mapping is
 No command in this batch writes to DuckDB, exports, raw sources, Crosswalks or
 Tableau assets. The private Persian reference remains in the sibling directory
 `../germany-ev-charging-analytics-private/` and is outside Git.
+
+## Batch 21 Tableau executive overview preparation
+
+Run from the repository root:
+
+~~~bash
+./.venv/bin/python scripts/21_prepare_tableau_overview.py
+~~~
+
+The script reads the Batch 19 manifest and nine existing CSVs, verifies all
+manifest-listed raw/reference/report fingerprints, opens
+`data/analytics/ev_charging.duckdb` with `read_only=True`, queries only the
+equipment-status grouping, and checks the database hash before and after. It
+writes only:
+
+- `data/exports/tableau/preparation/power_band_distribution_2026_09_30.csv`;
+- `data/exports/tableau/preparation/equipment_status_breakdown_2026_09_30.csv`;
+- `reports/batch21_tableau_overview_validation.md`.
+
+The first derived file contains four mutually exclusive bands totalling
+211,253 points. The second contains `In Betrieb` 117,642 and `In Wartung` 20.
+The validation report records the nine unchanged Batch 19 hashes, the 12
+manifest-listed fingerprints, the unchanged DuckDB SHA-256
+`5d2dc0b3c5800499bf3d2e41fd82a899315bcb713c267572ade7dc1b4c6a66d3`, and the
+fact that no Tableau workbook or screenshot exists yet. Tableau Desktop
+assembly remains a manual step in
+[`docs/tableau-executive-overview.md`](tableau-executive-overview.md).

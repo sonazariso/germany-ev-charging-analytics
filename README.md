@@ -4,7 +4,7 @@
 
 This portfolio project builds a reproducible, Germany-wide analytical foundation for comparing the published public-charging register with registered passenger-car stock. It preserves the original BNetzA, KBA, and separately versioned BBSR reference workbooks, separates charging equipment from charging points, and keeps snapshot dates visible throughout the workflow.
 
-The current implementation is a validated local DuckDB model, a deployed still-provisional KBA geographic layer, the separate Batch 13 charging-only BNetzA-source-grain BBSR layer, a separate Batch 13.1 owner-approved 2026 analytical scenario, a separate Batch 13.2 historical BBSR 2025 boundary harmonization, the Batch 14 read-only statistical analysis of that harmonized layer, the Batch 15 read-only KBA FZ 27 stock analysis, the Batch 17 read-only temporal-validity analysis of Batch 16 cross-source KPIs, the Batch 18 analytics-readiness and KPI-finalization review, the Batch 19 validated Tableau export contracts, and the Batch 20 Tableau semantic-model design. Batch 13.2 corrects the Kassel city/county join only in its new layer and aggregates Hanau with the remaining Main-Kinzig source row; Batches 14–20 do not change the official baseline, assign BBSR categories to KBA registration regions, integrate charging with KBA stock, create a historical infrastructure panel, or allocate Trier stock. Tableau Public reporting remains incomplete.
+The current implementation is a validated local DuckDB model, a deployed still-provisional KBA geographic layer, the separate Batch 13 charging-only BNetzA-source-grain BBSR layer, a separate Batch 13.1 owner-approved 2026 analytical scenario, a separate Batch 13.2 historical BBSR 2025 boundary harmonization, the Batch 14 read-only statistical analysis of that harmonized layer, the Batch 15 read-only KBA FZ 27 stock analysis, the Batch 17 read-only temporal-validity analysis of Batch 16 cross-source KPIs, the Batch 18 analytics-readiness and KPI-finalization review, the Batch 19 validated Tableau export contracts, the Batch 20 Tableau semantic-model design, and Batch 21's validated two-page Tableau presentation preparation. Batch 13.2 corrects the Kassel city/county join only in its new layer and aggregates Hanau with the remaining Main-Kinzig source row; Batches 14–21 do not change the official baseline, assign BBSR categories to KBA registration regions, integrate charging with BBSR vehicle stock, create a historical infrastructure panel, or allocate Trier stock. Tableau workbook authoring and public reporting remain incomplete.
 
 ## Why this matters
 
@@ -50,7 +50,7 @@ The state-level KBA FZ 27.2 total labelled Deutschland is 2,365,047 BEVs for Jul
 
 - Python 3 standard-library ingestion and profiling scripts
 - DuckDB 1.4.5 in the current local environment
-- Tableau Public as a planned reporting layer
+- Tableau Desktop 2026.3 for local workbook authoring; Tableau Public remains a future reporting target
 - Git for local version control
 - GitHub as a future publication target, subject to final review and explicit approval
 
@@ -107,7 +107,7 @@ Batch 17 adds a read-only temporal-validity and sensitivity analysis for those c
 
 Batch 18 finalizes the publication-readiness boundary without implementing the next analytical phase. It adds a deterministic 59-row KPI readiness register, a historical-infrastructure feasibility decision (`BLOCKED` with current data), Tableau candidate/source-grain documentation, a question-led narrative recommendation and a decision register. The canonical statuses are `HEADLINE_READY`, `HEADLINE_READY_WITH_DATES`, `CONTEXT_ONLY`, `EXPLORATORY` and `NOT_SUPPORTED`. No DuckDB object, raw/reference file, source fingerprint, dependency, Tableau asset, remote, upload or publication changed.
 
-Not complete: a dated BBSR/KBA compatibility bridge, KBA-level BBSR classification, Tableau extract preparation, dashboard development, genuine historical infrastructure-panel development, final license review, and GitHub publication. Batch 12 Path B remains at zero strict verified KBA regions; Batch 18 explicitly marks historical infrastructure-panel development blocked until multiple dated snapshots and identity/change evidence exist.
+Not complete: a dated BBSR/KBA compatibility bridge, KBA-level BBSR classification, native Tableau workbook assembly and screenshot verification, genuine historical infrastructure-panel development, final license review, and GitHub publication. Batch 12 Path B remains at zero strict verified KBA regions; Batch 18 explicitly marks historical infrastructure-panel development blocked until multiple dated snapshots and identity/change evidence exist.
 
 ## Reproducibility
 
@@ -280,3 +280,29 @@ records the 1,734-row manifest checks, required baseline reconciliations,
 401-to-400 BBSR harmonization, 59-KPI mapping completeness and unchanged
 DuckDB/source fingerprints. No Tableau workbook, extract, physical mart,
 schema change, export change, remote, or publication was created.
+
+## Batch 21 Tableau executive overview
+
+Batch 21 prepared the owner-approved two-page executive overview without
+modifying the nine Batch 19 exports, DuckDB, raw workbooks, references or
+crosswalks. It adds two deterministic presentation contracts:
+
+- [`scripts/21_prepare_tableau_overview.py`](scripts/21_prepare_tableau_overview.py)
+  validates the manifest, all listed source/reference fingerprints, national
+  and 16-state scopes, the 33 actual national KBA observations, state ranks,
+  equipment statuses and DuckDB immutability.
+- [`data/exports/tableau/preparation/power_band_distribution_2026_09_30.csv`](data/exports/tableau/preparation/power_band_distribution_2026_09_30.csv)
+  contains the four mutually exclusive bands 156,155 / 14,148 / 34,000 /
+  6,950, totalling 211,253 points.
+- [`data/exports/tableau/preparation/equipment_status_breakdown_2026_09_30.csv`](data/exports/tableau/preparation/equipment_status_breakdown_2026_09_30.csv)
+  contains `In Betrieb` 117,642 and `In Wartung` 20.
+- [`docs/tableau-executive-overview.md`](docs/tableau-executive-overview.md)
+  contains exact worksheet mappings, design tokens, dashboard assembly and
+  manual Tableau Desktop verification instructions.
+- [`reports/batch21_tableau_overview_validation.md`](reports/batch21_tableau_overview_validation.md)
+  records `DATA_PREPARATION_PASS`, all input hashes and the unchanged DuckDB
+  hash.
+
+The workbook remains `TABLEAU_WORKBOOK_NOT_YET_CREATED`: Tableau Desktop is
+installed, but no approved authoring bridge was available in this session. No
+`.twb`, `.twbx`, screenshot, remote, upload or publication is claimed.

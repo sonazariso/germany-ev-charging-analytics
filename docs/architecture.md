@@ -326,3 +326,25 @@ BBSR harmonization, 16-state/date matches, and unchanged source/database
 fingerprints. The architecture decision recommends the separate-source model
 over a multi-fact relationship model until stable shared keys and date-role
 contracts are implemented in a separately approved batch.
+
+## Batch 21 — executive overview preparation
+
+Batch 21 adds only a presentation layer over the Batch 19 contracts. The
+preparation script reads the manifest-listed exports and opens DuckDB
+read-only for the equipment-status counts. It writes two small CSVs under
+`data/exports/tableau/preparation/`: one four-row mutually exclusive power-band
+file and one two-row equipment-status file. It does not add a DuckDB relation,
+alter an export, or create a Fact-to-Fact join.
+
+The two dashboards use six separate Tableau subject sources: national
+charging, power bands, national KBA history, equipment status, state charging,
+and the fixed state comparison. The geographic map is allowed only through
+Tableau's official Bundesland geographic recognition; fabricated boundaries or
+image-derived state values are prohibited. The full worksheet/source contract
+is in [`docs/tableau-executive-overview.md`](tableau-executive-overview.md),
+and validation is in
+[`reports/batch21_tableau_overview_validation.md`](../reports/batch21_tableau_overview_validation.md).
+
+Native workbook authoring remains manual. Tableau Desktop 2026.3 is installed,
+but no approved local authoring bridge was available, so no `.twb`, `.twbx`,
+extract or screenshot is part of the current architecture.

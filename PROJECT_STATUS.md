@@ -2,16 +2,17 @@
 
 ## Current Batch
 
-Batch 20 — Tableau semantic model and Fact/Dimension architecture design
-(complete; design documentation, relationship contracts, 59-KPI mapping and
-read-only validation). No DuckDB object, raw/reference file, Crosswalk, BBSR
-layer, charging object, Tableau asset or official KPI deployment changed.
-Batch 19 exports and all earlier charging/BBSR/KBA layers remain unchanged.
+Batch 21 — approved two-page Tableau executive overview preparation
+(complete; validated presentation CSVs, implementation specification,
+worksheet instructions and read-only validation). The Tableau workbook itself
+is not yet created because no approved native authoring bridge was available.
+No DuckDB object, raw/reference file, Crosswalk, BBSR layer, charging object,
+Batch 19 export or official KPI deployment changed.
 
 ## Last completed Batch
 
-Batch 20 — Tableau semantic model and Fact/Dimension architecture design
-completed after Batch 19's data preparation and export validation, Batch 18's
+Batch 21 — approved two-page Tableau executive overview preparation completed
+after Batch 20's semantic model design, Batch 19's data preparation and export validation, Batch 18's
 source-readiness review and Batch 17's
 temporal-validity audit, Batch 16's state-level EV
 stock versus charging infrastructure comparison and Batch 15's KBA FZ 27
@@ -24,9 +25,9 @@ build, Batch 09 feasibility assessment, and Batch 08 geographic verification.
 
 ## Previous completed Batch
 
-Batch 19 — Tableau data preparation, export contracts and independent
-validation completed before Batch 20 and after Batch 18's source-readiness
-review.
+Batch 20 — Tableau semantic model and Fact/Dimension architecture design
+completed before Batch 21 and after Batch 19's export validation. It produced
+the separate-source architecture, relationship contracts and 59-KPI mapping.
 
 ## Earlier completed Batch
 
@@ -204,17 +205,19 @@ The deployed maximum-per-point parser classifies 156,155 points at or below 22 k
 
 ## Next planned work
 
-Owner review of the Batch 20 semantic model, relationship contracts and KPI
-mapping, followed by an explicit decision on whether to implement the separate
-Tableau subject sources. Keep historical infrastructure-panel development and
-KBA-to-BBSR vehicle integration deferred until their prerequisites exist. Keep
-the official Batch 13 baseline, Batch 13.1 scenario and Batch 13.2 historical
-layer separate from any future KBA vehicle-stock integration.
+Manual Tableau Desktop authoring of the two specified dashboards, official
+recognition checks for all 16 state geometries, screenshot verification and
+owner review remain pending. Save a real `.twb`/optional `.twbx` only after the
+workbook opens successfully and the visual checks pass. Keep historical
+infrastructure-panel development, KBA-to-BBSR vehicle integration, external
+publication and GitHub publication deferred until their prerequisites exist.
+Keep the official Batch 13 baseline, Batch 13.1 scenario and Batch 13.2
+historical layer separate from any future KBA vehicle-stock integration.
 
 ## Last local Git commit reference
 
-Batch 20 is the current completed local batch. The handoff commit is created
-after the final validation pass. No remote is configured.
+Batch 21 handoff commit is created after the final validation pass. No remote
+is configured.
 
 ## Batch 19 completed outputs
 
@@ -258,3 +261,25 @@ checksums, natural keys, state/date matches, 401-to-400 BBSR harmonization,
 required baselines, source fingerprints, and unchanged DuckDB bytes. No
 physical Fact/Dimension table, Tableau asset, schema change, source change,
 new dataset, remote, upload or publication was created.
+
+## Batch 21 completed outputs
+
+Batch 21 prepared the two approved dashboard contracts from the validated
+Batch 19 files. The new power-band file uses normal, fast-but-below-150,
+high-power-below-350 and ultra-fast bands, which reconcile to 211,253 points.
+The new equipment-status file keeps the 20 `In Wartung` records visible.
+
+The preparation script checks all nine Batch 19 export hashes, all 12
+manifest-listed source/reference/report fingerprints, the required national
+figures, all 33 national history rows, exactly 16 geographic states, the
+sixteen-state BEV/PHEV scope and the validated state rankings. It opens DuckDB
+read-only and confirmed the unchanged hash
+`5d2dc0b3c5800499bf3d2e41fd82a899315bcb713c267572ade7dc1b4c6a66d3`.
+
+The specification is
+[`docs/tableau-executive-overview.md`](docs/tableau-executive-overview.md),
+and the validation report is
+[`reports/batch21_tableau_overview_validation.md`](reports/batch21_tableau_overview_validation.md).
+The workbook, screenshots, map recognition result and any `.twb`/`.twbx` path
+remain pending manual Tableau Desktop authoring; no public publication was
+attempted.

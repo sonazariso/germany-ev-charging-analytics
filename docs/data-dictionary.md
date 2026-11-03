@@ -446,3 +446,20 @@ See the [Batch 20 Fact/Dimension catalog](tableau-fact-dimension-catalog.md)
 for actual DuckDB types, attributes, vintage semantics, null rules and related
 facts. See the [relationship design](tableau-relationship-design.md) for
 cardinality, filter behavior, expected unmatched records and prohibited paths.
+
+## Batch 21 Tableau presentation contracts
+
+Batch 21 adds two derived CSV contracts under
+`data/exports/tableau/preparation/`. They are presentation shapes, not DuckDB
+tables and not replacements for the Batch 19 exports.
+
+| File | Grain / key | Fields and units | Derivation |
+|---|---|---|---|
+| `power_band_distribution_2026_09_30.csv` | one row per mutually exclusive power band; `power_band_order` | `power_band`, `bnetza_reference_date`, `charging_point_count` (point slots), `charging_point_share_pct` (percentage points) | normal = normal; fast <150 = fast - >=150; high power <350 = >=150 - >=350; ultra-fast = >=350 |
+| `equipment_status_breakdown_2026_09_30.csv` | one row per published equipment status; `status_order` | `equipment_status`, `bnetza_reference_date`, `equipment_count` (equipment records), `equipment_share_pct` (percentage points) | read-only `COUNT(*)` grouped by `core.charging_equipment.status` |
+
+The four power bands total exactly 211,253 and do not treat nested threshold
+counts as independent categories. The status file contains `In Betrieb`
+117,642 and `In Wartung` 20. The script and measured validation are in
+[`scripts/21_prepare_tableau_overview.py`](../scripts/21_prepare_tableau_overview.py)
+and [`reports/batch21_tableau_overview_validation.md`](../reports/batch21_tableau_overview_validation.md).

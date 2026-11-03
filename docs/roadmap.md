@@ -139,9 +139,27 @@ vehicle bridge.
 
 ## Next decision-gated stage
 
-Review the Batch 20 semantic model and relationship contracts with the owner.
-If approved, Batch 21 may implement the separate Tableau subject sources and
-quality gates from the existing exports. Keep physical marts, historical
-infrastructure, KBA-to-BBSR vehicle integration, adequacy interpretation and
-remote publication outside scope until their prerequisites and permissions are
-separately approved.
+Batch 21 has implemented the separate Tableau subject-source preparation and
+quality gates from the existing exports. The remaining handoff is manual
+Tableau Desktop authoring of the two dashboards, official 16-state map
+recognition, screenshot checks, owner review and saving a verified local
+workbook. Keep physical marts, historical infrastructure, KBA-to-BBSR vehicle
+integration, adequacy interpretation and remote publication outside scope
+until their prerequisites and permissions are separately approved.
+
+## Batch 21 completion
+
+- [x] Validate the actual Batch 19 manifest, all nine export headers/rows/
+  checksums and all manifest-listed source/reference fingerprints.
+- [x] Reconcile national equipment, points, nested power thresholds, nominal
+  MW, national KBA July stock, 16-state KBA July stock, and the `Sonstige`
+  distinction.
+- [x] Create deterministic four-band power-mix and equipment-status CSVs with
+  source documentation and hashes.
+- [x] Write the two-page Tableau implementation specification with field
+  mappings, aggregations, calculations, colors, layout and manual steps.
+- [x] Confirm read-only DuckDB access and unchanged database/source/export
+  fingerprints.
+- [ ] Build and open the actual Tableau workbook in Tableau Desktop.
+- [ ] Verify all 16 official map geometries and capture final screenshots.
+- [ ] Review licensing and obtain separate approval before any publication.

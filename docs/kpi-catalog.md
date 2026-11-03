@@ -734,3 +734,25 @@ the Batch 20 rule that ratios and shares use aggregated numerator and
 denominator fields rather than averaged percentages. Unsupported KPIs remain
 `NOT_IMPLEMENTABLE`; a source field's existence does not promote an
 unsupported interpretation.
+
+## Batch 21 executive overview publication mapping
+
+Batch 21 does not add or promote KPI IDs in the 59-KPI readiness register. It
+binds the approved dashboard elements to the existing statuses as follows:
+
+| Dashboard element | Source/definition | Readiness treatment |
+|---|---|---|
+| National equipment and point cards | BNetzA `2026-09-30` national export | `HEADLINE_READY_WITH_DATES` |
+| Fast-point card and declared nominal MW | BNetzA source fields at the same snapshot | `HEADLINE_READY_WITH_DATES` |
+| National BEV/PHEV cards and 33-period history | KBA registered stock; `Deutschland`; latest date and actual history rows | `HEADLINE_READY_WITH_DATES` |
+| Four charging-power bands | Mutually exclusive presentation derivation from normal, fast, >=150 and >=350 counts | `HEADLINE_READY_WITH_DATES`; no overlapping slices |
+| Equipment status | Published `In Betrieb` / `In Wartung` equipment rows | descriptive current-snapshot status; not availability/utilization |
+| State charging counts and fast share | BNetzA 16-state export | `HEADLINE_READY_WITH_DATES` |
+| State BEV stock and penetration | fixed pre-combined KBA July/BNetzA September state comparison | `HEADLINE_READY_WITH_DATES`; dates remain visible |
+| BEVs per charging point | intentionally excluded from the main executive table | remains `CONTEXT_ONLY` |
+
+The page-two state rankings are descriptive and use the validated 16-state
+scope. No BBSR vehicle KPI, adequacy/shortage/surplus KPI, utilization KPI,
+historical infrastructure KPI or unapproved denominator is introduced. The
+worksheet-level implementation is in
+[`docs/tableau-executive-overview.md`](tableau-executive-overview.md).
