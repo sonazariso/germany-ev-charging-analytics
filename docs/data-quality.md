@@ -537,3 +537,29 @@ The canonical register and the evidence-based decisions are in
 [`reports/batch18_kpi_readiness_register.csv`](../reports/batch18_kpi_readiness_register.csv),
 [`reports/batch18_historical_data_feasibility.md`](../reports/batch18_historical_data_feasibility.md)
 and [`reports/batch18_readiness_decisions.md`](../reports/batch18_readiness_decisions.md).
+
+## Batch 19 export validation
+
+The Batch 19 exporter performed an independent output-layer validation after
+opening DuckDB read-only:
+
+| Check | Measured result | Status |
+|---|---:|---|
+| National equipment / point totals | 117,662 / 211,253 | PASS |
+| Normal / fast / >=150 / >=350 kW points | 156,155 / 55,098 / 40,950 / 6,950 | PASS |
+| Declared equipment nominal power | 9,215.4173 MW | PASS |
+| Duplicate point keys / orphan points / equipment-point mismatches | 0 / 0 / 0 | PASS |
+| State charging rows | 16 | PASS |
+| BBSR historical units / source components | 400 / 401 | PASS |
+| BBSR type unit counts | 68 / 131 / 98 / 103 | PASS |
+| KBA state rows / region-date rows | 48 / 1,200 | PASS |
+| KBA national, state, `Sonstige` and 400-region reconciliation | All three dates | PASS |
+| National KBA history | 33 unique stock dates | PASS |
+| Source fingerprints | 12 approved inputs matched | PASS |
+| DuckDB SHA-256 | `5d2dc0b3c5800499bf3d2e41fd82a899315bcb713c267572ade7dc1b4c6a66d3` before/after | PASS |
+| Second execution | CSVs, manifest and validation report byte-identical | PASS |
+
+The detailed measured report is
+[`reports/batch19_tableau_data_validation.md`](../reports/batch19_tableau_data_validation.md).
+NULL handling, field units, natural keys and relationship prohibitions are in
+[`reports/batch19_tableau_export_contracts.md`](../reports/batch19_tableau_export_contracts.md).

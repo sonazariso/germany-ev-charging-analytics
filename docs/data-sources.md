@@ -260,3 +260,20 @@ The detailed readiness matrix and source-date/join rules are in
 [`reports/batch18_tableau_analysis_candidates.md`](../reports/batch18_tableau_analysis_candidates.md).
 The historical-panel decision is in
 [`reports/batch18_historical_data_feasibility.md`](../reports/batch18_historical_data_feasibility.md).
+
+## Batch 19 export provenance
+
+Batch 19 uses only the preserved BNetzA snapshot dated `2026-09-30`, KBA FZ 27
+snapshots dated `2026-01-01`, `2026-04-01` and `2026-07-01`, the BBSR reference
+at geographic stand `2025-12-31`, the deployed Batch 13.2 harmonized views, and
+the validated Batch 16/17 CSV outputs. The exporter records all input hashes
+and output hashes in
+[`data/exports/tableau/export_manifest.json`](../data/exports/tableau/export_manifest.json).
+
+The nine outputs retain source dates and provenance in their columns or
+manifest. BBSR outputs are charging-only historical-geography extracts formed
+from 401 current BNetzA source components to 400 target units; they are not
+KBA-compatible vehicle datasets. KBA registration-region outputs retain
+`07211` as the combined `TRIER-SAARBURG` geography and do not allocate it to
+the two BBSR Trier rows. No new dataset was downloaded and no source workbook
+was changed.

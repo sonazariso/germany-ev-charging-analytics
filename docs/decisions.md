@@ -360,3 +360,31 @@ The following decisions are the concise project-log form:
   remotes or publication outputs.
 - Status: Batch 18 review complete; all implementation recommendations remain
   owner-approval gated for Batch 19.
+
+## Batch 19 — Tableau data-preparation decisions (2026-11-03)
+
+- Decision: Prepare separate deterministic CSV extracts for national/state
+  BNetzA infrastructure, charging-only historical BBSR geography, KBA state and
+  registration-region stock, the validated state comparison, temporal
+  sensitivity and the validated national KBA history.
+- Decision: Use `analytics.charging_by_state` only after confirming its
+  source-aware `(source_id, equipment_excel_row)` point pre-aggregation;
+  independently reconcile state measures to national totals without altering
+  the existing view.
+- Decision: Use the Batch 13.2 historical BBSR layer as the official charging-
+  only export baseline. Do not use the owner-approved Hanau scenario, join KBA
+  stock to BBSR, allocate Trier `07211`, or describe BBSR 2025 geography as
+  2025 infrastructure.
+- Decision: Preserve the existing KPI publication statuses. BEVs per point is
+  `CONTEXT_ONLY`; power-normalized and share-gap comparisons are
+  `EXPLORATORY_SENSITIVITY`; the temporal survivor cohort is exploratory and
+  not actual July infrastructure; adequacy/shortage/surplus remains
+  `NOT_SUPPORTED`.
+- Decision: Keep national, state, historical BBSR and KBA registration-region
+  sources separate in Tableau unless a relationship at the documented grain is
+  explicitly reviewed. Do not sum national and state aggregates or precomputed
+  percentage fields.
+- Consequence: Batch 19 creates no Tableau workbook, extract in Tableau's
+  proprietary format, DuckDB object, source/reference modification, download,
+  remote, upload or publication. A separate owner-approved implementation
+  batch is required for dashboard construction.

@@ -1,0 +1,2 @@
+geography_name,bnetza_reference_date,equipment_count,declared_charging_point_count,charging_point_count,normal_charging_point_count,fast_charging_point_count,points_ge_150_kw,points_ge_350_kw,unclassifiable_power_point_count,equipment_nominal_power_mw,fast_point_share_pct,points_ge_150_share_pct,points_ge_350_share_pct
+Germany,2026-09-30,117662,211253,211253,156155,55098,40950,6950,0,9215.4173,26.0815231026,19.384340104,3.289894108

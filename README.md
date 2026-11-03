@@ -229,3 +229,27 @@ The current BBSR layer remains source-grain and must not be reinterpreted as
 KBA integration.
 
 Code is covered by the existing MIT LICENSE. Official source data retain the licenses and attribution requirements declared in the source manifest; redistribution and final publication rights require a separate review.
+
+## Batch 19 Tableau-ready exports
+
+Batch 19 prepared and independently validated nine deterministic CSV extracts
+under `data/exports/tableau/`, plus the export manifest and validation report:
+
+- National and 16-state BNetzA infrastructure at `2026-09-30`.
+- Charging-only BBSR historical district/type extracts using the `2025-12-31`
+  geographic stand and the 401-to-400 Batch 13.2 harmonization.
+- KBA state and 400 registration-region stock at `2026-01-01`, `2026-04-01`
+  and `2026-07-01`.
+- The validated Batch 16 state comparison and Batch 17 temporal-sensitivity
+  extracts, retaining their publication statuses and date warnings.
+- The optional validated 33-observation national KBA history.
+
+The export contracts are in
+[`reports/batch19_tableau_export_contracts.md`](reports/batch19_tableau_export_contracts.md),
+the deterministic inventory is in
+[`data/exports/tableau/export_manifest.json`](data/exports/tableau/export_manifest.json),
+and measured checks are in
+[`reports/batch19_tableau_data_validation.md`](reports/batch19_tableau_data_validation.md).
+This batch did not create Tableau assets. State cross-source ratios remain
+contextual or exploratory, BBSR remains charging-only, and the 2025 BBSR
+geography must not be narrated as 2025 infrastructure.

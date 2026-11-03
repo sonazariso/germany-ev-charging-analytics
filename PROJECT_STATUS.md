@@ -2,18 +2,18 @@
 
 ## Current Batch
 
-Batch 18 — source readiness, KPI finalization and Tableau analytics planning
-(complete; documentation-only review of Batches 01–17, canonical KPI status
-register, historical infrastructure feasibility, Tableau source/grain
-assessment, analytical candidate portfolio and decision register). No DuckDB
-object, raw/reference file, Crosswalk, BBSR layer, charging object, Tableau
-asset, or official KPI deployment changed. Batch 17 and all earlier
+Batch 19 — Tableau data preparation, export contracts and independent
+validation (complete; deterministic source-date-labelled CSV extracts,
+manifest, contracts and measured validation report). No DuckDB object,
+raw/reference file, Crosswalk, BBSR layer, charging object, Tableau asset or
+official KPI deployment changed. Batch 17, Batch 18 and all earlier
 charging/BBSR/KBA layers remain unchanged.
 
 ## Last completed Batch
 
-Batch 18 — source readiness, KPI finalization and Tableau analytics planning
-completed after Batch 17's temporal-validity audit, Batch 16's state-level EV
+Batch 19 — Tableau data preparation, export contracts and independent
+validation completed after Batch 18's source-readiness review and Batch 17's
+temporal-validity audit, Batch 16's state-level EV
 stock versus charging infrastructure comparison and Batch 15's KBA FZ 27
 stock, growth, geography and ownership analysis and the Batch 14 BBSR
 charging infrastructure statistical analysis,
@@ -207,5 +207,29 @@ from any future KBA vehicle-stock integration.
 
 ## Last local Git commit reference
 
-Batch 18 is the current completed local batch. The handoff commit is created
+Batch 19 is the current completed local batch. The handoff commit is created
 after the final validation pass. No remote is configured.
+
+## Batch 19 completed outputs
+
+The exporter `scripts/19_prepare_tableau_data.py` opens DuckDB with
+`read_only=True`, validates the source object contract and prior fingerprints,
+aggregates equipment and point grains separately, and writes nine CSVs under
+`data/exports/tableau/`. The extracts contain 1, 16, 400, 4, 48, 1,200, 16,
+16 and 33 rows respectively. The national BNetzA totals are 117,662 equipment,
+211,253 point slots, 156,155 normal points, 55,098 fast points, 40,950 points
+>=150 kW, 6,950 points >=350 kW and 9,215.4173 MW declared equipment nominal
+power.
+
+The BBSR exports preserve 400 historical target units from 401 source
+components, consolidate Hanau with remaining Main-Kinzig-Kreis to `06435000`
+type 2, retain corrected Kassel city `06611000` type 1, and keep Trier city and
+Trier-Saarburg separate. The KBA exports preserve `07211` as one
+`TRIER-SAARBURG` registration region without allocation. Batch 16/17 source
+outputs are reused with their existing publication statuses; no KPI status was
+promoted or downgraded.
+
+Measured validation is recorded in
+[`reports/batch19_tableau_data_validation.md`](reports/batch19_tableau_data_validation.md)
+and file provenance/checksums in
+[`data/exports/tableau/export_manifest.json`](data/exports/tableau/export_manifest.json).

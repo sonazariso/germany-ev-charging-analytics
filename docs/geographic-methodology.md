@@ -503,3 +503,25 @@ Batch 18 fixes the geographic meaning of the candidate portfolio:
 
 The source-date, grain and join-risk matrix is in
 [`reports/batch18_tableau_analysis_candidates.md`](../reports/batch18_tableau_analysis_candidates.md).
+
+## Batch 19 export geography rules
+
+The Tableau preparation keeps the project geographies as separate source
+grains. State charging has 16 validated BNetzA state names. KBA stock has 16
+named states plus separate `Deutschland`, `Sonstige` and 400 registration-region
+reconciliation scopes. The KBA registration-region code `07211` remains the
+single combined `TRIER-SAARBURG` geography at every KBA date; no stock is
+allocated to Trier city or Trier-Saarburg administrative rows.
+
+The BBSR exports use `analytics.charging_by_bbsr_district_2025_harmonized` and
+its type summary. They contain 400 historical BBSR units formed from 401
+BNetzA source components. Hanau and remaining Main-Kinzig-Kreis consolidate to
+historical code `06435000` type 2; Kassel city is corrected to `06611000` type
+1; Trier city and Trier-Saarburg remain separate with types 1 and 3. Source
+component count/name fields make the 401-to-400 operation visible. This is a
+charging-only historical target reconstruction, not an official 2026 Hanau
+classification and not a KBA bridge.
+
+The contracts and measured validation are in
+[`reports/batch19_tableau_export_contracts.md`](../reports/batch19_tableau_export_contracts.md)
+and [`reports/batch19_tableau_data_validation.md`](../reports/batch19_tableau_data_validation.md).

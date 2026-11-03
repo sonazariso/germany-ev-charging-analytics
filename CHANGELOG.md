@@ -2,6 +2,16 @@
 
 This changelog records project milestones and local repository changes. Historical Batch 01–03 entries describe work evidenced by local reports; they do not imply historical Git commits or inferred dates.
 
+## 2026-11-03 — Batch 19
+
+- Added `scripts/19_prepare_tableau_data.py`, a deterministic read-only exporter that inspects required DuckDB objects, protects approved source fingerprints, keeps equipment and point grains separate, validates expected grains, and fails on unsafe or missing inputs.
+- Added nine Tableau-ready CSVs under `data/exports/tableau/`: national/state charging, historical BBSR district/type charging, KBA state/registration-region stock, the validated state comparison, temporal sensitivity, and the optional 33-observation national KBA history.
+- Added `data/exports/tableau/export_manifest.json`, `reports/batch19_tableau_export_contracts.md`, and `reports/batch19_tableau_data_validation.md` with row grains, keys, columns, dates, checksums, publication statuses, relationship rules, measured reconciliation and limitations.
+- Validated 117,662 equipment records, 211,253 point slots, all power bands, 9,215.4173 MW, 16 states, 400 BBSR historical units from 401 source components, 48 KBA state/date rows, 1,200 KBA registration-region/date rows, 16 temporal rows and 33 national-history rows.
+- Preserved Hanau/Main-Kinzig historical consolidation, corrected Kassel city category, separate Trier charging components, and the no-allocation rule for KBA `07211`. No KBA stock was joined to BBSR.
+- Confirmed the DuckDB SHA-256 remained `5d2dc0b3c5800499bf3d2e41fd82a899315bcb713c267572ade7dc1b4c6a66d3`, all approved input fingerprints matched, and the second export execution was byte-identical. No dependency, dataset, DuckDB object, source workbook, reference table, remote, upload, Tableau asset or publication changed.
+- Updated the English documentation and private Persian KPI catalog outside Git. Existing canonical KPI readiness statuses remain unchanged.
+
 ## 2026-11-03 — Batch 18
 
 - Added `reports/batch18_analytics_readiness_review.md`, `reports/batch18_kpi_readiness_register.csv`, `reports/batch18_historical_data_feasibility.md`, `reports/batch18_tableau_analysis_candidates.md`, and `reports/batch18_readiness_decisions.md`.

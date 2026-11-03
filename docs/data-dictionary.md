@@ -396,3 +396,30 @@ Trier-Saarburg registration region. BBSR historical outputs retain source
 component count/name and both source dates and contain no KBA vehicle measure.
 The repeated infrastructure values in the existing combined KBA view must not
 be summed across its three KBA dates.
+
+## Batch 19 Tableau export schemas
+
+Batch 19 writes the machine-readable extracts described in
+[`reports/batch19_tableau_export_contracts.md`](../reports/batch19_tableau_export_contracts.md).
+The CSVs are outputs, not new DuckDB relations. They retain explicit dates and
+grains:
+
+| Export | Grain | Rows | Key |
+|---|---|---:|---|
+| `national_charging_2026_09_30.csv` | Germany × BNetzA snapshot | 1 | `geography_name` |
+| `state_charging_2026_09_30.csv` | Bundesland × BNetzA snapshot | 16 | `state_name` |
+| `bbsr_district_charging_2025_geography.csv` | Historical BBSR unit × BNetzA snapshot | 400 | `historical_bbsr_administrative_district_code` |
+| `bbsr_type_charging_2025_geography.csv` | BBSR type × BNetzA snapshot | 4 | `bbsr_settlement_type_code` |
+| `kba_state_ev_stock_2026.csv` | Bundesland × KBA date | 48 | `state_name, kba_reference_date` |
+| `kba_registration_region_ev_stock_2026.csv` | KBA registration region × KBA date | 1,200 | `kba_registration_region_code, kba_reference_date` |
+| `state_ev_charging_comparison_2026.csv` | Bundesland cross-source comparison | 16 | `state_name` |
+| `state_temporal_sensitivity_2026.csv` | Bundesland published/survivor sensitivity | 16 | `state_name` |
+| `kba_national_stock_history.csv` | National stock date | 33 | `stock_date` |
+
+Charging exports use explicit equipment/point fields, count units, declared
+equipment nominal MW and numeric percentage fields. KBA exports preserve
+registration-region codes as strings, keep `Deutschland`/`Sonstige` out of
+state rows, and keep PHEV as nested `darunter Plug-in` detail. The BBSR exports
+include historical BBSR identifiers, source-component provenance and both
+geographic/infrastructure dates; they contain no KBA vehicle fields. Blank
+cells are NULLs, not zeros.

@@ -1,0 +1,199 @@
+{
+  "database_access": "read_only",
+  "duckdb_object_contract": {
+    "analytics.charging_by_bbsr_district_2025_harmonized": "VIEW",
+    "analytics.charging_by_bbsr_type_2025_harmonized": "VIEW",
+    "analytics.charging_by_state": "VIEW",
+    "analytics.kba_national_quarterly_stock": "VIEW",
+    "core.charging_equipment": "BASE TABLE",
+    "core.charging_point": "BASE TABLE",
+    "core.kba_district_ev_stock": "BASE TABLE",
+    "core.kba_state_fuel_stock": "BASE TABLE"
+  },
+  "export_version": "batch19-tableau-exports-2026-11-03-v1",
+  "exports": [
+    {
+      "column_count": 14,
+      "filename": "national_charging_2026_09_30.csv",
+      "row_count": 1,
+      "sha256": "df9cd80325ec8faa7829aeb46ad3a755ff50d60c5872d97842a517af7508bf41",
+      "validation_status": "PASS"
+    },
+    {
+      "column_count": 15,
+      "filename": "state_charging_2026_09_30.csv",
+      "row_count": 16,
+      "sha256": "df36137c44e61b0da8fb9c20e80ff6ce59abb6d2cd0891e5da9ed6daefd202e5",
+      "validation_status": "PASS"
+    },
+    {
+      "column_count": 27,
+      "filename": "bbsr_district_charging_2025_geography.csv",
+      "row_count": 400,
+      "sha256": "ae1f80513f071afdde2ac1fc3b885881cef296a22180769ecd09a62eb66288bc",
+      "validation_status": "PASS"
+    },
+    {
+      "column_count": 23,
+      "filename": "bbsr_type_charging_2025_geography.csv",
+      "row_count": 4,
+      "sha256": "0f61f86cccbeb254027b8aed7ae5a29ad12a64d8cc91b6be7ee843d32d54b589",
+      "validation_status": "PASS"
+    },
+    {
+      "column_count": 13,
+      "filename": "kba_state_ev_stock_2026.csv",
+      "row_count": 48,
+      "sha256": "d41bf606ff2aaeb82580555879a009d9aca0bab70167afe6db526e299609122b",
+      "validation_status": "PASS"
+    },
+    {
+      "column_count": 15,
+      "filename": "kba_registration_region_ev_stock_2026.csv",
+      "row_count": 1200,
+      "sha256": "3a9fc7f3a77390d2dfec98702812c344805af0ba7b821a031373e6803715e6c6",
+      "validation_status": "PASS"
+    },
+    {
+      "column_count": 28,
+      "filename": "state_ev_charging_comparison_2026.csv",
+      "row_count": 16,
+      "sha256": "8c2102cc3f32221f06f8f21eebe93039a4b42070cf65eda6f18e35187f9b9d62",
+      "validation_status": "PASS"
+    },
+    {
+      "column_count": 80,
+      "filename": "state_temporal_sensitivity_2026.csv",
+      "row_count": 16,
+      "sha256": "9ba06577ccf84c8e9465b6b87866f4b592c4671208371b53d6e59353b4f60aa0",
+      "validation_status": "PASS"
+    },
+    {
+      "column_count": 10,
+      "filename": "kba_national_stock_history.csv",
+      "row_count": 33,
+      "sha256": "48bc403b70954366eec1977a7e3c025b54cf69b601cd0902e4630978ff0dd024",
+      "validation_status": "PASS"
+    }
+  ],
+  "source_dataset_versions": [
+    {
+      "path": "data/raw/bnetza/Ladesaeulenregister_BNetzA_2026-09-30.xlsx",
+      "reference_date": "2026-09-30",
+      "role": "BNetzA infrastructure source workbook",
+      "sha256": "1e82c1734b17e17e51092a0f9460a5e204888569fb12aa5940b30e9cdb726342",
+      "source_id": "bnetza_charging_2026_09_30"
+    },
+    {
+      "path": "data/raw/kba/fz27_202601.xlsx",
+      "reference_date": "2026-01-01",
+      "role": "KBA FZ 27 source workbook",
+      "sha256": "29ab2eaa178a1c6a3463d5cad707fee1e762241304ae6bb08c29702d6e6aea31",
+      "source_id": "kba_fz27_2026_01"
+    },
+    {
+      "path": "data/raw/kba/fz27_202604.xlsx",
+      "reference_date": "2026-04-01",
+      "role": "KBA FZ 27 source workbook",
+      "sha256": "28fffaa7d2f21ede6d7f6988a717b749b759a308755c472df4d391c73a0653e7",
+      "source_id": "kba_fz27_2026_04"
+    },
+    {
+      "path": "data/raw/kba/fz27_202607.xlsx",
+      "reference_date": "2026-07-01",
+      "role": "KBA FZ 27 source workbook",
+      "sha256": "d6a26702fa6f8358cc5f0e15e88c04ac6c36527be404058674138dd9571bc803",
+      "source_id": "kba_fz27_2026_07"
+    },
+    {
+      "path": "data/raw/bbsr/raumgliederungen-referenzen-2025.xlsx",
+      "reference_date": "2025-12-31",
+      "role": "BBSR geographic reference workbook",
+      "sha256": "083f7740c3cf2d858c79482e63ca6c7e4680248c5bd6e207ebc9df6ede953525",
+      "source_id": "bbsr_raumgliederungen_2025"
+    },
+    {
+      "path": "data/reference/bnetza_kba_district_crosswalk_2026.csv",
+      "reference_date": "2026-09-30",
+      "role": "Preserved KBA crosswalk baseline fingerprint; not joined to BBSR exports",
+      "sha256": "fdf139c5057250184358e3014267a4a4c4259749113273f6bd48206f6a64fe6a",
+      "source_id": "bnetza_kba_district_crosswalk_2026"
+    },
+    {
+      "path": "data/reference/bnetza_bbsr_historical_harmonization_2025.csv",
+      "reference_date": "2025-12-31",
+      "role": "Batch 13.2 401-to-400 historical BBSR harmonization reference",
+      "sha256": "26b7b177b11f19628d85c7195975d75232804567b43d964f99acb8fcd8f84661",
+      "source_id": "bnetza_bbsr_historical_harmonization_2025"
+    },
+    {
+      "path": "data/reference/bnetza_bbsr_historical_harmonization_2025_manifest.json",
+      "reference_date": "2025-12-31",
+      "role": "Historical BBSR harmonization provenance manifest",
+      "sha256": "fa2cf4085e36ea7914eb3ce7e51ec56a527d9a7b5cc8a47c1701078a35871a26",
+      "source_id": "bnetza_bbsr_historical_harmonization_2025_manifest"
+    },
+    {
+      "path": "data/reference/bbsr_settlement_types_2025.csv",
+      "reference_date": "2025-12-31",
+      "role": "BBSR 400-unit settlement-type reference",
+      "sha256": "e35c57da8d8f675fa132b629e6dda43180a18e5b78b95e1e72de30069a062e65",
+      "source_id": "bbsr_settlement_types_2025"
+    },
+    {
+      "path": "data/reference/bbsr_source_manifest.json",
+      "reference_date": "2025-12-31",
+      "role": "BBSR source provenance manifest",
+      "sha256": "ba3540bf447a5c843a5a9d8fcdf224803edd26556c27e1e80a24b56a3f59a60c",
+      "source_id": "bbsr_source_manifest"
+    },
+    {
+      "path": "reports/batch16_state_comparison.csv",
+      "reference_date": "2026-07-01",
+      "role": "Validated Batch 16 state comparison input for Export G",
+      "sha256": "0b3864593dab8a0c760e5e8f175a17d01bdb8f4696e7c89602277bb24c31403a",
+      "source_id": "batch16_state_comparison"
+    },
+    {
+      "path": "reports/batch17_state_temporal_sensitivity.csv",
+      "reference_date": "2026-07-01",
+      "role": "Validated Batch 17 temporal sensitivity input for Export H",
+      "sha256": "5b6fc2cbe8f93b5beaf1786ac5ac733b733bc8bb55deacea63dcf46cd4144ab8",
+      "source_id": "batch17_state_temporal_sensitivity"
+    }
+  ],
+  "source_objects": {
+    "bbsr_district_charging": [
+      "analytics.charging_by_bbsr_district_2025_harmonized"
+    ],
+    "bbsr_type_charging": [
+      "analytics.charging_by_bbsr_type_2025_harmonized",
+      "analytics.charging_by_bbsr_district_2025_harmonized"
+    ],
+    "kba_national_stock_history": [
+      "analytics.kba_national_quarterly_stock"
+    ],
+    "kba_registration_region_ev_stock": [
+      "core.kba_district_ev_stock"
+    ],
+    "kba_state_ev_stock": [
+      "core.kba_state_fuel_stock"
+    ],
+    "national_charging": [
+      "core.charging_equipment",
+      "core.charging_point"
+    ],
+    "state_charging": [
+      "analytics.charging_by_state",
+      "core.charging_equipment",
+      "core.charging_point"
+    ],
+    "state_ev_charging_comparison": [
+      "reports/batch16_state_comparison.csv"
+    ],
+    "state_temporal_sensitivity": [
+      "reports/batch17_state_temporal_sensitivity.csv"
+    ]
+  },
+  "validation_status": "PASS"
+}

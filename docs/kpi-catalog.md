@@ -698,3 +698,23 @@ The full formulas and source objects are in
 [`reports/batch18_kpi_readiness_register.csv`](../reports/batch18_kpi_readiness_register.csv).
 The decision rationale, Tableau page recommendation and unresolved blockers
 are in [`reports/batch18_readiness_decisions.md`](../reports/batch18_readiness_decisions.md).
+
+## Batch 19 export publication map
+
+Batch 19 materializes existing validated KPI families into separate CSV
+contracts; it does not change the canonical readiness register or its counts.
+
+| Export family | Source/date scope | Publication treatment |
+|---|---|---|
+| National/state BNetzA counts, power bands, shares and nominal MW | BNetzA `2026-09-30` | `HEADLINE_READY_WITH_DATES` |
+| Historical BBSR district/type charging-only counts and shares | BBSR `2025-12-31` + BNetzA `2026-09-30` | `HEADLINE_READY_WITH_DATES`; historical geography caveat required |
+| KBA state and registration-region stock, penetration and snapshot changes | KBA `2026-01-01`, `2026-04-01`, `2026-07-01` | `HEADLINE_READY_WITH_DATES` |
+| National KBA quarterly stock history | 33 deduplicated national stock dates | `HEADLINE_READY_WITH_DATES` |
+| State EV/charging comparison | KBA `2026-07-01` + BNetzA `2026-09-30` | Absolute source measures dated; BEVs/point `CONTEXT_ONLY`; power-normalized/share-gap fields `EXPLORATORY_SENSITIVITY` |
+| Published-versus-survivor state sensitivity | KBA July denominator + September register and inclusive July cutoff | `EXPLORATORY_SENSITIVITY`; survivor is not actual July infrastructure |
+
+All exported shares are numeric calculations from aggregated numerators and
+denominators; Tableau must not sum them. Cross-source ratios remain descriptive
+and cannot be presented as adequacy, shortage, surplus, demand, utilization or
+accessibility measures. The full field contracts and permitted relationships
+are in [`reports/batch19_tableau_export_contracts.md`](../reports/batch19_tableau_export_contracts.md).

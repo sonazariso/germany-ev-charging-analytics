@@ -99,10 +99,26 @@ These are project milestones supported by local artifacts. They are not historic
 - [x] Recommend a question-led Tableau narrative while keeping dashboard implementation owner-approval gated.
 - [ ] Obtain explicit owner approval before implementing any Batch 19 extract or dashboard work.
 
-## Recommended Batch 19 scope (not approved for automatic execution)
+## Batch 19 completion
 
-If approved, Batch 19 should prepare and validate separate source-date-labelled
-extracts from the existing state, KBA-only, BBSR charging-only and temporal
-sensitivity outputs. It should not create a historical infrastructure panel,
-add a KBA-to-BBSR vehicle join, download new data or publish remotely unless
-those actions are separately authorized.
+- [x] Prepare deterministic national/state BNetzA charging extracts with
+  source date and separate equipment/point measures.
+- [x] Prepare charging-only historical BBSR district/type extracts from the
+  Batch 13.2 401-to-400 harmonized layer.
+- [x] Prepare KBA state and registration-region stock extracts for the three
+  validated 2026 dates, plus the validated national history.
+- [x] Reuse and validate the Batch 16 state comparison and Batch 17 temporal
+  sensitivity calculations without changing their formulas or statuses.
+- [x] Publish export contracts, manifest, checksums and measured validation
+  report; verify byte-identical second execution and source/database
+  immutability.
+
+Batch 19 did not create a historical infrastructure panel, add a KBA-to-BBSR
+vehicle join, download new data, build Tableau assets or publish remotely.
+
+## Next decision-gated stage
+
+Review the Batch 19 contracts and separate extracts with the owner. If desired,
+approve a later Tableau implementation batch. Keep historical infrastructure,
+KBA-to-BBSR vehicle integration, adequacy interpretation and remote publication
+outside scope until their prerequisites and permissions are separately approved.

@@ -522,3 +522,20 @@ The complete candidate assessments, source grains and join risks are in
 [`reports/batch18_tableau_analysis_candidates.md`](../reports/batch18_tableau_analysis_candidates.md);
 the decision register is in
 [`reports/batch18_readiness_decisions.md`](../reports/batch18_readiness_decisions.md).
+
+## Batch 19 export findings
+
+The validated export layer preserves the principal descriptive findings without
+changing their interpretation: the BNetzA snapshot contains 117,662 equipment
+records and 211,253 populated point slots; the 400-unit historical BBSR layer
+represents 401 source components; and the KBA 400-region July 2026 total is
+2,362,218 BEVs, separate from the published national `Deutschland` total of
+2,365,047.
+
+The export inventory is suitable for a future Tableau review because every file
+has one explicit grain, a natural key, source dates, numeric measures and
+deterministic checksums. It is not a dashboard implementation. The state
+comparison retains the 91-day KBA/BNetzA mismatch and status flags; the
+survivor sensitivity retains its explicit `NOT ACTUAL JULY INFRASTRUCTURE`
+label; and BBSR remains charging-only. No exported ratio supports an adequacy,
+shortage, surplus, utilization, demand, accessibility or causal claim.
