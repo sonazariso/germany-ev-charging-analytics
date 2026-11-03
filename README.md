@@ -4,7 +4,7 @@
 
 This portfolio project builds a reproducible, Germany-wide analytical foundation for comparing the published public-charging register with registered passenger-car stock. It preserves the original BNetzA, KBA, and separately versioned BBSR reference workbooks, separates charging equipment from charging points, and keeps snapshot dates visible throughout the workflow.
 
-The current implementation is a validated local DuckDB model, a deployed still-provisional KBA geographic layer, the separate Batch 13 charging-only BNetzA-source-grain BBSR layer, a separate Batch 13.1 owner-approved 2026 analytical scenario, a separate Batch 13.2 historical BBSR 2025 boundary harmonization, the Batch 14 read-only statistical analysis of that harmonized layer, the Batch 15 read-only KBA FZ 27 stock analysis, the Batch 17 read-only temporal-validity analysis of Batch 16 cross-source KPIs, and the Batch 18 analytics-readiness and KPI-finalization review. Batch 13.2 corrects the Kassel city/county join only in its new layer and aggregates Hanau with the remaining Main-Kinzig source row; Batches 14–18 do not change the official baseline, assign BBSR categories to KBA registration regions, integrate charging with KBA stock, create a historical infrastructure panel, or allocate Trier stock. Tableau Public reporting remains incomplete.
+The current implementation is a validated local DuckDB model, a deployed still-provisional KBA geographic layer, the separate Batch 13 charging-only BNetzA-source-grain BBSR layer, a separate Batch 13.1 owner-approved 2026 analytical scenario, a separate Batch 13.2 historical BBSR 2025 boundary harmonization, the Batch 14 read-only statistical analysis of that harmonized layer, the Batch 15 read-only KBA FZ 27 stock analysis, the Batch 17 read-only temporal-validity analysis of Batch 16 cross-source KPIs, the Batch 18 analytics-readiness and KPI-finalization review, the Batch 19 validated Tableau export contracts, and the Batch 20 Tableau semantic-model design. Batch 13.2 corrects the Kassel city/county join only in its new layer and aggregates Hanau with the remaining Main-Kinzig source row; Batches 14–20 do not change the official baseline, assign BBSR categories to KBA registration regions, integrate charging with KBA stock, create a historical infrastructure panel, or allocate Trier stock. Tableau Public reporting remains incomplete.
 
 ## Why this matters
 
@@ -198,6 +198,12 @@ The local DuckDB database, virtual environment, raw workbooks, temporary files, 
 - [Batch 18 historical data feasibility](reports/batch18_historical_data_feasibility.md)
 - [Batch 18 Tableau analysis candidates](reports/batch18_tableau_analysis_candidates.md)
 - [Batch 18 readiness decisions](reports/batch18_readiness_decisions.md)
+- [Batch 20 semantic model](docs/tableau-semantic-model.md)
+- [Batch 20 fact/dimension catalog](docs/tableau-fact-dimension-catalog.md)
+- [Batch 20 relationship design](docs/tableau-relationship-design.md)
+- [Batch 20 semantic-model validation](reports/batch20_semantic_model_validation.md)
+- [Batch 20 architecture decision](reports/batch20_architecture_decision.md)
+- [Batch 20 KPI model mapping](reports/batch20_kpi_model_mapping.csv)
 - [GitHub publication checklist](docs/github-publication-checklist.md)
 - [Phase validation reports](reports/phase01_data_profile.md), [Phase 02 schema inspection](reports/phase02_schema_inspection.md), [Phase 03 DuckDB validation](reports/phase03_duckdb_validation.md), [Batch 03 crosswalk validation](reports/batch03_crosswalk_validation.md), [Batch 06 geographic deployment](reports/batch06_geographic_deployment.md), [Batch 06.1 KPI documentation audit](reports/batch06-1_kpi_documentation_audit.md), [Batch 09 BBSR feasibility](reports/batch09_bbsr_feasibility.md), [Batch 10 BBSR reference validation](reports/batch10_bbsr_reference_validation.md), [Batch 11 BBSR/KBA compatibility audit](reports/batch11_bbsr_kba_compatibility.md), [Batch 12 two-path BBSR investigation](reports/batch12_bbsr_integration_paths.md), [Batch 13 BBSR charging-only deployment](reports/batch13_bbsr_charging_deployment.md), [Batch 13.1 owner-approved scenario](reports/batch13_1_bbsr_scenario_classification.md), [Batch 13.2 historical harmonization](reports/batch13_2_hanau_geographic_harmonization.md), [Batch 14 BBSR charging analysis](reports/batch14_bbsr_charging_analysis.md), [Batch 15 KBA EV stock analysis](reports/batch15_kba_ev_stock_analysis.md), [Batch 16 state EV/charging alignment](reports/batch16_state_ev_charging_alignment.md), and [Batch 17 temporal KPI validity](reports/batch17_temporal_kpi_validity.md)
 
@@ -220,11 +226,12 @@ The local DuckDB database, virtual environment, raw workbooks, temporary files, 
 
 ## Roadmap
 
-The next decision-gated stage is preparation and validation of separate,
-source-date-labelled Tableau extracts from the existing state, KBA-only, BBSR
-charging-only and temporal-sensitivity outputs. A dated KBA-to-BBSR bridge,
-genuine historical infrastructure panel, dashboard publication, final quality
-and licensing review, and GitHub publication remain separate future decisions.
+Batch 20 completed the design and validation of separate, source-date-labelled
+Tableau subject sources over the existing exports. The next decision-gated
+stage is implementation of those sources and quality gates after owner review.
+A dated KBA-to-BBSR bridge, genuine historical infrastructure panel, dashboard
+publication, final quality and licensing review, and GitHub publication remain
+separate future decisions.
 The current BBSR layer remains source-grain and must not be reinterpreted as
 KBA integration.
 
@@ -253,3 +260,23 @@ and measured checks are in
 This batch did not create Tableau assets. State cross-source ratios remain
 contextual or exploratory, BBSR remains charging-only, and the 2025 BBSR
 geography must not be narrated as 2025 infrastructure.
+
+## Batch 20 Tableau semantic model
+
+Batch 20 designs the Tableau semantic layer without implementing it. The
+recommended initial architecture uses separate subject data sources backed by
+the nine validated Batch 19 exports: charging infrastructure, historical BBSR
+charging-only analysis, KBA stock, the fixed state EV/charging comparison, and
+temporal sensitivity. The model keeps equipment and point grains separate,
+preserves BNetzA/KBA/BBSR date roles, and prohibits direct BBSR-to-KBA vehicle
+relationships.
+
+The [semantic model](docs/tableau-semantic-model.md),
+[fact/dimension catalog](docs/tableau-fact-dimension-catalog.md), and
+[relationship design](docs/tableau-relationship-design.md) document exact
+grains, keys, attributes, measures, cardinality assumptions, filter paths and
+future implementation prerequisites. The [validation report](reports/batch20_semantic_model_validation.md)
+records the 1,734-row manifest checks, required baseline reconciliations,
+401-to-400 BBSR harmonization, 59-KPI mapping completeness and unchanged
+DuckDB/source fingerprints. No Tableau workbook, extract, physical mart,
+schema change, export change, remote, or publication was created.

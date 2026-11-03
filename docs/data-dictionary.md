@@ -423,3 +423,26 @@ state rows, and keep PHEV as nested `darunter Plug-in` detail. The BBSR exports
 include historical BBSR identifiers, source-component provenance and both
 geographic/infrastructure dates; they contain no KBA vehicle fields. Blank
 cells are NULLs, not zeros.
+
+## Batch 20 semantic fact and dimension contracts
+
+Batch 20 adds no DuckDB schema. It documents logical Tableau facts and
+dimensions over the existing exports. The current fact grains are Germany ×
+BNetzA snapshot, state × BNetzA snapshot, historical BBSR target × BNetzA
+snapshot × BBSR vintage, BBSR type × the same date roles, KBA state or
+registration region × KBA date, national stock date, fixed state comparison,
+and fixed temporal sensitivity context.
+
+Actual source keys remain the current fields: `state_name`,
+`historical_bbsr_administrative_district_code`,
+`bbsr_settlement_type_code`, `kba_registration_region_code`,
+`kba_reference_date`, `stock_date`, and `bnetza_reference_date`. Candidate
+surrogate keys are explicitly conceptual and have not been added to DuckDB or
+the CSV exports. `core.charging_equipment` and `core.charging_point` remain
+separate; equipment nominal power must be aggregated before any point-level
+relationship.
+
+See the [Batch 20 Fact/Dimension catalog](tableau-fact-dimension-catalog.md)
+for actual DuckDB types, attributes, vintage semantics, null rules and related
+facts. See the [relationship design](tableau-relationship-design.md) for
+cardinality, filter behavior, expected unmatched records and prohibited paths.

@@ -394,3 +394,28 @@ The exports are not Tableau workbooks or proprietary extracts. Keep national,
 state, KBA registration-region and historical BBSR sources separate unless the
 relationships in the Batch 19 contract are selected deliberately. No remote,
 upload or publication is part of this workflow.
+
+## Batch 20 semantic-model validation
+
+Batch 20 is documentation and validation only. The validation workflow used:
+
+~~~bash
+git rev-parse HEAD
+git status --porcelain=v1
+git remote -v
+shasum -a 256 data/analytics/ev_charging.duckdb
+.venv/bin/python -c "import duckdb; duckdb.connect('data/analytics/ev_charging.duckdb', read_only=True)"
+~~~
+
+The read-only checks inspected `information_schema`, the manifest-listed CSVs,
+their SHA-256 values, natural keys, dates, relationship matches, and baseline
+reconciliations in memory. The database hash before and after was
+`5d2dc0b3c5800499bf3d2e41fd82a899315bcb713c267572ade7dc1b4c6a66d3`.
+The validation transcript is
+[`reports/batch20_semantic_model_validation.md`](../reports/batch20_semantic_model_validation.md).
+
+The 59-row mapping is
+[`reports/batch20_kpi_model_mapping.csv`](../reports/batch20_kpi_model_mapping.csv).
+No command in this batch writes to DuckDB, exports, raw sources, Crosswalks or
+Tableau assets. The private Persian reference remains in the sibling directory
+`../germany-ev-charging-analytics-private/` and is outside Git.

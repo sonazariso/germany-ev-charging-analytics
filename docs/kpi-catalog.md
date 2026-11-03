@@ -718,3 +718,19 @@ denominators; Tableau must not sum them. Cross-source ratios remain descriptive
 and cannot be presented as adequacy, shortage, surplus, demand, utilization or
 accessibility measures. The full field contracts and permitted relationships
 are in [`reports/batch19_tableau_export_contracts.md`](../reports/batch19_tableau_export_contracts.md).
+
+## Batch 20 semantic-model mapping
+
+Batch 20 does not change the canonical definitions or publication statuses. It
+maps every one of the 59 Batch 18 IDs to a logical fact, dimension contract,
+exact grain, formula, calculation location, filter behavior, source date, risk,
+and implementation-readiness state:
+
+[`reports/batch20_kpi_model_mapping.csv`](../reports/batch20_kpi_model_mapping.csv)
+
+The mapping keeps `HEADLINE_READY`, `HEADLINE_READY_WITH_DATES`,
+`CONTEXT_ONLY`, `EXPLORATORY`, and `NOT_SUPPORTED` unchanged. It also applies
+the Batch 20 rule that ratios and shares use aggregated numerator and
+denominator fields rather than averaged percentages. Unsupported KPIs remain
+`NOT_IMPLEMENTABLE`; a source field's existence does not promote an
+unsupported interpretation.

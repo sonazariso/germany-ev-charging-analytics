@@ -388,3 +388,25 @@ The following decisions are the concise project-log form:
   proprietary format, DuckDB object, source/reference modification, download,
   remote, upload or publication. A separate owner-approved implementation
   batch is required for dashboard construction.
+
+## Batch 20 — Tableau semantic architecture (2026-11-03)
+
+- Decision: Select separate Tableau data sources backed by the nine validated
+  Batch 19 CSV exports for the initial implementation. Treat the files as
+  subject facts, not as nine tables that must be joined.
+- Decision: Model the logical facts at their existing grains: national/state
+  charging, historical BBSR target/type charging, KBA state/registration-region
+  stock, national KBA history, fixed state comparison, and temporal sensitivity.
+- Decision: Share `DimState` only where the state grain and source-date context
+  are explicit. Keep BNetzA snapshot dates, KBA stock dates, BBSR geographic
+  vintage, and commissioning/cohort dates as separate roles.
+- Decision: Keep the national aggregate standalone, do not join BBSR 400 units
+  to KBA 400 regions, do not allocate `07211`, and do not join the pre-combined
+  comparison or temporal facts back to their component facts.
+- Decision: Reject the multi-fact relationship model for the first
+  implementation because it adds repeated-measure, date-propagation and
+  maintenance risks without a required analytical benefit. Reconsider it only
+  after versioned shared dimensions and relationship tests exist.
+- Consequence: Batch 20 creates design documentation, validation evidence and
+  a complete 59-KPI mapping only. No Tableau asset, physical mart, DuckDB
+  object, export, source, remote or publication is created.

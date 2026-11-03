@@ -2,6 +2,15 @@
 
 This changelog records project milestones and local repository changes. Historical Batch 01–03 entries describe work evidenced by local reports; they do not imply historical Git commits or inferred dates.
 
+## 2026-11-03 — Batch 20
+
+- Added the design-only Tableau semantic model specification in `docs/tableau-semantic-model.md`, with separate subject models, date roles, measure behavior, alternative-model evaluation, and future implementation prerequisites.
+- Added `docs/tableau-fact-dimension-catalog.md` and `docs/tableau-relationship-design.md`, including logical fact/dimension grains, actual source keys and fields, relationship contracts, cardinality assumptions, filter paths, and Mermaid diagrams.
+- Added `reports/batch20_kpi_model_mapping.csv` with exactly one mapping row for each of the 59 Batch 18 KPI IDs, preserving publication status and documenting facts, dimensions, formula, calculation location, filters, dates, risks, and readiness.
+- Added `reports/batch20_semantic_model_validation.md` and `reports/batch20_architecture_decision.md` with measured export/key/reconciliation/fingerprint validation and the recommendation to use separate validated Tableau data sources initially.
+- Updated the README, architecture, data dictionary, KPI catalog, decision log, roadmap, reproducibility guide, and project status. Updated the private Persian reference outside the repository with the Batch 20 fact/dimension and relationship guidance.
+- Confirmed no DuckDB object/schema/data, Batch 19 CSV, raw source, Crosswalk, Tableau asset, dependency, dataset, remote, or upload changed. No private Persian file is tracked or staged.
+
 ## 2026-11-03 — Batch 19
 
 - Added `scripts/19_prepare_tableau_data.py`, a deterministic read-only exporter that inspects required DuckDB objects, protects approved source fingerprints, keeps equipment and point grains separate, validates expected grains, and fails on unsafe or missing inputs.

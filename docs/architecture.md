@@ -282,3 +282,47 @@ The final implementation must add source-date keys, preserve unmapped/provisiona
 - The latest infrastructure and vehicle dates are not contemporaneous.
 - No utilization or energy-delivery tables exist.
 - The deployed state view is source-aware; future multi-snapshot loading must retain the (source_id, excel_row) equipment key and rerun the validation suite.
+
+## Batch 20 — Tableau semantic model design (2026-11-03)
+
+Batch 20 defines a design-only semantic layer over the nine validated Batch 19
+CSV exports. The recommended initial architecture is a set of separate
+Tableau data sources: charging infrastructure, charging-only historical BBSR,
+KBA stock, a fixed state EV/charging comparison, and temporal sensitivity. No
+physical Fact/Dimension tables or Tableau assets are created.
+
+```mermaid
+flowchart TB
+    D[(DuckDB analytical layer<br/>read-only)] --> E[Batch 19 manifest and nine CSV contracts]
+    E --> C[Charging subject<br/>national and state facts]
+    E --> B[BBSR subject<br/>400 historical target units and four types]
+    E --> K[KBA subject<br/>state, registration-region, national history]
+    E --> X[Pre-combined state comparison<br/>fixed July/September dates]
+    E --> T[Temporal sensitivity<br/>published versus survivor]
+    DS[DimState] -. explicit state grain only .-> C
+    DS -.-> K
+    DS -.-> X
+    DS -.-> T
+    DB[DimBBSRRegion and DimBBSRSettlementType] -. historical vintage only .-> B
+    DK[DimKBAStockDate] -. KBA role only .-> K
+    DC[DimChargingSnapshot] -. BNetzA role only .-> C
+    DC -.-> B
+    DC -.-> X
+```
+
+The full fact/dimension catalog is in
+[`docs/tableau-fact-dimension-catalog.md`](tableau-fact-dimension-catalog.md),
+and relationship contracts are in
+[`docs/tableau-relationship-design.md`](tableau-relationship-design.md).
+The model does not treat nine exports as nine tables that must be joined: each
+file remains an analytical subject at its validated grain. National charging
+is not a seventeenth state; BBSR 400 historical units are not KBA 400
+registration regions; and the state comparison/temporal files remain
+pre-combined facts.
+
+The Batch 20 validation report records the actual object columns/types,
+natural-key checks, 1,734 export rows, baseline reconciliations, 401-to-400
+BBSR harmonization, 16-state/date matches, and unchanged source/database
+fingerprints. The architecture decision recommends the separate-source model
+over a multi-fact relationship model until stable shared keys and date-role
+contracts are implemented in a separately approved batch.

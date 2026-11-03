@@ -2,17 +2,17 @@
 
 ## Current Batch
 
-Batch 19 — Tableau data preparation, export contracts and independent
-validation (complete; deterministic source-date-labelled CSV extracts,
-manifest, contracts and measured validation report). No DuckDB object,
-raw/reference file, Crosswalk, BBSR layer, charging object, Tableau asset or
-official KPI deployment changed. Batch 17, Batch 18 and all earlier
-charging/BBSR/KBA layers remain unchanged.
+Batch 20 — Tableau semantic model and Fact/Dimension architecture design
+(complete; design documentation, relationship contracts, 59-KPI mapping and
+read-only validation). No DuckDB object, raw/reference file, Crosswalk, BBSR
+layer, charging object, Tableau asset or official KPI deployment changed.
+Batch 19 exports and all earlier charging/BBSR/KBA layers remain unchanged.
 
 ## Last completed Batch
 
-Batch 19 — Tableau data preparation, export contracts and independent
-validation completed after Batch 18's source-readiness review and Batch 17's
+Batch 20 — Tableau semantic model and Fact/Dimension architecture design
+completed after Batch 19's data preparation and export validation, Batch 18's
+source-readiness review and Batch 17's
 temporal-validity audit, Batch 16's state-level EV
 stock versus charging infrastructure comparison and Batch 15's KBA FZ 27
 stock, growth, geography and ownership analysis and the Batch 14 BBSR
@@ -24,12 +24,18 @@ build, Batch 09 feasibility assessment, and Batch 08 geographic verification.
 
 ## Previous completed Batch
 
+Batch 19 — Tableau data preparation, export contracts and independent
+validation completed before Batch 20 and after Batch 18's source-readiness
+review.
+
+## Earlier completed Batch
+
 Batch 17 — temporal validity and cross-source KPI sensitivity analysis
 completed before Batch 18 and after Batch 16's state-level EV stock versus
 charging infrastructure comparison and Batch 15's KBA FZ 27 stock, growth,
 geography and ownership analysis.
 
-## Earlier completed Batch
+## Historical completed Batch
 
 Batch 13.2 — historical BBSR 2025 boundary harmonization completed after the
 Batch 13.1 owner-approved scenario, Batch 13 charging-only layer, Batch 12
@@ -198,16 +204,16 @@ The deployed maximum-per-point parser classifies 156,155 points at or below 22 k
 
 ## Next planned work
 
-Owner review of the Batch 18 readiness register and narrative, followed by an
-explicit decision on whether to prepare separate source-date-labelled Tableau
-extracts. Keep historical infrastructure-panel development and KBA-to-BBSR
-vehicle integration deferred until their prerequisites exist. Keep the official
-Batch 13 baseline, Batch 13.1 scenario and Batch 13.2 historical layer separate
-from any future KBA vehicle-stock integration.
+Owner review of the Batch 20 semantic model, relationship contracts and KPI
+mapping, followed by an explicit decision on whether to implement the separate
+Tableau subject sources. Keep historical infrastructure-panel development and
+KBA-to-BBSR vehicle integration deferred until their prerequisites exist. Keep
+the official Batch 13 baseline, Batch 13.1 scenario and Batch 13.2 historical
+layer separate from any future KBA vehicle-stock integration.
 
 ## Last local Git commit reference
 
-Batch 19 is the current completed local batch. The handoff commit is created
+Batch 20 is the current completed local batch. The handoff commit is created
 after the final validation pass. No remote is configured.
 
 ## Batch 19 completed outputs
@@ -233,3 +239,22 @@ Measured validation is recorded in
 [`reports/batch19_tableau_data_validation.md`](reports/batch19_tableau_data_validation.md)
 and file provenance/checksums in
 [`data/exports/tableau/export_manifest.json`](data/exports/tableau/export_manifest.json).
+
+## Batch 20 completed outputs
+
+Batch 20 produced a design-only Tableau semantic specification:
+
+- [`docs/tableau-semantic-model.md`](docs/tableau-semantic-model.md)
+- [`docs/tableau-fact-dimension-catalog.md`](docs/tableau-fact-dimension-catalog.md)
+- [`docs/tableau-relationship-design.md`](docs/tableau-relationship-design.md)
+- [`reports/batch20_semantic_model_validation.md`](reports/batch20_semantic_model_validation.md)
+- [`reports/batch20_architecture_decision.md`](reports/batch20_architecture_decision.md)
+- [`reports/batch20_kpi_model_mapping.csv`](reports/batch20_kpi_model_mapping.csv)
+
+The recommended architecture is separate Tableau data sources backed by the
+existing nine Batch 19 exports. The mapping contains exactly 59 unique KPI IDs.
+Read-only validation passed for actual schemas/types, export row counts and
+checksums, natural keys, state/date matches, 401-to-400 BBSR harmonization,
+required baselines, source fingerprints, and unchanged DuckDB bytes. No
+physical Fact/Dimension table, Tableau asset, schema change, source change,
+new dataset, remote, upload or publication was created.

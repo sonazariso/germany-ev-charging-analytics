@@ -116,9 +116,32 @@ These are project milestones supported by local artifacts. They are not historic
 Batch 19 did not create a historical infrastructure panel, add a KBA-to-BBSR
 vehicle join, download new data, build Tableau assets or publish remotely.
 
+## Batch 20 completion
+
+- [x] Inventory the nine Batch 19 exports using manifest filenames, actual
+  columns, data types and measured row counts.
+- [x] Design separate logical Fact/Dimension models for charging, historical
+  BBSR charging, KBA stock, state comparison and temporal sensitivity.
+- [x] Evaluate and reject the initial multi-fact relationship model in favor of
+  separate subject data sources.
+- [x] Document relationship keys, cardinality assumptions, valid/invalid filter
+  paths, date roles, geographic exceptions and duplicate-measure safeguards.
+- [x] Map all 59 Batch 18 KPI IDs to facts, dimensions, formulas, calculation
+  locations, filters, dates, risks and readiness.
+- [x] Run read-only key, relationship, reconciliation, manifest, fingerprint,
+  documentation and DuckDB immutability checks.
+- [x] Update the English design documentation and the private Persian
+  reference outside Git.
+
+Batch 20 did not create physical Fact/Dimension tables, Tableau workbooks or
+extracts, schema changes, source changes, new datasets, or a KBA-to-BBSR
+vehicle bridge.
+
 ## Next decision-gated stage
 
-Review the Batch 19 contracts and separate extracts with the owner. If desired,
-approve a later Tableau implementation batch. Keep historical infrastructure,
-KBA-to-BBSR vehicle integration, adequacy interpretation and remote publication
-outside scope until their prerequisites and permissions are separately approved.
+Review the Batch 20 semantic model and relationship contracts with the owner.
+If approved, Batch 21 may implement the separate Tableau subject sources and
+quality gates from the existing exports. Keep physical marts, historical
+infrastructure, KBA-to-BBSR vehicle integration, adequacy interpretation and
+remote publication outside scope until their prerequisites and permissions are
+separately approved.
