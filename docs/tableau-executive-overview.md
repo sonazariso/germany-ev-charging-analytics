@@ -4,11 +4,14 @@
 `02 — Geographic View`.
 
 **Implementation status:** data preparation passed. The Tableau workbook is
-**not yet created** because Tableau Desktop is installed locally but this
-session has no approved native Tableau authoring MCP, computer-use bridge,
-`tableau` CLI, or `tabcmd` executable. This document is the handoff for manual
-Tableau Desktop 2026.3 authoring. It does not describe a generated `.twb` or
-`.twbx`.
+**not yet created**. Batch 22.1 identified the official Tableau Desktop
+Authoring MCP as a credible native route, but it is not enabled in the current
+environment: Node.js/npm are unavailable, no Tableau MCP entry is configured,
+and the live Desktop External Client API has not been smoke-tested. This
+document remains the implementation contract; the approval-gated bridge and
+compatibility evidence are in
+[`reports/batch22_1_tableau_desktop_mcp_feasibility.md`](../reports/batch22_1_tableau_desktop_mcp_feasibility.md).
+It does not describe a generated `.twb` or `.twbx`.
 
 ## 1. Approved narrative and source dates
 
@@ -284,34 +287,60 @@ Use the same fixed 1600 × 900 canvas and page tokens as Page 1:
 5. Footer note: `16-state KBA stock is separate from national Deutschland and
    Sonstige totals; charging and vehicle dates are not contemporaneous.`
 
-## 6. Manual Tableau Desktop authoring and verification steps
+## 6. Official Desktop MCP authoring and verification steps
 
-1. Launch Tableau Desktop 2026.3 and create a blank workbook.
-2. Add the six CSV data sources in Section 2. Rename the connections to the
-   `DS_...` names. Do not relate them in the data model canvas.
-3. Create the Page 1 worksheets in Section 4, then assemble `01 — National
-   Summary` at 1600 × 900. Add source-date text exactly as specified.
-4. Create the Page 2 worksheets in Section 5, then assemble `02 — Geographic
-   View` at 1600 × 900. Test the official map role before positioning the
-   table and ranking worksheets.
-5. Check that the history line has exactly 33 marks per series, the donut has
-   exactly four segments totalling 211,253, and the equipment-status sheet
-   visibly labels 20 `In Wartung` records.
-6. Check all four geographic highlights against
-   `reports/batch21_tableau_overview_validation.md`. Check that the state table
-   has exactly 16 rows and no national or `Sonstige` row.
-7. Resize the window and use **Dashboard → Device Preview** or equivalent
-   layout checks. Confirm no title, source date, label, legend, table column,
-   or map mark is clipped.
-8. Save the actual workbook only after it opens successfully and passes the
-   checks. Recommended local path: `tableau/germany_ev_charging_analytics_executive_overview.twb`.
+Batch 22.1 found that the official Desktop build can perform the native
+worksheet, dashboard, calculation, formatting, readback, image-export and
+save operations needed here. It is a separate source build from the Web-only
+npm package. The following bridge steps are approval-gated; none has been
+executed in this batch.
+
+1. Approve Node.js `>=22.7.5`, the official source build and one local Codex
+   stdio MCP entry. Keep computer-use disabled and do not change macOS privacy
+   settings.
+2. In an isolated tooling directory, clone a pinned official revision and run
+   `npm ci` followed by `npm run build:desktop`. Point the MCP client to
+   `build/index.desktop.js` with `TRANSPORT=stdio`; do not use the Web-only
+   `@tableau/mcp-server` npm package for Desktop authoring.
+3. Launch Tableau Desktop 2026.3 with a disposable blank workbook. Call
+   `list-instances`, then use the returned PID as `session` for
+   `get-app-info`, `get-capabilities`, `get-desktop-state`,
+   `get-workbook-inventory` and `list-workbook-datasources`. Record the live
+   External Client API version and capability response.
+4. Attach the six CSV sources in Section 2 with `open-file`, verify every
+   datasource in workbook readback, and keep the sources separate. The
+   high-level `apply-datasource` tool replaces an existing datasource; it does
+   not import one.
+5. Use the official template/field path to create the Page 1 worksheets and
+   `01 — National Summary`. Use the requested executive-summary or validated
+   custom layout, then read back the workbook and export a disposable image.
+6. Create the Page 2 worksheets and `02 — Geographic View`. Assign
+   `state_name` the official Tableau **State/Province** role with Germany as
+   the country disambiguator. If any state is `Unknown`, leave the map pending;
+   do not fabricate geometry.
+7. Verify that the history line has exactly 33 marks per series, the donut has
+   exactly four segments totalling 211,253, the equipment-status sheet labels
+   20 `In Wartung` records, the state table has exactly 16 rows, and all four
+   geographic highlights match
+   `reports/batch21_tableau_overview_validation.md`.
+8. Check the dashboard images at approximately 1600 × 900 and at the actual
+   monitor size. Confirm no title, source date, label, legend, table column,
+   or map mark is clipped. Fine typography, gridlines, card styling and table
+   separators may require the official validated workbook/XML apply path.
+9. Save only after the workbook opens successfully and passes the checks.
+   Recommended local path:
+   `tableau/germany_ev_charging_analytics_executive_overview.twb`.
    Optionally save a `.twbx` only after confirming the packaged data-source
    policy and source licensing. That path is a recommendation, not evidence
    that a file exists.
-9. Capture one screenshot per dashboard at the final canvas size and add the
-   relative paths to the Batch 21 validation report. Current screenshot
-   references: **none — workbook not yet created**.
-10. Do not publish to Tableau Public or any external service in this batch.
+10. Capture one screenshot per dashboard at the final canvas size and add the
+    relative paths to the Batch 21 validation report. Current screenshot
+    references: **none — workbook not yet created**.
+11. Do not publish to Tableau Public or any external service in this batch.
+
+If the Desktop MCP smoke test fails, manual Desktop authoring remains a
+separate fallback decision; this specification does not authorize bypassing
+the live API checks or creating unverified workbook XML.
 
 ## 7. Validation and handoff status
 
@@ -331,8 +360,10 @@ hashes are recorded in
 Current status:
 
 - `DATA_PREPARATION_PASS`
+- `DESKTOP_MCP_FEASIBILITY=CONDITIONAL_GO`
 - `TABLEAU_WORKBOOK_NOT_YET_CREATED`
-- Screenshot validation: pending manual Desktop authoring
-- Official geographic map validation: pending manual Desktop authoring
+- Desktop MCP build and live API smoke test: pending approval
+- Screenshot validation: pending native authoring
+- Official geographic map validation: pending native authoring
 - External publication: not attempted
 - Workbook path: none verified

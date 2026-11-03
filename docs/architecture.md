@@ -345,6 +345,10 @@ is in [`docs/tableau-executive-overview.md`](tableau-executive-overview.md),
 and validation is in
 [`reports/batch21_tableau_overview_validation.md`](../reports/batch21_tableau_overview_validation.md).
 
-Native workbook authoring remains manual. Tableau Desktop 2026.3 is installed,
-but no approved local authoring bridge was available, so no `.twb`, `.twbx`,
-extract or screenshot is part of the current architecture.
+Batch 22.1 identified the official Tableau Desktop Authoring MCP as a
+conditional native authoring bridge. It drives a running Desktop instance
+through the External Client API rather than Accessibility or Screen Recording,
+but the source build, Codex MCP entry, live 2026.3 API handshake and workbook
+smoke test remain approval-gated. No `.twb`, `.twbx`, extract or screenshot is
+part of the current architecture. See
+[`reports/batch22_1_tableau_desktop_mcp_feasibility.md`](../reports/batch22_1_tableau_desktop_mcp_feasibility.md).

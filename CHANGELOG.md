@@ -2,6 +2,13 @@
 
 This changelog records project milestones and local repository changes. Historical Batch 01–03 entries describe work evidenced by local reports; they do not imply historical Git commits or inferred dates.
 
+## 2026-11-03 — Batch 22.1
+
+- Added [`reports/batch22_1_tableau_desktop_mcp_feasibility.md`](reports/batch22_1_tableau_desktop_mcp_feasibility.md), a read-only investigation of the official Tableau Desktop Authoring MCP, its native worksheet/dashboard/calculation/template/save surface, macOS External Client API behavior, local runtime/configuration state, compatibility uncertainty and limitations for the two approved dashboards.
+- Recorded a `CONDITIONAL GO`: the official Desktop MCP is the preferred native authoring route, but Node.js/npm >=22.7.5, an isolated source build, one local Codex stdio entry, a running Tableau Desktop 2026.3 session and a live capability/readback smoke test still require approval.
+- Updated the Tableau executive-overview specification, Tableau handoff README, architecture, decision log, project status and root README with the conditional route, safety boundaries and exact verification sequence.
+- Confirmed that no package, Codex setting, macOS permission, database object, source/reference file, Tableau workbook, screenshot, remote, upload or publication changed.
+
 ## 2026-11-03 — Batch 21
 
 - Added `scripts/21_prepare_tableau_overview.py`, a deterministic read-only preparation and validation script for the approved `01 — National Summary` and `02 — Geographic View` dashboards.

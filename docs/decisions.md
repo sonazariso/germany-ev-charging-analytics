@@ -431,3 +431,28 @@ The following decisions are the concise project-log form:
 - Consequence: Data preparation and documentation pass, but native workbook
   authoring, screenshots, map verification and a real `.twb`/`.twbx` remain
   manual. No public publication is authorized or attempted.
+
+## Batch 22.1 — Tableau Desktop Authoring MCP feasibility (2026-11-03)
+
+- Decision: Treat the official Tableau Desktop Authoring MCP as the preferred
+  native authoring route, but only as a conditional bridge until its local
+  build and live Desktop handshake are verified.
+- Decision: Use the Desktop build from the official source repository, not the
+  Web-only `@tableau/mcp-server` npm package. The Desktop build is the one that
+  drives a running local Tableau Desktop instance through the External Client
+  API and exposes the required native worksheet, dashboard, calculation,
+  template, formatting and workbook save/readback surface.
+- Decision: Do not enable UI automation or grant Accessibility, Screen
+  Recording or Apple Events permissions for this route. The MCP uses Tableau's
+  loopback External Client API; the separate computer-use MCP remains disabled.
+- Consequence: No install, Codex configuration, package change, data/source
+  change, workbook change or publication occurs in Batch 22.1. Approval is
+  still required for an isolated Node.js/npm source build, one local stdio
+  entry, a disposable Desktop smoke-test workbook and subsequent real
+  authoring.
+- Status: Investigation complete with `CONDITIONAL GO`. Exact Tableau Desktop
+  2026.3 compatibility, CSV attachment behavior, 16-state map recognition,
+  fine styling and native save/readback remain live verification gates.
+- Evidence: [`reports/batch22_1_tableau_desktop_mcp_feasibility.md`](../reports/batch22_1_tableau_desktop_mcp_feasibility.md),
+  [`docs/tableau-executive-overview.md`](tableau-executive-overview.md), and
+  the official Tableau MCP Desktop build documentation.

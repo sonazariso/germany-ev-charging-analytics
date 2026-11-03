@@ -2,17 +2,18 @@
 
 ## Current Batch
 
-Batch 21 — approved two-page Tableau executive overview preparation
-(complete; validated presentation CSVs, implementation specification,
-worksheet instructions and read-only validation). The Tableau workbook itself
-is not yet created because no approved native authoring bridge was available.
-No DuckDB object, raw/reference file, Crosswalk, BBSR layer, charging object,
-Batch 19 export or official KPI deployment changed.
+Batch 22.1 — Tableau Desktop Authoring MCP feasibility investigation
+(complete; `CONDITIONAL GO`). The official Desktop MCP route is credible, but
+Node.js/npm, the isolated source build, the local Codex MCP entry and the live
+Tableau External Client API smoke test are still approval-gated. No Tableau
+workbook is created. No DuckDB object, raw/reference file, Crosswalk, BBSR
+layer, charging object, Batch 19 export or official KPI deployment changed.
 
 ## Last completed Batch
 
-Batch 21 — approved two-page Tableau executive overview preparation completed
-after Batch 20's semantic model design, Batch 19's data preparation and export validation, Batch 18's
+Batch 22.1 — Tableau Desktop Authoring MCP feasibility investigation completed
+after Batch 21's approved two-page Tableau executive overview preparation,
+Batch 20's semantic model design, Batch 19's data preparation and export validation, Batch 18's
 source-readiness review and Batch 17's
 temporal-validity audit, Batch 16's state-level EV
 stock versus charging infrastructure comparison and Batch 15's KBA FZ 27
@@ -25,11 +26,16 @@ build, Batch 09 feasibility assessment, and Batch 08 geographic verification.
 
 ## Previous completed Batch
 
+Batch 21 — approved two-page Tableau executive overview preparation completed
+before Batch 22.1 and after Batch 20's semantic model design. It produced
+validated presentation CSVs, a two-page implementation specification and
+read-only validation, but no native workbook.
+
+## Earlier completed Batch
+
 Batch 20 — Tableau semantic model and Fact/Dimension architecture design
 completed before Batch 21 and after Batch 19's export validation. It produced
 the separate-source architecture, relationship contracts and 59-KPI mapping.
-
-## Earlier completed Batch
 
 Batch 17 — temporal validity and cross-source KPI sensitivity analysis
 completed before Batch 18 and after Batch 16's state-level EV stock versus
@@ -184,6 +190,8 @@ The deployed maximum-per-point parser classifies 156,155 points at or below 22 k
 - Batch 15 validates PHEV change/growth and PHEV passenger-car penetration as descriptive source-grain measures; they remain unsuitable for sales, utilization, demand, or causal interpretation.
 - Operator, city/county, payment/opening/connector, and KBA ownership/postcode/municipality analyses remain proposed pending denominator, grain, and normalization decisions.
 - Tableau reporting, production BBSR/KBA compatibility, final license review, and GitHub publication are incomplete. The Batch 11 and Batch 12 audit CSVs remain non-operational; Batch 13 official category KPIs and Batch 13.1 scenario KPIs are limited to separate BNetzA source-grain charging paths.
+- Tableau Desktop native authoring remains `CONDITIONAL_GO` only: Node.js/npm >=22.7.5, an isolated official source build, a local `tableau-desktop` stdio entry, a running Tableau Desktop External Client API session and a live capability/readback smoke test are still required. The official Desktop MCP does not need Accessibility or Screen Recording permissions, but its exact Tableau Desktop 2026.3 compatibility is not proven until that handshake succeeds.
+- CSV attachment, official 16-state map recognition, exact dashboard styling and native save/readback remain verification gates. `apply-datasource` does not import new datasource files; the approved path must validate `open-file` attachment and the resulting workbook state before real dashboard authoring.
 - The preserved ignored `.venv` has historical absolute paths in its activation scripts and `pip` entry-point shebangs; `.venv/bin/python` and `.venv/bin/python -m pip` work, but the environment requires explicit repair or recreation in a future approved task.
 
 ## Pending decisions
@@ -205,19 +213,21 @@ The deployed maximum-per-point parser classifies 156,155 points at or below 22 k
 
 ## Next planned work
 
-Manual Tableau Desktop authoring of the two specified dashboards, official
-recognition checks for all 16 state geometries, screenshot verification and
-owner review remain pending. Save a real `.twb`/optional `.twbx` only after the
-workbook opens successfully and the visual checks pass. Keep historical
-infrastructure-panel development, KBA-to-BBSR vehicle integration, external
-publication and GitHub publication deferred until their prerequisites exist.
+If approved, build the official Desktop MCP from its source in an isolated
+location, add one local Codex stdio entry, launch Tableau Desktop 2026.3 with
+a disposable blank workbook, and run the read-only discovery/capability,
+source-attachment, template, calculation, dashboard, screenshot and save/
+readback smoke tests. Only after those tests pass should the two specified
+dashboards be authored; official recognition of all 16 state geometries and
+visual review remain mandatory. Keep historical infrastructure-panel
+development, KBA-to-BBSR vehicle integration, external publication and
+GitHub publication deferred until their prerequisites exist.
 Keep the official Batch 13 baseline, Batch 13.1 scenario and Batch 13.2
 historical layer separate from any future KBA vehicle-stock integration.
 
 ## Last local Git commit reference
 
-Batch 21 handoff commit is created after the final validation pass. No remote
-is configured.
+Local handoff commits are kept on `main`; no remote is configured.
 
 ## Batch 19 completed outputs
 
@@ -283,3 +293,19 @@ and the validation report is
 The workbook, screenshots, map recognition result and any `.twb`/`.twbx` path
 remain pending manual Tableau Desktop authoring; no public publication was
 attempted.
+
+## Batch 22.1 completed outputs
+
+Batch 22.1 investigated the official Tableau Desktop Authoring MCP in
+read-only mode and recorded a `CONDITIONAL GO` in
+[`reports/batch22_1_tableau_desktop_mcp_feasibility.md`](reports/batch22_1_tableau_desktop_mcp_feasibility.md).
+The report confirms that the official Desktop build exposes native worksheet,
+dashboard, calculated-field, template, formatting, screenshot and workbook
+save/readback tools through Tableau's local External Client API. The current
+macOS project environment has Tableau Desktop 2026.3.0 installed, but no
+Node.js/npm runtime, Tableau MCP configuration, running Desktop discovery
+file or callable MCP tool. The report provides the minimum approval-gated
+build, configuration, live smoke-test and dashboard-authoring sequence.
+
+No package, Codex setting, macOS permission, source/reference file, DuckDB
+object, export, workbook, screenshot, remote, upload or publication changed.
