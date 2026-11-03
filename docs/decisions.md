@@ -525,3 +525,25 @@ The following decisions are the concise project-log form:
 - Evidence: [`reports/batch22_4_tableau_external_api_diagnosis.md`](../reports/batch22_4_tableau_external_api_diagnosis.md),
   the pinned official [Tableau MCP Desktop documentation](https://github.com/tableau/tableau-mcp/blob/v5.3.0/docs/README.desktop.md),
   and Tableau's [edition comparison](https://help.tableau.com/current/pro/desktop/en-us/desktop_comparison.htm).
+
+## Batch 22.5 — local GUI automation capability check (2026-11-03)
+
+- Decision: Treat the VS Code OpenAI Codex extension's native `codex`
+  app-server as the exact local automation host for this workflow. Do not use
+  the separate ChatGPT computer-use service or ChatGPT Work for this route.
+- Result: Effective System Events/Accessibility and Screen Recording checks
+  passed for the current host. The native AX probe read Tableau Desktop
+  2026.3.0's process, window, menus and start-pane controls; the screenshot
+  primitive produced a valid 2560 × 1600 PNG.
+- Qualification: The blank `Tableau - Book1` start pane exposed no worksheet
+  tab strip, `AXTab`/`AXTabGroup` roles or field pane. The screenshot did not
+  show a rendered worksheet canvas. Worksheet selection, field dragging,
+  dashboard layout, native save/reopen and live readback remain untested.
+- Decision: Do not create a worksheet merely to complete this probe. Keep the
+  no-workbook-edit boundary, the `Settings.ExternalApiEnabled=0` state and the
+  official MCP pause unchanged. A disposable GUI worksheet/save smoke test
+  requires separate owner approval.
+- Consequence: Record `LOCAL_AUTOMATION_PARTIAL`; this result establishes
+  host/permission feasibility only and does not authorize the two Executive
+  Overview dashboards.
+- Evidence: [`reports/batch22_5_local_automation_capability_check.md`](../reports/batch22_5_local_automation_capability_check.md).

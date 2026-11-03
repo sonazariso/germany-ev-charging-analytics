@@ -194,3 +194,19 @@ until their prerequisites and permissions are separately approved.
   answer, or approve an isolated GUI host with the required macOS permissions.
 - [ ] Run the live MCP handshake or the disposable GUI native-save smoke test;
   do not author the two dashboards before one path passes its readback gates.
+
+## Batch 22.5 local GUI automation capability check
+
+- [x] Identify the exact VS Code/Codex process hosting local shell automation.
+- [x] Verify effective System Events/Accessibility and Screen Recording
+  capabilities without changing macOS privacy settings.
+- [x] Detect the running Tableau Desktop process and accessible window title.
+- [x] Inspect the bounded native Accessibility tree and record the exposed
+  start-pane controls.
+- [x] Test the built-in screenshot command and clean up its temporary output.
+- [x] Close the disposable blank Tableau window without saving a workbook.
+- [ ] Verify actual worksheet tabs, field-pane controls, field interaction,
+  dashboard layout and native save/reopen in an explicitly approved GUI smoke
+  test.
+- [ ] Do not author the two Executive Overview dashboards until a supported
+  MCP handshake or disposable GUI smoke test passes its readback gates.

@@ -2,20 +2,22 @@
 
 ## Current Batch
 
-Batch 22.4 — Tableau Desktop External Client API startup-reset diagnosis
-completed. The immediate reset mechanism is confirmed:
-`FreeEditionActive` is recorded during Tableau Desktop 2026.3.0 startup,
-`Settings.ExternalApiEnabled` returns to integer `0`, and no discovery file or
-live Desktop session appears. No supported way to keep the API enabled in this
-installed Free Edition state was found in official Tableau documentation. No
-Tableau workbook is created. No DuckDB object, raw/reference file, Crosswalk,
-BBSR layer, charging object, Batch 19 export or official KPI deployment
-changed.
+Batch 22.5 — Local Tableau GUI automation capability check completed with
+`LOCAL_AUTOMATION_PARTIAL`. The VS Code OpenAI Codex host can use effective
+System Events/Accessibility operations and capture the screen, and Tableau's
+process/window can be detected. The blank `Tableau - Book1` start pane exposed
+no worksheet-tab strip or field pane, so worksheet selection, field dragging,
+dashboard layout and native save/reopen remain unverified. No supported API
+activation was retried; `Settings.ExternalApiEnabled` remains integer `0` and
+no Tableau workbook is created. No DuckDB object, raw/reference file,
+Crosswalk, BBSR layer, charging object, Batch 19 export or official KPI
+deployment changed.
 
 ## Last completed Batch
 
-Batch 22.4 — Tableau Desktop External Client API startup-reset diagnosis
-completed after Batch 22.3's controlled preference validation and Batch 21's
+Batch 22.5 — Local Tableau GUI automation capability check completed after
+Batch 22.4's Tableau Desktop External Client API startup-reset diagnosis,
+Batch 22.3's controlled preference validation and Batch 21's
 approved two-page Tableau executive overview preparation,
 Batch 20's semantic model design, Batch 19's data preparation and export validation, Batch 18's
 source-readiness review and Batch 17's
@@ -30,12 +32,17 @@ build, Batch 09 feasibility assessment, and Batch 08 geographic verification.
 
 ## Previous completed Batch
 
+Batch 22.4 — Tableau Desktop External Client API startup-reset diagnosis
+completed before Batch 22.5 and after Batch 22.3's controlled preference
+validation. It confirmed the startup reset, correlated `FreeEditionActive`,
+and found no supported Free Edition API activation method.
+
+## Earlier completed Batch
+
 Batch 21 — approved two-page Tableau executive overview preparation completed
 before Batch 22.1 and after Batch 20's semantic model design. It produced
 validated presentation CSVs, a two-page implementation specification and
 read-only validation, but no native workbook.
-
-## Earlier completed Batch
 
 Batch 20 — Tableau semantic model and Fact/Dimension architecture design
 completed before Batch 21 and after Batch 19's export validation. It produced
@@ -198,6 +205,7 @@ The deployed maximum-per-point parser classifies 156,155 points at or below 22 k
 - Batch 22.2 completed the isolated official build and Codex registration, but the live handshake stopped at `list-instances`: Tableau Desktop 2026.3.0 was running with `Settings.ExternalApiEnabled=0`, so no External Client API discovery file or session was available. Enabling that existing preference requires explicit owner approval; no authoring call is authorized until the read-only handshake passes.
 - Batch 22.3 used the verified user domain `com.tableau.Tableau-2026.3` and key `Settings.ExternalApiEnabled`; the exact plist backup passed byte/hash validation, the integer write `0 → 1` initially passed, and Tableau reverted it to `0` during startup. Batch 22.4 confirmed that the same startup records `FreeEditionActive` and that the installed External Client API libraries are present. The report treats the startup edition/licensing gate as the confirmed immediate reset mechanism while leaving the undocumented internal product rule explicitly qualified. Both discovery locations remained absent, `list-instances` still failed, and no live fields/workbook metadata were read.
 - Batch 22.4 found no matching system, ByHost, managed-preference or MDM setting, no MCP configuration cause, and no official Tableau documentation promising External Client API availability for the current Free Edition state. The supported next step is an owner decision about a paid supported Desktop configuration/support inquiry or an isolated GUI fallback; no further preference retry is authorized.
+- Batch 22.5 verified that the actual local automation host is the VS Code OpenAI Codex extension's `/Users/admin/.vscode/extensions/openai.chatgpt-26.1021.22027-darwin-x64/bin/macos-x86_64/codex` process. Effective System Events/Accessibility and Screen Recording tests passed, but the blank Tableau `Book1` start pane exposed no worksheet tabs or field pane; the result is `LOCAL_AUTOMATION_PARTIAL`, not an authoring pass. The TCC database itself remained unreadable, no permission was changed, and no tab selection, field interaction, workbook save or dashboard edit was attempted.
 - CSV attachment, official 16-state map recognition, exact dashboard styling and native save/readback remain verification gates. `apply-datasource` does not import new datasource files; the approved path must validate `open-file` attachment and the resulting workbook state before real dashboard authoring.
 - The preserved ignored `.venv` has historical absolute paths in its activation scripts and `pip` entry-point shebangs; `.venv/bin/python` and `.venv/bin/python -m pip` work, but the environment requires explicit repair or recreation in a future approved task.
 
@@ -221,12 +229,13 @@ The deployed maximum-per-point parser classifies 156,155 points at or below 22 k
 ## Next planned work
 
 Do not retry the preference write or use an alternate flag, binary edit or
-security-bypass/UI route. First obtain either an owner-approved supported paid
-Desktop configuration/support answer or approval for an isolated GUI fallback.
-Only after `list-instances` and the read-only live workbook handshake pass
-should the two specified dashboards be authored through MCP. If the GUI path
-is approved instead, use a disposable local workbook and verify native save and
-reopen before any real dashboard work. Official recognition of all 16 state
+security-bypass/UI route. The Batch 22.5 permission probe passed for the VS
+Code/Codex host, but it did not establish worksheet or field authoring. First
+obtain either an owner-approved supported paid Desktop configuration/support
+answer or approval for an isolated GUI fallback smoke test. Only after
+`list-instances` and the read-only live workbook handshake pass, or after the
+disposable GUI test verifies worksheet controls and native save/reopen, should
+the two specified dashboards be authored. Official recognition of all 16 state
 geometries, visual review and source licensing remain mandatory. Keep
 historical infrastructure-panel development, KBA-to-BBSR vehicle integration,
 external publication and GitHub publication deferred until their prerequisites
@@ -367,3 +376,24 @@ Free Edition method for keeping `Settings.ExternalApiEnabled=1`. The official
 MCP build remains unchanged and paused; the GUI fallback is feasible but
 approval-gated because computer-use entries and relevant macOS permissions are
 disabled. No project data, schema, export, workbook or publication changed.
+
+## Batch 22.5 local GUI automation outputs
+
+Batch 22.5 completed the required local permission and capability check in
+[`reports/batch22_5_local_automation_capability_check.md`](reports/batch22_5_local_automation_capability_check.md).
+The exact shell host was the VS Code OpenAI Codex extension's native `codex`
+app-server (PID `63398` during the probe), with
+`codex-code-mode-host` as its child. Read-only System Events and native
+Accessibility operations succeeded against Tableau Desktop 2026.3.0, and
+`/usr/sbin/screencapture` produced a valid 2560 × 1600 PNG. A TCC database
+query was denied by macOS; no bypass or permission change was attempted.
+
+Tableau was launched normally and exposed process PID `69292` and window title
+`Tableau - Book1`. The AX tree visited 339 nodes and exposed menus, start-pane
+controls, `New Worksheet`, `Clear Sheet` and a `Tables` outline, but no
+worksheet-tab or field-pane controls. The screenshot did not show a rendered
+worksheet canvas. No tab selection, worksheet creation, field drag, dashboard
+edit, workbook save/reopen or data-source change was performed. Tableau was
+closed normally, `Settings.ExternalApiEnabled` remained `0`, and the project
+remains `TABLEAU_WORKBOOK_NOT_YET_CREATED` with result
+`LOCAL_AUTOMATION_PARTIAL`.

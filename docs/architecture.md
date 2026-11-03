@@ -401,3 +401,22 @@ save/reopen verification. No Tableau workbook, data source, export, DuckDB
 object or KPI contract was added.
 
 See [`reports/batch22_4_tableau_external_api_diagnosis.md`](../reports/batch22_4_tableau_external_api_diagnosis.md).
+
+## Batch 22.5 — local GUI automation capability check
+
+The local GUI fallback was tested read-only through the VS Code OpenAI Codex
+extension's native `codex` app-server. System Events and macOS Accessibility
+could read Tableau Desktop 2026.3.0's process, focused window, menus and
+start-pane controls, and the built-in screen-capture primitive produced a
+valid 2560 × 1600 PNG. The TCC database itself was protected; no permission
+was changed or bypassed.
+
+The blank `Tableau - Book1` window did not expose a named worksheet-tab strip
+or field pane in the 339-node AX tree, and the screenshot did not show a
+rendered worksheet canvas. The result is `LOCAL_AUTOMATION_PARTIAL`: host and
+permission prerequisites are operational, but field interaction, worksheet
+selection, dashboard layout, native save/reopen and workbook readback remain
+untested. No Tableau workbook or project data was added, and the external API
+MCP remains paused.
+
+See [`reports/batch22_5_local_automation_capability_check.md`](../reports/batch22_5_local_automation_capability_check.md).

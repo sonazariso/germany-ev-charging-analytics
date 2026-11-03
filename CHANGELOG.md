@@ -2,6 +2,12 @@
 
 This changelog records project milestones and local repository changes. Historical Batch 01–03 entries describe work evidenced by local reports; they do not imply historical Git commits or inferred dates.
 
+## 2026-11-03 — Batch 22.5 Local Tableau GUI automation capability check
+
+- Added [`reports/batch22_5_local_automation_capability_check.md`](reports/batch22_5_local_automation_capability_check.md), documenting the exact VS Code/Codex automation host, built-in macOS automation options, effective Accessibility/Screen Recording/Automation results, Tableau window detection, Accessibility-tree findings, screenshot test and safe cleanup.
+- Recorded `LOCAL_AUTOMATION_PARTIAL`: the current VS Code Codex host can read Tableau UI state and capture the screen, but the blank `Tableau - Book1` start pane exposed no worksheet-tab strip or field pane, so tab selection, field dragging, dashboard layout and native save/reopen remain untested.
+- Updated the project status, architecture, decision log, roadmap and Tableau handoff. No ChatGPT Work/CUA operation, permission change, MCP retry, preference write, workbook, datasource, source, export, database object, remote, upload or publication changed.
+
 ## 2026-11-03 — Batch 22.4 Tableau External Client API diagnosis
 
 - Added [`reports/batch22_4_tableau_external_api_diagnosis.md`](reports/batch22_4_tableau_external_api_diagnosis.md), documenting the read-only source, preference, plist-precedence, startup-log, discovery and official-documentation evidence.

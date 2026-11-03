@@ -29,3 +29,12 @@ plus the earlier
 [`reports/batch22_1_tableau_desktop_mcp_feasibility.md`](../reports/batch22_1_tableau_desktop_mcp_feasibility.md).
 Do not claim a `.twb`/`.twbx` path or screenshots until Tableau Desktop opens and
 verifies the actual file. Do not publish externally.
+
+Batch 22.5 performed the local GUI permission and capability check through the
+VS Code OpenAI Codex host. System Events/Accessibility and Screen Recording
+worked, and Tableau's process/window could be read. The blank `Tableau - Book1`
+start pane did not expose worksheet tabs or a field pane, and the captured
+screen did not show a rendered worksheet canvas. The result is
+`LOCAL_AUTOMATION_PARTIAL`; no worksheet, data source, chart, workbook or
+screenshot artifact was retained. See
+[`reports/batch22_5_local_automation_capability_check.md`](../reports/batch22_5_local_automation_capability_check.md).
