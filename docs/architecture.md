@@ -352,3 +352,52 @@ but the source build, Codex MCP entry, live 2026.3 API handshake and workbook
 smoke test remain approval-gated. No `.twb`, `.twbx`, extract or screenshot is
 part of the current architecture. See
 [`reports/batch22_1_tableau_desktop_mcp_feasibility.md`](../reports/batch22_1_tableau_desktop_mcp_feasibility.md).
+
+## Batch 22.2 — official Desktop MCP setup result
+
+The isolated official Tableau MCP `v5.3.0` source build and local Codex stdio
+registration are now present outside the analytical project. The Desktop
+bundle initializes and exposes the expected authoring/readback tool surface;
+headless template discovery also passes. The live integration remains
+`MCP_SETUP_PARTIAL` because Tableau Desktop 2026.3.0 is running with
+`Settings.ExternalApiEnabled=0`, so it publishes no External Client API
+discovery file. Native workbook authoring must remain deferred until the owner
+approves that existing preference change and the read-only session handshake
+passes. No project data, export, workbook or database object is part of this
+bridge state.
+
+## Batch 22.3 — External Client API validation result
+
+Batch 22.3 verified the exact macOS user preference domain and backed up only
+the Tableau 2026.3 plist outside Git. The owner-approved integer write to
+`Settings.ExternalApiEnabled` read back as `1` before launch, but Tableau
+Desktop reverted it to `0` during startup. The local startup evidence records
+`FreeEditionActive`; the batch treats this as an observed limitation signal,
+not an undocumented license claim. No External Client API discovery file or
+listener appeared, so the official Desktop MCP could not inspect a live
+workbook. The architecture remains data-ready but native Tableau authoring is
+blocked until a supported Desktop configuration passes `list-instances` and
+the read-only live workbook handshake. See
+[`reports/batch22_3_tableau_external_api_validation.md`](../reports/batch22_3_tableau_external_api_validation.md).
+
+## Batch 22.4 — External Client API diagnosis result
+
+The local startup-reset diagnosis is complete. Tableau Desktop 2026.3.0
+accepts the pre-launch integer preference write, then initializes the runtime
+as `FreeEditionActive`, restores `Settings.ExternalApiEnabled=0`, and
+publishes no External Client API discovery file. User/system/managed preference
+precedence, MDM state, MCP configuration and missing API libraries were not
+the cause in the inspected installation. The precise internal edition rule is
+not published and remains qualified as an inference from the correlated
+startup evidence.
+
+The official MCP source and Tableau licensing documentation do not establish a
+supported Free Edition method for keeping the External Client API enabled. The
+MCP build therefore remains a paused optional bridge, not an authoring
+dependency. The next supported branch is an owner-approved paid Desktop
+configuration/support decision followed by a read-only handshake, or an
+isolated GUI fallback with explicit macOS permissions and local native
+save/reopen verification. No Tableau workbook, data source, export, DuckDB
+object or KPI contract was added.
+
+See [`reports/batch22_4_tableau_external_api_diagnosis.md`](../reports/batch22_4_tableau_external_api_diagnosis.md).

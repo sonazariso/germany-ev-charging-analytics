@@ -2,6 +2,25 @@
 
 This changelog records project milestones and local repository changes. Historical Batch 01–03 entries describe work evidenced by local reports; they do not imply historical Git commits or inferred dates.
 
+## 2026-11-03 — Batch 22.4 Tableau External Client API diagnosis
+
+- Added [`reports/batch22_4_tableau_external_api_diagnosis.md`](reports/batch22_4_tableau_external_api_diagnosis.md), documenting the read-only source, preference, plist-precedence, startup-log, discovery and official-documentation evidence.
+- Confirmed the immediate startup reset sequence: Tableau Desktop 2026.3.0 initializes `FreeEditionActive`, restores `Settings.ExternalApiEnabled=0`, and publishes no External Client API discovery file. The exact undocumented internal product rule is explicitly qualified.
+- Recorded that no supported Free Edition method for keeping this API enabled was found. Preference retries, binary changes, credential fabrication and security bypasses remain prohibited; a supported paid Desktop decision or approved GUI fallback is the next owner gate.
+- Updated the README, project status, architecture, decision log, roadmap and Tableau handoff documentation. No project data, schema, export, workbook, screenshot, remote, upload or publication changed.
+
+## 2026-11-03 — Batch 22.3 (partial)
+
+- Added [`reports/batch22_3_tableau_external_api_validation.md`](reports/batch22_3_tableau_external_api_validation.md), documenting the exact Tableau preference domain, validated backup, enablement attempt, restart, discovery checks, MCP results, rollback and blocker.
+- The owner-approved `Settings.ExternalApiEnabled` integer write read back as `1` immediately, but Tableau Desktop 2026.3.0 reverted it to `0` during startup. No External Client API discovery file or live Desktop session appeared; headless template discovery remained available.
+- Recorded `EXTERNAL_API_SETUP_PARTIAL`. No authoring tool, workbook, database, CSV export, source crosswalk, screenshot, remote, upload or publication changed.
+
+## 2026-11-03 — Batch 22.2 (partial)
+
+- Added [`reports/batch22_2_tableau_mcp_setup.md`](reports/batch22_2_tableau_mcp_setup.md), documenting the official Tableau MCP `v5.3.0` source build, local Node.js runtime, Codex stdio registration, tool discovery and the blocked live Desktop handshake.
+- Completed `npm ci`, `npm run build:desktop`, and the headless MCP initialize/tools/template checks. The live `list-instances` check stopped because Tableau Desktop 2026.3.0 has `Settings.ExternalApiEnabled=0` and publishes no External Client API discovery file.
+- Recorded `MCP_SETUP_PARTIAL`; no authoring call, workbook, database, export, source crosswalk, screenshot, remote, upload or publication changed. No local documentation commit was created because the live validation did not pass.
+
 ## 2026-11-03 — Batch 22.1
 
 - Added [`reports/batch22_1_tableau_desktop_mcp_feasibility.md`](reports/batch22_1_tableau_desktop_mcp_feasibility.md), a read-only investigation of the official Tableau Desktop Authoring MCP, its native worksheet/dashboard/calculation/template/save surface, macOS External Client API behavior, local runtime/configuration state, compatibility uncertainty and limitations for the two approved dashboards.

@@ -2,17 +2,21 @@
 
 ## Current Batch
 
-Batch 22.1 — Tableau Desktop Authoring MCP feasibility investigation
-(complete; `CONDITIONAL GO`). The official Desktop MCP route is credible, but
-Node.js/npm, the isolated source build, the local Codex MCP entry and the live
-Tableau External Client API smoke test are still approval-gated. No Tableau
-workbook is created. No DuckDB object, raw/reference file, Crosswalk, BBSR
-layer, charging object, Batch 19 export or official KPI deployment changed.
+Batch 22.4 — Tableau Desktop External Client API startup-reset diagnosis
+completed. The immediate reset mechanism is confirmed:
+`FreeEditionActive` is recorded during Tableau Desktop 2026.3.0 startup,
+`Settings.ExternalApiEnabled` returns to integer `0`, and no discovery file or
+live Desktop session appears. No supported way to keep the API enabled in this
+installed Free Edition state was found in official Tableau documentation. No
+Tableau workbook is created. No DuckDB object, raw/reference file, Crosswalk,
+BBSR layer, charging object, Batch 19 export or official KPI deployment
+changed.
 
 ## Last completed Batch
 
-Batch 22.1 — Tableau Desktop Authoring MCP feasibility investigation completed
-after Batch 21's approved two-page Tableau executive overview preparation,
+Batch 22.4 — Tableau Desktop External Client API startup-reset diagnosis
+completed after Batch 22.3's controlled preference validation and Batch 21's
+approved two-page Tableau executive overview preparation,
 Batch 20's semantic model design, Batch 19's data preparation and export validation, Batch 18's
 source-readiness review and Batch 17's
 temporal-validity audit, Batch 16's state-level EV
@@ -191,6 +195,9 @@ The deployed maximum-per-point parser classifies 156,155 points at or below 22 k
 - Operator, city/county, payment/opening/connector, and KBA ownership/postcode/municipality analyses remain proposed pending denominator, grain, and normalization decisions.
 - Tableau reporting, production BBSR/KBA compatibility, final license review, and GitHub publication are incomplete. The Batch 11 and Batch 12 audit CSVs remain non-operational; Batch 13 official category KPIs and Batch 13.1 scenario KPIs are limited to separate BNetzA source-grain charging paths.
 - Tableau Desktop native authoring remains `CONDITIONAL_GO` only: Node.js/npm >=22.7.5, an isolated official source build, a local `tableau-desktop` stdio entry, a running Tableau Desktop External Client API session and a live capability/readback smoke test are still required. The official Desktop MCP does not need Accessibility or Screen Recording permissions, but its exact Tableau Desktop 2026.3 compatibility is not proven until that handshake succeeds.
+- Batch 22.2 completed the isolated official build and Codex registration, but the live handshake stopped at `list-instances`: Tableau Desktop 2026.3.0 was running with `Settings.ExternalApiEnabled=0`, so no External Client API discovery file or session was available. Enabling that existing preference requires explicit owner approval; no authoring call is authorized until the read-only handshake passes.
+- Batch 22.3 used the verified user domain `com.tableau.Tableau-2026.3` and key `Settings.ExternalApiEnabled`; the exact plist backup passed byte/hash validation, the integer write `0 → 1` initially passed, and Tableau reverted it to `0` during startup. Batch 22.4 confirmed that the same startup records `FreeEditionActive` and that the installed External Client API libraries are present. The report treats the startup edition/licensing gate as the confirmed immediate reset mechanism while leaving the undocumented internal product rule explicitly qualified. Both discovery locations remained absent, `list-instances` still failed, and no live fields/workbook metadata were read.
+- Batch 22.4 found no matching system, ByHost, managed-preference or MDM setting, no MCP configuration cause, and no official Tableau documentation promising External Client API availability for the current Free Edition state. The supported next step is an owner decision about a paid supported Desktop configuration/support inquiry or an isolated GUI fallback; no further preference retry is authorized.
 - CSV attachment, official 16-state map recognition, exact dashboard styling and native save/readback remain verification gates. `apply-datasource` does not import new datasource files; the approved path must validate `open-file` attachment and the resulting workbook state before real dashboard authoring.
 - The preserved ignored `.venv` has historical absolute paths in its activation scripts and `pip` entry-point shebangs; `.venv/bin/python` and `.venv/bin/python -m pip` work, but the environment requires explicit repair or recreation in a future approved task.
 
@@ -213,15 +220,17 @@ The deployed maximum-per-point parser classifies 156,155 points at or below 22 k
 
 ## Next planned work
 
-If approved, build the official Desktop MCP from its source in an isolated
-location, add one local Codex stdio entry, launch Tableau Desktop 2026.3 with
-a disposable blank workbook, and run the read-only discovery/capability,
-source-attachment, template, calculation, dashboard, screenshot and save/
-readback smoke tests. Only after those tests pass should the two specified
-dashboards be authored; official recognition of all 16 state geometries and
-visual review remain mandatory. Keep historical infrastructure-panel
-development, KBA-to-BBSR vehicle integration, external publication and
-GitHub publication deferred until their prerequisites exist.
+Do not retry the preference write or use an alternate flag, binary edit or
+security-bypass/UI route. First obtain either an owner-approved supported paid
+Desktop configuration/support answer or approval for an isolated GUI fallback.
+Only after `list-instances` and the read-only live workbook handshake pass
+should the two specified dashboards be authored through MCP. If the GUI path
+is approved instead, use a disposable local workbook and verify native save and
+reopen before any real dashboard work. Official recognition of all 16 state
+geometries, visual review and source licensing remain mandatory. Keep
+historical infrastructure-panel development, KBA-to-BBSR vehicle integration,
+external publication and GitHub publication deferred until their prerequisites
+exist.
 Keep the official Batch 13 baseline, Batch 13.1 scenario and Batch 13.2
 historical layer separate from any future KBA vehicle-stock integration.
 
@@ -309,3 +318,52 @@ build, configuration, live smoke-test and dashboard-authoring sequence.
 
 No package, Codex setting, macOS permission, source/reference file, DuckDB
 object, export, workbook, screenshot, remote, upload or publication changed.
+
+## Batch 22.2 setup outputs
+
+Batch 22.2 installed the official Tableau MCP source at the isolated path
+`/Users/admin/dev/tools/tableau-mcp` at tag `v5.3.0`, revision
+`8c0ac37a336cd6c3dcf57f9a3dfc86b6541281f0`, using local Node.js `v22.23.4`.
+`npm ci` and `npm run build:desktop` passed and produced
+`build/index.desktop.js` plus `build/desktop/data/`. Codex CLI `0.163.0`
+registered `tableau-desktop` with the absolute Node entrypoint and
+`PRODUCT_TELEMETRY_ENABLED=false`; existing MCP entries were preserved.
+
+The actual MCP initialized and exposed 85 tools, and headless
+`list-templates` returned `trend-line-chart`. The required live
+`list-instances` call failed because Tableau Desktop 2026.3.0 published no
+External Client API discovery file; the read-only preference probe found
+`Settings.ExternalApiEnabled=0`. The setup therefore remains
+`MCP_SETUP_PARTIAL`. No authoring call, workbook, database, export, source
+crosswalk, screenshot, remote, upload or publication was created or modified.
+Full evidence is in
+[`reports/batch22_2_tableau_mcp_setup.md`](reports/batch22_2_tableau_mcp_setup.md).
+
+## Batch 22.3 External Client API validation outputs
+
+Batch 22.3 performed the owner-approved, read-only/controlled validation in
+[`reports/batch22_3_tableau_external_api_validation.md`](reports/batch22_3_tableau_external_api_validation.md).
+The exact preference domain was `com.tableau.Tableau-2026.3`, the physical
+plist was `/Users/admin/Library/Preferences/com.tableau.Tableau-2026.3.plist`,
+and the key was `Settings.ExternalApiEnabled`. A timestamped backup outside
+Git passed byte comparison, plist parsing and SHA-256 validation.
+
+The integer value changed from `0` to `1` and passed immediate readback, but
+Tableau Desktop 2026.3.0 reset it to `0` on launch. The observed launch PID was
+`66196`; it exited gracefully. Both documented discovery directories remained
+absent. Official MCP `list-instances` failed, while headless `list-templates`
+returned the existing 137-template catalog. No live workbook inspection or
+authoring was attempted, and the project remains
+`TABLEAU_WORKBOOK_NOT_YET_CREATED`.
+
+## Batch 22.4 External Client API diagnosis outputs
+
+Batch 22.4 completed the required read-only diagnosis in
+[`reports/batch22_4_tableau_external_api_diagnosis.md`](reports/batch22_4_tableau_external_api_diagnosis.md).
+The local evidence confirms the startup reset sequence and rules out the
+readable system/managed-preference and MCP-configuration alternatives. The
+official Tableau source and licensing documentation review found no supported
+Free Edition method for keeping `Settings.ExternalApiEnabled=1`. The official
+MCP build remains unchanged and paused; the GUI fallback is feasible but
+approval-gated because computer-use entries and relevant macOS permissions are
+disabled. No project data, schema, export, workbook or publication changed.

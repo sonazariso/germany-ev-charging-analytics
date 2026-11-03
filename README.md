@@ -4,7 +4,7 @@
 
 This portfolio project builds a reproducible, Germany-wide analytical foundation for comparing the published public-charging register with registered passenger-car stock. It preserves the original BNetzA, KBA, and separately versioned BBSR reference workbooks, separates charging equipment from charging points, and keeps snapshot dates visible throughout the workflow.
 
-The current implementation is a validated local DuckDB model, a deployed still-provisional KBA geographic layer, the separate Batch 13 charging-only BNetzA-source-grain BBSR layer, a separate Batch 13.1 owner-approved 2026 analytical scenario, a separate Batch 13.2 historical BBSR 2025 boundary harmonization, the Batch 14 read-only statistical analysis of that harmonized layer, the Batch 15 read-only KBA FZ 27 stock analysis, the Batch 17 read-only temporal-validity analysis of Batch 16 cross-source KPIs, the Batch 18 analytics-readiness and KPI-finalization review, the Batch 19 validated Tableau export contracts, the Batch 20 Tableau semantic-model design, Batch 21's validated two-page Tableau presentation preparation, and Batch 22.1's read-only official Tableau Desktop Authoring MCP feasibility investigation. Batch 13.2 corrects the Kassel city/county join only in its new layer and aggregates Hanau with the remaining Main-Kinzig source row; Batches 14–22.1 do not change the official baseline, assign BBSR categories to KBA registration regions, integrate charging with BBSR vehicle stock, create a historical infrastructure panel, or allocate Trier stock. Tableau workbook authoring and public reporting remain incomplete.
+The current implementation is a validated local DuckDB model, a deployed still-provisional KBA geographic layer, the separate Batch 13 charging-only BNetzA-source-grain BBSR layer, a separate Batch 13.1 owner-approved 2026 analytical scenario, a separate Batch 13.2 historical BBSR 2025 boundary harmonization, the Batch 14 read-only statistical analysis of that harmonized layer, the Batch 15 read-only KBA FZ 27 stock analysis, the Batch 17 read-only temporal-validity analysis of Batch 16 cross-source KPIs, the Batch 18 analytics-readiness and KPI-finalization review, the Batch 19 validated Tableau export contracts, the Batch 20 Tableau semantic-model design, Batch 21's validated two-page Tableau presentation preparation, Batch 22.1's read-only official Tableau Desktop Authoring MCP feasibility investigation, Batch 22.2's partial official MCP setup, Batch 22.3's partial External Client API validation and Batch 22.4's read-only startup-reset diagnosis. Batch 13.2 corrects the Kassel city/county join only in its new layer and aggregates Hanau with the remaining Main-Kinzig source row; Batches 14–22.4 do not change the official baseline, assign BBSR categories to KBA registration regions, integrate charging with BBSR vehicle stock, create a historical infrastructure panel, or allocate Trier stock. Tableau workbook authoring and public reporting remain incomplete.
 
 ## Why this matters
 
@@ -205,6 +205,9 @@ The local DuckDB database, virtual environment, raw workbooks, temporary files, 
 - [Batch 20 architecture decision](reports/batch20_architecture_decision.md)
 - [Batch 20 KPI model mapping](reports/batch20_kpi_model_mapping.csv)
 - [Batch 22.1 Tableau Desktop MCP feasibility](reports/batch22_1_tableau_desktop_mcp_feasibility.md)
+- [Batch 22.2 Tableau Desktop MCP setup](reports/batch22_2_tableau_mcp_setup.md)
+- [Batch 22.3 Tableau External Client API validation](reports/batch22_3_tableau_external_api_validation.md)
+- [Batch 22.4 Tableau External Client API diagnosis](reports/batch22_4_tableau_external_api_diagnosis.md)
 - [GitHub publication checklist](docs/github-publication-checklist.md)
 - [Phase validation reports](reports/phase01_data_profile.md), [Phase 02 schema inspection](reports/phase02_schema_inspection.md), [Phase 03 DuckDB validation](reports/phase03_duckdb_validation.md), [Batch 03 crosswalk validation](reports/batch03_crosswalk_validation.md), [Batch 06 geographic deployment](reports/batch06_geographic_deployment.md), [Batch 06.1 KPI documentation audit](reports/batch06-1_kpi_documentation_audit.md), [Batch 09 BBSR feasibility](reports/batch09_bbsr_feasibility.md), [Batch 10 BBSR reference validation](reports/batch10_bbsr_reference_validation.md), [Batch 11 BBSR/KBA compatibility audit](reports/batch11_bbsr_kba_compatibility.md), [Batch 12 two-path BBSR investigation](reports/batch12_bbsr_integration_paths.md), [Batch 13 BBSR charging-only deployment](reports/batch13_bbsr_charging_deployment.md), [Batch 13.1 owner-approved scenario](reports/batch13_1_bbsr_scenario_classification.md), [Batch 13.2 historical harmonization](reports/batch13_2_hanau_geographic_harmonization.md), [Batch 14 BBSR charging analysis](reports/batch14_bbsr_charging_analysis.md), [Batch 15 KBA EV stock analysis](reports/batch15_kba_ev_stock_analysis.md), [Batch 16 state EV/charging alignment](reports/batch16_state_ev_charging_alignment.md), and [Batch 17 temporal KPI validity](reports/batch17_temporal_kpi_validity.md)
 
@@ -321,3 +324,50 @@ approved or verified.
 The full [feasibility report](reports/batch22_1_tableau_desktop_mcp_feasibility.md)
 records the exact minimum build and verification plan. No package, setting,
 data, workbook, screenshot, remote, upload or publication changed.
+
+## Batch 22.2 Tableau Desktop Authoring MCP setup
+
+Batch 22.2 completed the approved isolated official source build and Codex
+registration. Node.js `v22.23.4` is installed under
+`/Users/admin/dev/tools`, the pinned Tableau MCP `v5.3.0` source build is at
+`/Users/admin/dev/tools/tableau-mcp`, and `tableau-desktop` is registered as a
+local stdio server with telemetry disabled. The MCP initialized and exposed 85
+tools; headless template discovery passed.
+
+The result is `MCP_SETUP_PARTIAL`, not a live authoring pass. Tableau Desktop
+2026.3.0 was running, but `list-instances` could not find an External Client
+API discovery file because `Settings.ExternalApiEnabled=0`. Changing that
+existing preference requires explicit owner approval. No authoring tool,
+workbook, database, export, source crosswalk or publication was changed. See
+[`reports/batch22_2_tableau_mcp_setup.md`](reports/batch22_2_tableau_mcp_setup.md).
+
+## Batch 22.3 Tableau Desktop External Client API validation
+
+Batch 22.3 used the owner-approved, exact user preference domain and backed up
+the verified plist outside Git. `Settings.ExternalApiEnabled` was an integer
+`0`; the controlled `defaults write` changed it to `1` and immediate readback
+passed. Tableau Desktop 2026.3.0 then reverted the value to `0` during startup,
+recorded `FreeEditionActive` in its local startup log, and published no
+External Client API discovery file. The official MCP `list-instances` check
+therefore remained blocked; headless `list-templates` still passed. No
+workbook, data source, export, database or security permission changed. Full
+evidence is in
+[`reports/batch22_3_tableau_external_api_validation.md`](reports/batch22_3_tableau_external_api_validation.md).
+
+## Batch 22.4 Tableau External Client API diagnosis
+
+Batch 22.4 completed the required read-only diagnosis after Tableau Desktop
+2026.3.0 reverted the owner-approved API preference during startup. The
+immediate reset mechanism is confirmed: Tableau initializes the installed
+runtime as `FreeEditionActive`, restores `Settings.ExternalApiEnabled=0`, and
+publishes no External Client API discovery file. No managed/system preference,
+MDM policy, MCP configuration or missing API library explains the result.
+
+No official Tableau source reviewed documents a supported way to keep this API
+enabled in the current Free Edition state. The safe recommendation is to stop
+preference retries and obtain either an owner-approved supported paid Desktop
+configuration/support answer or an explicitly approved isolated GUI fallback.
+The GUI fallback is feasible for local authoring but has not been executed; the
+computer-use entries remain disabled. The workbook, data model and KPI
+contracts remain unchanged. See
+[`reports/batch22_4_tableau_external_api_diagnosis.md`](reports/batch22_4_tableau_external_api_diagnosis.md).

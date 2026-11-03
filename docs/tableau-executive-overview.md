@@ -4,13 +4,14 @@
 `02 — Geographic View`.
 
 **Implementation status:** data preparation passed. The Tableau workbook is
-**not yet created**. Batch 22.1 identified the official Tableau Desktop
-Authoring MCP as a credible native route, but it is not enabled in the current
-environment: Node.js/npm are unavailable, no Tableau MCP entry is configured,
-and the live Desktop External Client API has not been smoke-tested. This
-document remains the implementation contract; the approval-gated bridge and
-compatibility evidence are in
-[`reports/batch22_1_tableau_desktop_mcp_feasibility.md`](../reports/batch22_1_tableau_desktop_mcp_feasibility.md).
+**not yet created**. Batch 22.2 built and registered the official Desktop MCP,
+Batch 22.3 performed the owner-approved preference validation, and Batch 22.4
+confirmed that Tableau Desktop 2026.3.0 restores
+`Settings.ExternalApiEnabled=0` while initializing `FreeEditionActive`. No
+supported Free Edition method for keeping the External Client API enabled was
+found. This document remains the implementation contract; the diagnosis and
+approval gates are in
+[`reports/batch22_4_tableau_external_api_diagnosis.md`](../reports/batch22_4_tableau_external_api_diagnosis.md).
 It does not describe a generated `.twb` or `.twbx`.
 
 ## 1. Approved narrative and source dates
@@ -292,21 +293,31 @@ Use the same fixed 1600 × 900 canvas and page tokens as Page 1:
 Batch 22.1 found that the official Desktop build can perform the native
 worksheet, dashboard, calculation, formatting, readback, image-export and
 save operations needed here. It is a separate source build from the Web-only
-npm package. The following bridge steps are approval-gated; none has been
-executed in this batch.
+npm package. Batch 22.2 completed the isolated source build and Codex
+registration, and verified MCP initialization, the 85-tool surface and
+headless template discovery. Batch 22.3 attempted the owner-approved
+preference change, but Tableau reverted it during startup. Batch 22.4
+confirmed the startup `FreeEditionActive` state, ruled out the inspected
+preference/MCP alternatives and found no documented supported Free Edition
+activation method. No workbook authoring was attempted.
 
-1. Approve Node.js `>=22.7.5`, the official source build and one local Codex
-   stdio MCP entry. Keep computer-use disabled and do not change macOS privacy
+1. Completed in Batch 22.2: install Node.js `v22.23.4` locally, build the
+   pinned official source at tag `v5.3.0`, and register one local Codex stdio
+   MCP entry. Keep computer-use disabled and do not change macOS privacy
    settings.
-2. In an isolated tooling directory, clone a pinned official revision and run
-   `npm ci` followed by `npm run build:desktop`. Point the MCP client to
-   `build/index.desktop.js` with `TRANSPORT=stdio`; do not use the Web-only
-   `@tableau/mcp-server` npm package for Desktop authoring.
-3. Launch Tableau Desktop 2026.3 with a disposable blank workbook. Call
-   `list-instances`, then use the returned PID as `session` for
-   `get-app-info`, `get-capabilities`, `get-desktop-state`,
-   `get-workbook-inventory` and `list-workbook-datasources`. Record the live
-   External Client API version and capability response.
+2. Completed in Batch 22.2: the isolated build produced
+   `build/index.desktop.js` and `build/desktop/data/`; the MCP client points at
+   that Desktop entry and does not use the Web-only `@tableau/mcp-server`
+   package.
+3. Do not retry the preference or launch Desktop solely to seek a different
+   result. Only after the owner obtains a supported paid Desktop
+   configuration/support answer should the read-only sequence run: launch
+   Tableau Desktop 2026.3 with a disposable blank workbook, call
+   `list-instances`, then use the returned PID as `session` for `get-app-info`,
+   `get-capabilities`, `get-desktop-state`, `get-workbook-inventory` and
+   `list-workbook-datasources`. Record the live External Client API version
+   and capability response. See
+   [`reports/batch22_4_tableau_external_api_diagnosis.md`](../reports/batch22_4_tableau_external_api_diagnosis.md).
 4. Attach the six CSV sources in Section 2 with `open-file`, verify every
    datasource in workbook readback, and keep the sources separate. The
    high-level `apply-datasource` tool replaces an existing datasource; it does
@@ -338,9 +349,12 @@ executed in this batch.
     references: **none — workbook not yet created**.
 11. Do not publish to Tableau Public or any external service in this batch.
 
-If the Desktop MCP smoke test fails, manual Desktop authoring remains a
-separate fallback decision; this specification does not authorize bypassing
-the live API checks or creating unverified workbook XML.
+If the supported Desktop MCP smoke test remains unavailable, manual Desktop
+authoring is a separate approval-gated fallback. It requires an approved GUI
+host and applicable macOS Accessibility/visual permissions, a disposable
+workbook, native save/reopen verification and no publication. This
+specification does not authorize bypassing the live API checks, changing
+security settings, or creating unverified workbook XML.
 
 ## 7. Validation and handoff status
 
@@ -361,8 +375,16 @@ Current status:
 
 - `DATA_PREPARATION_PASS`
 - `DESKTOP_MCP_FEASIBILITY=CONDITIONAL_GO`
+- `DESKTOP_MCP_SOURCE_BUILD=PASS`
+- `DESKTOP_MCP_CODEX_REGISTRATION=PASS`
+- `DESKTOP_MCP_HEADLESS_TEMPLATE_CHECK=PASS`
+- `DESKTOP_MCP_LIVE_HANDSHAKE=BLOCKED_EXTERNAL_API_REVERTED_TO_DISABLED`
+- `DESKTOP_MCP_STARTUP_DIAGNOSIS=ROOT_CAUSE_CONFIRMED_FREE_EDITION_INITIALIZATION`
+- `DESKTOP_MCP_SUPPORTED_ACTIVATION=NOT_ESTABLISHED_FOR_CURRENT_FREE_EDITION_STATE`
+- `GUI_AUTHORING_FALLBACK=FEASIBLE_APPROVAL_GATED`
 - `TABLEAU_WORKBOOK_NOT_YET_CREATED`
-- Desktop MCP build and live API smoke test: pending approval
+- Desktop MCP build and headless MCP checks: passed
+- Live Desktop API smoke test: blocked at `list-instances`; Tableau reverted the owner-approved preference to disabled during startup
 - Screenshot validation: pending native authoring
 - Official geographic map validation: pending native authoring
 - External publication: not attempted

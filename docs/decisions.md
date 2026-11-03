@@ -456,3 +456,72 @@ The following decisions are the concise project-log form:
 - Evidence: [`reports/batch22_1_tableau_desktop_mcp_feasibility.md`](../reports/batch22_1_tableau_desktop_mcp_feasibility.md),
   [`docs/tableau-executive-overview.md`](tableau-executive-overview.md), and
   the official Tableau MCP Desktop build documentation.
+
+## Batch 22.2 — Tableau Desktop MCP setup (2026-11-03)
+
+- Decision: Use the official Tableau MCP source build at pinned tag `v5.3.0`
+  (`8c0ac37a336cd6c3dcf57f9a3dfc86b6541281f0`) under
+  `/Users/admin/dev/tools/tableau-mcp`; do not use the Web-only npm package or
+  modify the MCP source.
+- Decision: Use a local Node.js `v22.23.4` runtime and the supported Codex CLI
+  stdio registration named `tableau-desktop`, with
+  `PRODUCT_TELEMETRY_ENABLED=false` and no Tableau Cloud credentials.
+- Decision: Keep Accessibility, Screen Recording, Apple Events, computer-use
+  and mouse automation disabled. The official route depends on Tableau's
+  authenticated loopback External Client API.
+- Decision: Do not change the existing Tableau preference
+  `Settings.ExternalApiEnabled=0` without explicit owner approval. Stop the
+  setup at the failed `list-instances` handshake and do not author a workbook
+  through an unverified fallback.
+- Consequence: The source build, Codex registration, MCP initialization,
+  85-tool listing and headless template discovery are verified, but live
+  workbook metadata, fields, datasource access, authoring, image export and
+  native save/readback remain `AVAILABLE_NOT_YET_VERIFIED`. The project remains
+  `TABLEAU_WORKBOOK_NOT_YET_CREATED` and `MCP_SETUP_PARTIAL`.
+- Evidence: [`reports/batch22_2_tableau_mcp_setup.md`](../reports/batch22_2_tableau_mcp_setup.md).
+
+## Batch 22.3 — External Client API validation (2026-11-03)
+
+- Decision: Use only the verified user preference domain
+  `com.tableau.Tableau-2026.3`, key `Settings.ExternalApiEnabled`, and preserve
+  its existing integer type. Back up the exact plist outside Git before any
+  controlled change.
+- Result: The owner-approved `defaults` write from integer `0` to `1` passed
+  immediate readback, but Tableau Desktop 2026.3.0 reverted the setting to
+  `0` during startup. No discovery file or live External Client API session
+  appeared, and official MCP `list-instances` failed.
+- Decision: Leave the original disabled state restored. Do not retry with an
+  unverified value, command-line override, binary edit, UI automation,
+  Accessibility/Screen Recording permission or alternate MCP.
+- Consequence: Headless MCP initialization and the 137-template catalog remain
+  available, but live workbook fields, metadata, authoring, image export and
+  native save/readback remain unverified. The project remains
+  `TABLEAU_WORKBOOK_NOT_YET_CREATED` and `EXTERNAL_API_SETUP_PARTIAL`.
+- Evidence: [`reports/batch22_3_tableau_external_api_validation.md`](../reports/batch22_3_tableau_external_api_validation.md).
+
+## Batch 22.4 — External Client API startup-reset diagnosis (2026-11-03)
+
+- Decision: Classify the immediate reset mechanism as confirmed startup
+  edition/licensing initialization. Tableau Desktop 2026.3.0 accepts the
+  owner-approved integer write, records `FreeEditionActive` during startup,
+  restores `Settings.ExternalApiEnabled=0`, and publishes no discovery file.
+- Qualification: The exact internal product rule connecting Free Edition to
+  this preference is not published in the local logs or official MCP source;
+  the documentation must not claim a narrower undocumented licensing rule.
+- Decision: Do not retry the preference, use an alternate flag, edit a binary,
+  inject code, fabricate credentials, or bypass macOS security. No supported
+  method for keeping the External Client API enabled in the current Free
+  Edition state was found in official Tableau documentation.
+- Decision: Keep the official MCP build and existing disabled preference
+  unchanged. The next owner gate is either a supported paid Desktop
+  licensing/support decision followed by a fresh read-only handshake, or an
+  explicitly approved isolated GUI fallback.
+- GUI consequence: Local manual authoring is feasible but untested. Any GUI
+  route must use approved Accessibility/visual permissions, a disposable
+  workbook, local native save/reopen verification and no publication.
+- Consequence: The project remains `TABLEAU_WORKBOOK_NOT_YET_CREATED`; no
+  data, schema, export, workbook, screenshot, remote, upload or publication
+  changed. The private settings backup remains outside Git.
+- Evidence: [`reports/batch22_4_tableau_external_api_diagnosis.md`](../reports/batch22_4_tableau_external_api_diagnosis.md),
+  the pinned official [Tableau MCP Desktop documentation](https://github.com/tableau/tableau-mcp/blob/v5.3.0/docs/README.desktop.md),
+  and Tableau's [edition comparison](https://help.tableau.com/current/pro/desktop/en-us/desktop_comparison.htm).

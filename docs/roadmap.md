@@ -163,3 +163,34 @@ until their prerequisites and permissions are separately approved.
 - [ ] Build and open the actual Tableau workbook in Tableau Desktop.
 - [ ] Verify all 16 official map geometries and capture final screenshots.
 - [ ] Review licensing and obtain separate approval before any publication.
+
+## Batch 22.3 external authoring bridge status
+
+- [x] Verify the exact Tableau 2026.3 user preference domain, key, value type
+  and physical plist.
+- [x] Back up and validate the exact preference file outside Git.
+- [x] Attempt the owner-approved integer enablement and graceful restart.
+- [x] Run the actual MCP `list-instances` and headless `list-templates` checks.
+- [x] Restore the original disabled preference after Tableau reverted the
+  enablement during startup.
+- [ ] Establish an officially supported Desktop configuration that keeps the
+  External Client API enabled and produces a live discovery file.
+- [ ] Run live workbook field/metadata readback before authoring either
+  Executive Overview dashboard.
+
+## Batch 22.4 external authoring bridge diagnosis
+
+- [x] Confirm the startup reset sequence after the owner-approved preference
+  write and graceful launch.
+- [x] Correlate the reset with the local `FreeEditionActive` startup state and
+  verify that the API libraries are present.
+- [x] Check user, system, ByHost, managed-preference, MDM, MCP-config and
+  discovery-file alternatives without changing them.
+- [x] Review the pinned official MCP contract and official Tableau licensing,
+  edition and release documentation.
+- [x] Document the supported-activation finding, GUI fallback feasibility,
+  privacy/permission constraints and least-interaction owner decision.
+- [ ] Obtain an owner-approved supported paid Desktop configuration/support
+  answer, or approve an isolated GUI host with the required macOS permissions.
+- [ ] Run the live MCP handshake or the disposable GUI native-save smoke test;
+  do not author the two dashboards before one path passes its readback gates.
