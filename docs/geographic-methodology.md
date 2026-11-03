@@ -432,3 +432,27 @@ This boundary rule is analytical provenance, not evidence that every KBA
 registration region is identical to a current or historical administrative
 Kreis. Any future BBSR/KBA vehicle-stock integration requires a separately
 approved dated compatibility bridge.
+
+## Batch 16 state comparison grain
+
+Batch 16 deliberately stops at the common Bundesland grain and does not create
+a new geographic crosswalk. BNetzA equipment and point rows are grouped by
+their retained `state_name`; KBA FZ 27.2 rows are grouped by the 16 published
+federal-state names. The state-level result is one row per Bundesland and is
+independent of the provisional 401-row BNetzA-to-KBA Crosswalk.
+
+The vehicle total is the sum of the six mutually exclusive FZ 27.2 passenger-
+car fuel rows: Benzin, Diesel, Gas insgesamt, Elektro (BEV), Hybrid insgesamt
+and Sonstige. `darunter Plug-in` is a nested PHEV detail and is not added to
+that total. The `Deutschland` row and `Sonstige` residual remain separate from
+the 16 named states; the 400 FZ 27.15 registration-region total is used only as
+an independent reconciliation to the 16-state sum.
+
+Charging equipment and populated points are pre-aggregated separately. Point
+power uses the established maximum-per-point parser over
+`connector_power_raw`. Only after both source aggregates exist are vehicle and
+infrastructure rows joined by state. The cross-source measures carry both
+`KBA 2026-07-01` and `BNetzA 2026-09-30` dates and are exploratory. They do not
+imply administrative equivalence, infrastructure adequacy, accessibility,
+demand or causality. No district-level allocation, BBSR assignment or Trier
+stock allocation is performed.

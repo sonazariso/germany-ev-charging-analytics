@@ -325,3 +325,76 @@ effects remain not testable with the current sources.
 Complete tables, worksheet capabilities, formulas, KPI statuses, fingerprints
 and validation evidence are in
 [`reports/batch15_kba_ev_stock_analysis.md`](../reports/batch15_kba_ev_stock_analysis.md).
+
+## Batch 16 state EV stock versus charging infrastructure
+
+Batch 16 is a separate read-only state-level comparison. It uses KBA FZ 27.2
+passenger-car stock dated `2026-07-01` and the BNetzA Ladesäulenregister dated
+`2026-09-30`. It aggregates equipment, point, status and declared-power
+measures to one row per state before joining one KBA vehicle row per state. It
+does not use BBSR, the KBA district Crosswalk, a Trier allocation, a new
+DuckDB object or a Tableau asset.
+
+### Reconciliation and benchmarks
+
+| Scope | Passenger cars | BEV | PHEV | Infrastructure scope |
+|---|---:|---:|---:|---|
+| Published `Deutschland` | 49,696,710 | 2,365,047 | 1,226,863 | KBA national row |
+| 16-state sum | 49,644,855 | 2,362,218 | 1,225,241 | Comparable to all 16 BNetzA state rows |
+| `Sonstige` | 51,855 | 2,829 | 1,622 | KBA residual, not a federal state |
+| 400 KBA registration regions | 49,644,855 | 2,362,218 | 1,225,241 | Exact match to 16-state sum |
+| BNetzA 16-state infrastructure | — | — | — | 117,662 equipment; 211,253 points |
+
+The primary comparable cross-source benchmark is **11.18 registered BEVs per
+registered point**, or **89.43 points per 1,000 BEVs**, calculated from the
+16-state sums. The published-national numerator gives **11.20 BEVs per point**
+because it adds 2,829 `Sonstige` BEVs without adding a corresponding
+infrastructure row. State ratios are not averaged to create either benchmark.
+
+### State-level findings
+
+- **OBSERVED:** Nordrhein-Westfalen has the largest July BEV stock (527,377),
+  Hamburg the highest BEV penetration (5.97%), and Nordrhein-Westfalen the
+  largest charging-point stock (41,536).
+- **OBSERVED:** Sachsen-Anhalt has the highest fast-point share (39.89%), while
+  Mecklenburg-Vorpommern has the highest >=150 kW point share (32.29%).
+  These are maximum declared-power classifications, not availability or
+  utilization measures.
+- **OBSERVED:** The largest absolute BEV-share/point-share gap is Nordrhein-
+  Westfalen (+2.66 percentage points), followed by Berlin (-1.31 points) and
+  Rheinland-Pfalz (+1.24 points). The gap is compositional, not a shortage or
+  surplus measure.
+- **OBSERVED:** The lowest and highest BEV-per-point ratios are Mecklenburg-
+  Vorpommern (6.73) and Saarland (16.48). The lowest and highest fast points
+  per 1,000 BEVs are Baden-Württemberg (16.95) and Mecklenburg-Vorpommern
+  (58.16). Counts remain the primary evidence beside each ratio.
+
+The complete 16-state table, including BEV/PHEV stock, passenger-car
+denominators, charging counts, power bands, nominal MW, all cross-source
+ratios, equipment statuses and both dates, is in
+[`reports/batch16_state_ev_charging_alignment.md`](../reports/batch16_state_ev_charging_alignment.md)
+and [`reports/batch16_state_comparison.csv`](../reports/batch16_state_comparison.csv).
+
+### Associations and interpretation
+
+The descriptive Pearson/Spearman association between absolute BEV stock and
+absolute charging points is `0.991 / 0.985`; excluding the three largest
+passenger-car states gives `0.977 / 0.973`. Passenger cars versus charging
+points is `0.983 / 0.926`, while BEV penetration versus fast-point share is
+`-0.715 / -0.688`. These are 16-state descriptive summaries, not significance
+tests or causal findings. The absolute and share associations are strongly
+scale/composition-driven; ratio-versus-ratio measures have denominator-driven
+interpretation.
+
+- **SUPPORTED ASSOCIATION:** Absolute stock and infrastructure counts
+  co-vary descriptively across states, with the association remaining high
+  after excluding the three largest states.
+- **PLAUSIBLE HYPOTHESIS:** State size, urban form, fleet composition, siting
+  patterns and travel may contribute to the observed differences, but the
+  current cross-section cannot identify the mechanism.
+- **NOT TESTABLE WITH AVAILABLE DATA:** Demand, utilization, sessions, queues,
+  reliability, traffic flow, delivered energy, accessibility and causal
+  infrastructure effects.
+
+The full report contains the validation matrix, source fingerprints, formulas,
+Tableau suitability assessment and reproducibility command.

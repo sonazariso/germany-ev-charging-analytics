@@ -253,3 +253,35 @@ This log separates approved decisions, implementation details, and pending propo
 - Status: Approved and applied for Batch 15; any dated KBA/BBSR bridge,
   cross-source vehicle/charging ratio, Tableau deployment or new source remains
   separately approval-gated.
+
+## Batch 16 — state EV stock and charging alignment decisions (2026-11-03)
+
+- Decision: Use the existing KBA FZ 27.2 July 2026 state-fuel table and the
+  existing source-aware BNetzA state/infrastructure objects for a read-only
+  16-state comparison. No new DuckDB table, view or permanent KPI object is
+  authorized.
+- Decision: Calculate one KBA vehicle row and one BNetzA charging row per
+  federal state before joining. Keep equipment-grain nominal power and
+  point-grain power bands separate; do not join raw equipment, raw points and
+  KBA fuel rows together.
+- Decision: Reconstruct total passenger cars from the six mutually exclusive
+  FZ 27.2 fuel rows. Use `darunter Plug-in` for PHEV only and never add it to
+  `Hybrid insgesamt`.
+- Decision: Keep published `Deutschland`, the 16-state sum, `Sonstige`, the
+  400 KBA registration-region sum and BNetzA's 16-state infrastructure scope
+  separate. The primary benchmark is 2,362,218 16-state BEVs / 211,253 points
+  = 11.18 BEVs per point; the national benchmark includes 2,829 `Sonstige`
+  BEVs and is reported separately.
+- Decision: Carry both snapshot dates on every cross-source output. Treat
+  BEVs per point, points per 1,000 BEVs, fast/HPC points per 1,000 BEVs and
+  BEV-share-minus-point-share as exploratory descriptive indicators, not
+  adequacy, shortage, surplus, accessibility, utilization or causal KPIs.
+- Decision: Report Pearson and Spearman associations only as descriptive
+  16-state diagnostics, include a three-largest-state sensitivity check, and
+  do not make significance or causal claims.
+- Consequence: Batch 16 creates one analyzer, one Markdown report and three
+  deterministic CSV diagnostics. It does not modify DuckDB, raw workbooks, the
+  Crosswalk, BBSR layers, dependencies or Tableau assets.
+- Status: Approved and applied for Batch 16; any same-date infrastructure
+  panel, geographic bridge, Tableau deployment or new source remains
+  separately approval-gated.

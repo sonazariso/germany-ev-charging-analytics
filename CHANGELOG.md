@@ -2,6 +2,15 @@
 
 This changelog records project milestones and local repository changes. Historical Batch 01–03 entries describe work evidenced by local reports; they do not imply historical Git commits or inferred dates.
 
+## 2026-11-03 — Batch 16
+
+- Added `scripts/16_analyze_state_ev_charging_alignment.py`, a deterministic read-only analyzer that pre-aggregates KBA FZ 27.2 July 2026 passenger-car stock and BNetzA September 2026 infrastructure separately at the 16-state grain before joining.
+- Added `reports/batch16_state_ev_charging_alignment.md`, `reports/batch16_state_comparison.csv`, `reports/batch16_national_reconciliation.csv`, and `reports/batch16_state_associations.csv` with the complete state KPI comparison, national/16-state/`Sonstige`/400-region reconciliation, outlier tables, descriptive Pearson/Spearman associations, denominator safeguards, KPI evaluation, and source fingerprints.
+- Reconciled 117,662 equipment records, 211,253 declared/populated points, 156,155 normal points, 55,098 fast points, 40,950 points >=150 kW, 6,950 points >=350 kW, and 9,215.4173 MW; reconciled July KBA national, 16-state, `Sonstige`, and 400-region passenger-car/BEV/PHEV totals.
+- Documented the primary 16-state benchmark of 2,362,218 BEVs / 211,253 registered points = 11.18 BEVs per point and kept the published-national 2,365,047-BEV benchmark separate because it includes 2,829 `Sonstige` BEVs.
+- Verified exactly 16 state joins, maximum-per-point power definitions, equipment statuses, safe ratio denominators, unchanged source fingerprints, unchanged DuckDB bytes, and byte-identical second-run outputs. No DuckDB object, raw workbook, geographic Crosswalk, BBSR layer, dependency, remote, upload, Tableau asset, or publication changed.
+- Updated the English README, findings, KPI catalog, data-quality, geographic-methodology, decision, roadmap and project-status documentation, plus the private Persian KPI catalog outside Git.
+
 ## 2026-11-03 — Batch 15
 
 - Added `scripts/15_analyze_kba_ev_stock.py`, a deterministic read-only analyzer for the three local KBA FZ 27 releases dated 2026-01-01, 2026-04-01, and 2026-07-01.

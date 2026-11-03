@@ -436,3 +436,38 @@ across districts, and many missing numeric cells after source-dot parsing. The
 two tables are therefore descriptive alternative grains, not replacement
 denominators for FZ 27.15. Full evidence is in
 [`reports/batch15_kba_ev_stock_analysis.md`](../reports/batch15_kba_ev_stock_analysis.md).
+
+## Batch 16 state EV/charging validation
+
+Batch 16 opened DuckDB with `read_only=True` and created no database object.
+It calculated one charging row per federal state and one KBA vehicle row per
+federal state before joining them. The KBA stock date is `2026-07-01`; the
+BNetzA infrastructure date is `2026-09-30`.
+
+| Check | Result | Status |
+|---|---:|---|
+| BNetzA equipment rows | 117,662 | PASS |
+| Declared/populated points | 211,253 / 211,253 | PASS |
+| Normal / fast points | 156,155 / 55,098 | PASS |
+| Points >=150 / >=350 kW | 40,950 / 6,950 | PASS |
+| Unclassifiable maximum point power | 0 | PASS |
+| Declared equipment nominal power | 9,215.4173 MW | PASS |
+| Equipment statuses | 117,642 `In Betrieb`; 20 `In Wartung`; 0 other/NULL | PASS; statuses retained without filtering |
+| State charging rows | 16 distinct states | PASS |
+| KBA FZ 27.2 rows | 126 = 18 geographies × 7 fuel rows | PASS |
+| National / 16-state / Sonstige reconciliation | Exact for passenger cars, BEVs and PHEVs | PASS |
+| KBA 400-region rows | 400 unique July codes; totals equal 16-state sum | PASS |
+| Vehicle category control | Six mutually exclusive total rows; PHEV not added to `Hybrid insgesamt` | PASS |
+| Duplicate/orphan/mismatched charging points | 0 / 0 / 0 | PASS |
+| State join | 16 distinct states; no missing or duplicated join keys | PASS |
+| Zero ratio denominators | 0 BEV or point denominators | PASS |
+| Source fingerprints | 6 preserved workbook/reference fingerprints match | PASS |
+| DuckDB byte hash | Start/end `5d2dc0b3c5800499bf3d2e41fd82a899315bcb713c267572ade7dc1b4c6a66d3` | PASS |
+| Deterministic repeat | Report and 3 CSV hashes identical on second execution | PASS |
+
+The charging parser preserves the established definition: split each
+semicolon-separated `connector_power_raw` value, parse numeric tokens, take the
+maximum within one point, and classify that point once as normal (`<=22 kW`),
+fast (`>22 kW`), >=150 kW or >=350 kW. Equipment nominal power is aggregated
+from the equipment table separately from point rows. The full evidence is in
+[`reports/batch16_state_ev_charging_alignment.md`](../reports/batch16_state_ev_charging_alignment.md).

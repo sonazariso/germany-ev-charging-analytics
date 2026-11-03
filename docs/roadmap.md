@@ -23,6 +23,8 @@ This roadmap distinguishes established work from planned work. A planned item is
 - Batch 13.1: deployed the separate owner-approved Hanau/Main-Kinzig analytical scenario with a two-row override reference, 401 classified source districts, zero scenario-unclassified districts, and no change to the official Batch 13 baseline.
 - Batch 13.2: audited the BBSR 68-versus-67 discrepancy, corrected the Kassel city/county join only in a new layer, and deployed a historical Hanau/Main-Kinzig BBSR 2025 harmonization with 401 source components, 400 target units, and full national reconciliation.
 - Batch 14: completed a read-only statistical analysis of the harmonized BBSR charging layer, including category KPIs, within-unit distributions, weighted/unweighted comparisons, concentration/outlier screens, evidence-labelled interpretations, and future Tableau KPI evaluation. No database objects were changed.
+- Batch 15: completed a read-only KBA FZ 27 stock, growth, geography, ownership, worksheet-capability and historical-series analysis with deterministic outputs and explicit national/state/`Sonstige`/400-region scopes.
+- Batch 16: completed a read-only 16-state comparison of KBA July 2026 passenger-car stock versus BNetzA September 2026 charging infrastructure, with deterministic reconciliation, cross-source ratios, outlier screens, descriptive correlations and KPI evaluation. No database objects were changed.
 
 These are project milestones supported by local artifacts. They are not historical Git commits unless a local commit is explicitly identified in the handoff.
 
@@ -69,9 +71,13 @@ These are project milestones supported by local artifacts. They are not historic
 - [x] Run Batch 15 read-only KBA FZ 27 stock, growth, geography, ownership, worksheet-capability and historical-series analysis with deterministic CSV/report outputs.
 - [x] Reconcile national, 16-state, `Sonstige` and 400 KBA-region passenger-car/BEV/PHEV scopes; preserve Trier `07211` as one shared registration region.
 - [x] Document FZ 27.5 owner residuals, FZ 27.16/27.17 alternative grains, national quarterly history, and the exploratory 1,000-BEV percentage-growth threshold.
+- [x] Run the Batch 16 state EV stock versus charging alignment analyzer and produce the report plus state, reconciliation and association CSVs.
+- [x] Reconcile BNetzA infrastructure totals, KBA national/16-state/`Sonstige`/400-region totals, exact 16-state joins, source fingerprints, power bands, statuses, safe denominators and unchanged DuckDB bytes.
+- [x] Document the 16-state benchmark, separate published-national benchmark, both snapshot dates, outliers, large-state sensitivity and non-causal interpretation safeguards.
 - [ ] Approve a dated BBSR/KBA compatibility bridge before any KBA-level BBSR classification or vehicle-stock ratio.
 - [ ] Decide whether a post-2026 BBSR vintage, a product-specific KBA bridge, historical KBA snapshots, or future Tableau work is required; no universal prefix rule or Trier allocation is approved.
-- [ ] Review Batch 15 findings and complete dashboard-specific denominator review before any Tableau implementation.
+- [x] Review Batch 15 findings and complete the Batch 16 state-level denominator/date review before any Tableau implementation.
+- [ ] Approve whether a contemporaneous infrastructure panel or product-specific geographic bridge is needed for future cross-source trends.
 - [ ] Prepare compact Tableau extracts and source-date metadata.
 - [ ] Develop a Germany-wide overview and selected drill-down dashboard.
 - [ ] Complete code, dependency, data, licensing, and screenshot review.

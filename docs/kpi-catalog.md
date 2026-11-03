@@ -53,7 +53,7 @@ This audit reviewed the existing numbered definitions and the requested coverage
 | PHEV stock | VALIDATED | `core.kba_district_ev_stock`; Batch 06 July total | None for the current stock measure | Retain the existing definition |
 | PHEV absolute change and percentage growth | DEFINED BUT NOT VALIDATED | Same KBA fields and snapshot dates as the BEV measures | No independent project validation result or explicit approved catalog entry | Obtain owner approval and run a like-for-like validation before publishing |
 | BEV share of passenger cars | VALIDATED | FZ 27.15 `bev_cars / passenger_cars`; existing definition 16 | None where the FZ 27.15 denominator is used | Keep the district/state/national-grain warning |
-| PHEV share of passenger cars | DEFINED BUT NOT VALIDATED | FZ 27.15 provides `phev_cars` and `passenger_cars` | No approved definition or validation result in the current project | Treat as a candidate until approved and reconciled |
+| PHEV share of passenger cars | VALIDATED at current state/FZ 27.15 grains | FZ 27.2 `darunter Plug-in` or FZ 27.15 `phev_cars` divided by same-grain passenger cars | Batch 15/16 independently reconcile state and 400-region passenger-car denominators; national `Deutschland` remains a separate scope | Keep the source grain, date and nested PHEV definition visible |
 | BEVs per registered charging point and related ratios | PROVISIONAL | Deployed combined view; existing definition 17 | Formula is complete; dates, source coverage, and provisional geography limit interpretation | Keep as a cross-snapshot descriptive ratio, never a utilization KPI |
 | Fast/HPC share versus BEV growth | EXPLORATORY (PROVISIONAL) | Existing definitions 18 and 19; Batch 05/06 dates and limitations | These are paired measures, not one causal KPI | Keep exploratory and do not infer demand, impact, or causality |
 | Administrative city/county comparisons | PROPOSED — REQUIRES APPROVAL | BNetzA admin type and crosswalk fields; 401 source geographies | Display geography, aggregation rule, and treatment of city-to-county and Trier cases are not approved | Decide the comparison grain and validate it separately |
@@ -391,12 +391,12 @@ The following definitions document gaps identified by the audit. They are delibe
 
 ### PHEV share of passenger cars
 
-- Definition: PHEV stock divided by `passenger_cars` from the same FZ 27.15 row and date.
-- Formula: `100 * SUM(phev_cars) / SUM(passenger_cars)`.
+- Definition: PHEV stock divided by `passenger_cars` from the same FZ 27.15 row and date, or by the same-grain FZ 27.2 state passenger-car total.
+- Formula: `100 * SUM(phev_cars) / SUM(passenger_cars)` or `100 * darunter Plug-in / total passenger cars`.
 - Units: Percent.
-- Source and grain: `core.kba_district_ev_stock`; district, state aggregate, or 400-district aggregate plus `reference_date`.
-- Required controls: Use only the confirmed FZ 27.15 denominator and keep the district-versus-Deutschland reconciliation visible.
-- Status: DEFINED BUT NOT VALIDATED. Owner approval and an independent reconciliation are required before it becomes a published KPI.
+- Source and grain: `core.kba_district_ev_stock` or `core.kba_state_fuel_stock`; 400-region or 16-state grain plus `reference_date`.
+- Required controls: Use the confirmed same-grain denominator and keep the district/state-versus-Deutschland reconciliation visible.
+- Status: VALIDATED for the current state and 400-region source grains after Batch 15/16 reconciliation. National `Deutschland` and `Sonstige` remain separate reporting scopes.
 
 ### Administrative city/county comparison
 
@@ -597,3 +597,32 @@ The complete formulas, columns, reconciliation fields and limitations are in
 The recommended Tableau set is limited to validated stock/penetration/change
 measures plus clearly labelled exploratory distributions. No measure implies
 charging demand, utilization, access, quality, or causality.
+
+## Batch 16 state EV/charging alignment KPIs
+
+Batch 16 adds a state-level candidate set without creating permanent DuckDB
+KPI views. KBA values use `2026-07-01`; BNetzA values use `2026-09-30`.
+
+| KPI | Formula | Numerator | Denominator | Unit | Source | Grain | Status | Interpretation / limitation | Tableau suitability |
+|---|---|---|---|---|---|---|---|---|---|
+| State BEV stock | `SUM(Elektro (BEV))` | Registered BEV passenger cars | None | Vehicles | KBA FZ 27.2 | 16 states | VALIDATED | Stock, not sales or demand | Recommended |
+| State PHEV stock | `SUM(darunter Plug-in)` | Registered PHEV passenger cars | None | Vehicles | KBA FZ 27.2 | 16 states | VALIDATED | Nested under `Hybrid insgesamt`; never add to the total fuel rows | Recommended |
+| Total registered passenger cars | Sum six mutually exclusive fuel rows | Benzin, Diesel, Gas, BEV, Hybrid insgesamt, Sonstige | None | Vehicles | KBA FZ 27.2 | 16 states | VALIDATED | Passenger-car denominator; PHEV is not added a second time | Recommended denominator |
+| BEV penetration | `BEV / total passenger cars` | State BEV stock | Same-state passenger cars | % | KBA FZ 27.2 | 16 states | VALIDATED | Registered-stock share | Recommended |
+| PHEV penetration | `PHEV / total passenger cars` | State PHEV stock | Same-state passenger cars | % | KBA FZ 27.2 | 16 states | VALIDATED | Registered-stock share | Recommended |
+| Combined plug-in penetration | `(BEV + PHEV) / total passenger cars` | BEV + PHEV stock | Same-state passenger cars | % | KBA FZ 27.2 | 16 states | VALIDATED | Valid only for mutually exclusive BEV/PHEV categories | Recommended |
+| Charging-point count | `COUNT(core.charging_point)` | Populated point slots | None | Points | BNetzA | 16 states | VALIDATED | Register stock; not connectors, availability or capacity | Recommended |
+| Fast/HPC point counts and shares | Count by maximum declared point power; divide by all points | Points >22, >=150, >=350 kW | All point slots | Points / % | BNetzA `connector_power_raw` | 16 states | VALIDATED | Nested declared-power mix; not utilization or simultaneous delivery | Recommended with definitions |
+| Nominal equipment power | `SUM(equipment_nominal_power_kw) / 1,000` | Equipment nominal kW | None | MW | BNetzA | 16 states | VALIDATED | Nominal power, not energy or grid capacity | Context |
+| BEVs per registered point | `BEV / points` | July state BEV stock | September registered points | BEVs/point | KBA + BNetzA | 16 states | EXPLORATORY | Date-mismatched and register-coverage dependent; not adequacy/accessibility | Clearly labelled exploratory only |
+| Points per 1,000 BEVs | `points * 1,000 / BEV` | September registered points | July state BEV stock | Points / 1,000 BEVs | KBA + BNetzA | 16 states | EXPLORATORY | Inverse date-mismatched ratio; not a service standard | Exploratory context |
+| Fast/HPC points per 1,000 BEVs | `threshold points * 1,000 / BEV` | Fast or >=150/350 kW points | July state BEV stock | Points / 1,000 BEVs | KBA + BNetzA | 16 states | EXPLORATORY | Denominator, date and source-coverage limitations | Exploratory context |
+| BEV share minus point share | `BEV share − point share` | State share of 16-state BEVs | State share of all registered points | Percentage points | KBA + BNetzA | 16 states | EXPLORATORY | Compositional gap; not shortage/surplus | Annotation, not standalone KPI |
+| State Pearson/Spearman associations | Correlation across state rows | Selected state metric | Selected state metric | Coefficient | KBA + BNetzA | 16 states | EXPLORATORY | Small cross-section; scale and denominators; no causality | Analyst diagnostic |
+| Adequacy/shortage/surplus | No defensible formula | — | — | Unsupported | Requires sessions/demand/availability/service standard | Not supported | UNSUPPORTED | Current sources cannot measure the concept | Do not deploy |
+
+The recommended concise Tableau set is state BEV stock, passenger-car stock,
+BEV penetration, registered points, fast/HPC counts and shares, and nominal MW
+as context. Any cross-source ratio must show both reference dates and remain
+exploratory. A ratio must not be used to label a state adequately or
+inadequately supplied.
