@@ -471,3 +471,54 @@ evidence and warning labels are in
 [`reports/batch17_state_temporal_sensitivity.csv`](../reports/batch17_state_temporal_sensitivity.csv),
 [`reports/batch17_equipment_commissioning_cohorts.csv`](../reports/batch17_equipment_commissioning_cohorts.csv),
 and [`reports/batch17_kpi_publication_decisions.csv`](../reports/batch17_kpi_publication_decisions.csv).
+
+## Batch 18 consolidated readiness findings
+
+Batch 18 converts the validated findings into a publication-readiness
+decision. The strongest current analytical story is not a charger adequacy
+score; it is the contrast between absolute registered point scale and declared
+power composition, supported by a separate registered-EV stock profile.
+
+### Verified findings
+
+- The September BNetzA register contains 117,662 equipment records and
+  211,253 populated point slots. Maximum-per-point declared-power parsing gives
+  156,155 normal, 55,098 fast, 40,950 at least 150 kW and 6,950 at least
+  350 kW points; declared equipment nominal power is 9,215.4173 MW.
+- July 2026 KBA national totals are 2,365,047 BEVs and 1,226,863 PHEVs. The
+  comparable 16-state/400-region scope is 2,362,218 BEVs and 1,225,241 PHEVs;
+  `Sonstige` remains separate.
+- The historical BBSR harmonized charging layer reconciles 401 current source
+  components to 400 BBSR 2025 target units. It is charging-only and retains
+  the `2025-12-31` BBSR stand beside the `2026-09-30` BNetzA date.
+- The canonical Batch 18 register contains 59 KPI/candidate rows with status
+  counts `HEADLINE_READY` 16, `HEADLINE_READY_WITH_DATES` 11,
+  `CONTEXT_ONLY` 8, `EXPLORATORY` 17 and `NOT_SUPPORTED` 7.
+
+### Methodological decisions
+
+- BEVs per registered point is `CONTEXT_ONLY`; its comparable 16-state value is
+  11.181938 and the retrospective survivor sensitivity is 11.446796. Neither
+  is an adequacy, accessibility, utilization or demand measure.
+- Temporal survivor-cohort metrics are `EXPLORATORY`; the survivor cohort is
+  not actual July infrastructure. A genuine historical infrastructure panel is
+  `BLOCKED` with current data.
+- Infrastructure adequacy, shortage, surplus, utilization, energy delivery,
+  queueing, reliability, real-time availability and causal adoption effects
+  are `NOT_SUPPORTED`.
+- No KBA-to-BBSR vehicle-stock integration is published. No BBSR ratio is
+  calculated and no `07211` Trier BEV stock is allocated.
+
+### Recommended portfolio analyses
+
+Prioritize the BBSR historical charging-only composition story, regional
+declared-HPC concentration, the date-labelled 16-state EV/charging profile,
+and temporal sensitivity as an explanatory methods view. Keep ownership
+composition as supporting context. Defer genuine historical evolution and
+BBSR vehicle-stock integration until their prerequisites are approved and
+available.
+
+The complete candidate assessments, source grains and join risks are in
+[`reports/batch18_tableau_analysis_candidates.md`](../reports/batch18_tableau_analysis_candidates.md);
+the decision register is in
+[`reports/batch18_readiness_decisions.md`](../reports/batch18_readiness_decisions.md).

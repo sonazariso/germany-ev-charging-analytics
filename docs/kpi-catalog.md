@@ -2,12 +2,22 @@
 
 ## Status vocabulary
 
-- VALIDATED: the current source fields, grain, formula, and reconciliation have been checked against the local artifacts. This is descriptive validation, not a claim that the source is exhaustive.
-- PROVISIONAL: calculable from current data, but affected by a documented date, coverage, geographic, parsing, or interpretation limitation.
-- EXPLORATORY: a descriptive comparison or ranking that is not an approved standalone causal or performance KPI.
-- DEFINED BUT NOT VALIDATED: the source fields, grain, and formula are specified, but this project has not yet produced the required independent validation evidence.
-- PROPOSED — REQUIRES APPROVAL: a candidate analysis or KPI whose final denominator, display grain, normalization, or use has not been approved.
-- UNSUPPORTED BY CURRENT SOURCES: the current source fields cannot measure the requested concept without a new approved data source.
+Batch 18 establishes the project publication vocabulary. The historical batch
+sections below retain earlier labels where they are part of the audit trail;
+the [Batch 18 KPI readiness register](../reports/batch18_kpi_readiness_register.csv)
+is authoritative for current publication status.
+
+- `HEADLINE_READY`: the formula, numerator, denominator, grain, scope and reconciliation are validated for a primary descriptive presentation. Standard source-date metadata remains mandatory.
+- `HEADLINE_READY_WITH_DATES`: suitable for primary presentation only when the relevant snapshot dates or geographic vintage are visible beside the value.
+- `CONTEXT_ONLY`: useful supporting context whose coverage, geography or interpretation needs a prominent caveat; not a headline conclusion.
+- `EXPLORATORY`: descriptive comparison, ranking, sensitivity or source-field analysis; not an approved causal, performance or adequacy KPI.
+- `NOT_SUPPORTED`: the current sources do not supply a defensible formula or validated integration for the requested interpretation.
+
+For Batch 18, earlier `VALIDATED` labels map to one of the two headline
+statuses when publication-ready, earlier `PROVISIONAL` labels map to
+`CONTEXT_ONLY`, `EXPLORATORY` or `NOT_SUPPORTED` according to the documented
+risk, and earlier `DEFINED BUT NOT VALIDATED`/`PROPOSED` labels remain
+`EXPLORATORY` or `NOT_SUPPORTED` until their evidence exists.
 
 All KPIs must carry the source reference date and the geographic grain in the output. A KBA stock value is registered stock, not new vehicle sales.
 
@@ -656,3 +666,35 @@ sensitivity, risk, label and visualization recommendation for each row is in
 The BEVs-per-point measure may therefore appear only as a dated secondary
 context measure. It must not be framed as a contemporaneous adequacy or
 accessibility KPI, regardless of ranking stability.
+
+## Batch 18 final publication readiness
+
+Batch 18 consolidates the definitions across the infrastructure, power,
+geographic, BBSR, vehicle-stock, ownership, state-comparison and temporal
+domains. The machine-readable register contains 59 deterministic rows and
+stores, for each row, the English/German name, exact formula, numerator,
+denominator, unit, datasets, fields/objects, geographic grain, dates, source
+scope, limitations, interpretation controls, publication status and Tableau
+treatment.
+
+| Publication status | Count | Practical meaning |
+|---|---:|---|
+| `HEADLINE_READY` | 16 | Single-source infrastructure and same-grain KBA descriptive measures. |
+| `HEADLINE_READY_WITH_DATES` | 11 | Dated stock changes, national history and historical BBSR charging measures. |
+| `CONTEXT_ONLY` | 8 | Cross-source ratios, provisional geography, source-grain BBSR context and ownership. |
+| `EXPLORATORY` | 17 | Distribution, concentration, rankings, correlations, source-field and temporal sensitivity analyses. |
+| `NOT_SUPPORTED` | 7 | Historical stock change, BBSR vehicle ratios, adequacy, utilization and unvalidated denominators/integrations. |
+
+The recommended headline families are registered equipment and point-slot
+counts; normal/fast and declared-power threshold counts/shares; declared
+nominal MW; 16-state infrastructure distribution; KBA BEV/PHEV/passenger-car
+stock and same-grain penetration; KBA stock changes; the national stock
+trajectory; and historical BBSR charging-only composition with both
+`2026-09-30` BNetzA and `2025-12-31` BBSR dates. BEVs per registered point is
+`CONTEXT_ONLY`; temporal survivor-cohort metrics are `EXPLORATORY`; adequacy,
+shortage and surplus are `NOT_SUPPORTED`.
+
+The full formulas and source objects are in
+[`reports/batch18_kpi_readiness_register.csv`](../reports/batch18_kpi_readiness_register.csv).
+The decision rationale, Tableau page recommendation and unresolved blockers
+are in [`reports/batch18_readiness_decisions.md`](../reports/batch18_readiness_decisions.md).

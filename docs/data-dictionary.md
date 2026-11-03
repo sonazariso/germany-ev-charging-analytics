@@ -374,3 +374,25 @@ holder-group data, so commercial plus private counts are reported separately
 from the residual and are not forced to equal a complete ownership allocation.
 FZ 27.16 and FZ 27.17 remain alternative postcode/municipality grains and are
 not additive partitions of FZ 27.15.
+
+## Batch 18 readiness outputs
+
+Batch 18 does not add a DuckDB table or view. Its machine-readable readiness
+assessment is:
+
+| Output | Grain | Rule |
+|---|---|---|
+| `reports/batch18_kpi_readiness_register.csv` | One row per stable KPI/candidate ID | 59 rows; 19 fields; canonical publication status, exact formula, numerator/denominator, source scope, grain, dates and Tableau treatment. |
+| `reports/batch14_bbsr_district_metrics.csv` | One historical BBSR target unit | 400 rows; charging-only; BNetzA `2026-09-30` applied to BBSR stand `2025-12-31`. |
+| `reports/batch14_bbsr_type_metrics.csv` | One historical BBSR type | Four rows; category totals and within-category declared-power shares. |
+| `reports/batch16_state_comparison.csv` | One federal state | 16 state rows; KBA `2026-07-01` and BNetzA `2026-09-30` carried together. |
+| `reports/batch15_kba_district_metrics.csv` | One KBA registration region | 400 rows with three KBA dates; no BBSR equivalence and no Trier allocation. |
+| `reports/batch17_state_temporal_sensitivity.csv` | One federal state | Published September versus retrospective survivor sensitivity; not a historical July stock. |
+
+The source relationships are not implied by shared names. State comparisons join
+one pre-aggregated KBA row to one pre-aggregated BNetzA row for the 16 named
+states. KBA registration-region outputs retain `07211` as one combined
+Trier-Saarburg registration region. BBSR historical outputs retain source
+component count/name and both source dates and contain no KBA vehicle measure.
+The repeated infrastructure values in the existing combined KBA view must not
+be summed across its three KBA dates.

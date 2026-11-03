@@ -232,3 +232,31 @@ fingerprints, plus the preserved BBSR workbook and Crosswalk fingerprints. The
 analysis reads the existing DuckDB file read-only and writes only local
 analytical reports/CSVs. It does not change source workbooks, Crosswalk rows,
 BBSR reference files, or database objects.
+
+## Batch 18 source-readiness decision
+
+Batch 18 rechecked the preserved BNetzA, KBA and BBSR artifacts without
+downloading or importing another dataset. The BNetzA source remains one
+published snapshot dated `2026-09-30`; the three KBA FZ 27 releases remain
+dated `2026-01-01`, `2026-04-01` and `2026-07-01`; and the BBSR reference
+remains at geographic stand `2025-12-31`.
+
+The source roles are now fixed for publication planning:
+
+- BNetzA supports current equipment/point stock and declared-power mix at its
+  published snapshot. A point slot is not a connector count, and the register
+  is not necessarily exhaustive.
+- KBA supports registered passenger-car stock, same-grain EV penetration and
+  stock change at national/state/KBA registration-region grains. `Deutschland`,
+  the 16 named states, `Sonstige` and the 400-region table remain separate.
+- BBSR supports a charging-only historical target-unit comparison through the
+  Batch 13.2 harmonized layer. It does not supply a validated KBA vehicle-stock
+  bridge or an official 2026 Hanau classification.
+- Equipment commissioning dates support a current-register cohort profile and
+  a retrospective survivor sensitivity only. They do not create historical
+  infrastructure snapshots.
+
+The detailed readiness matrix and source-date/join rules are in
+[`reports/batch18_tableau_analysis_candidates.md`](../reports/batch18_tableau_analysis_candidates.md).
+The historical-panel decision is in
+[`reports/batch18_historical_data_feasibility.md`](../reports/batch18_historical_data_feasibility.md).

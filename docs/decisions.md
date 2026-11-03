@@ -323,3 +323,40 @@ This log separates approved decisions, implementation details, and pending propo
 - Status: Approved and applied for Batch 17. A historical infrastructure panel,
   activation/retirement semantics, demand, availability, Tableau deployment or
   Batch 18 remains separately approval-gated.
+
+## Batch 18 — analytics readiness and KPI publication decisions (2026-11-03)
+
+Batch 18's complete register is in
+[`reports/batch18_readiness_decisions.md`](../reports/batch18_readiness_decisions.md).
+The following decisions are the concise project-log form:
+
+- Decision: Use `HEADLINE_READY`, `HEADLINE_READY_WITH_DATES`, `CONTEXT_ONLY`,
+  `EXPLORATORY` and `NOT_SUPPORTED` as the canonical publication statuses.
+  The deterministic 59-row register in
+  [`reports/batch18_kpi_readiness_register.csv`](../reports/batch18_kpi_readiness_register.csv)
+  is authoritative for current status.
+- Decision: Publish core BNetzA counts/power composition, same-grain KBA stock
+  and penetration, KBA stock changes, the national KBA stock history and
+  charging-only historical BBSR composition only with their source dates,
+  grain and vintage controls.
+- Decision: Keep BEVs per registered point and its inverse `CONTEXT_ONLY`;
+  keep temporal survivor metrics and power-normalized cross-source metrics
+  `EXPLORATORY`; keep adequacy, shortage, surplus, utilization and demand
+  claims `NOT_SUPPORTED`.
+- Decision: Treat 16-state comparisons as the supported common cross-source
+  grain. Keep KBA registration regions, BBSR historical targets and BNetzA
+  source geography separate; do not create a KBA-to-BBSR vehicle join or
+  allocate Trier `07211` stock.
+- Decision: Mark genuine historical infrastructure-panel development
+  `BLOCKED` with current data. Commissioning dates support a cohort profile and
+  sensitivity only; they do not reconstruct observed historical stock.
+- Recommendation: If separately approved, implement a five-page Tableau
+  narrative around the published register, geographic composition, registered
+  EV stock, cross-source context and methods/limitations. Keep ownership
+  optional and defer historical evolution, BBSR vehicle ratios and adequacy
+  scorecards.
+- Consequence: Batch 18 adds readiness reports and documentation only. It does
+  not create dashboards, extracts, DuckDB objects, source files, new datasets,
+  remotes or publication outputs.
+- Status: Batch 18 review complete; all implementation recommendations remain
+  owner-approval gated for Batch 19.

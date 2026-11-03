@@ -26,6 +26,7 @@ This roadmap distinguishes established work from planned work. A planned item is
 - Batch 15: completed a read-only KBA FZ 27 stock, growth, geography, ownership, worksheet-capability and historical-series analysis with deterministic outputs and explicit national/state/`Sonstige`/400-region scopes.
 - Batch 16: completed a read-only 16-state comparison of KBA July 2026 passenger-car stock versus BNetzA September 2026 charging infrastructure, with deterministic reconciliation, cross-source ratios, outlier screens, descriptive correlations and KPI evaluation. No database objects were changed.
 - Batch 17: completed a read-only temporal-validity audit of the Batch 16 cross-source KPIs, including commissioning-date quality, published-versus-survivor cohort sensitivity, 16-state ranking/outlier comparison, fixed-denominator vehicle-stock illustration and KPI publication decisions. No database objects were changed.
+- Batch 18: completed the source-readiness review, canonical 59-row KPI register, historical-panel feasibility decision, Tableau candidate assessment, concise narrative recommendation and decision register. No database objects, source files, Tableau assets or new datasets were changed.
 
 These are project milestones supported by local artifacts. They are not historical Git commits unless a local commit is explicitly identified in the handoff.
 
@@ -87,3 +88,21 @@ These are project milestones supported by local artifacts. They are not historic
 - [ ] Develop a Germany-wide overview and selected drill-down dashboard.
 - [ ] Complete code, dependency, data, licensing, and screenshot review.
 - [ ] Obtain explicit user approval for any remote or GitHub publication.
+
+## Batch 18 readiness boundary
+
+- [x] Finalize the canonical publication statuses and machine-readable KPI readiness register.
+- [x] Separate headline-ready, date-labelled, context-only, exploratory and unsupported measures.
+- [x] Confirm the supported state, KBA registration-region, BNetzA source-grain and historical BBSR charging-only geographies.
+- [x] Decide that genuine historical infrastructure-panel development is `BLOCKED` with the current single BNetzA snapshot.
+- [x] Identify Tableau-ready source outputs, grain relationships, dates and join risks without creating Tableau assets.
+- [x] Recommend a question-led Tableau narrative while keeping dashboard implementation owner-approval gated.
+- [ ] Obtain explicit owner approval before implementing any Batch 19 extract or dashboard work.
+
+## Recommended Batch 19 scope (not approved for automatic execution)
+
+If approved, Batch 19 should prepare and validate separate source-date-labelled
+extracts from the existing state, KBA-only, BBSR charging-only and temporal
+sensitivity outputs. It should not create a historical infrastructure panel,
+add a KBA-to-BBSR vehicle join, download new data or publish remotely unless
+those actions are separately authorized.

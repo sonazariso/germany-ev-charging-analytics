@@ -511,3 +511,29 @@ bands are 152,981 normal, 53,384 fast, 39,543 at least 150 kW and 6,335 at
 least 350 kW. Full year/month, state/status and sensitivity evidence is in
 [`reports/batch17_temporal_kpi_validity.md`](../reports/batch17_temporal_kpi_validity.md)
 and [`reports/batch17_equipment_commissioning_cohorts.csv`](../reports/batch17_equipment_commissioning_cohorts.csv).
+
+## Batch 18 readiness validation
+
+Batch 18 performed independent read-only checks before documenting publication
+decisions. No DuckDB object, raw workbook, reference CSV or Crosswalk row was
+written.
+
+| Check | Result | Status |
+|---|---:|---|
+| Required Batch 17 commit present | `ed0320fc956ad5da733bf933c88dec22dcb7f4c7` | PASS |
+| Initial worktree | Clean | PASS |
+| Git remote | None configured | PASS |
+| DuckDB access | `read_only=True` | PASS |
+| Equipment / point counts | 117,662 / 211,253 | PASS |
+| State / July KBA region counts | 16 / 400 | PASS |
+| Source/reference fingerprints | Match prior Batch 16/17 evidence | PASS |
+| DuckDB hash | `5d2dc0b3c5800499bf3d2e41fd82a899315bcb713c267572ade7dc1b4c6a66d3` | PASS |
+| KPI register rows / columns | 59 / 19 | PASS |
+| KPI register field widths | Every row has 19 CSV fields | PASS |
+| KPI register statuses | 16 / 11 / 8 / 17 / 7 in canonical order | PASS |
+| Historical-panel readiness | `BLOCKED` with current data | PASS; limitation recorded |
+
+The canonical register and the evidence-based decisions are in
+[`reports/batch18_kpi_readiness_register.csv`](../reports/batch18_kpi_readiness_register.csv),
+[`reports/batch18_historical_data_feasibility.md`](../reports/batch18_historical_data_feasibility.md)
+and [`reports/batch18_readiness_decisions.md`](../reports/batch18_readiness_decisions.md).

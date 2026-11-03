@@ -2,6 +2,17 @@
 
 This changelog records project milestones and local repository changes. Historical Batch 01–03 entries describe work evidenced by local reports; they do not imply historical Git commits or inferred dates.
 
+## 2026-11-03 — Batch 18
+
+- Added `reports/batch18_analytics_readiness_review.md`, `reports/batch18_kpi_readiness_register.csv`, `reports/batch18_historical_data_feasibility.md`, `reports/batch18_tableau_analysis_candidates.md`, and `reports/batch18_readiness_decisions.md`.
+- Consolidated the validated Batches 01–17 evidence into a deterministic 59-row KPI readiness register with `HEADLINE_READY`, `HEADLINE_READY_WITH_DATES`, `CONTEXT_ONLY`, `EXPLORATORY`, and `NOT_SUPPORTED` statuses.
+- Preserved the distinction between equipment records, populated charging-point slots, declared maximum connector-power classes, KBA registered stock, BBSR historical target geography, and the published-register coverage limitation.
+- Decided that BEVs per registered charging point is `CONTEXT_ONLY`, temporal survivor-cohort metrics are `EXPLORATORY`, and adequacy/shortage/surplus, utilization, demand and causal claims are `NOT_SUPPORTED`.
+- Decided that genuine historical infrastructure-panel development is `BLOCKED` with the current single BNetzA snapshot; documented the multiple-snapshot, identity, removal, attribute-history and completeness prerequisites without implementing a panel.
+- Documented the supported Tableau source grains, state/KBA/BBSR join risks, five-page question-led narrative recommendation, distinctive analytical candidates and deferred work. No Tableau asset or extract was created.
+- Updated the README, KPI catalog, data sources, data dictionary, data quality, analysis findings, geographic methodology, decisions, roadmap, reproducibility guide, project status and the private Persian KPI catalog outside Git.
+- Verified the required Batch 17 commit `ed0320fc956ad5da733bf933c88dec22dcb7f4c7`, clean initial worktree, absent remote, unchanged source/reference fingerprints, read-only DuckDB access and unchanged database hash. No dependency, dataset, raw source, reference crosswalk or remote publication changed.
+
 ## 2026-11-03 — Batch 17
 
 - Added `scripts/17_analyze_temporal_kpi_validity.py`, a deterministic read-only analyzer for temporal compatibility between KBA registered passenger-car stock and the BNetzA September charging register.

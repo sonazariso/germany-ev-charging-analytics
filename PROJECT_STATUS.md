@@ -2,22 +2,21 @@
 
 ## Current Batch
 
-Batch 17 — temporal validity and cross-source KPI sensitivity analysis
-(complete; read-only audit of equipment commissioning dates, explicit
-published September versus retrospective September-survivor perspectives,
-inclusive July cutoff handling, 16-state sensitivity/ranking/outlier results,
-fixed-September-denominator vehicle-stock illustration, KPI publication
-decisions, source fingerprints and deterministic report/CSV outputs). No
-DuckDB object, raw/reference file, Crosswalk, BBSR layer, charging object, or
-official KPI deployment changed. Batch 16 and all earlier
+Batch 18 — source readiness, KPI finalization and Tableau analytics planning
+(complete; documentation-only review of Batches 01–17, canonical KPI status
+register, historical infrastructure feasibility, Tableau source/grain
+assessment, analytical candidate portfolio and decision register). No DuckDB
+object, raw/reference file, Crosswalk, BBSR layer, charging object, Tableau
+asset, or official KPI deployment changed. Batch 17 and all earlier
 charging/BBSR/KBA layers remain unchanged.
 
 ## Last completed Batch
 
-Batch 17 — temporal validity and cross-source KPI sensitivity analysis
-completed after Batch 16's state-level EV stock versus charging infrastructure
-comparison and Batch 15's KBA FZ 27 stock, growth, geography and ownership
-analysis and the Batch 14 BBSR charging infrastructure statistical analysis,
+Batch 18 — source readiness, KPI finalization and Tableau analytics planning
+completed after Batch 17's temporal-validity audit, Batch 16's state-level EV
+stock versus charging infrastructure comparison and Batch 15's KBA FZ 27
+stock, growth, geography and ownership analysis and the Batch 14 BBSR
+charging infrastructure statistical analysis,
 Batch 13.2's historical BBSR 2025 boundary harmonization, the Batch 13.1
 owner-approved scenario, the Batch 13 charging-only layer, Batch 12 two-path
 BBSR compatibility investigation, Batch 11 BBSR–KBA audit, Batch 10 reference
@@ -25,8 +24,9 @@ build, Batch 09 feasibility assessment, and Batch 08 geographic verification.
 
 ## Previous completed Batch
 
-Batch 16 — state-level EV stock versus charging infrastructure analysis
-completed before Batch 17 and after Batch 15's KBA FZ 27 stock, growth,
+Batch 17 — temporal validity and cross-source KPI sensitivity analysis
+completed before Batch 18 and after Batch 16's state-level EV stock versus
+charging infrastructure comparison and Batch 15's KBA FZ 27 stock, growth,
 geography and ownership analysis.
 
 ## Earlier completed Batch
@@ -89,6 +89,9 @@ The latest local DuckDB validation uses BNetzA 2026-09-30 and KBA snapshots 2026
 | Batch 17 ranking sensitivity | BEVs/point rank changed for 0 / 16 states; fast points/1,000 BEVs rank changed for 4 / 16 |
 | Batch 17 KPI publication decision | BEVs/point `CONTEXT_ONLY`; power/ranking/share/correlation `EXPLORATORY_SENSITIVITY`; adequacy `NOT_SUPPORTED` |
 | Batch 17 deterministic outputs | 1 report + 4 CSVs; database/source fingerprints unchanged |
+| Batch 18 KPI readiness register | 59 rows; 16 `HEADLINE_READY`, 11 `HEADLINE_READY_WITH_DATES`, 8 `CONTEXT_ONLY`, 17 `EXPLORATORY`, 7 `NOT_SUPPORTED` |
+| Batch 18 historical infrastructure feasibility | `BLOCKED` with current single BNetzA snapshot; commissioning cohort retained as exploratory only |
+| Batch 18 Tableau readiness | Existing state, KBA-only, BBSR charging-only and temporal outputs suitable for separate extract planning; no Tableau asset created |
 
 The deployed maximum-per-point parser classifies 156,155 points at or below 22 kW, 55,098 above 22 kW, 40,950 at or above 150 kW, and 6,950 at or above 350 kW. These are declared-power classifications, not utilization measures.
 
@@ -154,6 +157,8 @@ The deployed maximum-per-point parser classifies 156,155 points at or below 22 k
 - Batch 17 safeguards: commissioning date remains equipment-level with raw value preserved; no point activation field exists; all September statuses remain in scope; point rows use source-aware keys and maximum-per-point power classification; published and survivor perspectives remain separate.
 - Batch 17 validation: 0 commissioning parsing failures, 0 future dates, 0 duplicate/orphan/mismatched points, exact KBA January/April/July and July national/16-state/`Sonstige`/400-region reconciliation, 6 source fingerprints matched, unchanged DuckDB hash, and deterministic outputs.
 - Batch 17 interpretation: the full September comparison is cross-snapshot descriptive; the survivor cohort is not actual July infrastructure. BEVs per point is secondary context only, not a headline adequacy metric.
+- Batch 18 readiness review: canonical statuses are `HEADLINE_READY`, `HEADLINE_READY_WITH_DATES`, `CONTEXT_ONLY`, `EXPLORATORY` and `NOT_SUPPORTED`; historical infrastructure-panel development is blocked; BBSR vehicle-stock integration remains blocked; Tableau implementation remains approval-gated.
+- Batch 18 artifacts: `reports/batch18_analytics_readiness_review.md`, `reports/batch18_kpi_readiness_register.csv`, `reports/batch18_historical_data_feasibility.md`, `reports/batch18_tableau_analysis_candidates.md` and `reports/batch18_readiness_decisions.md`.
 
 ## Open issues
 
@@ -168,6 +173,7 @@ The deployed maximum-per-point parser classifies 156,155 points at or below 22 k
 - Batch 16 cross-source measures use KBA `2026-07-01` and BNetzA `2026-09-30`; the 16-state benchmark excludes KBA `Sonstige`, while the separate published-national benchmark includes 2,829 `Sonstige` BEVs. Neither benchmark is an adequacy measure.
 - Batch 17 found no point-level activation date or historical availability field. The commissioning-date cohort is reproducible at equipment grain only; the September survivor result is not a true July snapshot, an upper/lower bound, or observed infrastructure growth.
 - Batch 17 recommends BEVs per registered point only as `CONTEXT_ONLY` secondary context. Its published 16-state ratio is 11.181938 and the survivor sensitivity is 11.446796 (+2.37%); ranking stability does not establish temporal validity or adequacy.
+- Batch 18 confirms that genuine historical infrastructure analysis is `BLOCKED` until multiple independently dated infrastructure snapshots, stable identity/change evidence and completeness metadata are available. The canonical register is the current publication control.
 - Batch 15 validates PHEV change/growth and PHEV passenger-car penetration as descriptive source-grain measures; they remain unsuitable for sales, utilization, demand, or causal interpretation.
 - Operator, city/county, payment/opening/connector, and KBA ownership/postcode/municipality analyses remain proposed pending denominator, grain, and normalization decisions.
 - Tableau reporting, production BBSR/KBA compatibility, final license review, and GitHub publication are incomplete. The Batch 11 and Batch 12 audit CSVs remain non-operational; Batch 13 official category KPIs and Batch 13.1 scenario KPIs are limited to separate BNetzA source-grain charging paths.
@@ -192,14 +198,14 @@ The deployed maximum-per-point parser classifies 156,155 points at or below 22 k
 
 ## Next planned work
 
-Owner review of the Batch 17 temporal findings and KPI publication decisions,
-followed by a decision on whether a genuinely dated infrastructure panel with
-activation/retirement and availability semantics or a product-specific KBA
-compatibility bridge is warranted. Tableau extract preparation, dashboard
-development and final publication review remain pending. Keep the official
+Owner review of the Batch 18 readiness register and narrative, followed by an
+explicit decision on whether to prepare separate source-date-labelled Tableau
+extracts. Keep historical infrastructure-panel development and KBA-to-BBSR
+vehicle integration deferred until their prerequisites exist. Keep the official
 Batch 13 baseline, Batch 13.1 scenario and Batch 13.2 historical layer separate
 from any future KBA vehicle-stock integration.
 
 ## Last local Git commit reference
 
-Batch 17 is the current completed local batch. No remote is configured.
+Batch 18 is the current completed local batch. The handoff commit is created
+after the final validation pass. No remote is configured.

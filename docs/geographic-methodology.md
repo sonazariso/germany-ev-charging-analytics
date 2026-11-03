@@ -479,3 +479,27 @@ has no individual activation-date field, and the September equipment status is
 not historical operational availability. Later-commissioned shares are
 reported by BNetzA state for descriptive concentration only; they are not
 interpreted as regional causes or observed infrastructure growth.
+
+## Batch 18 geographic publication rules
+
+Batch 18 fixes the geographic meaning of the candidate portfolio:
+
+- The 16-state comparison is the only current cross-source grain where one
+  KBA vehicle aggregate can be paired with one BNetzA infrastructure aggregate
+  without a new geographic bridge. Both dates remain visible.
+- KBA FZ 27.15's 400 rows are KBA registration regions. They are suitable for
+  KBA-only vehicle stock, penetration and change analysis, not for automatic
+  administrative or BBSR classification. `07211` remains one combined
+  Trier-Saarburg registration region and its 7,869 July BEVs are not allocated.
+- Batch 13 Path A is a charging-only source-grain reference with 399
+  verified-compatible rows, one conditional-vintage Main-Kinzig row and one
+  unresolved Hanau row. It does not prove a universal AGS/ARS/KRS equivalence.
+- Batch 13.2 is a historical BBSR 2025 target reconstruction for charging
+  records. It maps 401 current source components to 400 historical target units,
+  preserves source-component lineage, and does not assign an official 2026
+  BBSR type to Hanau.
+- No KBA-to-BBSR vehicle-stock ratio, BBSR BEV category or BBSR adequacy map is
+  supported. The strict verified KBA-to-BBSR coverage remains zero.
+
+The source-date, grain and join-risk matrix is in
+[`reports/batch18_tableau_analysis_candidates.md`](../reports/batch18_tableau_analysis_candidates.md).

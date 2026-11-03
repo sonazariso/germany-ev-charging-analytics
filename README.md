@@ -4,7 +4,7 @@
 
 This portfolio project builds a reproducible, Germany-wide analytical foundation for comparing the published public-charging register with registered passenger-car stock. It preserves the original BNetzA, KBA, and separately versioned BBSR reference workbooks, separates charging equipment from charging points, and keeps snapshot dates visible throughout the workflow.
 
-The current implementation is a validated local DuckDB model, a deployed still-provisional KBA geographic layer, the separate Batch 13 charging-only BNetzA-source-grain BBSR layer, a separate Batch 13.1 owner-approved 2026 analytical scenario, a separate Batch 13.2 historical BBSR 2025 boundary harmonization, the Batch 14 read-only statistical analysis of that harmonized layer, the Batch 15 read-only KBA FZ 27 stock analysis, and the Batch 17 read-only temporal-validity analysis of Batch 16 cross-source KPIs. Batch 13.2 corrects the Kassel city/county join only in its new layer and aggregates Hanau with the remaining Main-Kinzig source row; Batch 14, Batch 15, and Batch 17 do not change the official baseline, assign BBSR categories to KBA registration regions, integrate charging with KBA stock, or allocate Trier stock. Tableau Public reporting remains incomplete.
+The current implementation is a validated local DuckDB model, a deployed still-provisional KBA geographic layer, the separate Batch 13 charging-only BNetzA-source-grain BBSR layer, a separate Batch 13.1 owner-approved 2026 analytical scenario, a separate Batch 13.2 historical BBSR 2025 boundary harmonization, the Batch 14 read-only statistical analysis of that harmonized layer, the Batch 15 read-only KBA FZ 27 stock analysis, the Batch 17 read-only temporal-validity analysis of Batch 16 cross-source KPIs, and the Batch 18 analytics-readiness and KPI-finalization review. Batch 13.2 corrects the Kassel city/county join only in its new layer and aggregates Hanau with the remaining Main-Kinzig source row; Batches 14–18 do not change the official baseline, assign BBSR categories to KBA registration regions, integrate charging with KBA stock, create a historical infrastructure panel, or allocate Trier stock. Tableau Public reporting remains incomplete.
 
 ## Why this matters
 
@@ -105,7 +105,9 @@ Batch 16 adds a read-only state-level comparison of the July 2026 KBA passenger-
 
 Batch 17 adds a read-only temporal-validity and sensitivity analysis for those cross-source measures. It audits the real equipment-level commissioning-date field, compares the full September publication with a retrospective September-survivor cohort commissioned on or before 2026-07-01, preserves the distinction between observed and reconstructed infrastructure, evaluates state rankings/outliers and January/April fixed-denominator illustrations, and records Tableau publication decisions. All 117,662 commissioning values parse successfully; 2,762 equipment records and 4,888 associated point rows are post-cutoff; the survivor cohort contains 114,900 equipment records and 206,365 point rows. BEVs per point is recommended as `CONTEXT_ONLY`/secondary context, not a headline adequacy KPI. No DuckDB object, raw/reference file, Crosswalk, dependency, remote, upload, or Tableau asset changed.
 
-Not complete: a dated BBSR/KBA compatibility bridge, KBA-level BBSR classification, Tableau data preparation, dashboard development, final license review, and GitHub publication. Batch 12 Path B remains at zero strict verified KBA regions.
+Batch 18 finalizes the publication-readiness boundary without implementing the next analytical phase. It adds a deterministic 59-row KPI readiness register, a historical-infrastructure feasibility decision (`BLOCKED` with current data), Tableau candidate/source-grain documentation, a question-led narrative recommendation and a decision register. The canonical statuses are `HEADLINE_READY`, `HEADLINE_READY_WITH_DATES`, `CONTEXT_ONLY`, `EXPLORATORY` and `NOT_SUPPORTED`. No DuckDB object, raw/reference file, source fingerprint, dependency, Tableau asset, remote, upload or publication changed.
+
+Not complete: a dated BBSR/KBA compatibility bridge, KBA-level BBSR classification, Tableau extract preparation, dashboard development, genuine historical infrastructure-panel development, final license review, and GitHub publication. Batch 12 Path B remains at zero strict verified KBA regions; Batch 18 explicitly marks historical infrastructure-panel development blocked until multiple dated snapshots and identity/change evidence exist.
 
 ## Reproducibility
 
@@ -191,6 +193,11 @@ The local DuckDB database, virtual environment, raw workbooks, temporary files, 
 - [Reproducibility](docs/reproducibility.md)
 - [Roadmap](docs/roadmap.md)
 - [Decision log](docs/decisions.md)
+- [Batch 18 analytics readiness review](reports/batch18_analytics_readiness_review.md)
+- [Batch 18 KPI readiness register](reports/batch18_kpi_readiness_register.csv)
+- [Batch 18 historical data feasibility](reports/batch18_historical_data_feasibility.md)
+- [Batch 18 Tableau analysis candidates](reports/batch18_tableau_analysis_candidates.md)
+- [Batch 18 readiness decisions](reports/batch18_readiness_decisions.md)
 - [GitHub publication checklist](docs/github-publication-checklist.md)
 - [Phase validation reports](reports/phase01_data_profile.md), [Phase 02 schema inspection](reports/phase02_schema_inspection.md), [Phase 03 DuckDB validation](reports/phase03_duckdb_validation.md), [Batch 03 crosswalk validation](reports/batch03_crosswalk_validation.md), [Batch 06 geographic deployment](reports/batch06_geographic_deployment.md), [Batch 06.1 KPI documentation audit](reports/batch06-1_kpi_documentation_audit.md), [Batch 09 BBSR feasibility](reports/batch09_bbsr_feasibility.md), [Batch 10 BBSR reference validation](reports/batch10_bbsr_reference_validation.md), [Batch 11 BBSR/KBA compatibility audit](reports/batch11_bbsr_kba_compatibility.md), [Batch 12 two-path BBSR investigation](reports/batch12_bbsr_integration_paths.md), [Batch 13 BBSR charging-only deployment](reports/batch13_bbsr_charging_deployment.md), [Batch 13.1 owner-approved scenario](reports/batch13_1_bbsr_scenario_classification.md), [Batch 13.2 historical harmonization](reports/batch13_2_hanau_geographic_harmonization.md), [Batch 14 BBSR charging analysis](reports/batch14_bbsr_charging_analysis.md), [Batch 15 KBA EV stock analysis](reports/batch15_kba_ev_stock_analysis.md), [Batch 16 state EV/charging alignment](reports/batch16_state_ev_charging_alignment.md), and [Batch 17 temporal KPI validity](reports/batch17_temporal_kpi_validity.md)
 
@@ -213,6 +220,12 @@ The local DuckDB database, virtual environment, raw workbooks, temporary files, 
 
 ## Roadmap
 
-The next stages are a dated KBA compatibility bridge and mixed-region treatment, KPI hardening, Tableau extract preparation, dashboard development, final quality and licensing review, and only then an explicitly approved GitHub publication. The current BBSR layer remains source-grain and must not be reinterpreted as KBA integration.
+The next decision-gated stage is preparation and validation of separate,
+source-date-labelled Tableau extracts from the existing state, KBA-only, BBSR
+charging-only and temporal-sensitivity outputs. A dated KBA-to-BBSR bridge,
+genuine historical infrastructure panel, dashboard publication, final quality
+and licensing review, and GitHub publication remain separate future decisions.
+The current BBSR layer remains source-grain and must not be reinterpreted as
+KBA integration.
 
 Code is covered by the existing MIT LICENSE. Official source data retain the licenses and attribution requirements declared in the source manifest; redistribution and final publication rights require a separate review.
