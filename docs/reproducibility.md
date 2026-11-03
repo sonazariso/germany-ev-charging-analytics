@@ -275,3 +275,28 @@ fingerprints, and writes only these Git-tracked analytical artifacts:
 It does not create or replace a DuckDB object, modify a source/reference file,
 read KBA vehicle stock for the analysis, or deploy a KPI. Repeated execution
 with the same database and reference files is deterministic.
+
+## Batch 15 KBA FZ 27 analysis
+
+Run the deterministic read-only analyzer from the repository root:
+
+~~~bash
+.venv/bin/python scripts/15_analyze_kba_ev_stock.py --json
+~~~
+
+The script opens `data/analytics/ev_charging.duckdb` with `read_only=True`,
+checks the three KBA workbook SHA-256 fingerprints, validates the 20-sheet
+inventory for each release, reconciles national/state/`Sonstige`/400-region
+scopes, checks FZ 27.5 ownership grain, inspects postcode/municipality keys,
+and validates the deduplicated FZ 27.9 history. It writes only:
+
+- `reports/batch15_kba_ev_stock_analysis.md`
+- `reports/batch15_kba_national_trends.csv`
+- `reports/batch15_kba_state_metrics.csv`
+- `reports/batch15_kba_district_metrics.csv`
+- `reports/batch15_kba_ownership_metrics.csv`
+- `reports/batch15_kba_worksheet_capabilities.csv`
+
+The script does not create or replace a DuckDB object, modify a source or
+reference file, build a BBSR join, allocate Trier stock, or deploy a KPI.
+Repeated execution with the same database and fingerprints is deterministic.

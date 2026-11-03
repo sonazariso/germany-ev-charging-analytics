@@ -66,9 +66,12 @@ These are project milestones supported by local artifacts. They are not historic
 - [x] Run the Batch 14 read-only harmonized-layer analysis and produce the report plus deterministic type/district diagnostic CSVs.
 - [x] Reconcile Batch 14 national totals, source fingerprints, duplicate/orphan checks, category counts, and maximum-per-point power bands.
 - [x] Evaluate and recommend a small future Tableau KPI set without deploying views or BBSR/KBA ratios.
+- [x] Run Batch 15 read-only KBA FZ 27 stock, growth, geography, ownership, worksheet-capability and historical-series analysis with deterministic CSV/report outputs.
+- [x] Reconcile national, 16-state, `Sonstige` and 400 KBA-region passenger-car/BEV/PHEV scopes; preserve Trier `07211` as one shared registration region.
+- [x] Document FZ 27.5 owner residuals, FZ 27.16/27.17 alternative grains, national quarterly history, and the exploratory 1,000-BEV percentage-growth threshold.
 - [ ] Approve a dated BBSR/KBA compatibility bridge before any KBA-level BBSR classification or vehicle-stock ratio.
 - [ ] Decide whether a post-2026 BBSR vintage, a product-specific KBA bridge, historical KBA snapshots, or future Tableau work is required; no universal prefix rule or Trier allocation is approved.
-- [ ] Review Batch 14 findings and complete dashboard-specific denominator review before any Tableau implementation.
+- [ ] Review Batch 15 findings and complete dashboard-specific denominator review before any Tableau implementation.
 - [ ] Prepare compact Tableau extracts and source-date metadata.
 - [ ] Develop a Germany-wide overview and selected drill-down dashboard.
 - [ ] Complete code, dependency, data, licensing, and screenshot review.

@@ -403,3 +403,36 @@ The script opened DuckDB with `read_only=True`; it created no database object
 and did not change raw data, references, the Crosswalk, KBA objects, or vehicle
 stock. Full evidence is in
 [`reports/batch14_bbsr_charging_analysis.md`](../reports/batch14_bbsr_charging_analysis.md).
+
+## Batch 15 KBA FZ 27 validation
+
+Batch 15 independently checked the existing KBA raw/core objects and local
+workbook fingerprints with a read-only DuckDB connection. All three releases
+contain the expected 20 worksheets. The national/state reconciliation passed:
+the 16 named states equal the 400 KBA registration-region rows for passenger
+cars, BEVs and PHEVs, and adding `Sonstige` reproduces the national totals.
+
+| Check | Result |
+|---|---|
+| KBA registration-region rows | 1,200 = 400 × 3 snapshots |
+| Duplicate region/date rows | 0 |
+| Region identity changes across snapshots | 0 |
+| District numeric NULLs / zero denominators | 0 / 0 |
+| January BEV baseline ≥1,000 for percentage ranking | 377 eligible / 23 disclosed exclusions |
+| FZ 27.5 owner rows | 108 commercial/private rows; 54 published totals |
+| Historical national observations | 33 deduplicated rows, 2018-07-01 to 2026-07-01 |
+| KBA workbook fingerprint mismatches | 0 |
+
+The three national residuals are explicit `Sonstige` reporting rows: BEV
+2,390 / 2,606 / 2,829 and PHEV 1,442 / 1,501 / 1,622 for January / April /
+July. FZ 27.5 totals retain an unallocated/unknown holder-group residual,
+consistent with the publisher footnote; it is not silently assigned to private
+or commercial ownership.
+
+FZ 27.16 has unique postcode/date rows but missing numeric source cells and a
+small July coverage change. FZ 27.17 has unique district-code/municipality-name
+rows and all 400 district codes, but no municipality code, repeated names
+across districts, and many missing numeric cells after source-dot parsing. The
+two tables are therefore descriptive alternative grains, not replacement
+denominators for FZ 27.15. Full evidence is in
+[`reports/batch15_kba_ev_stock_analysis.md`](../reports/batch15_kba_ev_stock_analysis.md).

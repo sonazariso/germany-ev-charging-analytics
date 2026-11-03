@@ -2,18 +2,20 @@
 
 ## Current Batch
 
-Batch 14 — BBSR charging infrastructure statistical analysis (complete;
-read-only analysis of the Batch 13.2 harmonized district/type views, national
-reconciliation, category comparisons, unit distributions, weighted/unweighted
-checks, concentration/outlier analysis, KPI evaluation, source fingerprints,
-and deterministic report/CSV outputs). No DuckDB object, raw/reference file,
-Crosswalk, KBA object, vehicle-stock table, or official KPI deployment changed.
-The official Batch 13 baseline, Batch 13.1 owner scenario, and Batch 13.2
-historical layer remain unchanged.
+Batch 15 — KBA FZ 27 EV stock, growth, geography and ownership analysis
+(complete; read-only analysis of the three 2026 KBA releases, worksheet
+inventory, national/state/`Sonstige`/400-region reconciliation, BEV/PHEV
+growth, state and registration-region penetration, FZ 27.5 ownership, FZ
+27.16/27.17 capability checks, historical quarterly stock, KPI evaluation,
+source fingerprints, and deterministic report/CSV outputs). No DuckDB object,
+raw/reference file, Crosswalk, BBSR layer, charging object, or official KPI
+deployment changed. Batch 14 and all earlier charging/BBSR/KBA layers remain
+unchanged.
 
 ## Last completed Batch
 
-Batch 14 — BBSR charging infrastructure statistical analysis completed after
+Batch 15 — KBA FZ 27 EV stock, growth, geography and ownership analysis
+completed after the Batch 14 BBSR charging infrastructure statistical analysis,
 Batch 13.2's historical BBSR 2025 boundary harmonization, the Batch 13.1
 owner-approved scenario, the Batch 13 charging-only layer, Batch 12 two-path
 BBSR compatibility investigation, Batch 11 BBSR–KBA audit, Batch 10 reference
@@ -62,6 +64,11 @@ The latest local DuckDB validation uses BNetzA 2026-09-30 and KBA snapshots 2026
 | Batch 13.2 Kassel correction | City `06611000`, type 1; county `06633000`, type 2; official Batch 13 bridge preserved unchanged |
 
 | Batch 14 analysis outputs | 400 historical units; category counts 68 / 131 / 98 / 103; point-weighted fast share 26.08%; unweighted unit mean 31.25%; 30-point share filter excluded 0 units |
+| Batch 15 national stock growth | National BEV +330,787 (+16.26%) and PHEV +103,905 (+9.25%), 2026-01-01 to 2026-07-01 |
+| Batch 15 KBA regional coverage | 400 codes per snapshot; 1,200 source rows; 0 identity changes, numeric NULLs, or zero denominators |
+| Batch 15 percentage-growth ranking | 377 regions eligible at January BEV >=1,000; 23 disclosed exclusions |
+| Batch 15 ownership scope | FZ 27.5: commercial/private × BEV/PHEV at 16 states, Sonstige and national grain; 54 wide diagnostic rows |
+| Batch 15 historical series | 33 deduplicated national observations from 2018-07-01 through 2026-07-01 |
 
 The deployed maximum-per-point parser classifies 156,155 points at or below 22 kW, 55,098 above 22 kW, 40,950 at or above 150 kW, and 6,950 at or above 350 kW. These are declared-power classifications, not utilization measures.
 
@@ -116,6 +123,9 @@ The deployed maximum-per-point parser classifies 156,155 points at or below 22 k
 - Batch 14 read-only analyzer `scripts/14_analyze_bbsr_charging_patterns.py` with deterministic type/district CSVs and analytical report.
 - Batch 14 statistical findings: type 2 has the largest absolute point and fast-point totals; type 4 has the highest within-category fast share; all-unit weighted fast share is 26.08% versus a 31.25% unweighted unit mean.
 - Batch 14 KPI controls: descriptive shares, distributions, and concentration screens are not accessibility, demand, utilization, quality, or causal measures; BBSR-based BEV-to-charger ratios remain unsupported.
+- Batch 15 read-only analyzer: `scripts/15_analyze_kba_ev_stock.py` with worksheet, national, state, district, and ownership diagnostics plus report `reports/batch15_kba_ev_stock_analysis.md`.
+- Batch 15 safeguards: DuckDB opened read-only; all three KBA workbook fingerprints matched; no BBSR join, charging join, Crosswalk update, Trier allocation, database write, raw workbook write, or new KPI object was performed.
+- Batch 15 finding: national BEV stock grew faster than PHEV stock in January–April, April–July, and January–July; all growth and penetration measures remain explicitly descriptive.
 
 ## Open issues
 
@@ -127,7 +137,7 @@ The deployed maximum-per-point parser classifies 156,155 points at or below 22 k
 - The 400-district KBA total differs from the state-level Deutschland total because of the current Sonstige/reporting-structure reconciliation.
 - One BNetzA coordinate falls outside a broad Germany bounding check and remains uncorrected.
 - BNetzA and KBA snapshot dates are not contemporaneous, and the BNetzA register is not exhaustive.
-- PHEV change/growth and PHEV passenger-car penetration are defined as candidates but remain unvalidated and require owner approval.
+- Batch 15 validates PHEV change/growth and PHEV passenger-car penetration as descriptive source-grain measures; they remain unsuitable for sales, utilization, demand, or causal interpretation.
 - Operator, city/county, payment/opening/connector, and KBA ownership/postcode/municipality analyses remain proposed pending denominator, grain, and normalization decisions.
 - Tableau reporting, production BBSR/KBA compatibility, final license review, and GitHub publication are incomplete. The Batch 11 and Batch 12 audit CSVs remain non-operational; Batch 13 official category KPIs and Batch 13.1 scenario KPIs are limited to separate BNetzA source-grain charging paths.
 - The preserved ignored `.venv` has historical absolute paths in its activation scripts and `pip` entry-point shebangs; `.venv/bin/python` and `.venv/bin/python -m pip` work, but the environment requires explicit repair or recreation in a future approved task.
@@ -151,11 +161,12 @@ The deployed maximum-per-point parser classifies 156,155 points at or below 22 k
 
 ## Next planned work
 
-Owner review of the Batch 14 findings and KPI recommendations, followed by the
-Path B bridge gap, historical-boundary recommendation, KBA reconciliation,
-Tableau extract preparation, dashboard development, and final publication
-review. Keep the official Batch 13 baseline, Batch 13.1 scenario, and Batch
-13.2 historical layer separate from any future KBA vehicle-stock integration.
+Owner review of the Batch 15 findings and denominator choices, followed by the
+Path B bridge gap, historical-boundary recommendation, any dated KBA
+compatibility decision, Tableau extract preparation, dashboard development,
+and final publication review. Keep the official Batch 13 baseline, Batch 13.1
+scenario, and Batch 13.2 historical layer separate from any future KBA
+vehicle-stock integration.
 
 ## Last local Git commit reference
 

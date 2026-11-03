@@ -226,3 +226,30 @@ This log separates approved decisions, implementation details, and pending propo
   deployment changes.
 - Status: Approved and applied for Batch 14; any Tableau deployment still
   requires separate approval.
+
+## Batch 15 — KBA stock analysis decisions (2026-11-03)
+
+- Decision: Use the existing KBA FZ 27.2, FZ 27.5, FZ 27.9, FZ 27.15, FZ
+  27.16 and FZ 27.17 objects at their actual published grains; inventory all 20
+  worksheets in each of the three local 2026 releases.
+- Decision: Keep national `Deutschland`, the 16 named states, `Sonstige`, and
+  the 400 KBA registration-region table as separate reporting scopes. Validate
+  their residuals explicitly rather than forcing every breakdown to sum at one
+  grain.
+- Decision: Use mutually exclusive FZ 27.2 fuel rows for passenger-car
+  denominators. Do not add `darunter Plug-in` to `Hybrid insgesamt`.
+- Decision: Treat BEV/PHEV stock changes as descriptive snapshot changes, not
+  sales, registrations, charging demand, utilization, or causal measures.
+- Decision: Preserve commercial/private ownership residuals from FZ 27.5 and
+  report owner composition only at the published state/residual/national grain;
+  do not infer district ownership.
+- Decision: Use January BEV stock >=1,000 as an exploratory stability threshold
+  for percentage-growth ranking and disclose all excluded regions.
+- Decision: Keep KBA `07211 TRIER-SAARBURG` as one registration region and do
+  not allocate stock to Trier city or Trier-Saarburg administrative units.
+- Consequence: Batch 15 creates one read-only analyzer, one report and five
+  diagnostic CSVs. It does not change DuckDB, raw workbooks, references,
+  Crosswalks, BBSR objects, charging objects or official KPI deployment.
+- Status: Approved and applied for Batch 15; any dated KBA/BBSR bridge,
+  cross-source vehicle/charging ratio, Tableau deployment or new source remains
+  separately approval-gated.

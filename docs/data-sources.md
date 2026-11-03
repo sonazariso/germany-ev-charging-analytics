@@ -184,3 +184,29 @@ classification rule. Hanau category 1 is an owner-approved analytical
 assumption, not an official BBSR 2025 or 2026 classification. Main-Kinzig type
 2 is carried forward from the BBSR 2025 row with an explicit 2026
 boundary-vintage caveat.
+
+## Batch 15 KBA FZ 27 analytical inventory
+
+Batch 15 uses the three locally preserved KBA FZ 27 releases already listed in
+the project manifest:
+
+| Reference date | Local source | Worksheets | Scope used in Batch 15 |
+|---|---|---:|---|
+| 2026-01-01 | `data/raw/kba/fz27_202601.xlsx` | 20 | National/state, ownership, history, 400 KBA registration regions, postcode and municipality checks |
+| 2026-04-01 | `data/raw/kba/fz27_202604.xlsx` | 20 | National/state, ownership, history, 400 KBA registration regions, postcode and municipality checks |
+| 2026-07-01 | `data/raw/kba/fz27_202607.xlsx` | 20 | National/state, ownership, history, 400 KBA registration regions, postcode and municipality checks |
+
+The complete release-by-release worksheet inventory is in
+[`reports/batch15_kba_worksheet_capabilities.csv`](../reports/batch15_kba_worksheet_capabilities.csv).
+The primary analytical roles are:
+
+- FZ 27.2: federal-state fuel/vehicle stock, including BEV and nested PHEV.
+- FZ 27.5: commercial/private holder groups at federal-state, `Sonstige` and national grain.
+- FZ 27.9: national quarterly stock history; overlapping releases are deduplicated by stock date.
+- FZ 27.15: 400 KBA registration-region rows per snapshot with passenger-car, BEV and PHEV counts.
+- FZ 27.16: postcode-level commercial/private BEV/PHEV detail without district/state identifiers.
+- FZ 27.17: municipality detail nested under KBA districts, without a municipality code and with missing numeric cells after source-dot parsing.
+
+Batch 15 verified SHA-256 fingerprints for all three KBA workbooks before
+analysis. It used only existing local sources, did not download another
+dataset, and did not modify any source workbook or Crosswalk.

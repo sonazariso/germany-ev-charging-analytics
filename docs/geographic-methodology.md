@@ -412,3 +412,23 @@ The Hanau/Main-Kinzig target is 585 equipment and 991 points. No KBA stock,
 Crosswalk assignment, Trier allocation, or existing Batch 13/13.1 object was
 changed. Full evidence and validation are in
 [`reports/batch13_2_hanau_geographic_harmonization.md`](../reports/batch13_2_hanau_geographic_harmonization.md).
+
+## Batch 15 KBA registration-region scope
+
+Batch 15 uses the KBA FZ 27.15 registration-region grain as published. It is
+not a BBSR Kreis, Kreisregion, municipal boundary, or an administrative
+crosswalk. The source contains 400 codes per snapshot and keeps the shared
+`07211 TRIER-SAARBURG` row intact. No allocation is made to the separate
+administrative identities of Trier city and Trier-Saarburg.
+
+The national/state reconciliation is reported in separate scopes: 16 named
+states, `Sonstige`, `Deutschland`, and the 400 KBA registration-region rows.
+The 400-region table equals the 16 named states in the available FZ 27.15
+measures; it excludes the national `Sonstige` residual. Postcode and
+municipality tables are alternative KBA source grains and do not create a new
+Crosswalk or BBSR assignment.
+
+This boundary rule is analytical provenance, not evidence that every KBA
+registration region is identical to a current or historical administrative
+Kreis. Any future BBSR/KBA vehicle-stock integration requires a separately
+approved dated compatibility bridge.

@@ -2,6 +2,15 @@
 
 This changelog records project milestones and local repository changes. Historical Batch 01–03 entries describe work evidenced by local reports; they do not imply historical Git commits or inferred dates.
 
+## 2026-11-03 — Batch 15
+
+- Added `scripts/15_analyze_kba_ev_stock.py`, a deterministic read-only analyzer for the three local KBA FZ 27 releases dated 2026-01-01, 2026-04-01, and 2026-07-01.
+- Added `reports/batch15_kba_ev_stock_analysis.md` and five diagnostic CSVs covering worksheet capabilities, national trends, federal-state metrics, 400 KBA registration-region metrics, and FZ 27.5 ownership composition.
+- Reconciled national, 16-state, `Sonstige`, and 400-region passenger-car/BEV/PHEV totals; confirmed 400 region codes per snapshot and preserved the shared Trier code `07211` without allocation.
+- Documented national January–July growth of +16.26% for BEVs and +9.25% for PHEVs, same-grain penetration measures, 23 low-baseline percentage-growth exclusions, ownership residuals, postcode/municipality limitations, and the 33-observation national quarterly history.
+- Updated the README, project status, data sources, data dictionary, KPI catalog, data quality, findings, geographic methodology, decision log, roadmap, and reproducibility documentation. Updated the private Persian KPI catalog outside Git.
+- No DuckDB object, raw workbook, reference file, Crosswalk, BBSR layer, charging object, dependency, remote, upload, or publication changed.
+
 ## 2026-11-03 — Batch 14
 
 - Added `scripts/14_analyze_bbsr_charging_patterns.py`, a deterministic read-only analyzer whose primary source is the Batch 13.2 harmonized BBSR district/type layer.

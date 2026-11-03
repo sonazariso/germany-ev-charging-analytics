@@ -348,3 +348,29 @@ Grain: one retained national historical stock observation per stock_date after d
 - Preserve both BNetzA `2026-09-30` and BBSR `2025-12-31` dates in Batch 13.2 outputs, and retain source-component names/counts so target-unit aggregation is auditable.
 - Do not join BBSR views to KBA vehicle stock or infer a BBSR type for KBA registration regions.
 - Do not infer utilization, energy delivery, or causality from these tables.
+
+## Batch 15 read-only analytical outputs
+
+Batch 15 does not add a DuckDB table or view. It writes deterministic report
+CSV files from the existing raw/core/history objects:
+
+| Output | Grain | Important fields and rules |
+|---|---|---|
+| `batch15_kba_national_trends.csv` | KBA release date | National, 16-state, `Sonstige`, and 400-region passenger-car/BEV/PHEV totals; BEV/PHEV shares and changes from the preceding snapshot |
+| `batch15_kba_state_metrics.csv` | State or `Sonstige` × release date | Passenger-car denominator from mutually exclusive FZ 27.2 fuel rows; BEV/PHEV stock, penetration, combined plug-in penetration, January-to-date changes, and national-growth contribution |
+| `batch15_kba_district_metrics.csv` | KBA registration-region code | One row per 400-code region with January/April/July stock, same-grain penetration and national/400-region shares; January–July change and percentage growth |
+| `batch15_kba_ownership_metrics.csv` | FZ 27.5 geography × release date | Commercial/private BEV/PHEV counts, observed-owner shares, published-total shares, and unallocated/unknown residuals |
+| `batch15_kba_worksheet_capabilities.csv` | Source release × worksheet | Published title, raw row span, analytical grain, dimensions, subtotal behavior, coverage and aggregation suitability |
+
+The district table retains KBA code `07211` as the single published
+`TRIER-SAARBURG` registration region. It must not be split into Trier city and
+Trier-Saarburg administrative units. The percentage-growth ranking flag is
+true only when January BEV stock is at least 1,000; the threshold is an
+exploratory stability filter and does not remove the underlying row.
+
+The ownership output uses the actual FZ 27.5 grain. Published `zusammen` and
+`Deutschland insgesamt` totals include vehicles with missing or implausible
+holder-group data, so commercial plus private counts are reported separately
+from the residual and are not forced to equal a complete ownership allocation.
+FZ 27.16 and FZ 27.17 remain alternative postcode/municipality grains and are
+not additive partitions of FZ 27.15.

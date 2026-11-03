@@ -261,3 +261,67 @@ The reproducible diagnostics are
 [`reports/batch14_bbsr_type_metrics.csv`](../reports/batch14_bbsr_type_metrics.csv)
 and
 [`reports/batch14_bbsr_district_metrics.csv`](../reports/batch14_bbsr_district_metrics.csv).
+
+## Batch 15 KBA EV-stock findings
+
+Batch 15 is a separate read-only KBA analysis. It does not combine vehicle
+stock with the BNetzA charging register or any BBSR layer.
+
+### National and state findings
+
+National passenger-car stock rose from 49,486,487 on 2026-01-01 to 49,696,710
+on 2026-07-01. BEV stock rose from 2,034,260 to 2,365,047 (+330,787; +16.26%),
+while PHEV stock rose from 1,122,958 to 1,226,863 (+103,905; +9.25%). BEV
+share increased from 4.11% to 4.76% of national passenger cars; PHEV share
+increased from 2.27% to 2.47%; combined BEV + PHEV share reached 7.23%.
+These are registered-stock changes, not new registrations or sales.
+
+Nordrhein-Westfalen had the largest July BEV stock (527,377) and the largest
+January–July absolute increase (+72,595). Hamburg had the highest July BEV
+penetration among the 16 named states (5.97%). Mecklenburg-Vorpommern had the
+highest January–July state BEV growth (+20.98%). `Sonstige` remains a separate
+residual and is not blended into a state.
+
+### Registration-region findings
+
+FZ 27.15 contains 400 stable KBA registration-region codes at each snapshot.
+The July 2026 BEV penetration median is 4.53% and the PHEV penetration median
+is 2.13%. The ten largest covered regions account for 14.78% of July
+400-region BEV stock and 17.91% of 400-region PHEV stock. Weighted January–July
+BEV growth is 16.26%, compared with an unweighted mean of regional growth rates
+of 17.36%; for PHEVs the values are 9.25% and 10.37%.
+
+The percentage-growth ranking uses a documented January BEV baseline of 1,000
+vehicles: 377 regions are eligible and 23 are disclosed as excluded. The
+threshold is exploratory and does not remove excluded regions from the CSV.
+KBA `07211 TRIER-SAARBURG` stays one shared registration region; no stock is
+allocated between Trier city and Trier-Saarburg.
+
+### Ownership and alternative grains
+
+FZ 27.5 supports commercial/private BEV and PHEV composition at state,
+`Sonstige` and national grain. In July, private ownership represented 61.49%
+of observed-owner BEV stock and 54.31% of observed-owner PHEV stock nationally;
+published totals retain 3,522 BEV and 1,850 PHEV unallocated/unknown residuals.
+The source footnote explains that `zusammen` and `Deutschland insgesamt`
+include missing or implausible holder-group values. District-level ownership is
+not inferred.
+
+FZ 27.16 is a postcode breakdown without district/state identifiers. FZ 27.17
+is nested under KBA districts but has no municipality code and repeated names
+across districts. Both have missing numeric cells after parsing source dots and
+remain descriptive future-use inputs rather than new Crosswalks.
+
+### Historical and interpretation controls
+
+FZ 27.9 supports a 33-observation national quarterly history from 2018-07-01
+through 2026-07-01 after deterministic overlap deduplication. Across 400
+regions, January–July BEV and PHEV percentage growth have a descriptive
+Pearson correlation of 0.464. This is a supported association in the observed
+stock changes, not a causal finding. Population, traffic, demand, charging
+utilization, sales flows, migration, accessibility and causal infrastructure
+effects remain not testable with the current sources.
+
+Complete tables, worksheet capabilities, formulas, KPI statuses, fingerprints
+and validation evidence are in
+[`reports/batch15_kba_ev_stock_analysis.md`](../reports/batch15_kba_ev_stock_analysis.md).

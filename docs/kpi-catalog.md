@@ -575,3 +575,25 @@ not be allocated without a separately approved method. See
 | Vehicle sales or charger-caused adoption | UNSUPPORTED BY CURRENT SOURCES | KBA values are stock snapshots and the project has no causal design | Descriptive stock change and explicitly exploratory comparisons |
 
 These exclusions are analytical controls. Declared power is not delivered energy, the equipment `status` field is not uptime, opening hours are not real-time availability, and BEV/PHEV stock growth is not new vehicle sales.
+
+## Batch 15 KBA stock KPIs
+
+Batch 15 validates the following descriptive KBA measures without deploying
+new DuckDB KPI objects:
+
+| KPI | Status | Numerator / denominator | Grain and date | Interpretation control |
+|---|---|---|---|---|
+| National BEV stock | VALIDATED | `Deutschland / Elektro (BEV)` | National × 2026-01-01, 2026-04-01, 2026-07-01 | Registered stock, not sales |
+| National PHEV stock | VALIDATED | `Deutschland / darunter Plug-in` | National × release date | PHEV is nested under `Hybrid insgesamt` for total-category logic |
+| BEV/PHEV stock change and growth | VALIDATED | End stock − start stock; change / start stock | National, state or KBA region × snapshots | Snapshot stock change, not registration flow |
+| BEV/PHEV passenger-car penetration | VALIDATED | Powertrain stock / same-grain passenger-car total | State or 400 KBA region × snapshot | Denominator and reporting scope must stay visible |
+| Combined plug-in penetration | VALIDATED | `(BEV + PHEV) / passenger cars` | Same-grain snapshot | Valid here because BEV and PHEV are mutually exclusive |
+| FZ 27.5 ownership composition | EXPLORATORY | Commercial/private BEV or PHEV / observed owner rows; published-total coverage shown separately | State, `Sonstige` or national × snapshot | Unknown/implausible holder-group residuals are not allocated |
+| KBA-region percentage-growth ranking | EXPLORATORY | January–July BEV growth with January BEV ≥1,000 | 400 KBA codes | The threshold stabilizes the ranking; it is not an official standard |
+| BBSR-based vehicle-stock ratio | UNSUPPORTED | No approved dated KBA-to-BBSR bridge | Not deployed | Do not infer or create in Batch 15 |
+
+The complete formulas, columns, reconciliation fields and limitations are in
+[`reports/batch15_kba_ev_stock_analysis.md`](../reports/batch15_kba_ev_stock_analysis.md).
+The recommended Tableau set is limited to validated stock/penetration/change
+measures plus clearly labelled exploratory distributions. No measure implies
+charging demand, utilization, access, quality, or causality.
