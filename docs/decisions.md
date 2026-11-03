@@ -547,3 +547,24 @@ The following decisions are the concise project-log form:
   host/permission feasibility only and does not authorize the two Executive
   Overview dashboards.
 - Evidence: [`reports/batch22_5_local_automation_capability_check.md`](../reports/batch22_5_local_automation_capability_check.md).
+
+## Batch 22.6 — Tableau worksheet visual capture (2026-11-03)
+
+- Decision: Classify the current local screenshot-based GUI route as `NO-GO`
+  for authoring. Do not use blind coordinate clicks or drags when the Tableau
+  window body cannot be captured.
+- Result: `/usr/sbin/screencapture` produced a valid full-display PNG, but the
+  visible Tableau window body was absent. The supported window-targeted form
+  failed with `could not create image from window`; the exact-bounds control
+  capture also contained only the desktop wallpaper.
+- Evidence: CoreGraphics listed the on-screen `Tableau - Book10` window as ID
+  `8660` with sharing state `0` (`kCGWindowSharingNone`). Accessibility exposed
+  window chrome and the `Book10.twb` document image but no canvas, field pane,
+  Rows/Columns shelves, Marks card or worksheet tabs. Menu state provided only
+  limited worksheet-context evidence through `Sheet 1` and the listed charging
+  data source.
+- Consequence: `CANVAS_VISIBLE: NO`; no safe visual interaction plan is
+  available under the current host. Reconsider only after a supported
+  External Client API readback or a separately approved host verifies Tableau
+  window capture. The project remains `TABLEAU_WORKBOOK_NOT_YET_CREATED`.
+- Evidence: [`reports/batch22_6_tableau_worksheet_visual_capture.md`](../reports/batch22_6_tableau_worksheet_visual_capture.md).

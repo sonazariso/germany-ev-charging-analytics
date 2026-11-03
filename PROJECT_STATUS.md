@@ -2,21 +2,23 @@
 
 ## Current Batch
 
-Batch 22.5 — Local Tableau GUI automation capability check completed with
-`LOCAL_AUTOMATION_PARTIAL`. The VS Code OpenAI Codex host can use effective
-System Events/Accessibility operations and capture the screen, and Tableau's
-process/window can be detected. The blank `Tableau - Book1` start pane exposed
-no worksheet-tab strip or field pane, so worksheet selection, field dragging,
-dashboard layout and native save/reopen remain unverified. No supported API
-activation was retried; `Settings.ExternalApiEnabled` remains integer `0` and
-no Tableau workbook is created. No DuckDB object, raw/reference file,
-Crosswalk, BBSR layer, charging object, Batch 19 export or official KPI
-deployment changed.
+Batch 22.6 — Tableau worksheet visual capture completed with
+`CANVAS_VISIBLE: NO` and `VISUAL_INTERACTION_NO_GO`. The existing
+`Tableau - Book10` window can be activated and its menu state gives limited
+worksheet-context evidence (`Sheet 1` and the listed charging data source),
+but the native display capture contains only the Tableau menu bar over the
+desktop wallpaper. The window-targeted capture fails because the on-screen
+window reports CoreGraphics sharing state `0`; no canvas, shelves, Marks card,
+Data pane or field controls can be visually grounded. No supported API
+activation was retried; no Tableau workbook or authoring change was made. No
+DuckDB object, raw/reference file, Crosswalk, BBSR layer, charging object,
+Batch 19 export or official KPI deployment changed.
 
 ## Last completed Batch
 
-Batch 22.5 — Local Tableau GUI automation capability check completed after
-Batch 22.4's Tableau Desktop External Client API startup-reset diagnosis,
+Batch 22.6 — Tableau worksheet visual capture completed after Batch 22.5's
+local GUI automation capability check and Batch 22.4's Tableau Desktop
+External Client API startup-reset diagnosis,
 Batch 22.3's controlled preference validation and Batch 21's
 approved two-page Tableau executive overview preparation,
 Batch 20's semantic model design, Batch 19's data preparation and export validation, Batch 18's
@@ -32,10 +34,11 @@ build, Batch 09 feasibility assessment, and Batch 08 geographic verification.
 
 ## Previous completed Batch
 
-Batch 22.4 — Tableau Desktop External Client API startup-reset diagnosis
-completed before Batch 22.5 and after Batch 22.3's controlled preference
-validation. It confirmed the startup reset, correlated `FreeEditionActive`,
-and found no supported Free Edition API activation method.
+Batch 22.5 — Local Tableau GUI automation capability check completed before
+Batch 22.6 and after Batch 22.4's Tableau Desktop External Client API
+startup-reset diagnosis. It verified the current host's effective
+System Events/Accessibility and Screen Recording capabilities but did not
+expose a worksheet canvas.
 
 ## Earlier completed Batch
 
@@ -206,6 +209,7 @@ The deployed maximum-per-point parser classifies 156,155 points at or below 22 k
 - Batch 22.3 used the verified user domain `com.tableau.Tableau-2026.3` and key `Settings.ExternalApiEnabled`; the exact plist backup passed byte/hash validation, the integer write `0 → 1` initially passed, and Tableau reverted it to `0` during startup. Batch 22.4 confirmed that the same startup records `FreeEditionActive` and that the installed External Client API libraries are present. The report treats the startup edition/licensing gate as the confirmed immediate reset mechanism while leaving the undocumented internal product rule explicitly qualified. Both discovery locations remained absent, `list-instances` still failed, and no live fields/workbook metadata were read.
 - Batch 22.4 found no matching system, ByHost, managed-preference or MDM setting, no MCP configuration cause, and no official Tableau documentation promising External Client API availability for the current Free Edition state. The supported next step is an owner decision about a paid supported Desktop configuration/support inquiry or an isolated GUI fallback; no further preference retry is authorized.
 - Batch 22.5 verified that the actual local automation host is the VS Code OpenAI Codex extension's `/Users/admin/.vscode/extensions/openai.chatgpt-26.1021.22027-darwin-x64/bin/macos-x86_64/codex` process. Effective System Events/Accessibility and Screen Recording tests passed, but the blank Tableau `Book1` start pane exposed no worksheet tabs or field pane; the result is `LOCAL_AUTOMATION_PARTIAL`, not an authoring pass. The TCC database itself remained unreadable, no permission was changed, and no tab selection, field interaction, workbook save or dashboard edit was attempted.
+- Batch 22.6 established that the current local screen capture route cannot see the Tableau window body: `/usr/sbin/screencapture` captured a valid display PNG, while `screencapture -l` failed for the on-screen window with CoreGraphics sharing state `0`; the exact-bounds control capture showed only wallpaper. Menu metadata indicates `Sheet 1` and a listed charging data source, but the worksheet canvas, Rows/Columns shelves, Marks card, Data pane, fields and tabs remain unavailable. The visual route is `NO-GO` under the current host; no permission change, workbook edit or API retry was made.
 - CSV attachment, official 16-state map recognition, exact dashboard styling and native save/readback remain verification gates. `apply-datasource` does not import new datasource files; the approved path must validate `open-file` attachment and the resulting workbook state before real dashboard authoring.
 - The preserved ignored `.venv` has historical absolute paths in its activation scripts and `pip` entry-point shebangs; `.venv/bin/python` and `.venv/bin/python -m pip` work, but the environment requires explicit repair or recreation in a future approved task.
 
@@ -229,14 +233,15 @@ The deployed maximum-per-point parser classifies 156,155 points at or below 22 k
 ## Next planned work
 
 Do not retry the preference write or use an alternate flag, binary edit or
-security-bypass/UI route. The Batch 22.5 permission probe passed for the VS
-Code/Codex host, but it did not establish worksheet or field authoring. First
-obtain either an owner-approved supported paid Desktop configuration/support
-answer or approval for an isolated GUI fallback smoke test. Only after
-`list-instances` and the read-only live workbook handshake pass, or after the
-disposable GUI test verifies worksheet controls and native save/reopen, should
-the two specified dashboards be authored. Official recognition of all 16 state
-geometries, visual review and source licensing remain mandatory. Keep
+security-bypass/UI route. Batch 22.6 found that the current local GUI capture
+route cannot expose the Tableau window body, so screenshot-based interaction is
+not safely groundable and is `NO-GO`. Obtain either an owner-approved
+supported paid Desktop configuration/support answer or a separately approved
+host with verified window capture before reconsidering GUI automation. Only
+after `list-instances` and the read-only live workbook handshake pass, or after
+a new approved GUI host verifies worksheet controls and native save/reopen,
+should the two specified dashboards be authored. Official recognition of all
+16 state geometries, visual review and source licensing remain mandatory. Keep
 historical infrastructure-panel development, KBA-to-BBSR vehicle integration,
 external publication and GitHub publication deferred until their prerequisites
 exist.
@@ -397,3 +402,27 @@ edit, workbook save/reopen or data-source change was performed. Tableau was
 closed normally, `Settings.ExternalApiEnabled` remained `0`, and the project
 remains `TABLEAU_WORKBOOK_NOT_YET_CREATED` with result
 `LOCAL_AUTOMATION_PARTIAL`.
+
+## Batch 22.6 Tableau worksheet visual capture outputs
+
+Batch 22.6 completed the read-only visual capture in
+[`reports/batch22_6_tableau_worksheet_visual_capture.md`](reports/batch22_6_tableau_worksheet_visual_capture.md).
+The existing Tableau Desktop 2026.3 process was activated without opening,
+creating or editing a workbook. The current window was `Tableau - Book10`,
+CoreGraphics window ID `8660`, with bounds `188,76,960,628` and on-screen
+sharing state `0` (`kCGWindowSharingNone`).
+
+The native full-display command produced a valid 2560 × 1600 PNG, but the
+image showed only the Tableau menu bar over desktop wallpaper. The
+window-targeted `screencapture -l 8660` call returned
+`could not create image from window`, and a capture of the exact window
+rectangle also contained only wallpaper. Menu metadata provided limited
+worksheet-context evidence (`Window → Sheet 1` and listed
+`national_charging_2026_09_30` data source), but the actual canvas, Rows and
+Columns shelves, Marks card, Data pane, fields and worksheet tabs were neither
+visually visible nor exposed by Accessibility. The validated result is
+`CANVAS_VISIBLE: NO` and `NO-GO` for screenshot-based local GUI interaction.
+
+No ScreenCaptureKit permission was added, no MCP retry or preference write was
+performed, and no workbook, data, source, export, database object, remote,
+upload or publication changed.

@@ -446,3 +446,35 @@ manifest-listed fingerprints, the unchanged DuckDB SHA-256
 fact that no Tableau workbook or screenshot exists yet. Tableau Desktop
 assembly remains a manual step in
 [`docs/tableau-executive-overview.md`](tableau-executive-overview.md).
+
+## Batch 22.6 Tableau worksheet visual capture
+
+Batch 22.6 was a read-only macOS capture diagnostic. It activated the
+existing Tableau Desktop window through System Events, enumerated the native
+window metadata, and wrote temporary images outside the repository. The
+full-display command was:
+
+~~~bash
+/usr/sbin/screencapture -x <temporary-dir>/full-screen.png
+~~~
+
+It produced a valid 2560 × 1600 PNG. The native window-targeted command was
+also attempted:
+
+~~~bash
+/usr/sbin/screencapture -x -l <tableau-window-id> <temporary-dir>/tableau-window.png
+~~~
+
+For the existing window, CoreGraphics reported ID `8660`, bounds
+`188,76,960,628`, on-screen status `true` and sharing state `0`
+(`kCGWindowSharingNone`). The window-targeted command returned
+`could not create image from window`; the exact-bounds control capture showed
+only desktop wallpaper. The full report is
+[`reports/batch22_6_tableau_worksheet_visual_capture.md`](../reports/batch22_6_tableau_worksheet_visual_capture.md).
+
+Menu metadata indicated `Window → Sheet 1` and listed data source
+`national_charging_2026_09_30`, but the worksheet canvas, shelves, Marks card,
+Data pane, fields and worksheet tabs were not visually visible or exposed by
+Accessibility. The result is `CANVAS_VISIBLE: NO` and `NO-GO` for screenshot-
+based local GUI interaction. No workbook, source, export, database,
+permission, preference or MCP configuration changed.

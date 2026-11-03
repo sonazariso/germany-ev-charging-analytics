@@ -4,7 +4,7 @@
 
 This portfolio project builds a reproducible, Germany-wide analytical foundation for comparing the published public-charging register with registered passenger-car stock. It preserves the original BNetzA, KBA, and separately versioned BBSR reference workbooks, separates charging equipment from charging points, and keeps snapshot dates visible throughout the workflow.
 
-The current implementation is a validated local DuckDB model, a deployed still-provisional KBA geographic layer, the separate Batch 13 charging-only BNetzA-source-grain BBSR layer, a separate Batch 13.1 owner-approved 2026 analytical scenario, a separate Batch 13.2 historical BBSR 2025 boundary harmonization, the Batch 14 read-only statistical analysis of that harmonized layer, the Batch 15 read-only KBA FZ 27 stock analysis, the Batch 17 read-only temporal-validity analysis of Batch 16 cross-source KPIs, the Batch 18 analytics-readiness and KPI-finalization review, the Batch 19 validated Tableau export contracts, the Batch 20 Tableau semantic-model design, Batch 21's validated two-page Tableau presentation preparation, Batch 22.1's read-only official Tableau Desktop Authoring MCP feasibility investigation, Batch 22.2's partial official MCP setup, Batch 22.3's partial External Client API validation, Batch 22.4's read-only startup-reset diagnosis and Batch 22.5's partial local GUI automation capability check. Batch 13.2 corrects the Kassel city/county join only in its new layer and aggregates Hanau with the remaining Main-Kinzig source row; Batches 14–22.5 do not change the official baseline, assign BBSR categories to KBA registration regions, integrate charging with BBSR vehicle stock, create a historical infrastructure panel, or allocate Trier stock. Tableau workbook authoring and public reporting remain incomplete.
+The current implementation is a validated local DuckDB model, a deployed still-provisional KBA geographic layer, the separate Batch 13 charging-only BNetzA-source-grain BBSR layer, a separate Batch 13.1 owner-approved 2026 analytical scenario, a separate Batch 13.2 historical BBSR 2025 boundary harmonization, the Batch 14 read-only statistical analysis of that harmonized layer, the Batch 15 read-only KBA FZ 27 stock analysis, the Batch 17 read-only temporal-validity analysis of Batch 16 cross-source KPIs, the Batch 18 analytics-readiness and KPI-finalization review, the Batch 19 validated Tableau export contracts, the Batch 20 Tableau semantic-model design, Batch 21's validated two-page Tableau presentation preparation, Batch 22.1's read-only official Tableau Desktop Authoring MCP feasibility investigation, Batch 22.2's partial official MCP setup, Batch 22.3's partial External Client API validation, Batch 22.4's read-only startup-reset diagnosis, Batch 22.5's partial local GUI automation capability check and Batch 22.6's no-canvas visual-capture diagnosis. Batch 13.2 corrects the Kassel city/county join only in its new layer and aggregates Hanau with the remaining Main-Kinzig source row; Batches 14–22.6 do not change the official baseline, assign BBSR categories to KBA registration regions, integrate charging with BBSR vehicle stock, create a historical infrastructure panel, or allocate Trier stock. Tableau workbook authoring and public reporting remain incomplete.
 
 ## Why this matters
 
@@ -208,6 +208,8 @@ The local DuckDB database, virtual environment, raw workbooks, temporary files, 
 - [Batch 22.2 Tableau Desktop MCP setup](reports/batch22_2_tableau_mcp_setup.md)
 - [Batch 22.3 Tableau External Client API validation](reports/batch22_3_tableau_external_api_validation.md)
 - [Batch 22.4 Tableau External Client API diagnosis](reports/batch22_4_tableau_external_api_diagnosis.md)
+- [Batch 22.5 local Tableau GUI automation capability check](reports/batch22_5_local_automation_capability_check.md)
+- [Batch 22.6 Tableau worksheet visual capture](reports/batch22_6_tableau_worksheet_visual_capture.md)
 - [GitHub publication checklist](docs/github-publication-checklist.md)
 - [Phase validation reports](reports/phase01_data_profile.md), [Phase 02 schema inspection](reports/phase02_schema_inspection.md), [Phase 03 DuckDB validation](reports/phase03_duckdb_validation.md), [Batch 03 crosswalk validation](reports/batch03_crosswalk_validation.md), [Batch 06 geographic deployment](reports/batch06_geographic_deployment.md), [Batch 06.1 KPI documentation audit](reports/batch06-1_kpi_documentation_audit.md), [Batch 09 BBSR feasibility](reports/batch09_bbsr_feasibility.md), [Batch 10 BBSR reference validation](reports/batch10_bbsr_reference_validation.md), [Batch 11 BBSR/KBA compatibility audit](reports/batch11_bbsr_kba_compatibility.md), [Batch 12 two-path BBSR investigation](reports/batch12_bbsr_integration_paths.md), [Batch 13 BBSR charging-only deployment](reports/batch13_bbsr_charging_deployment.md), [Batch 13.1 owner-approved scenario](reports/batch13_1_bbsr_scenario_classification.md), [Batch 13.2 historical harmonization](reports/batch13_2_hanau_geographic_harmonization.md), [Batch 14 BBSR charging analysis](reports/batch14_bbsr_charging_analysis.md), [Batch 15 KBA EV stock analysis](reports/batch15_kba_ev_stock_analysis.md), [Batch 16 state EV/charging alignment](reports/batch16_state_ev_charging_alignment.md), and [Batch 17 temporal KPI validity](reports/batch17_temporal_kpi_validity.md)
 
@@ -371,3 +373,21 @@ The GUI fallback is feasible for local authoring but has not been executed; the
 computer-use entries remain disabled. The workbook, data model and KPI
 contracts remain unchanged. See
 [`reports/batch22_4_tableau_external_api_diagnosis.md`](reports/batch22_4_tableau_external_api_diagnosis.md).
+
+## Batch 22.6 Tableau worksheet visual capture
+
+Batch 22.6 activated the existing Tableau Desktop window without editing its
+workbook and compared a native full-display capture with a native window
+capture. The full-display capture succeeded at 2560 × 1600, but only the
+Tableau menu bar appeared over the desktop wallpaper. Window-targeted capture
+failed with `could not create image from window`; CoreGraphics reported the
+on-screen window's sharing state as `0` (`kCGWindowSharingNone`), and an
+exact-bounds control capture also showed only wallpaper.
+
+Menu metadata indicated a limited worksheet context (`Sheet 1` and active
+`national_charging_2026_09_30` data source), but the worksheet canvas,
+Rows/Columns shelves, Marks card, Data pane, fields and tabs were not visible
+or exposed by Accessibility. The result is `CANVAS_VISIBLE: NO` and `NO-GO`
+for screenshot-based local GUI interaction. No workbook, data, permission,
+preference, MCP configuration, remote, upload or publication changed. See
+[`reports/batch22_6_tableau_worksheet_visual_capture.md`](reports/batch22_6_tableau_worksheet_visual_capture.md).

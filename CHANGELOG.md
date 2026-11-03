@@ -2,6 +2,13 @@
 
 This changelog records project milestones and local repository changes. Historical Batch 01–03 entries describe work evidenced by local reports; they do not imply historical Git commits or inferred dates.
 
+## 2026-11-03 — Batch 22.6 Tableau worksheet visual capture
+
+- Added [`reports/batch22_6_tableau_worksheet_visual_capture.md`](reports/batch22_6_tableau_worksheet_visual_capture.md), documenting the read-only activation of the existing `Tableau - Book10` window, full-display capture, native window-targeted capture failure, exact-bounds control capture, Accessibility/menu inspection and ScreenCaptureKit fallback result.
+- Validated `CANVAS_VISIBLE: NO`: `/usr/sbin/screencapture` produced a valid 2560 × 1600 display PNG, but the Tableau window body was absent; CoreGraphics reported the on-screen window's sharing state as `0` (`kCGWindowSharingNone`), and `screencapture -l` returned `could not create image from window`.
+- Recorded limited worksheet-context evidence (`Window → Sheet 1` and listed `national_charging_2026_09_30` data source) without claiming visual canvas visibility. Rows/Columns shelves, Marks card, Data pane, fields and worksheet tabs remain unavailable for safe visual grounding; recommendation is `NO-GO` for the current local GUI capture route.
+- Updated the project status, roadmap, reproducibility guide, Tableau handoff, root README, decision log and private Persian reference outside Git. No workbook, worksheet, data source, preference, permission, MCP configuration, source, export, database object, remote, upload or publication changed.
+
 ## 2026-11-03 — Batch 22.5 Local Tableau GUI automation capability check
 
 - Added [`reports/batch22_5_local_automation_capability_check.md`](reports/batch22_5_local_automation_capability_check.md), documenting the exact VS Code/Codex automation host, built-in macOS automation options, effective Accessibility/Screen Recording/Automation results, Tableau window detection, Accessibility-tree findings, screenshot test and safe cleanup.

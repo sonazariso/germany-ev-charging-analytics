@@ -139,9 +139,14 @@ vehicle bridge.
 
 ## Next decision-gated stage
 
-Batch 21 has implemented the separate Tableau subject-source preparation and
-quality gates from the existing exports. The remaining handoff is manual
-Tableau Desktop authoring of the two dashboards, official 16-state map
+Batch 21 implemented the separate Tableau subject-source preparation and
+quality gates from the existing exports. Batches 22.5 and 22.6 tested the
+local GUI route and established that the current host can activate Tableau and
+capture the display, but cannot capture the Tableau window body or expose
+worksheet controls needed for safe visual interaction. The local screenshot
+route is therefore `NO-GO`. The remaining handoff requires either a supported
+Desktop External Client API configuration or a separately approved host with
+verified window capture before manual authoring, official 16-state map
 recognition, screenshot checks, owner review and saving a verified local
 workbook. Keep physical marts, historical infrastructure, KBA-to-BBSR vehicle
 integration, adequacy interpretation and remote publication outside scope
@@ -210,3 +215,21 @@ until their prerequisites and permissions are separately approved.
   test.
 - [ ] Do not author the two Executive Overview dashboards until a supported
   MCP handshake or disposable GUI smoke test passes its readback gates.
+
+## Batch 22.6 Tableau worksheet visual capture
+
+- [x] Read the Batch 22.5 report and current project status before the probe.
+- [x] Activate the existing Tableau Desktop window without editing the
+  workbook.
+- [x] Capture the full visible display with native `/usr/sbin/screencapture`.
+- [x] Attempt native window-targeted capture and capture the exact window
+  rectangle as a control.
+- [x] Compare the captures and inspect the bounded Accessibility/menu state.
+- [x] Record the exact limitation: the on-screen Tableau window reports
+  CoreGraphics sharing state `0`, so its body is omitted from capture.
+- [x] Record `CANVAS_VISIBLE: NO` and `NO-GO` for screenshot-based local GUI
+  interaction; update the English and private Persian documentation.
+- [ ] Obtain a supported API readback or a separately approved host with
+  verified Tableau-window capture before reconsidering visual automation.
+- [ ] Do not author the two Executive Overview dashboards through blind
+  coordinate interaction.

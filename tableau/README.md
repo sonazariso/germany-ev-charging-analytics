@@ -38,3 +38,14 @@ screen did not show a rendered worksheet canvas. The result is
 `LOCAL_AUTOMATION_PARTIAL`; no worksheet, data source, chart, workbook or
 screenshot artifact was retained. See
 [`reports/batch22_5_local_automation_capability_check.md`](../reports/batch22_5_local_automation_capability_check.md).
+
+Batch 22.6 activated the existing `Tableau - Book10` window read-only and
+confirmed that the local visual route is not usable for authoring. The native
+full-display capture worked, but the Tableau window body was omitted; the
+window-targeted capture failed with `could not create image from window`, and
+CoreGraphics reported sharing state `0` (`kCGWindowSharingNone`). Menu state
+indicated `Sheet 1` and the listed charging data source, but the canvas,
+Rows/Columns shelves, Marks card, Data pane, fields and worksheet tabs were
+not visible or exposed. The result is `CANVAS_VISIBLE: NO` and `NO-GO` for
+screenshot-based interaction. See
+[`reports/batch22_6_tableau_worksheet_visual_capture.md`](../reports/batch22_6_tableau_worksheet_visual_capture.md).
