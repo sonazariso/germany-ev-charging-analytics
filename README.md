@@ -51,6 +51,7 @@ The state-level KBA FZ 27.2 total labelled Deutschland is 2,365,047 BEVs for Jul
 - Python 3 standard-library ingestion and profiling scripts
 - DuckDB 1.4.5 in the current local environment
 - Tableau Desktop 2026.3 for local workbook authoring; Tableau Public remains a future reporting target
+- React, TypeScript, Vite, Apache ECharts, and Lucide for the Batch 23 local dashboard
 - Git for local version control
 - GitHub as a future publication target, subject to final review and explicit approval
 
@@ -72,6 +73,9 @@ flowchart LR
     L --> M[Versioned BBSR reference CSV and provenance]
     M --> N[Batch 13 BNetzA-to-BBSR bridge]
     N --> O[Charging-only BBSR views]
+    P[Batch 19/21 validated CSV exports] --> Q[web/scripts/prepare-data.mjs]
+    Q --> R[web/public/data/dashboard.json]
+    R --> S[React + ECharts local dashboard]
     J -. planned .-> K[Tableau Public extracts and dashboard]
 ~~~
 
@@ -107,7 +111,9 @@ Batch 17 adds a read-only temporal-validity and sensitivity analysis for those c
 
 Batch 18 finalizes the publication-readiness boundary without implementing the next analytical phase. It adds a deterministic 59-row KPI readiness register, a historical-infrastructure feasibility decision (`BLOCKED` with current data), Tableau candidate/source-grain documentation, a question-led narrative recommendation and a decision register. The canonical statuses are `HEADLINE_READY`, `HEADLINE_READY_WITH_DATES`, `CONTEXT_ONLY`, `EXPLORATORY` and `NOT_SUPPORTED`. No DuckDB object, raw/reference file, source fingerprint, dependency, Tableau asset, remote, upload or publication changed.
 
-Not complete: a dated BBSR/KBA compatibility bridge, KBA-level BBSR classification, native Tableau workbook assembly and screenshot verification, genuine historical infrastructure-panel development, final license review, and GitHub publication. Batch 12 Path B remains at zero strict verified KBA regions; Batch 18 explicitly marks historical infrastructure-panel development blocked until multiple dated snapshots and identity/change evidence exist.
+Batch 23 adds the local web dashboard described in [docs/web-dashboard-design.md](docs/web-dashboard-design.md). It reads only the validated Batch 19/21 CSV exports through a deterministic preparation script, renders `#national` and `#geographic` views with React/TypeScript/Vite/ECharts, includes the locally verified 16-state GeoJSON, and preserves source dates, state scope, methodology notes and selection interactions. The dashboard passed data preparation, TypeScript, production build and local browser checks. It does not modify DuckDB, raw sources, reference data or Tableau assets.
+
+Not complete: a dated BBSR/KBA compatibility bridge, KBA-level BBSR classification, native Tableau workbook assembly and screenshot verification, genuine historical infrastructure-panel development, final license review, and GitHub publication. Batch 12 Path B remains at zero strict verified KBA regions; Batch 18 explicitly marks historical infrastructure-panel development blocked until multiple dated snapshots and identity/change evidence exist. The Batch 23 dashboard remains a local static presentation layer until separate publication approval.
 
 ## Reproducibility
 
@@ -157,6 +163,15 @@ python3 scripts/10_build_bbsr_reference.py
 
 # Batch 17 read-only temporal KPI validity and cohort sensitivity analysis
 .venv/bin/python scripts/17_analyze_temporal_kpi_validity.py --json
+
+# Batch 23 local web dashboard (run from web/)
+cd web
+npm install
+npm run check
+npm run build
+# Choose one local server:
+npm run dev -- --host 127.0.0.1
+# npm run preview
 ~~~
 
 The DuckDB build command is documented in [docs/reproducibility.md](docs/reproducibility.md) and must only be run when a database rebuild is explicitly approved. The Batch 06 deployment is the approved exception for the permanent geographic objects and creates an ignored local backup before modification.
@@ -175,6 +190,7 @@ reports/      Human-readable validation reports
 scripts/      Download, profile, ingest, crosswalk, deployment, validation, and analysis code
 sql/          DuckDB settings and reproducible deployment SQL
 tableau/      Planned Tableau reporting notes
+web/          Batch 23 React/TypeScript dashboard and deterministic data prep
 ~~~
 
 The local DuckDB database, virtual environment, raw workbooks, temporary files, and uncontrolled CSV exports are excluded from version control. See [.gitignore](.gitignore) and [docs/github-publication-checklist.md](docs/github-publication-checklist.md).
@@ -183,6 +199,8 @@ The local DuckDB database, virtual environment, raw workbooks, temporary files, 
 
 - [Project charter](docs/project-charter.md)
 - [Architecture](docs/architecture.md)
+- [Web dashboard architecture](docs/web-dashboard-architecture.md)
+- [Web dashboard design](docs/web-dashboard-design.md)
 - [Data sources](docs/data-sources.md)
 - [Data dictionary](docs/data-dictionary.md)
 - [KPI catalog](docs/kpi-catalog.md)
@@ -210,6 +228,7 @@ The local DuckDB database, virtual environment, raw workbooks, temporary files, 
 - [Batch 22.4 Tableau External Client API diagnosis](reports/batch22_4_tableau_external_api_diagnosis.md)
 - [Batch 22.5 local Tableau GUI automation capability check](reports/batch22_5_local_automation_capability_check.md)
 - [Batch 22.6 Tableau worksheet visual capture](reports/batch22_6_tableau_worksheet_visual_capture.md)
+- [Batch 23 web dashboard validation](reports/batch23_web_dashboard_validation.md)
 - [GitHub publication checklist](docs/github-publication-checklist.md)
 - [Phase validation reports](reports/phase01_data_profile.md), [Phase 02 schema inspection](reports/phase02_schema_inspection.md), [Phase 03 DuckDB validation](reports/phase03_duckdb_validation.md), [Batch 03 crosswalk validation](reports/batch03_crosswalk_validation.md), [Batch 06 geographic deployment](reports/batch06_geographic_deployment.md), [Batch 06.1 KPI documentation audit](reports/batch06-1_kpi_documentation_audit.md), [Batch 09 BBSR feasibility](reports/batch09_bbsr_feasibility.md), [Batch 10 BBSR reference validation](reports/batch10_bbsr_reference_validation.md), [Batch 11 BBSR/KBA compatibility audit](reports/batch11_bbsr_kba_compatibility.md), [Batch 12 two-path BBSR investigation](reports/batch12_bbsr_integration_paths.md), [Batch 13 BBSR charging-only deployment](reports/batch13_bbsr_charging_deployment.md), [Batch 13.1 owner-approved scenario](reports/batch13_1_bbsr_scenario_classification.md), [Batch 13.2 historical harmonization](reports/batch13_2_hanau_geographic_harmonization.md), [Batch 14 BBSR charging analysis](reports/batch14_bbsr_charging_analysis.md), [Batch 15 KBA EV stock analysis](reports/batch15_kba_ev_stock_analysis.md), [Batch 16 state EV/charging alignment](reports/batch16_state_ev_charging_alignment.md), and [Batch 17 temporal KPI validity](reports/batch17_temporal_kpi_validity.md)
 

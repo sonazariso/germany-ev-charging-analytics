@@ -756,3 +756,25 @@ scope. No BBSR vehicle KPI, adequacy/shortage/surplus KPI, utilization KPI,
 historical infrastructure KPI or unapproved denominator is introduced. The
 worksheet-level implementation is in
 [`docs/tableau-executive-overview.md`](tableau-executive-overview.md).
+
+## Batch 23 web-dashboard binding
+
+Batch 23 does not add or promote KPI definitions. It binds the existing
+validated measures to a local presentation layer through the Batch 19/21
+export contracts:
+
+| Web view | Bound measures | Required source treatment |
+|---|---|---|
+| National Summary cards | Equipment, points, fast points, nominal MW, national BEV/PHEV stock | BNetzA `2026-09-30`; KBA `2026-07-01`; dates visible |
+| National Summary power views | Four mutually exclusive maximum-per-point bands and equipment status | Point-slot versus equipment grain remains separate |
+| National Summary history | 33 deduplicated national BEV/PHEV observations | Registered stock history, not charging history or sales |
+| Geographic View map/table | 16-state charging counts and fast shares | BNetzA state grain, `2026-09-30`; map geometry is visual only |
+| Geographic View comparison | BEV stock and BEV penetration | KBA state grain, `2026-07-01`; cross-snapshot note remains visible |
+
+Shares and percentages are prepared from aggregated counts; the browser does
+not sum or average exported percentage fields. The dashboard does not expose
+the `CONTEXT_ONLY` BEVs-per-point measure as an executive KPI and does not
+introduce BBSR vehicle KPIs, adequacy, utilization, demand, shortage, surplus
+or causal claims. The full implementation and validation records are in
+[`docs/web-dashboard-architecture.md`](web-dashboard-architecture.md) and
+[`reports/batch23_web_dashboard_validation.md`](../reports/batch23_web_dashboard_validation.md).

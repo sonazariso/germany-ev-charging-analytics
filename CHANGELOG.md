@@ -2,6 +2,28 @@
 
 This changelog records project milestones and local repository changes. Historical Batch 01–03 entries describe work evidenced by local reports; they do not imply historical Git commits or inferred dates.
 
+## 2026-11-03 — Batch 23 local web dashboard
+
+- Added the local React/TypeScript/Vite dashboard under `web/` with `#national`
+  and `#geographic` routes, responsive layout, Lucide icons, ECharts charts,
+  interactive power-band and state selection, a local 16-state choropleth,
+  ranking, comparison table and keyboard-accessible state rows.
+- Added `web/scripts/prepare-data.mjs`, which validates the six approved Batch
+  19/21 CSV inputs, reconciles exact totals and writes deterministic
+  `web/public/data/dashboard.json` with source hashes, dates and provenance.
+- Added the locally verified GeoJSON asset and attribution record under
+  `web/public/data/`, plus the dashboard package/lockfile and development
+  instructions.
+- Added `docs/web-dashboard-architecture.md`,
+  `docs/web-dashboard-design.md`, and
+  `reports/batch23_web_dashboard_validation.md`; updated the README, project
+  status, architecture, KPI/geographic methodology, reproducibility and
+  roadmap documentation.
+- Passed data preparation, TypeScript, Vite production build and local Chrome
+  inspection of both routes. The ECharts chunk-size notice is non-blocking.
+  No DuckDB object, source/reference file, Batch 19 export, Tableau asset,
+  remote, upload or publication changed.
+
 ## 2026-11-03 — Batch 22.6 Tableau worksheet visual capture
 
 - Added [`reports/batch22_6_tableau_worksheet_visual_capture.md`](reports/batch22_6_tableau_worksheet_visual_capture.md), documenting the read-only activation of the existing `Tableau - Book10` window, full-display capture, native window-targeted capture failure, exact-bounds control capture, Accessibility/menu inspection and ScreenCaptureKit fallback result.

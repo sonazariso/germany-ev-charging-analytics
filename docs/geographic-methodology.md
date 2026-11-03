@@ -525,3 +525,20 @@ classification and not a KBA bridge.
 The contracts and measured validation are in
 [`reports/batch19_tableau_export_contracts.md`](../reports/batch19_tableau_export_contracts.md)
 and [`reports/batch19_tableau_data_validation.md`](../reports/batch19_tableau_data_validation.md).
+
+## Batch 23 web-dashboard state map
+
+The web dashboard's geographic page is a 16-state presentation at the
+validated BNetzA state grain. It uses the explicit state names and `DE-XX`
+codes in the prepared dashboard JSON; the geometry is not used to calculate,
+allocate, or infer any metric. The map therefore remains separate from the
+provisional BNetzA-to-KBA Crosswalk, the BBSR layers, and the shared Trier
+registration-region treatment.
+
+The local geometry file is
+`web/public/data/germany-states.geo.json`, sourced from the low-resolution
+`DeutschlandGeoJSON` federal-state collection. Its 16-feature coverage,
+source URL, GIS-DATA/DIVA-GIS credit, Unlicense note, access date and SHA-256
+are recorded in `web/public/data/geo-attribution.md`. The dashboard uses the
+map for visual recognition only; charging points, BEV stock, penetration and
+fast-share values come from validated Batch 19 exports.

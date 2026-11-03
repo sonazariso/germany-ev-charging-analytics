@@ -27,6 +27,10 @@ This roadmap distinguishes established work from planned work. A planned item is
 - Batch 16: completed a read-only 16-state comparison of KBA July 2026 passenger-car stock versus BNetzA September 2026 charging infrastructure, with deterministic reconciliation, cross-source ratios, outlier screens, descriptive correlations and KPI evaluation. No database objects were changed.
 - Batch 17: completed a read-only temporal-validity audit of the Batch 16 cross-source KPIs, including commissioning-date quality, published-versus-survivor cohort sensitivity, 16-state ranking/outlier comparison, fixed-denominator vehicle-stock illustration and KPI publication decisions. No database objects were changed.
 - Batch 18: completed the source-readiness review, canonical 59-row KPI register, historical-panel feasibility decision, Tableau candidate assessment, concise narrative recommendation and decision register. No database objects, source files, Tableau assets or new datasets were changed.
+- Batch 23: completed the local static web dashboard, deterministic JSON
+  preparation, local 16-state map integration, responsive two-page design and
+  browser validation. No database objects, source files, Tableau assets or
+  remote publication were changed.
 
 These are project milestones supported by local artifacts. They are not historical Git commits unless a local commit is explicitly identified in the handoff.
 
@@ -233,3 +237,22 @@ until their prerequisites and permissions are separately approved.
   verified Tableau-window capture before reconsidering visual automation.
 - [ ] Do not author the two Executive Overview dashboards through blind
   coordinate interaction.
+
+## Batch 23 local web dashboard
+
+- [x] Create the React/TypeScript/Vite application shell and two hash-routed
+  pages: National Summary and Geographic View.
+- [x] Build deterministic data preparation from the validated Batch 19/21
+  exports with manifest hash, row-count, date, state-membership and total
+  reconciliation checks.
+- [x] Preserve exact national, state, KBA-history, power-band and equipment
+  status values; keep source dates and cross-snapshot caveats visible.
+- [x] Add interactive ECharts visuals, cross-panel state selection, sortable
+  comparison table, keyboard-accessible rows, responsive layout and local
+  fallback-free map rendering.
+- [x] Add the 16-state GeoJSON asset with source, license, attribution and
+  checksum record.
+- [x] Run TypeScript checks, the Vite production build and live browser QA for
+  both routes; record the result as `WEB_DASHBOARD_PASS`.
+- [ ] Decide separately whether to publish the local dashboard or create the
+  native Tableau workbook; neither is implied by Batch 23.

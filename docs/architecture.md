@@ -33,6 +33,15 @@ flowchart LR
 
 The Tableau path remains planned. Batch 06 deployed the approved geographic reference table and analytics views to the local DuckDB file; the crosswalk mappings remain partly provisional and are not an official boundary gazetteer.
 
+Batch 23 adds a separate static web presentation path. It starts from the
+validated Batch 19/21 CSV contracts, validates and normalizes them with
+`web/scripts/prepare-data.mjs`, writes `web/public/data/dashboard.json`, and
+serves two React/ECharts pages through Vite. The browser never connects to
+DuckDB or an external API. The page-two map uses a locally verified 16-state
+GeoJSON asset with attribution and checksum metadata. See
+[`web-dashboard-architecture.md`](web-dashboard-architecture.md) and
+[`web-dashboard-design.md`](web-dashboard-design.md).
+
 ## Source and ingestion stages
 
 1. config/sources.json records the four primary BNetzA/KBA source IDs plus the separately handled BBSR reference source, including reference dates, paths, direct URLs, source pages, and declared reuse licenses.

@@ -85,6 +85,21 @@ These are declared-power classifications. They are not connector counts, simulta
 
 These assertions validate coverage, retention, and join arithmetic. They do not establish official geographic correctness.
 
+## Batch 23 web-dashboard validation boundary
+
+The web dashboard consumes the validated Batch 19/21 export contracts rather
+than opening DuckDB in the browser. Its preparation script repeats the
+presentation-layer checks for six inputs, including source checksums, expected
+rows/columns, 16-state membership, national/state totals, 33 history rows and
+the four mutually exclusive power bands. The output preserves source dates,
+roles and validation metadata in `web/public/data/dashboard.json`.
+
+This is a rendering validation, not a new source-quality claim. It does not
+turn the published BNetzA register into a complete utilization feed, does not
+resolve the KBA/BBSR boundary limitations, and does not change the canonical
+KPI statuses. Details are in
+[`reports/batch23_web_dashboard_validation.md`](../reports/batch23_web_dashboard_validation.md).
+
 ### Batch 05 pre-integration geographic validation
 
 Batch 05 repeated the geographic checks with one DuckDB connection opened read-only and SELECT/CTE queries only. No `CREATE`, `ALTER`, `DROP`, `INSERT`, `UPDATE`, or `DELETE` statement was executed.

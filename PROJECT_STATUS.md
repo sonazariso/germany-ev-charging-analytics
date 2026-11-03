@@ -2,6 +2,33 @@
 
 ## Current Batch
 
+Batch 23 — local web dashboard completed with `WEB_DASHBOARD_PASS`.
+The dashboard consumes only the validated Batch 19/21 CSV exports through
+`web/scripts/prepare-data.mjs`, validates the six input contracts, and renders
+the responsive `#national` and `#geographic` views with React, TypeScript,
+Vite, ECharts and Lucide. The local 16-state GeoJSON is attributed and
+checksum-recorded. `npm run check`, `npm run build`, and live Chrome inspection
+of both routes passed. No DuckDB object, raw/reference file, Batch 19 export,
+Tableau asset, remote or publication changed.
+
+## Batch 23 deliverables
+
+- `web/` — Vite/React/TypeScript application with two dashboard pages,
+  interactive charts, local map, keyboard-accessible state selection and
+  responsive styling.
+- `web/scripts/prepare-data.mjs` — deterministic source validation and JSON
+  preparation from the approved Batch 19/21 exports.
+- `web/public/data/dashboard.json` — normalized, checksum-bearing dashboard
+  artifact with exact national, state and history reconciliations.
+- `web/public/data/germany-states.geo.json` and
+  `web/public/data/geo-attribution.md` — local 16-state geometry and
+  provenance.
+- `docs/web-dashboard-architecture.md`, `docs/web-dashboard-design.md`, and
+  `reports/batch23_web_dashboard_validation.md` — implementation, design and
+  validation handoff.
+
+## Previous Tableau diagnostic
+
 Batch 22.6 — Tableau worksheet visual capture completed with
 `CANVAS_VISIBLE: NO` and `VISUAL_INTERACTION_NO_GO`. The existing
 `Tableau - Book10` window can be activated and its menu state gives limited
@@ -16,7 +43,8 @@ Batch 19 export or official KPI deployment changed.
 
 ## Last completed Batch
 
-Batch 22.6 — Tableau worksheet visual capture completed after Batch 22.5's
+Batch 23 — local web dashboard completed after Batch 22.6's
+Tableau worksheet visual capture, Batch 22.5's
 local GUI automation capability check and Batch 22.4's Tableau Desktop
 External Client API startup-reset diagnosis,
 Batch 22.3's controlled preference validation and Batch 21's
@@ -34,11 +62,10 @@ build, Batch 09 feasibility assessment, and Batch 08 geographic verification.
 
 ## Previous completed Batch
 
-Batch 22.5 — Local Tableau GUI automation capability check completed before
-Batch 22.6 and after Batch 22.4's Tableau Desktop External Client API
-startup-reset diagnosis. It verified the current host's effective
-System Events/Accessibility and Screen Recording capabilities but did not
-expose a worksheet canvas.
+Batch 22.6 — Tableau worksheet visual capture completed before Batch 23 and
+after Batch 22.5's local GUI automation capability check. The current host
+could activate Tableau and inspect limited menu state, but window capture
+reported `CANVAS_VISIBLE: NO`; no workbook authoring was attempted.
 
 ## Earlier completed Batch
 

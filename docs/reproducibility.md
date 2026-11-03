@@ -478,3 +478,35 @@ Data pane, fields and worksheet tabs were not visually visible or exposed by
 Accessibility. The result is `CANVAS_VISIBLE: NO` and `NO-GO` for screenshot-
 based local GUI interaction. No workbook, source, export, database,
 permission, preference or MCP configuration changed.
+
+## Batch 23 local web dashboard
+
+The web dashboard is a static presentation layer over the validated Batch 19
+and Batch 21 CSV contracts. It does not rebuild DuckDB and does not require a
+database connection at runtime. Use Node.js 22 or a compatible current LTS
+runtime from the `web/` directory:
+
+~~~bash
+cd web
+npm install
+npm run check
+npm run build
+# Choose one local server:
+npm run dev -- --host 127.0.0.1
+# npm run preview
+~~~
+
+`npm run check` first runs `scripts/prepare-data.mjs`. The script reads the
+national charging, state charging, state comparison, KBA national history,
+power-band preparation and equipment-status preparation CSVs; verifies the
+Batch 19 manifest checksums and expected row/column contracts; validates the
+16-state membership, 33 history observations, national/state totals and the
+four mutually exclusive power bands; then writes the deterministic
+`web/public/data/dashboard.json` artifact. It records source checksums, roles,
+dates and map provenance in that artifact.
+
+The browser routes are `/#national` and `/#geographic`. The map uses the
+versioned local asset `web/public/data/germany-states.geo.json`; its source and
+license metadata are in `web/public/data/geo-attribution.md`. `web/node_modules`
+and `web/dist` are ignored. The dashboard preparation script does not write
+DuckDB, raw workbooks, reference data, Batch 19 exports or Tableau assets.

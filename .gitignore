@@ -31,6 +31,10 @@ data/tmp/
 .data_cache/
 *.tmp
 
+# Web dashboard dependencies and build output
+web/node_modules/
+web/dist/
+
 # Generated or uncontrolled analytical exports
 reports/CSV Archive/
 reports/csv/
