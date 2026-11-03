@@ -205,3 +205,24 @@ This log separates approved decisions, implementation details, and pending propo
 - Decide whether historical KBA snapshots are required before publishing pre-2026 or cross-vintage regional trends.
 - Approve any new source download, future KBA-level DuckDB object, or Tableau enrichment separately; no KBA–BBSR integration is authorized by Batch 13.
 - Complete source-data redistribution and final public-extract licensing review.
+
+## Batch 14 decision: use the harmonized layer for descriptive BBSR analysis
+
+- Decision: Use only `analytics.charging_by_bbsr_district_2025_harmonized`
+  and its four-category summary as the primary Batch 14 analytical baseline.
+- Reason: Batch 13.2 is the validated layer that resolves the historical
+  Hanau/Main-Kinzig target and the Kassel city/county identity while preserving
+  source-component provenance.
+- Controls: Keep BNetzA `2026-09-30` and BBSR `2025-12-31` visible; preserve
+  `fast >22 kW`, `>=150 kW`, and `>=350 kW` as nested declared-power measures;
+  do not use KBA stock or create a BBSR/KBA ratio.
+- Decision: Treat category shares, distributions, weighted/unweighted
+  comparisons, and concentration rankings as descriptive. Do not call them
+  access, demand, quality, utilization, or causal KPIs.
+- Decision: Use a 30-point minimum only as an exploratory stability filter for
+  share-based outlier rankings. It is not an official statistical standard.
+- Consequence: Batch 14 creates a read-only analyzer, report, and diagnostic
+  CSVs only. No DuckDB view, table, mapping, source file, or official KPI
+  deployment changes.
+- Status: Approved and applied for Batch 14; any Tableau deployment still
+  requires separate approval.

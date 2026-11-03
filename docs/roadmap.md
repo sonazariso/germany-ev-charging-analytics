@@ -22,6 +22,7 @@ This roadmap distinguishes established work from planned work. A planned item is
 - Batch 13: deployed the approved source-grain BBSR charging-only bridge and category views with 399 verified classifications, two visible unclassified districts, full charging reconciliation, and no KBA stock integration.
 - Batch 13.1: deployed the separate owner-approved Hanau/Main-Kinzig analytical scenario with a two-row override reference, 401 classified source districts, zero scenario-unclassified districts, and no change to the official Batch 13 baseline.
 - Batch 13.2: audited the BBSR 68-versus-67 discrepancy, corrected the Kassel city/county join only in a new layer, and deployed a historical Hanau/Main-Kinzig BBSR 2025 harmonization with 401 source components, 400 target units, and full national reconciliation.
+- Batch 14: completed a read-only statistical analysis of the harmonized BBSR charging layer, including category KPIs, within-unit distributions, weighted/unweighted comparisons, concentration/outlier screens, evidence-labelled interpretations, and future Tableau KPI evaluation. No database objects were changed.
 
 These are project milestones supported by local artifacts. They are not historical Git commits unless a local commit is explicitly identified in the handoff.
 
@@ -62,9 +63,12 @@ These are project milestones supported by local artifacts. They are not historic
 - [x] Approve and deploy the separate BNetzA-source-grain charging-only BBSR bridge and category views; preserve mixed/unresolved status, Hanau treatment, and no Trier allocation.
 - [x] Deploy the owner-approved 2026 Hanau/Main-Kinzig scenario as a separate, versioned charging-only layer; preserve the official BBSR 2025 five-row baseline and explicit non-official provenance.
 - [x] Independently explain the 68-versus-67 discrepancy, document official Hanau boundary evidence, and deploy the historical BBSR 2025 target-unit harmonization without changing Batch 13, Batch 13.1, KBA, or Crosswalk objects.
+- [x] Run the Batch 14 read-only harmonized-layer analysis and produce the report plus deterministic type/district diagnostic CSVs.
+- [x] Reconcile Batch 14 national totals, source fingerprints, duplicate/orphan checks, category counts, and maximum-per-point power bands.
+- [x] Evaluate and recommend a small future Tableau KPI set without deploying views or BBSR/KBA ratios.
 - [ ] Approve a dated BBSR/KBA compatibility bridge before any KBA-level BBSR classification or vehicle-stock ratio.
 - [ ] Decide whether a post-2026 BBSR vintage, a product-specific KBA bridge, historical KBA snapshots, or future Tableau work is required; no universal prefix rule or Trier allocation is approved.
-- [ ] Further KPI validation and dashboard-specific denominator review.
+- [ ] Review Batch 14 findings and complete dashboard-specific denominator review before any Tableau implementation.
 - [ ] Prepare compact Tableau extracts and source-date metadata.
 - [ ] Develop a Germany-wide overview and selected drill-down dashboard.
 - [ ] Complete code, dependency, data, licensing, and screenshot review.

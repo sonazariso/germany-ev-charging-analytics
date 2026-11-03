@@ -178,3 +178,86 @@ Hanau/Main-Kinzig target is 585 equipment and 991 points. The official Batch 13
 baseline and Batch 13.1 scenario remain separate comparison layers; KBA stock,
 the Crosswalk, and Trier allocation are unchanged. Full evidence is in
 [`reports/batch13_2_hanau_geographic_harmonization.md`](../reports/batch13_2_hanau_geographic_harmonization.md).
+
+## Batch 14 BBSR charging-pattern analysis
+
+Batch 14 performs a read-only statistical analysis using only the harmonized
+Batch 13.2 analytical layer:
+
+- `analytics.charging_by_bbsr_district_2025_harmonized` is the 400-unit
+  historical target-unit grain.
+- `analytics.charging_by_bbsr_type_2025_harmonized` is the four-category
+  reconciliation view.
+- The source infrastructure date is `2026-09-30`; the historical BBSR
+  geographic stand is `2025-12-31`.
+- The 400 historical units represent 401 current BNetzA source components.
+  Hanau and remaining Main-Kinzig-Kreis are one historical target; Kassel city
+  remains type 1 and Kassel county remains type 2.
+
+### Validated category results
+
+| BBSR type | Historical units | Equipment | Points | Equipment share | Point share | Fast share | >=150 kW share | >=350 kW share | Nominal MW | Nominal-power share |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 1 | 68 | 39,789 | 69,863 | 33.82% | 33.07% | 18.75% | 13.87% | 1.69% | 2,373.0481 | 25.75% |
+| 2 | 131 | 42,191 | 77,986 | 35.86% | 36.92% | 26.82% | 19.87% | 3.37% | 3,509.5100 | 38.08% |
+| 3 | 98 | 18,042 | 32,342 | 15.33% | 15.31% | 32.63% | 24.36% | 4.47% | 1,669.6451 | 18.12% |
+| 4 | 103 | 17,640 | 31,062 | 14.99% | 14.70% | 33.88% | 25.38% | 5.47% | 1,663.2141 | 18.05% |
+
+National reconciliation is exact: 117,662 equipment records, 211,253 points,
+156,155 normal points, 55,098 fast points, 40,950 points at least 150 kW,
+6,950 points at least 350 kW, and 9,215.4173 MW of declared equipment nominal
+power. No unclassified infrastructure remains. Fast (`>22 kW`), >=150 kW,
+and >=350 kW are nested declared-power classifications, not mutually exclusive
+accessibility bands.
+
+### Distribution, weighting, and concentration findings
+
+- The all-unit point-weighted fast share is 26.08%, while the unweighted mean
+  of unit fast shares is 31.25% (a -5.17 percentage-point difference). The
+  corresponding weighted/unweighted differences are -3.80 points for >=150 kW
+  and -0.80 points for >=350 kW. Small units therefore have more influence on
+  the unweighted mean than on the national point mix.
+- Type 1 has more points than types 3 and 4 but fewer than type 2. Type 4 has
+  the highest within-category fast share, whereas type 2 has the largest
+  absolute fast-point count. Absolute scale and relative mix are different
+  statements.
+- Berlin is the largest unit for total points (7,644; 3.62% of national
+  points), fast points (1,256), >=150 kW points (1,000), and >=350 kW points
+  (136). The top 10 units account for 17.38% of points, 11.22% of fast points,
+  11.22% of >=150 kW points, and 12.83% of >=350 kW points.
+- The exploratory 30-point minimum for fast-share rankings excludes no unit in
+  this snapshot. The filter remains documented because small denominators can
+  make percentages unstable in future snapshots.
+- Highest fast-share examples are Hersfeld-Rotenburg (69.43% of 314 points),
+  Nordhausen (68.99% of 158), and Saale-Orla-Kreis (64.13% of 223). Lowest
+  examples are Stuttgart (4.98% of 4,381), Calw (4.99% of 441), and Heidelberg
+  (7.65% of 784). These are descriptive outlier screens, not quality rankings.
+
+### Interpretation controls
+
+- **OBSERVED:** Type 4 has the highest fast-point share, while type 2 has the
+  largest absolute fast-point count.
+- **SUPPORTED ASSOCIATION:** Across the four category aggregates, fast-share
+  ordering and high-power-share ordering are the same. This is descriptive
+  association across four groups, not a causal finding.
+- **PLAUSIBLE HYPOTHESIS:** Normal/fast mix, high-power concentration, and the
+  size and composition of individual historical units may contribute to the
+  observed differences. Current data cannot identify a cause.
+- **NOT TESTABLE WITH CURRENT DATA:** Resident population, area, traffic or
+  motorway corridors, EV ownership, demand, utilization, queueing, reliability,
+  delivered energy, and accessibility cannot explain these results without
+  additional same-grain evidence. No KBA vehicle-stock data were used.
+
+The recommended future Tableau set is small: category point counts/shares,
+fast counts/shares, nested >=150 and >=350 kW counts/shares, and unit-level
+P10/median/P90 distributions. Nominal power and top-k concentration are useful
+context measures. BBSR-based BEV-to-charger ratios remain unsupported because
+there is no approved dated BBSR/KBA bridge.
+
+Full tables, outlier rankings, KPI assessment, validation evidence, source
+fingerprints, and reproducibility instructions are in
+[`reports/batch14_bbsr_charging_analysis.md`](../reports/batch14_bbsr_charging_analysis.md).
+The reproducible diagnostics are
+[`reports/batch14_bbsr_type_metrics.csv`](../reports/batch14_bbsr_type_metrics.csv)
+and
+[`reports/batch14_bbsr_district_metrics.csv`](../reports/batch14_bbsr_district_metrics.csv).

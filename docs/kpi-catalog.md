@@ -516,6 +516,30 @@ audit, official boundary evidence, layer comparison, and backup provenance are
 in
 [`reports/batch13_2_hanau_geographic_harmonization.md`](../reports/batch13_2_hanau_geographic_harmonization.md).
 
+## Batch 14 statistical KPI evaluation
+
+Batch 14 evaluates future Tableau candidates from the harmonized layer without
+deploying new database views. All candidates retain the BNetzA infrastructure
+date `2026-09-30`, the BBSR historical stand `2025-12-31`, and the 400-unit
+historical target grain unless stated otherwise.
+
+| Candidate | Status | Numerator / denominator | Source | Unit and grain | Limitation |
+|---|---|---|---|---|---|
+| BBSR category point count and national share | `VALIDATED` | Category charging points / all 211,253 points | Harmonized district/type views over core point rows | Points and percent; four BBSR types | Absolute counts are not accessibility or need |
+| BBSR category equipment count and national share | `VALIDATED` | Category equipment rows / all 117,662 rows | Harmonized district/type views over core equipment rows | Equipment rows and percent; four BBSR types | Equipment is not point count |
+| Fast point count and within-category fast share | `VALIDATED` | Points with maximum declared power >22 kW / category points | Harmonized views with maximum `connector_power_raw` parser | Points and percent; category | Declared power is not utilization |
+| >=150 and >=350 kW counts/shares | `VALIDATED` | Nested threshold counts / category points | Harmonized views with maximum `connector_power_raw` parser | Points and percent; category | Thresholds overlap and do not establish access |
+| Unit distribution percentiles | `EXPLORATORY` | P10, median, P90 of counts, shares, nominal power, and points/equipment | Harmonized district view | Historical BBSR unit; category | Skew and small denominators require context |
+| Weighted versus unweighted shares | `EXPLORATORY` | Point-weighted share versus mean unit share | Harmonized district view | Category or all 400 units | Weighting differences are not performance evidence |
+| Top-1/top-5/top-10 concentration share | `EXPLORATORY` | Points in top k units / national points | Harmonized district view | Historical BBSR unit | Ranking is not quality or need |
+| Declared equipment nominal power | `VALIDATED` | Sum equipment nominal kW / 1,000 | Harmonized district view over core equipment rows | MW; category or unit | Nominal power is not delivered energy or simultaneous capacity |
+| BBSR-based BEV-to-charger ratio | `UNSUPPORTED` | Would require a valid dated BBSR/KBA bridge | No approved BBSR/KBA source bridge | No approved current grain | KBA stock is intentionally excluded from Batch 14 |
+
+The recommended initial Tableau set is category point count/share, fast
+count/share, nested high-power count/share, and a distribution view with
+P10/median/P90 context. The descriptive metrics must not be labelled as
+coverage, demand, utilization, accessibility, or causality measures.
+
 ## Optional future BBSR/KBA enrichment
 
 BBSR settlement or spatial typology remains a separate, versioned reference for

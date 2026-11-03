@@ -378,3 +378,28 @@ They are not proof that a provisional alias is an official boundary mapping, and
 - Reconcile the 2,829 state-level Sonstige BEVs and the passenger-car denominator difference before a national cross-grain KPI is published.
 - Review the one coordinate exception without altering the source record.
 - Re-run the same validation suite after any approved schema or source-date change.
+
+## Batch 14 read-only analysis validation
+
+Batch 14 uses only the harmonized BBSR analytical layer as its primary source:
+
+- `analytics.charging_by_bbsr_district_2025_harmonized`: 400 unique historical
+  target units.
+- `analytics.charging_by_bbsr_type_2025_harmonized`: four category rows with
+  target counts 68 / 131 / 98 / 103.
+- The 400 target units represent 401 current BNetzA source components.
+
+The read-only analyzer independently reconciled 117,662 equipment rows,
+211,253 point rows, 156,155 normal points, 55,098 fast points, 40,950 points
+at least 150 kW, 6,950 points at least 350 kW, and 9,215.4173 MW nominal
+equipment power. It found zero unclassifiable points, zero duplicate equipment
+keys, zero duplicate point keys, and zero orphan points. The harmonized view
+contains no `UNCLASSIFIED` infrastructure and its SQL contains no KBA, BEV, or
+PHEV dependency.
+
+The Batch 14 fingerprint check matched the local BNetzA source workbook, BBSR
+raw workbook, BBSR derived reference CSV, and Batch 13.2 harmonization CSV.
+The script opened DuckDB with `read_only=True`; it created no database object
+and did not change raw data, references, the Crosswalk, KBA objects, or vehicle
+stock. Full evidence is in
+[`reports/batch14_bbsr_charging_analysis.md`](../reports/batch14_bbsr_charging_analysis.md).

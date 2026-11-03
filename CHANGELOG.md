@@ -2,6 +2,15 @@
 
 This changelog records project milestones and local repository changes. Historical Batch 01–03 entries describe work evidenced by local reports; they do not imply historical Git commits or inferred dates.
 
+## 2026-11-03 — Batch 14
+
+- Added `scripts/14_analyze_bbsr_charging_patterns.py`, a deterministic read-only analyzer whose primary source is the Batch 13.2 harmonized BBSR district/type layer.
+- Added `reports/batch14_bbsr_charging_analysis.md`, `reports/batch14_bbsr_type_metrics.csv`, and `reports/batch14_bbsr_district_metrics.csv` with category KPIs, distributions, weighted/unweighted comparisons, concentration statistics, outlier screens, evidence labels, KPI evaluation, source fingerprints, and validation results.
+- Validated 400 historical BBSR target units from 401 BNetzA source components; reconciled 117,662 equipment rows, 211,253 points, all four power bands, and 9,215.4173 MW of declared equipment nominal power.
+- Documented that type 2 has the largest absolute point/fast-point totals while type 4 has the highest within-category fast share; the national weighted fast share is 26.08% versus a 31.25% unweighted unit mean.
+- Recommended a small future Tableau set and explicitly excluded BBSR-based BEV-to-charger ratios, accessibility, utilization, and causal interpretations. No DuckDB table/view, raw data, reference, Crosswalk, KBA object, dependency, or source file changed.
+- Updated English findings, KPI, data-quality, decision, reproducibility, roadmap, README, and project-status documentation plus the private Persian KPI catalog outside Git. No remote was added and nothing was uploaded or published.
+
 ## Historical project milestones before the local Git baseline
 
 - Source discovery and profiling: created the source manifest, downloaded or verified the BNetzA 2026-09-30 workbook and three KBA FZ 27 2026 workbooks, preserved hashes, and profiled every worksheet.

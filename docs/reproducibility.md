@@ -254,3 +254,24 @@ DBeaver is optional. If used, create a DuckDB connection to data/analytics/ev_ch
 ## Tableau Public
 
 Tableau Public cannot query a local DuckDB file as a live published source. The planned workflow is to create a compact, validated extract from approved analytics relations, record both source dates and the extract generation time, and keep detailed point data available locally where performance and licensing permit. No Tableau dashboard or public extract has been completed.
+
+## Batch 14 read-only BBSR statistical analysis
+
+Run the deterministic analyzer from the repository root:
+
+~~~bash
+.venv/bin/python scripts/14_analyze_bbsr_charging_patterns.py --json
+~~~
+
+The script opens the existing DuckDB file with `read_only=True`, validates the
+Batch 13.2 harmonized district/type view contract, independently reconciles
+the core equipment/point and maximum-per-point power totals, checks source-file
+fingerprints, and writes only these Git-tracked analytical artifacts:
+
+- `reports/batch14_bbsr_charging_analysis.md`
+- `reports/batch14_bbsr_type_metrics.csv`
+- `reports/batch14_bbsr_district_metrics.csv`
+
+It does not create or replace a DuckDB object, modify a source/reference file,
+read KBA vehicle stock for the analysis, or deploy a KPI. Repeated execution
+with the same database and reference files is deterministic.

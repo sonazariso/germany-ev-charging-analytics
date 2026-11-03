@@ -4,7 +4,7 @@
 
 This portfolio project builds a reproducible, Germany-wide analytical foundation for comparing the published public-charging register with registered passenger-car stock. It preserves the original BNetzA, KBA, and separately versioned BBSR reference workbooks, separates charging equipment from charging points, and keeps snapshot dates visible throughout the workflow.
 
-The current implementation is a validated local DuckDB model, a deployed still-provisional KBA geographic layer, the separate Batch 13 charging-only BNetzA-source-grain BBSR layer, a separate Batch 13.1 owner-approved 2026 analytical scenario, and a separate Batch 13.2 historical BBSR 2025 boundary harmonization. Batch 13.2 corrects the Kassel city/county join only in its new layer and aggregates Hanau with the remaining Main-Kinzig source row; it does not change the official baseline, assign BBSR categories to KBA registration regions, join KBA vehicle stock, or allocate Trier stock. Tableau Public reporting remains incomplete.
+The current implementation is a validated local DuckDB model, a deployed still-provisional KBA geographic layer, the separate Batch 13 charging-only BNetzA-source-grain BBSR layer, a separate Batch 13.1 owner-approved 2026 analytical scenario, a separate Batch 13.2 historical BBSR 2025 boundary harmonization, and the Batch 14 read-only statistical analysis of that harmonized layer. Batch 13.2 corrects the Kassel city/county join only in its new layer and aggregates Hanau with the remaining Main-Kinzig source row; Batch 14 does not change the official baseline, assign BBSR categories to KBA registration regions, join KBA vehicle stock, or allocate Trier stock. Tableau Public reporting remains incomplete.
 
 ## Why this matters
 
@@ -94,6 +94,8 @@ Batch 13.1 added a separate two-row owner-override reference, a 401-row scenario
 
 Batch 13.2 independently explained the 68-versus-67 discrepancy, corrected the preserved Kassel city/county join only in a new historical layer, and deployed a versioned mapping of 401 current source components to 400 BBSR 2025 target units. Hanau and remaining Main-Kinzig are aggregated to historical BBSR `06435000` type 2; the layer reconciles to 117,662 equipment, 211,253 points, and 9,215.4173 MW. The official baseline and owner scenario remain deployed for comparison.
 
+Batch 14 adds a read-only statistical analysis of the harmonized BBSR layer. It compares absolute infrastructure totals with within-category shares, reports unit-level distributions and weighted versus unweighted measures, identifies descriptive concentration/outlier patterns, evaluates evidence-supported versus untested explanations, and recommends a small future Tableau KPI set. It does not change DuckDB objects, add a BBSR/KBA vehicle-stock ratio, or claim that any share is accessibility, demand, utilization, or quality.
+
 Not complete: a dated BBSR/KBA compatibility bridge, KBA-level BBSR classification, Tableau data preparation, dashboard development, final license review, and GitHub publication. Batch 12 Path B remains at zero strict verified KBA regions.
 
 ## Reproducibility
@@ -132,6 +134,9 @@ python3 scripts/10_build_bbsr_reference.py
   --dry-run --json
 .venv/bin/python scripts/13_2_deploy_hanau_geographic_harmonization.py \
   --json
+
+# Batch 14 read-only BBSR charging-pattern analysis
+.venv/bin/python scripts/14_analyze_bbsr_charging_patterns.py --json
 ~~~
 
 The DuckDB build command is documented in [docs/reproducibility.md](docs/reproducibility.md) and must only be run when a database rebuild is explicitly approved. The Batch 06 deployment is the approved exception for the permanent geographic objects and creates an ignored local backup before modification.
@@ -147,7 +152,7 @@ data/profiles/
               Source inventories and validation JSON artifacts
 docs/         English project documentation
 reports/      Human-readable validation reports
-scripts/      Download, profile, ingest, crosswalk, deployment, and validation code
+scripts/      Download, profile, ingest, crosswalk, deployment, validation, and analysis code
 sql/          DuckDB settings and reproducible deployment SQL
 tableau/      Planned Tableau reporting notes
 ~~~
@@ -169,7 +174,7 @@ The local DuckDB database, virtual environment, raw workbooks, temporary files, 
 - [Roadmap](docs/roadmap.md)
 - [Decision log](docs/decisions.md)
 - [GitHub publication checklist](docs/github-publication-checklist.md)
-- [Phase validation reports](reports/phase01_data_profile.md), [Phase 02 schema inspection](reports/phase02_schema_inspection.md), [Phase 03 DuckDB validation](reports/phase03_duckdb_validation.md), [Batch 03 crosswalk validation](reports/batch03_crosswalk_validation.md), [Batch 06 geographic deployment](reports/batch06_geographic_deployment.md), [Batch 06.1 KPI documentation audit](reports/batch06-1_kpi_documentation_audit.md), [Batch 09 BBSR feasibility](reports/batch09_bbsr_feasibility.md), [Batch 10 BBSR reference validation](reports/batch10_bbsr_reference_validation.md), [Batch 11 BBSR/KBA compatibility audit](reports/batch11_bbsr_kba_compatibility.md), [Batch 12 two-path BBSR investigation](reports/batch12_bbsr_integration_paths.md), [Batch 13 BBSR charging-only deployment](reports/batch13_bbsr_charging_deployment.md), [Batch 13.1 owner-approved scenario](reports/batch13_1_bbsr_scenario_classification.md), and [Batch 13.2 historical harmonization](reports/batch13_2_hanau_geographic_harmonization.md)
+- [Phase validation reports](reports/phase01_data_profile.md), [Phase 02 schema inspection](reports/phase02_schema_inspection.md), [Phase 03 DuckDB validation](reports/phase03_duckdb_validation.md), [Batch 03 crosswalk validation](reports/batch03_crosswalk_validation.md), [Batch 06 geographic deployment](reports/batch06_geographic_deployment.md), [Batch 06.1 KPI documentation audit](reports/batch06-1_kpi_documentation_audit.md), [Batch 09 BBSR feasibility](reports/batch09_bbsr_feasibility.md), [Batch 10 BBSR reference validation](reports/batch10_bbsr_reference_validation.md), [Batch 11 BBSR/KBA compatibility audit](reports/batch11_bbsr_kba_compatibility.md), [Batch 12 two-path BBSR investigation](reports/batch12_bbsr_integration_paths.md), [Batch 13 BBSR charging-only deployment](reports/batch13_bbsr_charging_deployment.md), [Batch 13.1 owner-approved scenario](reports/batch13_1_bbsr_scenario_classification.md), [Batch 13.2 historical harmonization](reports/batch13_2_hanau_geographic_harmonization.md), and [Batch 14 BBSR charging analysis](reports/batch14_bbsr_charging_analysis.md)
 
 ## Important limitations
 
@@ -181,6 +186,7 @@ The local DuckDB database, virtual environment, raw workbooks, temporary files, 
 - The BBSR reference uses the 2025 geographic stand and contains 400 Kreis rows / 362 Kreisregion keys. Batch 13 uses it only in a dated source-grain charging enrichment: 399 verified-compatible rows are classifiable, while Main-Kinzig is conditional-vintage and Hanau unresolved in `UNCLASSIFIED`. It is not a KBA registration-region classification; Trier city/Trier-Saarburg retain types 1 and 3 separately, and Path B remains 0 strict verified KBA regions.
 - Batch 13.1 is a separate owner-approved analytical scenario, not an official BBSR 2026 publication. Hanau `06415` is category 1 by explicit owner assumption, and Main-Kinzig `06435` carries forward BBSR 2025 type 2 with the 2026 Hanau-separation caveat. The official Batch 13 five-row summary remains unchanged and available for comparison.
 - Batch 13.2 is a historical BBSR 2025 target reconstruction, not an official 2026 Hanau classification. It corrects Kassel city to BBSR `06611000` type 1, combines Hanau and remaining Main-Kinzig into historical BBSR `06435000` type 2, preserves both source dates, and leaves the official Batch 13/13.1 and KBA objects unchanged.
+- Batch 14 is a descriptive statistical analysis of that harmonized layer. Its category shares, weighted/unweighted comparisons, concentration measures, and outlier rankings are not accessibility, demand, utilization, quality, or causal KPIs. The report uses a 30-point minimum only as an exploratory share-ranking stability filter.
 - The deployed analytics.charging_by_state view uses source_id and equipment Excel row in both the point aggregation and join. The current database still contains one BNetzA infrastructure snapshot; future multi-snapshot loads require re-running the same source-aware validations.
 - No source supports utilization, sessions, energy delivered, queue times, reliability, or causality.
 

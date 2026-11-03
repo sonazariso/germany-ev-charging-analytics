@@ -2,15 +2,24 @@
 
 ## Current Batch
 
-Batch 13.2 — historical BBSR 2025 boundary harmonization (complete; independent
-68-versus-67 audit, official Hanau boundary evidence, corrected Kassel
-city/county mapping in a new layer, 401-row source-component reference,
-400-row historical target view, and four-row harmonized summary deployed and
-independently validated). The official Batch 13 baseline and Batch 13.1
-owner-approved scenario remain unchanged; no KBA stock join, KBA
-classification, Crosswalk change, or Trier allocation was made.
+Batch 14 — BBSR charging infrastructure statistical analysis (complete;
+read-only analysis of the Batch 13.2 harmonized district/type views, national
+reconciliation, category comparisons, unit distributions, weighted/unweighted
+checks, concentration/outlier analysis, KPI evaluation, source fingerprints,
+and deterministic report/CSV outputs). No DuckDB object, raw/reference file,
+Crosswalk, KBA object, vehicle-stock table, or official KPI deployment changed.
+The official Batch 13 baseline, Batch 13.1 owner scenario, and Batch 13.2
+historical layer remain unchanged.
 
 ## Last completed Batch
+
+Batch 14 — BBSR charging infrastructure statistical analysis completed after
+Batch 13.2's historical BBSR 2025 boundary harmonization, the Batch 13.1
+owner-approved scenario, the Batch 13 charging-only layer, Batch 12 two-path
+BBSR compatibility investigation, Batch 11 BBSR–KBA audit, Batch 10 reference
+build, Batch 09 feasibility assessment, and Batch 08 geographic verification.
+
+## Previous completed Batch
 
 Batch 13.2 — historical BBSR 2025 boundary harmonization completed after the
 Batch 13.1 owner-approved scenario, Batch 13 charging-only layer, Batch 12
@@ -51,6 +60,8 @@ The latest local DuckDB validation uses BNetzA 2026-09-30 and KBA snapshots 2026
 | Batch 13.2 historical target units | 400 BBSR 2025 targets from 401 current BNetzA source components; type counts 68 / 131 / 98 / 103 |
 | Batch 13.2 Hanau/Main-Kinzig target | Historical BBSR `06435000`, type 2; 585 equipment / 991 points; no official 2026 Hanau type claimed |
 | Batch 13.2 Kassel correction | City `06611000`, type 1; county `06633000`, type 2; official Batch 13 bridge preserved unchanged |
+
+| Batch 14 analysis outputs | 400 historical units; category counts 68 / 131 / 98 / 103; point-weighted fast share 26.08%; unweighted unit mean 31.25%; 30-point share filter excluded 0 units |
 
 The deployed maximum-per-point parser classifies 156,155 points at or below 22 kW, 55,098 above 22 kW, 40,950 at or above 150 kW, and 6,950 at or above 350 kW. These are declared-power classifications, not utilization measures.
 
@@ -102,6 +113,9 @@ The deployed maximum-per-point parser classifies 156,155 points at or below 22 k
 - Batch 13.2 safeguards: the new layer uses raw BBSR `SLK2025` city/county form, corrects Kassel only in the new layer, keeps BNetzA `2026-09-30` and BBSR `2025-12-31` visible, does not manufacture an official 2026 Hanau type, and does not reference KBA vehicle stock.
 - Batch 13.2 artifacts: `reference.bnetza_bbsr_historical_harmonization_2025`, `analytics.charging_by_bbsr_district_2025_harmonized`, `analytics.charging_by_bbsr_type_2025_harmonized`, the deterministic 401-row reference CSV/manifest, and the full deployment report.
 - Persistent AGENTS.md, changelog, and local Git configuration.
+- Batch 14 read-only analyzer `scripts/14_analyze_bbsr_charging_patterns.py` with deterministic type/district CSVs and analytical report.
+- Batch 14 statistical findings: type 2 has the largest absolute point and fast-point totals; type 4 has the highest within-category fast share; all-unit weighted fast share is 26.08% versus a 31.25% unweighted unit mean.
+- Batch 14 KPI controls: descriptive shares, distributions, and concentration screens are not accessibility, demand, utilization, quality, or causal measures; BBSR-based BEV-to-charger ratios remain unsupported.
 
 ## Open issues
 
@@ -137,10 +151,11 @@ The deployed maximum-per-point parser classifies 156,155 points at or below 22 k
 
 ## Next planned work
 
-Owner review of the Path B bridge gap, historical-boundary recommendation, KBA
-reconciliation, KPI hardening, Tableau extract preparation, dashboard
-development, and final publication review. Keep the official Batch 13 baseline
-and Batch 13.1 scenario separate from any future KBA vehicle-stock integration.
+Owner review of the Batch 14 findings and KPI recommendations, followed by the
+Path B bridge gap, historical-boundary recommendation, KBA reconciliation,
+Tableau extract preparation, dashboard development, and final publication
+review. Keep the official Batch 13 baseline, Batch 13.1 scenario, and Batch
+13.2 historical layer separate from any future KBA vehicle-stock integration.
 
 ## Last local Git commit reference
 
