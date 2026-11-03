@@ -210,3 +210,25 @@ The primary analytical roles are:
 Batch 15 verified SHA-256 fingerprints for all three KBA workbooks before
 analysis. It used only existing local sources, did not download another
 dataset, and did not modify any source workbook or Crosswalk.
+
+## Batch 17 temporal source treatment
+
+Batch 17 uses the same preserved local sources and no additional download:
+
+| Source role | Local object | Reference date | Meaning in Batch 17 |
+|---|---|---|---|
+| BNetzA infrastructure | `data/raw/bnetza/Ladesaeulenregister_BNetzA_2026-09-30.xlsx` / `core.charging_equipment` and `core.charging_point` | 2026-09-30 | Published equipment/point snapshot and currently reported status |
+| KBA primary stock | `fz27_202607.xlsx` / `core.kba_state_fuel_stock` | 2026-07-01 | Primary registered BEV/PHEV/passenger-car denominator |
+| KBA stock sensitivity | `fz27_202601.xlsx`, `fz27_202604.xlsx` | 2026-01-01, 2026-04-01 | Vehicle-numerator sensitivity with a fixed September point denominator only |
+
+The BNetzA workbook's commissioning date is an equipment-level source field.
+The normalized point table has no individual activation-date field. The raw
+commissioning value is retained in `commissioning_date_raw` and the parsed
+date in `commissioning_date`; neither is renamed as a publication date,
+opening date, activation date or historical availability observation.
+
+Batch 17 verifies the established BNetzA fingerprint and all three KBA
+fingerprints, plus the preserved BBSR workbook and Crosswalk fingerprints. The
+analysis reads the existing DuckDB file read-only and writes only local
+analytical reports/CSVs. It does not change source workbooks, Crosswalk rows,
+BBSR reference files, or database objects.

@@ -471,3 +471,43 @@ maximum within one point, and classify that point once as normal (`<=22 kW`),
 fast (`>22 kW`), >=150 kW or >=350 kW. Equipment nominal power is aggregated
 from the equipment table separately from point rows. The full evidence is in
 [`reports/batch16_state_ev_charging_alignment.md`](../reports/batch16_state_ev_charging_alignment.md).
+
+## Batch 17 temporal and commissioning-date validation
+
+Batch 17 opened DuckDB with `read_only=True` and did not create a table, view or
+other database object. It audited the actual equipment-level
+`commissioning_date_raw` and parsed `commissioning_date` fields, then joined
+points to equipment with the source-aware key `(source_id, excel_row)` ↔
+`(source_id, equipment_excel_row)`. No connector explosion was used.
+
+| Check | Result | Status |
+|---|---:|---|
+| Commissioning equipment rows | 117,662 | PASS |
+| Raw NULL / blank values | 0 / 0 | PASS |
+| Parsed NULL / parsing failures | 0 / 0 | PASS |
+| Non-numeric raw values | 0 | PASS; current values are retained Excel-style serial strings |
+| Dates after BNetzA snapshot `2026-09-30` | 0 | PASS |
+| Dates after survivor cutoff `2026-07-01` | 2,762 equipment; 4,888 points | PASS; complement disclosed |
+| Dates exactly on cutoff | 80 equipment; 136 points | PASS; included by the inclusive cutoff |
+| Minimum / maximum commissioning date | `1992-10-01` / `2026-09-30` | PASS; unusual early values retained |
+| Duplicate equipment / point keys | 0 / 0 | PASS |
+| Orphan points / equipment-point mismatches | 0 / 0 | PASS |
+| Published point power unknowns | 0 | PASS |
+| Published / survivor / later point partition | 211,253 = 206,365 + 4,888 | PASS |
+| Published / survivor / later equipment partition | 117,662 = 114,900 + 2,762 | PASS |
+| Equipment status filter | None | PASS; 20 `In Wartung` rows retained |
+| Point-level activation date | Not available | Limitation; equipment commissioning is not point activation |
+
+The retrospective cohort is reproducible at equipment grain but is not a
+historical July point registry. Equipment removed before September is absent;
+point additions or modifications after commissioning are not observable;
+September status is not July operational availability; and historical opening
+hours cannot be reconstructed. The cohort is not assumed to be an upper or
+lower bound on actual July infrastructure.
+
+The published September cohort contains 117,662 equipment and 211,253 points;
+the survivor cohort contains 114,900 equipment and 206,365 points. Its power
+bands are 152,981 normal, 53,384 fast, 39,543 at least 150 kW and 6,335 at
+least 350 kW. Full year/month, state/status and sensitivity evidence is in
+[`reports/batch17_temporal_kpi_validity.md`](../reports/batch17_temporal_kpi_validity.md)
+and [`reports/batch17_equipment_commissioning_cohorts.csv`](../reports/batch17_equipment_commissioning_cohorts.csv).

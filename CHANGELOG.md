@@ -2,6 +2,16 @@
 
 This changelog records project milestones and local repository changes. Historical Batch 01–03 entries describe work evidenced by local reports; they do not imply historical Git commits or inferred dates.
 
+## 2026-11-03 — Batch 17
+
+- Added `scripts/17_analyze_temporal_kpi_validity.py`, a deterministic read-only analyzer for temporal compatibility between KBA registered passenger-car stock and the BNetzA September charging register.
+- Added `reports/batch17_temporal_kpi_validity.md`, `reports/batch17_equipment_commissioning_cohorts.csv`, `reports/batch17_state_temporal_sensitivity.csv`, `reports/batch17_kpi_publication_decisions.csv`, and `reports/batch17_vehicle_stock_denominator_sensitivity.csv`.
+- Audited the actual equipment-level commissioning-date field and preserved raw values: 117,662 nonblank values, 0 parsing failures, 0 future dates, 2,762 equipment and 4,888 point rows after the inclusive 2026-07-01 cutoff, and 80 equipment records exactly on the cutoff.
+- Reconciled the full 2026-09-30 publication with the retrospective September-survivor cohort: 117,662 equipment / 211,253 points published versus 114,900 equipment / 206,365 retained survivor points; maximum-per-point bands and all equipment statuses remain visible.
+- Documented the 91-day KBA/BNetzA mismatch, the absence of point-level activation dates, state ranking/outlier sensitivity, fixed-September vehicle-stock illustration, unsupported historical interpretations, and chart warning labels. BEVs per point is `CONTEXT_ONLY` secondary context; power/ranking/share/correlation comparisons are `EXPLORATORY_SENSITIVITY`; adequacy/shortage/surplus is `NOT_SUPPORTED`.
+- Validated exact KBA January/April/July and July national/16-state/`Sonstige`/400-region scopes, source-aware point integrity, six source fingerprints, unchanged DuckDB bytes, and deterministic outputs. No source workbook, Crosswalk, DuckDB object, dependency, remote, upload, Tableau asset, or publication changed.
+- Updated the README, findings, KPI catalog, data quality, data sources, geographic methodology, decision log, roadmap, project status, reproducibility documentation, and the private Persian KPI catalog outside Git.
+
 ## 2026-11-03 — Batch 16
 
 - Added `scripts/16_analyze_state_ev_charging_alignment.py`, a deterministic read-only analyzer that pre-aggregates KBA FZ 27.2 July 2026 passenger-car stock and BNetzA September 2026 infrastructure separately at the 16-state grain before joining.

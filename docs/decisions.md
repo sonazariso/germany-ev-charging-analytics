@@ -285,3 +285,41 @@ This log separates approved decisions, implementation details, and pending propo
 - Status: Approved and applied for Batch 16; any same-date infrastructure
   panel, geographic bridge, Tableau deployment or new source remains
   separately approval-gated.
+
+## Batch 17 — temporal validity and cohort sensitivity decisions (2026-11-03)
+
+- Decision: Use the existing BNetzA snapshot dated `2026-09-30` and KBA FZ
+  27.2 stock snapshots dated `2026-01-01`, `2026-04-01` and `2026-07-01` as
+  separate source vintages. Use July stock for the primary comparison and keep
+  the 91-day date separation visible.
+- Decision: Treat `core.charging_equipment.commissioning_date` as an
+  equipment-level source field only. Preserve `commissioning_date_raw`; do not
+  rename it as point activation, publication date, opening date or verified
+  operational availability. The point table has no activation-date field.
+- Decision: Define the published full-register perspective as
+  **CROSS-SNAPSHOT DESCRIPTIVE COMPARISON** and the date-cutoff perspective as
+  **RETROSPECTIVE SEPTEMBER-SURVIVOR COHORT — NOT ACTUAL JULY
+  INFRASTRUCTURE**. Select equipment commissioned on or before `2026-07-01`
+  inclusively and retain its currently reported September point rows.
+- Decision: Keep all equipment statuses, including the 20 `In Wartung` rows,
+  in the published and survivor audit. Do not filter status to infer July
+  availability.
+- Decision: Continue using source-aware equipment-to-point keys and maximum
+  valid connector-power token per point. Do not count connectors as points or
+  multiply nominal equipment power by point rows.
+- Decision: Keep KBA `Deutschland`, the 16-state sum, `Sonstige` and the 400
+  KBA registration-region total separate. Do not double-count national and
+  state rows, and do not add September infrastructure to January or April as
+  observed historical infrastructure.
+- Decision: Classify BEVs per registered point and its inverse as
+  `CONTEXT_ONLY` secondary context, not a headline adequacy KPI. Classify
+  fast/HPC ratios, share gaps, rank comparisons and state correlations as
+  `EXPLORATORY_SENSITIVITY`; classify adequacy, shortage and surplus as
+  `NOT_SUPPORTED`.
+- Consequence: Batch 17 creates one read-only analyzer, one report and four
+  deterministic CSV diagnostics. It does not create or modify DuckDB objects,
+  source workbooks, references, the Crosswalk, dependencies, Tableau assets,
+  remotes or published outputs.
+- Status: Approved and applied for Batch 17. A historical infrastructure panel,
+  activation/retirement semantics, demand, availability, Tableau deployment or
+  Batch 18 remains separately approval-gated.

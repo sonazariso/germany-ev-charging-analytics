@@ -2,20 +2,21 @@
 
 ## Current Batch
 
-Batch 16 — state-level EV stock versus charging infrastructure analysis
-(complete; read-only comparison of KBA FZ 27.2 July 2026 passenger-car stock
-with the BNetzA September 2026 charging register, exact 16-state joins,
-national/16-state/`Sonstige`/400-region reconciliation, declared-power bands,
-status retention, cross-source ratios, outlier screens, descriptive
-Pearson/Spearman associations, KPI evaluation, source fingerprints and
-deterministic report/CSV outputs). No DuckDB object, raw/reference file,
-Crosswalk, BBSR layer, charging object, or official KPI deployment changed.
-Batch 15 and all earlier charging/BBSR/KBA layers remain unchanged.
+Batch 17 — temporal validity and cross-source KPI sensitivity analysis
+(complete; read-only audit of equipment commissioning dates, explicit
+published September versus retrospective September-survivor perspectives,
+inclusive July cutoff handling, 16-state sensitivity/ranking/outlier results,
+fixed-September-denominator vehicle-stock illustration, KPI publication
+decisions, source fingerprints and deterministic report/CSV outputs). No
+DuckDB object, raw/reference file, Crosswalk, BBSR layer, charging object, or
+official KPI deployment changed. Batch 16 and all earlier
+charging/BBSR/KBA layers remain unchanged.
 
 ## Last completed Batch
 
-Batch 16 — state-level EV stock versus charging infrastructure analysis
-completed after Batch 15's KBA FZ 27 stock, growth, geography and ownership
+Batch 17 — temporal validity and cross-source KPI sensitivity analysis
+completed after Batch 16's state-level EV stock versus charging infrastructure
+comparison and Batch 15's KBA FZ 27 stock, growth, geography and ownership
 analysis and the Batch 14 BBSR charging infrastructure statistical analysis,
 Batch 13.2's historical BBSR 2025 boundary harmonization, the Batch 13.1
 owner-approved scenario, the Batch 13 charging-only layer, Batch 12 two-path
@@ -24,9 +25,9 @@ build, Batch 09 feasibility assessment, and Batch 08 geographic verification.
 
 ## Previous completed Batch
 
-Batch 15 — KBA FZ 27 EV stock, growth, geography and ownership analysis
-completed before Batch 16 and after the Batch 14 BBSR charging infrastructure
-statistical analysis.
+Batch 16 — state-level EV stock versus charging infrastructure analysis
+completed before Batch 17 and after Batch 15's KBA FZ 27 stock, growth,
+geography and ownership analysis.
 
 ## Earlier completed Batch
 
@@ -81,6 +82,13 @@ The latest local DuckDB validation uses BNetzA 2026-09-30 and KBA snapshots 2026
 | Batch 16 published-national benchmark | 2,365,047 Deutschland BEVs / 211,253 points = 11.195330 BEVs per point; includes 2,829 Sonstige BEVs |
 | Batch 16 state associations | BEV stock/points Pearson 0.991; Spearman 0.985; descriptive only |
 | Batch 16 deterministic outputs | 1 report + 3 CSVs; second execution byte-identical |
+| Batch 17 commissioning-date quality | 117,662 rows; 0 raw NULL/blank; 0 parsing failures; 0 dates after 2026-09-30 |
+| Batch 17 inclusive cutoff | 80 equipment / 136 points exactly on 2026-07-01; 2,762 equipment / 4,888 points after cutoff |
+| Batch 17 survivor cohort | 114,900 equipment / 206,365 points; 152,981 normal / 53,384 fast / 39,543 >=150 / 6,335 >=350 kW |
+| Batch 17 16-state ratio sensitivity | 11.181938 published vs 11.446796 survivor BEVs/point; +2.37%; survivor is not actual July infrastructure |
+| Batch 17 ranking sensitivity | BEVs/point rank changed for 0 / 16 states; fast points/1,000 BEVs rank changed for 4 / 16 |
+| Batch 17 KPI publication decision | BEVs/point `CONTEXT_ONLY`; power/ranking/share/correlation `EXPLORATORY_SENSITIVITY`; adequacy `NOT_SUPPORTED` |
+| Batch 17 deterministic outputs | 1 report + 4 CSVs; database/source fingerprints unchanged |
 
 The deployed maximum-per-point parser classifies 156,155 points at or below 22 kW, 55,098 above 22 kW, 40,950 at or above 150 kW, and 6,950 at or above 350 kW. These are declared-power classifications, not utilization measures.
 
@@ -142,6 +150,10 @@ The deployed maximum-per-point parser classifies 156,155 points at or below 22 k
 - Batch 16 safeguards: one charging row and one KBA vehicle row per state before joining; `Deutschland`, `Sonstige` and 400-region scopes kept separate; PHEV not double-counted inside `Hybrid insgesamt`; equipment statuses retained; maximum-per-point power definitions preserved; both snapshot dates visible.
 - Batch 16 validation: exact 16-state coverage, 117,662 equipment, 211,253 points, all power bands, 0 invalid-power points, 0 duplicate/orphan/mismatched point checks, 6 source fingerprints matched, unchanged DuckDB hash, and byte-identical second execution.
 - Batch 16 interpretation: cross-source ratios and correlations are exploratory/descriptive only; no infrastructure adequacy, shortage, surplus, accessibility, utilization, demand or causal claim is made.
+- Batch 17 read-only analyzer: `scripts/17_analyze_temporal_kpi_validity.py` with commissioning-date audit, published/survivor cohort metrics, 16-state temporal sensitivity, KPI publication matrix and fixed-denominator vehicle-stock diagnostics.
+- Batch 17 safeguards: commissioning date remains equipment-level with raw value preserved; no point activation field exists; all September statuses remain in scope; point rows use source-aware keys and maximum-per-point power classification; published and survivor perspectives remain separate.
+- Batch 17 validation: 0 commissioning parsing failures, 0 future dates, 0 duplicate/orphan/mismatched points, exact KBA January/April/July and July national/16-state/`Sonstige`/400-region reconciliation, 6 source fingerprints matched, unchanged DuckDB hash, and deterministic outputs.
+- Batch 17 interpretation: the full September comparison is cross-snapshot descriptive; the survivor cohort is not actual July infrastructure. BEVs per point is secondary context only, not a headline adequacy metric.
 
 ## Open issues
 
@@ -154,6 +166,8 @@ The deployed maximum-per-point parser classifies 156,155 points at or below 22 k
 - One BNetzA coordinate falls outside a broad Germany bounding check and remains uncorrected.
 - BNetzA and KBA snapshot dates are not contemporaneous, and the BNetzA register is not exhaustive.
 - Batch 16 cross-source measures use KBA `2026-07-01` and BNetzA `2026-09-30`; the 16-state benchmark excludes KBA `Sonstige`, while the separate published-national benchmark includes 2,829 `Sonstige` BEVs. Neither benchmark is an adequacy measure.
+- Batch 17 found no point-level activation date or historical availability field. The commissioning-date cohort is reproducible at equipment grain only; the September survivor result is not a true July snapshot, an upper/lower bound, or observed infrastructure growth.
+- Batch 17 recommends BEVs per registered point only as `CONTEXT_ONLY` secondary context. Its published 16-state ratio is 11.181938 and the survivor sensitivity is 11.446796 (+2.37%); ranking stability does not establish temporal validity or adequacy.
 - Batch 15 validates PHEV change/growth and PHEV passenger-car penetration as descriptive source-grain measures; they remain unsuitable for sales, utilization, demand, or causal interpretation.
 - Operator, city/county, payment/opening/connector, and KBA ownership/postcode/municipality analyses remain proposed pending denominator, grain, and normalization decisions.
 - Tableau reporting, production BBSR/KBA compatibility, final license review, and GitHub publication are incomplete. The Batch 11 and Batch 12 audit CSVs remain non-operational; Batch 13 official category KPIs and Batch 13.1 scenario KPIs are limited to separate BNetzA source-grain charging paths.
@@ -178,13 +192,14 @@ The deployed maximum-per-point parser classifies 156,155 points at or below 22 k
 
 ## Next planned work
 
-Owner review of the Batch 16 findings and cross-source denominator/date choices,
-followed by a decision on whether a contemporaneous infrastructure panel or a
-product-specific KBA compatibility bridge is warranted. Tableau extract
-preparation, dashboard development and final publication review remain
-pending. Keep the official Batch 13 baseline, Batch 13.1 scenario and Batch
-13.2 historical layer separate from any future KBA vehicle-stock integration.
+Owner review of the Batch 17 temporal findings and KPI publication decisions,
+followed by a decision on whether a genuinely dated infrastructure panel with
+activation/retirement and availability semantics or a product-specific KBA
+compatibility bridge is warranted. Tableau extract preparation, dashboard
+development and final publication review remain pending. Keep the official
+Batch 13 baseline, Batch 13.1 scenario and Batch 13.2 historical layer separate
+from any future KBA vehicle-stock integration.
 
 ## Last local Git commit reference
 
-The Batch 13.2 commit is recorded in Git history. No remote is configured.
+Batch 17 is the current completed local batch. No remote is configured.

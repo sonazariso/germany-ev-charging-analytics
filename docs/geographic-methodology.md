@@ -456,3 +456,26 @@ infrastructure rows joined by state. The cross-source measures carry both
 imply administrative equivalence, infrastructure adequacy, accessibility,
 demand or causality. No district-level allocation, BBSR assignment or Trier
 stock allocation is performed.
+
+## Batch 17 temporal cohort grain
+
+Batch 17 stays at the common 16-state grain and does not use the provisional
+401-row BNetzA-to-KBA Crosswalk. It first aggregates KBA FZ 27.2 stock by the
+16 published federal-state labels and separately aggregates BNetzA equipment
+and point rows by the retained BNetzA `state_name`. The two one-row-per-state
+results are then joined.
+
+The published comparison is explicitly **CROSS-SNAPSHOT DESCRIPTIVE
+COMPARISON**: KBA `2026-07-01` versus BNetzA `2026-09-30`. The sensitivity
+comparison is explicitly **RETROSPECTIVE SEPTEMBER-SURVIVOR COHORT — NOT
+ACTUAL JULY INFRASTRUCTURE**. It selects equipment with parsed commissioning
+date on or before `2026-07-01`, then retains the point rows currently linked to
+those September equipment rows. It does not assign a KBA district, allocate
+Trier stock, infer an administrative boundary, or claim that a point existed
+or was accessible in July.
+
+Equipment commissioning date is not a point activation date. The point table
+has no individual activation-date field, and the September equipment status is
+not historical operational availability. Later-commissioned shares are
+reported by BNetzA state for descriptive concentration only; they are not
+interpreted as regional causes or observed infrastructure growth.

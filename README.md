@@ -4,7 +4,7 @@
 
 This portfolio project builds a reproducible, Germany-wide analytical foundation for comparing the published public-charging register with registered passenger-car stock. It preserves the original BNetzA, KBA, and separately versioned BBSR reference workbooks, separates charging equipment from charging points, and keeps snapshot dates visible throughout the workflow.
 
-The current implementation is a validated local DuckDB model, a deployed still-provisional KBA geographic layer, the separate Batch 13 charging-only BNetzA-source-grain BBSR layer, a separate Batch 13.1 owner-approved 2026 analytical scenario, a separate Batch 13.2 historical BBSR 2025 boundary harmonization, the Batch 14 read-only statistical analysis of that harmonized layer, and the Batch 15 read-only KBA FZ 27 stock analysis. Batch 13.2 corrects the Kassel city/county join only in its new layer and aggregates Hanau with the remaining Main-Kinzig source row; Batch 14 and Batch 15 do not change the official baseline, assign BBSR categories to KBA registration regions, integrate charging with KBA stock, or allocate Trier stock. Tableau Public reporting remains incomplete.
+The current implementation is a validated local DuckDB model, a deployed still-provisional KBA geographic layer, the separate Batch 13 charging-only BNetzA-source-grain BBSR layer, a separate Batch 13.1 owner-approved 2026 analytical scenario, a separate Batch 13.2 historical BBSR 2025 boundary harmonization, the Batch 14 read-only statistical analysis of that harmonized layer, the Batch 15 read-only KBA FZ 27 stock analysis, and the Batch 17 read-only temporal-validity analysis of Batch 16 cross-source KPIs. Batch 13.2 corrects the Kassel city/county join only in its new layer and aggregates Hanau with the remaining Main-Kinzig source row; Batch 14, Batch 15, and Batch 17 do not change the official baseline, assign BBSR categories to KBA registration regions, integrate charging with KBA stock, or allocate Trier stock. Tableau Public reporting remains incomplete.
 
 ## Why this matters
 
@@ -30,6 +30,9 @@ The values below are measured from the local DuckDB file and source-aware valida
 |---|---:|---|
 | BNetzA equipment records | 117,662 | BNetzA snapshot, 2026-09-30 |
 | Populated charging-point slots | 211,253 | BNetzA snapshot, 2026-09-30 |
+| Retrospective survivor equipment | 114,900 | September records commissioned on or before 2026-07-01; not July infrastructure |
+| Retrospective survivor point rows | 206,365 | September point rows attached to that equipment; not a historical July snapshot |
+| Post-cutoff equipment / points | 2,762 / 4,888 | Commissioned after 2026-07-01; 2.35% / 2.31% of September totals |
 | Declared point count reconciled to populated slots | 211,253 = 211,253 | No equipment-level mismatch in the current snapshot |
 | Declared equipment nominal power | 9,215.42 MW | Sum of equipment-level kW field |
 | Normal charging points, maximum declared power <=22 kW | 156,155 | 73.92% of point slots |
@@ -100,6 +103,8 @@ Batch 15 adds a read-only statistical analysis of the three local KBA FZ 27 rele
 
 Batch 16 adds a read-only state-level comparison of the July 2026 KBA passenger-car stock and the September 2026 BNetzA charging register. It pre-aggregates one validated vehicle row and one validated infrastructure row per federal state, reconciles all 16 states with `Deutschland`, `Sonstige`, and the 400 KBA registration-region scope, calculates date-labelled cross-source indicators, evaluates descriptive associations with a large-state sensitivity check, and produces deterministic CSV/report outputs. It does not modify DuckDB, raw workbooks, the geographic Crosswalk, BBSR layers, or Tableau assets. The primary comparable benchmark is 2,362,218 16-state BEVs / 211,253 registered points = 11.18 BEVs per point; the published-national benchmark is kept separate because `Deutschland` includes 2,829 `Sonstige` BEVs.
 
+Batch 17 adds a read-only temporal-validity and sensitivity analysis for those cross-source measures. It audits the real equipment-level commissioning-date field, compares the full September publication with a retrospective September-survivor cohort commissioned on or before 2026-07-01, preserves the distinction between observed and reconstructed infrastructure, evaluates state rankings/outliers and January/April fixed-denominator illustrations, and records Tableau publication decisions. All 117,662 commissioning values parse successfully; 2,762 equipment records and 4,888 associated point rows are post-cutoff; the survivor cohort contains 114,900 equipment records and 206,365 point rows. BEVs per point is recommended as `CONTEXT_ONLY`/secondary context, not a headline adequacy KPI. No DuckDB object, raw/reference file, Crosswalk, dependency, remote, upload, or Tableau asset changed.
+
 Not complete: a dated BBSR/KBA compatibility bridge, KBA-level BBSR classification, Tableau data preparation, dashboard development, final license review, and GitHub publication. Batch 12 Path B remains at zero strict verified KBA regions.
 
 ## Reproducibility
@@ -147,6 +152,9 @@ python3 scripts/10_build_bbsr_reference.py
 
 # Batch 16 read-only state EV stock versus charging analysis
 .venv/bin/python scripts/16_analyze_state_ev_charging_alignment.py --json
+
+# Batch 17 read-only temporal KPI validity and cohort sensitivity analysis
+.venv/bin/python scripts/17_analyze_temporal_kpi_validity.py --json
 ~~~
 
 The DuckDB build command is documented in [docs/reproducibility.md](docs/reproducibility.md) and must only be run when a database rebuild is explicitly approved. The Batch 06 deployment is the approved exception for the permanent geographic objects and creates an ignored local backup before modification.
@@ -184,7 +192,7 @@ The local DuckDB database, virtual environment, raw workbooks, temporary files, 
 - [Roadmap](docs/roadmap.md)
 - [Decision log](docs/decisions.md)
 - [GitHub publication checklist](docs/github-publication-checklist.md)
-- [Phase validation reports](reports/phase01_data_profile.md), [Phase 02 schema inspection](reports/phase02_schema_inspection.md), [Phase 03 DuckDB validation](reports/phase03_duckdb_validation.md), [Batch 03 crosswalk validation](reports/batch03_crosswalk_validation.md), [Batch 06 geographic deployment](reports/batch06_geographic_deployment.md), [Batch 06.1 KPI documentation audit](reports/batch06-1_kpi_documentation_audit.md), [Batch 09 BBSR feasibility](reports/batch09_bbsr_feasibility.md), [Batch 10 BBSR reference validation](reports/batch10_bbsr_reference_validation.md), [Batch 11 BBSR/KBA compatibility audit](reports/batch11_bbsr_kba_compatibility.md), [Batch 12 two-path BBSR investigation](reports/batch12_bbsr_integration_paths.md), [Batch 13 BBSR charging-only deployment](reports/batch13_bbsr_charging_deployment.md), [Batch 13.1 owner-approved scenario](reports/batch13_1_bbsr_scenario_classification.md), [Batch 13.2 historical harmonization](reports/batch13_2_hanau_geographic_harmonization.md), [Batch 14 BBSR charging analysis](reports/batch14_bbsr_charging_analysis.md), [Batch 15 KBA EV stock analysis](reports/batch15_kba_ev_stock_analysis.md), and [Batch 16 state EV/charging alignment](reports/batch16_state_ev_charging_alignment.md)
+- [Phase validation reports](reports/phase01_data_profile.md), [Phase 02 schema inspection](reports/phase02_schema_inspection.md), [Phase 03 DuckDB validation](reports/phase03_duckdb_validation.md), [Batch 03 crosswalk validation](reports/batch03_crosswalk_validation.md), [Batch 06 geographic deployment](reports/batch06_geographic_deployment.md), [Batch 06.1 KPI documentation audit](reports/batch06-1_kpi_documentation_audit.md), [Batch 09 BBSR feasibility](reports/batch09_bbsr_feasibility.md), [Batch 10 BBSR reference validation](reports/batch10_bbsr_reference_validation.md), [Batch 11 BBSR/KBA compatibility audit](reports/batch11_bbsr_kba_compatibility.md), [Batch 12 two-path BBSR investigation](reports/batch12_bbsr_integration_paths.md), [Batch 13 BBSR charging-only deployment](reports/batch13_bbsr_charging_deployment.md), [Batch 13.1 owner-approved scenario](reports/batch13_1_bbsr_scenario_classification.md), [Batch 13.2 historical harmonization](reports/batch13_2_hanau_geographic_harmonization.md), [Batch 14 BBSR charging analysis](reports/batch14_bbsr_charging_analysis.md), [Batch 15 KBA EV stock analysis](reports/batch15_kba_ev_stock_analysis.md), [Batch 16 state EV/charging alignment](reports/batch16_state_ev_charging_alignment.md), and [Batch 17 temporal KPI validity](reports/batch17_temporal_kpi_validity.md)
 
 ## Important limitations
 
@@ -199,6 +207,7 @@ The local DuckDB database, virtual environment, raw workbooks, temporary files, 
 - Batch 14 is a descriptive statistical analysis of that harmonized layer. Its category shares, weighted/unweighted comparisons, concentration measures, and outlier rankings are not accessibility, demand, utilization, quality, or causal KPIs. The report uses a 30-point minimum only as an exploratory share-ranking stability filter.
 - Batch 15 is a descriptive analysis of registered stock. Its growth measures are snapshot-to-snapshot stock changes, not registrations or sales. The 400-region denominator excludes the national `Sonstige` residual; FZ 27.5 ownership totals preserve unknown/implausible holder-group residuals; FZ 27.16/27.17 contain missing cells; and the exploratory regional percentage-growth ranking excludes 23 regions below a 1,000-January-BEV baseline.
 - Batch 16 compares KBA stock dated 2026-07-01 with BNetzA infrastructure dated 2026-09-30. Its BEVs-per-point, points-per-1,000-BEVs, power-mix-per-1,000-BEVs, share-gap and correlation measures are exploratory cross-snapshot descriptions, not adequacy, shortage, surplus, accessibility, utilization, demand, or causal KPIs. The primary benchmark uses the 16-state sum; the published-national benchmark includes `Sonstige` BEVs and is reported separately.
+- Batch 17 confirms that all current equipment commissioning dates parse, but commissioning is equipment-level and does not provide point activation or historical availability. The published September denominator and the retrospective survivor cohort are different analytical perspectives; the latter is not actual July infrastructure. The 2.35% equipment / 2.31% point post-cutoff share produces a +2.37% national 16-state BEVs-per-point sensitivity, so the ratio remains secondary context rather than a headline adequacy KPI.
 - The deployed analytics.charging_by_state view uses source_id and equipment Excel row in both the point aggregation and join. The current database still contains one BNetzA infrastructure snapshot; future multi-snapshot loads require re-running the same source-aware validations.
 - No source supports utilization, sessions, energy delivered, queue times, reliability, or causality.
 

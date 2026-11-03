@@ -398,3 +398,76 @@ interpretation.
 
 The full report contains the validation matrix, source fingerprints, formulas,
 Tableau suitability assessment and reproducibility command.
+
+## Batch 17 temporal validity and cross-source KPI sensitivity
+
+Batch 17 audits the temporal meaning of the Batch 16 state comparison without
+changing DuckDB or the source artifacts. The primary vehicle denominator is
+KBA registered passenger-car stock on `2026-07-01`; the published infrastructure
+denominator is the BNetzA register snapshot on `2026-09-30`, a 91-day separation.
+The source dates are not interchangeable with equipment commissioning dates,
+point activation dates, or observed operational availability.
+
+### Commissioning-date quality
+
+The real field is `core.charging_equipment.commissioning_date`, with the
+original `commissioning_date_raw` retained. All 117,662 raw values are
+nonblank and parse successfully; there are zero parsed NULLs, zero parsing
+failures, zero dates after the September snapshot, and zero dates before 1900.
+The minimum parsed date is `1992-10-01`; 21 equipment records fall before 2010
+and remain visible as unusual historical values. The point table has no
+individual activation-date column. The date quality supports a reproducible
+equipment-level cohort calculation, not reconstruction of point-level
+historical existence or availability.
+
+### Published and retrospective perspectives
+
+Perspective A is labelled **CROSS-SNAPSHOT DESCRIPTIVE COMPARISON**. It uses
+the full September BNetzA publication and July KBA stock. The published
+infrastructure totals are 117,662 equipment, 211,253 point rows, 156,155
+normal points, 55,098 fast points, 40,950 points at least 150 kW and 6,950
+points at least 350 kW.
+
+Perspective B is labelled **RETROSPECTIVE SEPTEMBER-SURVIVOR COHORT — NOT
+ACTUAL JULY INFRASTRUCTURE**. It retains September point rows attached to
+equipment commissioned on or before `2026-07-01`: 114,900 equipment, 206,365
+points, 152,981 normal points, 53,384 fast points, 39,543 points at least 150
+kW and 6,335 points at least 350 kW. The complement contains 2,762 equipment
+and 4,888 points commissioned after the cutoff; 80 equipment records are dated
+exactly on the cutoff and are included. All post-cutoff equipment is currently
+labelled `In Betrieb`, while the 20 `In Wartung` records are pre-cutoff; no
+status filter was applied.
+
+### State sensitivity and KPI decisions
+
+The 16-state July BEV denominator is 2,362,218. The primary BEVs-per-point
+ratio changes from `11.181938` in the published September comparison to
+`11.446796` in the survivor cohort, a `+2.37%` survivor-minus-published change.
+The BEVs-per-point ranking is unchanged for all 16 states; the fast-points per
+1,000 BEVs ranking changes for four states. The highest/lowest ratio and
+power-mix outliers are reported separately for both perspectives, with the
+>=350 kW point-share low outlier changing from Berlin to Baden-Württemberg.
+These empirical ranking results do not prove that the survivor cohort matches
+July infrastructure or that any ratio measures adequacy.
+
+The recommended publication statuses are:
+
+- `CONTEXT_ONLY` for BEVs per registered point, its inverse, and the optional
+  combined plug-in ratio; BEVs per point may appear as a secondary contextual
+  KPI with both dates and no adequacy threshold, not as a headline tile.
+- `EXPLORATORY_SENSITIVITY` for fast/HPC points per 1,000 BEVs, share gaps,
+  rank comparisons and state correlations.
+- `NOT_SUPPORTED` for infrastructure adequacy, shortage or surplus because
+  no demand, sessions, availability or approved service standard is observed.
+
+The fixed-September-denominator January/April illustration is a vehicle-stock
+sensitivity only: 16-state BEVs per fixed September point are `9.618183` on
+2026-01-01, `10.258368` on 2026-04-01 and `11.181938` on 2026-07-01. It does
+not imply that September infrastructure existed unchanged in January or April.
+
+Full state values, cohort distributions, publication decisions, validation
+evidence and warning labels are in
+[`reports/batch17_temporal_kpi_validity.md`](../reports/batch17_temporal_kpi_validity.md),
+[`reports/batch17_state_temporal_sensitivity.csv`](../reports/batch17_state_temporal_sensitivity.csv),
+[`reports/batch17_equipment_commissioning_cohorts.csv`](../reports/batch17_equipment_commissioning_cohorts.csv),
+and [`reports/batch17_kpi_publication_decisions.csv`](../reports/batch17_kpi_publication_decisions.csv).

@@ -626,3 +626,33 @@ BEV penetration, registered points, fast/HPC counts and shares, and nominal MW
 as context. Any cross-source ratio must show both reference dates and remain
 exploratory. A ratio must not be used to label a state adequately or
 inadequately supplied.
+
+## Batch 17 temporal-validity decisions
+
+Batch 17 keeps the Batch 16 formulas but distinguishes the observed published
+September denominator from a retrospective equipment-level cohort. The primary
+KBA stock date is `2026-07-01`; the BNetzA publication date is `2026-09-30`.
+They are 91 days apart. The published comparison is labelled
+**CROSS-SNAPSHOT DESCRIPTIVE COMPARISON**. The cohort is labelled
+**RETROSPECTIVE SEPTEMBER-SURVIVOR COHORT — NOT ACTUAL JULY INFRASTRUCTURE**.
+
+| Candidate cross-source KPI | Formula | Published denominator | Survivor sensitivity | Batch 17 status | Tableau recommendation |
+|---|---|---|---|---|---|
+| BEVs per registered charging point | KBA BEV stock / BNetzA populated point rows | September 2026 BNetzA points | 11.181938 → 11.446796 BEVs/point; +2.37% | `CONTEXT_ONLY` | Secondary contextual KPI with both dates; not a headline or adequacy gauge |
+| Registered points per 1,000 BEVs | 1,000 × points / KBA BEV stock | July 2026 KBA BEVs | Inverse date/cohort sensitivity | `CONTEXT_ONLY` | Context table paired with absolute counts |
+| Fast points per 1,000 BEVs | 1,000 × points >22 kW / KBA BEV stock | July KBA BEVs and September fast points | State ratios and rankings change under survivor selection | `EXPLORATORY_SENSITIVITY` | Dot plot/table with declared-power and date warnings |
+| >=150 / >=350 kW points per 1,000 BEVs | 1,000 × threshold points / KBA BEV stock | July KBA BEVs and September threshold points | Survivor counts are not observed July high-power stock | `EXPLORATORY_SENSITIVITY` | Threshold sensitivity table only |
+| Combined plug-in vehicles per registered point | (BEV + PHEV stock) / point rows | July KBA stock and September points | Same date mismatch; PHEV stock is not demand | `CONTEXT_ONLY` | Optional context only, never adequacy |
+| BEV-share minus point-share gap | BEV share − point share | 16-state source totals | Survivor point shares are reconstructed sensitivity | `EXPLORATORY_SENSITIVITY` | Annotated composition chart, not shortage/surplus |
+| State correlations | Pearson/Spearman across 16 state rows | Cross-sectional | Stable association can reflect state size and denominators | `EXPLORATORY_SENSITIVITY` | Analyst diagnostic, not a headline |
+| Infrastructure adequacy/shortage/surplus | No defensible current formula | No demand/availability/service standard | Cohort selection cannot supply missing evidence | `NOT_SUPPORTED` | Do not deploy |
+
+The commissioning-date audit found 0 raw NULLs/blanks, 0 parsing failures, 0
+future dates relative to the September source, and no point-level activation
+date field. The full formula, numerator, denominator, grain, date treatment,
+sensitivity, risk, label and visualization recommendation for each row is in
+[`reports/batch17_kpi_publication_decisions.csv`](../reports/batch17_kpi_publication_decisions.csv).
+
+The BEVs-per-point measure may therefore appear only as a dated secondary
+context measure. It must not be framed as a contemporaneous adequacy or
+accessibility KPI, regardless of ranking stability.

@@ -25,6 +25,7 @@ This roadmap distinguishes established work from planned work. A planned item is
 - Batch 14: completed a read-only statistical analysis of the harmonized BBSR charging layer, including category KPIs, within-unit distributions, weighted/unweighted comparisons, concentration/outlier screens, evidence-labelled interpretations, and future Tableau KPI evaluation. No database objects were changed.
 - Batch 15: completed a read-only KBA FZ 27 stock, growth, geography, ownership, worksheet-capability and historical-series analysis with deterministic outputs and explicit national/state/`Sonstige`/400-region scopes.
 - Batch 16: completed a read-only 16-state comparison of KBA July 2026 passenger-car stock versus BNetzA September 2026 charging infrastructure, with deterministic reconciliation, cross-source ratios, outlier screens, descriptive correlations and KPI evaluation. No database objects were changed.
+- Batch 17: completed a read-only temporal-validity audit of the Batch 16 cross-source KPIs, including commissioning-date quality, published-versus-survivor cohort sensitivity, 16-state ranking/outlier comparison, fixed-denominator vehicle-stock illustration and KPI publication decisions. No database objects were changed.
 
 These are project milestones supported by local artifacts. They are not historical Git commits unless a local commit is explicitly identified in the handoff.
 
@@ -74,6 +75,10 @@ These are project milestones supported by local artifacts. They are not historic
 - [x] Run the Batch 16 state EV stock versus charging alignment analyzer and produce the report plus state, reconciliation and association CSVs.
 - [x] Reconcile BNetzA infrastructure totals, KBA national/16-state/`Sonstige`/400-region totals, exact 16-state joins, source fingerprints, power bands, statuses, safe denominators and unchanged DuckDB bytes.
 - [x] Document the 16-state benchmark, separate published-national benchmark, both snapshot dates, outliers, large-state sensitivity and non-causal interpretation safeguards.
+- [x] Run the Batch 17 temporal-validity analyzer with the actual equipment commissioning-date field and produce deterministic cohort, state-sensitivity, KPI-decision and vehicle-stock-sensitivity outputs.
+- [x] Reconcile published September infrastructure, the inclusive July cutoff cohort, the post-cutoff complement, all four point-power bands, equipment statuses and KBA January/April/July denominator scopes.
+- [x] Document the distinction between published cross-snapshot comparison, retrospective September-survivor cohort and unavailable true historical infrastructure snapshots.
+- [x] Decide that BEVs per point is secondary `CONTEXT_ONLY`, power-normalized/share/ranking/correlation measures are `EXPLORATORY_SENSITIVITY`, and adequacy/shortage/surplus is `NOT_SUPPORTED`.
 - [ ] Approve a dated BBSR/KBA compatibility bridge before any KBA-level BBSR classification or vehicle-stock ratio.
 - [ ] Decide whether a post-2026 BBSR vintage, a product-specific KBA bridge, historical KBA snapshots, or future Tableau work is required; no universal prefix rule or Trier allocation is approved.
 - [x] Review Batch 15 findings and complete the Batch 16 state-level denominator/date review before any Tableau implementation.

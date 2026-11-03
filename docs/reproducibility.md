@@ -300,3 +300,33 @@ and validates the deduplicated FZ 27.9 history. It writes only:
 The script does not create or replace a DuckDB object, modify a source or
 reference file, build a BBSR join, allocate Trier stock, or deploy a KPI.
 Repeated execution with the same database and fingerprints is deterministic.
+
+## Batch 17 temporal KPI validity analysis
+
+Run the deterministic read-only analyzer from the repository root:
+
+~~~bash
+.venv/bin/python scripts/17_analyze_temporal_kpi_validity.py --json
+~~~
+
+The script opens `data/analytics/ev_charging.duckdb` with `read_only=True`,
+checks the actual equipment commissioning-date field and preserved raw value,
+validates source-aware equipment/point identities and maximum-per-point power
+bands, reconciles KBA January/April/July state and 400-region scopes, checks
+all six preserved source/reference fingerprints, and verifies that the
+database hash is unchanged. It writes only:
+
+- `reports/batch17_temporal_kpi_validity.md`
+- `reports/batch17_equipment_commissioning_cohorts.csv`
+- `reports/batch17_state_temporal_sensitivity.csv`
+- `reports/batch17_kpi_publication_decisions.csv`
+- `reports/batch17_vehicle_stock_denominator_sensitivity.csv`
+
+Perspective A is the full BNetzA `2026-09-30` published snapshot compared with
+KBA `2026-07-01` stock and is labelled **CROSS-SNAPSHOT DESCRIPTIVE
+COMPARISON**. Perspective B retains September point rows attached to equipment
+commissioned on or before `2026-07-01` and is labelled **RETROSPECTIVE
+SEPTEMBER-SURVIVOR COHORT — NOT ACTUAL JULY INFRASTRUCTURE**. The script does
+not treat commissioning as point activation, does not infer historical status,
+does not modify DuckDB/source files, and does not deploy a KPI. Repeated
+execution with unchanged inputs is deterministic.
